@@ -3,7 +3,8 @@
         {
             "required": true,
             "description": "A directory to count files in.",
-            "name": "directory"
+            "name": "directory",
+            "type": "directory"
         },
         {
             "name": "recursive",
@@ -19,7 +20,8 @@
         },
         {
             "name": "file_count_result",
-            "description": "Output dir with file_count.json"
+            "description": "Output dir with file_count.json",
+            "type": "directory"
         }
     ],
     "containerDescriptors": [
@@ -39,5 +41,5 @@
         }
     ],
     "description": "Runs a task that counts files in directory.",
-    "name": "file-count"
+    "name": "FileCount"
 }

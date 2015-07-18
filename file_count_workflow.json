@@ -2,8 +2,8 @@
     "name": "Files count",
     "tasks": [
         {
-            "taskType": "file-count",
-            "name": "File count",
+            "name": "FileCount",
+            "taskType": "FileCount",
             "inputs": [
                 {
                     "name": "directory",
@@ -16,8 +16,25 @@
             ],
             "outputs": [
                 {
-                    "name": "outputstring",
+                    "name": "file_count_result"
+                },
+                {
+                    "name": "file_count",
                     "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "StageToS3",
+            "taskType": "StageDataToS3",
+            "inputs": [
+                {
+                    "source": "FileCount:file_count_result",
+                    "name": "data"
+                },
+                {
+                    "name": "destination",
+                    "value": "https://test-tdgplatform-com.s3.amazonaws.com/temp/dmitryzv"
                 }
             ]
         }

@@ -1,6 +1,7 @@
 import os
 import shutil
 import json
+from simpleflake import simpleflake
 from gbdx_task_wrapper import TaskWrapper
 
 
@@ -41,7 +42,9 @@ class FileCountTask(TaskWrapper):
             return False
 
         # Copy output
-        shutil.copy('file_count.json', output_dir)
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
+        shutil.copy('file_count.json', os.path.join(output_dir, 'file_count_' + str(simpleflake()) + '.json'))
 
         # Create output port
         self.set_output_string_port(self.__output_string_port_name, self.__algo_output['file_count'])
