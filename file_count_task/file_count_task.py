@@ -1,9 +1,12 @@
 import os
 import shutil
+import json
 from gbdx_task_wrapper import TaskWrapper
 
 
 class FileCountTask(TaskWrapper):
+    __algo_output_file = "file_count.json"
+
     __directory_port_name = "directory"
     __recursive_port_name = "recursive"
     __output_data_port_name = "file_count_result"
@@ -22,7 +25,7 @@ class FileCountTask(TaskWrapper):
         recursive = self.get_input_string_port(self.__recursive_port_name, 'n')
         recursive = str(recursive).lower() in {'y', 'yes', 'true'}
 
-        output_dir = self.get_output_data_port(self.__output_port_name)
+        output_dir = self.get_output_data_port(self.__output_data_port_name)
 
         # Build and the command
         args = '{_dir}{_r}'.format(_dir=directory, _r='' if not recursive else ' -r')
@@ -30,8 +33,18 @@ class FileCountTask(TaskWrapper):
         print('Executing {_cmd}'.format(_cmd=cmd))
         os.system(cmd)
 
+        if os.path.exists(self.__algo_output_file):
+            with open(self.__algo_output_file, 'r') as f:
+                self.__algo_output = json.load(f)
+        else:
+            print("Expected output missing.")
+            return False
+
         # Copy output
         shutil.copy('file_count.json', output_dir)
+
+        # Create output port
+        self.set_output_string_port(self.__output_string_port_name, self.__algo_output['file_count'])
 
         print("Invoke complete")
 

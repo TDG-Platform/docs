@@ -9,6 +9,7 @@ class TaskWrapper(object):
     def __init__(self, work_path="/mnt/work/"):
         self.__work_path = work_path
         self.__string_input_ports = None
+        self.__string_output_ports = None
 
         if not os.path.exists(self.__work_path):
             raise Exception("Working path must exist. {_path}.".format(_path=self.__work_path))
@@ -57,6 +58,18 @@ class TaskWrapper(object):
         """
         return os.path.join(self.output_path, port_name)
 
+    def set_output_string_port(self, port_name, value):
+        """
+        Set output string port value
+        :param port_name:
+        :param value:
+        :return: :rtype:
+        """
+        if not self.__string_output_ports:
+            self.__string_output_ports = {}
+
+        self.__string_output_ports[port_name] = value
+
     def invoke(self):
         """
         The do something method
@@ -70,5 +83,9 @@ class TaskWrapper(object):
         :param success_or_fail: string that is 'success' or 'fail'
         :param message:
         """
-        with open(os.path.join(self.base_path, 'status.json'), 'w') as f:
-            json.dump({'status': success_or_fail, 'reason': message}, f, indent=4)
+        if self.__string_output_ports:
+            with open(os.path.join(self.output_path, 'ports.json'), 'w') as opf:
+                json.dump(self.__string_output_ports, opf, indent=4)
+
+        with open(os.path.join(self.base_path, 'status.json'), 'w') as sf:
+            json.dump({'status': success_or_fail, 'reason': message}, sf, indent=4)

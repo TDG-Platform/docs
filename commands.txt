@@ -1,0 +1,7 @@
+docker version
+docker login
+docker build -t=tdgp/file_count_algo .
+docker images
+docker run -i tdgp/file_count_algo bash
+docker build -t=tdgp/file_count_task .
+docker push tdgp/file_count_task

@@ -1,0 +1,25 @@
+{
+    "name": "Files count",
+    "tasks": [
+        {
+            "taskType": "file-count",
+            "name": "File count",
+            "inputs": [
+                {
+                    "name": "directory",
+                    "value": "https://test-tdgplatform-com.s3.amazonaws.com/data/test_folder"
+                },
+                {
+                    "name": "recursive",
+                    "value": "y"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "outputstring",
+                    "type": "string"
+                }
+            ]
+        }
+    ]
+}

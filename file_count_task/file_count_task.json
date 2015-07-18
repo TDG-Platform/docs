@@ -19,8 +19,7 @@
         },
         {
             "name": "file_count_result",
-            "description": "Output dir with file_count.json",
-            "type": "string"
+            "description": "Output dir with file_count.json"
         }
     ],
     "containerDescriptors": [
