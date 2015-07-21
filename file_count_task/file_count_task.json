@@ -1,4 +1,6 @@
 {
+    "name": "FileCount",
+    "description": "Runs a task that counts files in directory.",
     "inputPortDescriptors": [
         {
             "required": true,
@@ -27,19 +29,14 @@
     "containerDescriptors": [
         {
             "type": "DOCKER",
-            "command": "",
             "properties": {
-                "image": "tdgp/file_count_task",
-                "mounts": [
-                    {
-                        "local": "$task_data_dir",
-                        "container": "/mnt/work",
-                        "read_only": false
-                    }
-                ]
+                "image": "tdgp/file_count_task"
             }
         }
     ],
-    "description": "Runs a task that counts files in directory.",
-    "name": "FileCount"
+    "properties":
+    {
+        "timeout": 7200,
+        "isPublic": true
+    }
 }

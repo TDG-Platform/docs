@@ -1,7 +1,8 @@
 docker version
-docker login
-docker build -t=tdgp/file_count_algo .
+docker build -t dmitryzv/file_count_algo file_count/
+docker build -t dmitryzv/file_count_task file_count_task/
 docker images
-docker run -i tdgp/file_count_algo bash
-docker build -t=tdgp/file_count_task .
-docker push tdgp/file_count_task
+docker run -it dmitryzv/file_count_algo /bin/bash
+docker run -it dmitryzv/file_count_task /bin/bash
+docker login
+docker push dmitryzv/file_count_task
