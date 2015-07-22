@@ -1,8 +1,13 @@
+
+
 docker version
+
 docker build -t dmitryzv/file_count_algo file_count/
-docker build -t dmitryzv/file_count_task file_count_task/
-docker images
 docker run -it dmitryzv/file_count_algo /bin/bash
-docker run -it dmitryzv/file_count_task /bin/bash
+docker push dmitryzv/file_count_algo
+docker images
+
+docker build -t dmitryzv/file_count_task file_count_task/
+docker run -it -v /Users/work:mnt/work dmitryzv/file_count_task /bin/bash
 docker login
 docker push dmitryzv/file_count_task
