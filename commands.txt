@@ -1,4 +1,9 @@
+mkdir gbdx_demo
+cd gbdx_demo
+git clone https://github.com/TDG-Platform/task-tutorial.git
 
+cd file_count
+python file_count.py -r .
 
 docker version
 
