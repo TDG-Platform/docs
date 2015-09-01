@@ -2,8 +2,8 @@
 
 1. The basic way to run roadtracker in gbd is to have a run_config.json file in the same directory as the intended raster file to be extracted. 
 2. The ability to run vector update and automated RT are available. 
-..*If you want to run vector update the input shapefile needs to be in the directory too. 
-..*If the input shapefile does not exist the missingfeatures tag needs to be "true" in the run_config.json.  
+  *If you want to run vector update the input shapefile needs to be in the directory too. 
+  *If the input shapefile does not exist the missingfeatures tag needs to be "true" in the run_config.json.  
 
 ## Example run_configs for RoadTracker
 Along with running RT in gbdx, the same Run_RT.py file can be run locally in Linux or Windows. The only requirement is the run_configs.json file (this can be renamed for local (or clustered) runs).
