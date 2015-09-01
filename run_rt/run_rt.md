@@ -8,7 +8,8 @@
 ## Example run_configs for RoadTracker
 Along with running RT in gbdx, the same Run_RT.py file can be run locally in Linux or Windows. The only requirement is the run_configs.json file (this can be renamed for local (or clustered) runs).
 
-Example run_configs are in this repository directory (these need to be named run_config.json in the directory for gbd): 
+Example run_configs are in this repository directory (these need to be named run_config.json in the directory for gbd):
+
 1. example_input_gbd.json - typical run for fully automated (could be vector update + fill in missing features if shapefile is there) 
 
 ## Different feature modes that RoadTracker can handle
