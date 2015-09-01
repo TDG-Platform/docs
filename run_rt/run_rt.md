@@ -10,7 +10,7 @@ Along with running RT in gbdx, the same Run_RT.py file can be run locally in Lin
 
 Example run_configs are in this repository directory (these need to be named run_config.json in the directory for gbd):
 
-1. example_input_gbd.json - typical run for fully automated (could be vector update + fill in missing features if shapefile is there) 
+1. [example_input_gbd.json](https://github.com/TDG-Platform/task-tutorial/edit/master/run_rt/example_input_gbd.json) - typical run for fully automated (could be vector update + fill in missing features if shapefile is there) 
 
 ## Different feature modes that RoadTracker can handle
 
@@ -19,3 +19,7 @@ Example run_configs are in this repository directory (these need to be named run
 3. rivers - same as trails except dark compared to background. There is some more filtering here to try and capture dark rivers.
 4. suburban - Intended to pick up roads/features that have low textures
 5. Oil Fields - intended to pick up dirt roads that access oil fields.
+
+## Here is an example workflow
+
+
