@@ -22,4 +22,4 @@ Example run_configs are in this repository directory (these need to be named run
 
 ## Here is an example workflow
 
-
+[typical_workflow.json](https://github.com/TDG-Platform/task-tutorial/edit/master/run_rt/typical_workflow.json)
