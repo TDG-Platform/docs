@@ -1,0 +1,7 @@
+{ "featuretype": "trails",
+    "filename": "e:\\Ben3\\benghazisubset3.tif",
+    "vuptexecutable" : "E:\\dglabs\\bin\\dglabs\\GeoTracker_Drivers\\Release_develop_x64\\VUPT_Driver_Release_develop_x64.exe",
+    "supportexecutable": "E:\\dglabs\\bin\\dglabs\\GeoTracker_Drivers\\Release_develop_x64\\CostDriver_Release_develop_x64.exe",
+    "inputshpname": "e:\\Ben3\\t.shp",
+    "missingfeatures" : "True"
+}
