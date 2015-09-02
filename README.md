@@ -1,6 +1,5 @@
-# task-tutorial
-Tutorial for building workflow tasks
+## task-tutorial
+[Tutorial](task/README.md) for building workflow tasks
 
-## Automated RoadTracker Guidance
-
-see [run_rt.md](https://github.com/TDG-Platform/task-tutorial/tree/master/run_rt/run_rt.md)
+## RoadTracker Task
+Automated RoadTracker [Guidance](task/run_rt/run_rt.md)
