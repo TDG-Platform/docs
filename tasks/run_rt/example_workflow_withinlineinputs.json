@@ -1,0 +1,55 @@
+{
+    "name": "run_rt_wf",
+    "tasks": [
+    {
+        "name": "run_rt2",
+        "taskType": "run_rt2",
+        "timeout" : 20000,
+        "inputs": [
+        {
+            "name": "data",
+            "value": "http://budweiser/acomp_training/054723580040/"
+        },
+        {
+            "name" : "featuretype",
+            "value" : "dirt urban"
+        },
+        {
+            "name" : "filename",
+            "value" : "14NOV24100734-M3DS-054723580040_01_P001_ACOMP.TIF"
+        },
+        {
+            "name" : "inputshpname",
+            "value" : "du.shp"
+        },
+        {
+            "name" : "missingfeatures",
+            "value" : "true"
+        },
+        {
+            "name" : "numthreads",
+            "value" : "4"
+        }
+    ],
+    "outputs": [
+        {
+            "name": "out"
+        }
+    ]
+    },
+    {
+        "inputs": [
+        {
+            "name": "data",
+            "source": "run_rt2:out"
+        },
+        {
+            "name": "destination",
+            "value": "http://budweiser/acomp_training/054723580040/out"
+        }
+        ],
+        "name": "StageToS3",
+        "taskType": "StageDataToS3"
+    }
+    ]
+}
