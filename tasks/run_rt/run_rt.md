@@ -22,4 +22,10 @@ Example run_configs are in this repository directory (these need to be named run
 
 ## Here is an example workflow
 
+Using the workflow to enter parameters to roadtracker
+
+[typical_workflow.json](example_workflow_withinlineinputs.json)
+
+If the parameters are in the input data directory/bucket
+
 [typical_workflow.json](typical_workflow.json)
