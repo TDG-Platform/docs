@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{543a97cd-4341-4aa3-a19a-5e356f2cfc41}</ProjectGuid>
+    <ProjectHome />
+    <StartupFile>run_rt\Run_RTD.py</StartupFile>
+    <SearchPath>E:\Software_workspace\src\docs\tasks\run_rt\</SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <InterpreterId />
+    <InterpreterVersion />
+    <CommandLineArguments>--f e:\work\ports.json --w e:\work</CommandLineArguments>
+    <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
+    <IsWindowsApplication>False</IsWindowsApplication>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
+    <PtvsTargetsFile>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="run_rt\Run_RT.py" />
+    <Compile Include="run_rt\Run_support.py" />
+    <Compile Include="run_rt\Run_RTD.py" />
+    <Compile Include="task-tutorial\file_count\file_count.py" />
+    <Compile Include="task-tutorial\file_count_task\file_count_task.py" />
+    <Compile Include="task-tutorial\file_count_task\gbdx_task_wrapper.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="task-tutorial\commands.txt" />
+    <Content Include="task-tutorial\file_count\requirements.txt" />
+    <Content Include="task-tutorial\file_count_task\requirements.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="run_rt" />
+    <Folder Include="task-tutorial" />
+    <Folder Include="task-tutorial\file_count" />
+    <Folder Include="task-tutorial\file_count_task" />
+  </ItemGroup>
+  <Import Project="$(PtvsTargetsFile)" Condition="Exists($(PtvsTargetsFile))" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="!Exists($(PtvsTargetsFile))" />
+</Project>
