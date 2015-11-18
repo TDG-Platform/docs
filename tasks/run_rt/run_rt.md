@@ -1,16 +1,35 @@
 ## Basic usage
 
-1. The basic way to run roadtracker in gbd is to have a run_config.json file in the same directory as the intended raster file to be extracted. 
-2. The ability to run vector update and automated RT are available. 
-  1. If you want to run vector update the input shapefile needs to be in the directory too. 
-  2. If the input shapefile does not exist the missingfeatures tag needs to be "true" in the run_config.json.  
+1. Their are two basic usages of the RoadTracker tasks in GBDX. The first usage is to produce support files so that the 
+resulting files can be used by the client ArcMap/QGIS plugin for digitization. The second usage is to produce a fully 
+automated extraction or update of specified features. 
+  * To run the automated extraction task you need to first have the support files built. If the support files are not 
+already built, they can be built in conjunction by running a workflow with both tasks.    
 
-## Example run_configs for RoadTracker
-Along with running RT in gbdx, the same Run_RT.py file can be run locally in Linux or Windows. The only requirement is the run_configs.json file (this can be renamed for local (or clustered) runs).
+## Here are some example workflows
 
-Example run_configs are in this repository directory (these need to be named run_config.json in the directory for gbd):
+* Example workflow to build support files for all of the features for every tif file that is in the input directory.
+(Notice the filename field is set to False.)
 
-1. [example_input_gbd.json](example_input_gbd.json) - typical run for fully automated (could be vector update + fill in missing features if shapefile is there) 
+[example_workflow_supportfilesAll.json](example_workflow_supportfilesAll.json)
+
+* Example workflow to build support files for all of the features for a specified input file.
+(Notice the filename field is set to filename.)
+
+[example_workflow_supportfilesOne.json](example_workflow_supportfilesOne.jsone)
+
+* Example workflow to build support files for one feature for all the tifs in the input directory.
+(Notice the featuretype field.)
+
+[example_workflow_supportfilesOneFeature.json](example_workflow_supportfilesOneFeature.jsons)
+
+* Example workflow for an automated run filling in missing features (base run if no vectors exist in the beginning).
+
+[example_workflow_automatedDU.json](example_workflow_automatedDU.json)
+
+* Example workflow for a combined support generation and automated run.
+
+[example_workflow_automatedDU.json](example_workflow_automatedDU.json)
 
 ## Different feature modes that RoadTracker can handle
 
@@ -20,12 +39,3 @@ Example run_configs are in this repository directory (these need to be named run
 4. suburban - Intended to pick up roads/features that have low textures
 5. Oil Fields - intended to pick up dirt roads that access oil fields.
 
-## Here is an example workflow
-
-Using the workflow to enter parameters to roadtracker
-
-[typical_workflow.json](example_workflow_withinlineinputs.json)
-
-If the parameters are in the input data directory/bucket
-
-[typical_workflow.json](typical_workflow.json)

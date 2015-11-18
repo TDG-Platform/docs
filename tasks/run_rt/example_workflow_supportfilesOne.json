@@ -1,0 +1,47 @@
+{
+    "name": "support",
+    "tasks": [
+    {
+        "name": "support_files",
+        "taskType": "rt_support",
+        "timeout" : 20000,
+        "inputs": [
+        {
+            "name": "data",
+            "value": "http://budweiser/acomp_training/054723580030/"
+        },
+        {
+            "name" : "featuretype",
+            "value" : "all"
+        },
+        {
+            "name" : "filename",
+            "value" : "inputFile.tif"
+        },
+        {
+            "name" : "numthreads",
+            "value" : "16"     
+    }
+    ],
+    "outputs": [
+        {
+            "name": "out"
+        }
+    ]
+    },
+    {
+        "inputs": [
+        {
+            "name": "data",
+            "source": "support_files:out"
+        },
+        {
+            "name": "destination",
+            "value": "http://budweiser/acomp_training/054723580030/out/"
+        }  
+                ],
+        "name": "StageToS3_support",
+        "taskType": "StageDataToS3"
+    }
+    ]
+}

@@ -1,0 +1,55 @@
+{
+    "name": "du",
+    "tasks": [
+    {
+        "name": "rt_automated",
+        "taskType": "rt_automated",
+        "timeout" : 20000,
+        "inputs": [
+        {
+            "name": "data",
+            "value": "http://budweiser/acomp_training/054723580030/out/"
+        },
+        {
+            "name" : "featuretype",
+            "value" : "dirt urban"
+        },
+        {
+            "name" : "filename",
+            "value" : "False"
+        },
+        {
+            "name" : "inputshpname",
+            "value" : "du.shp"
+        },
+        {
+            "name" : "missingfeatures",
+            "value" : "true"
+        },
+        {
+            "name" : "numthreads",
+            "value" : "1"
+        }
+    ],
+    "outputs": [
+        {
+            "name": "out"
+        }
+    ]
+    },
+    {
+        "inputs": [
+        {
+            "name": "data",
+            "source": "rt_automated:out"
+        },
+        {
+            "name": "destination",
+            "value": "http://budweiser/acomp_training/054723580030/out/"
+        }
+        ],
+        "name": "StageToS3",
+        "taskType": "StageDataToS3"
+    }
+    ]
+}
