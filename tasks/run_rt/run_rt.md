@@ -29,7 +29,7 @@ already built, they can be built in conjunction by running a workflow with both 
 
 * Example workflow for a combined support generation and automated run.
 
-[example_workflow_automatedDU.json](example_workflow_automatedDU.json)
+[example_workflow_supportfilesAll_DUautomated.json](example_workflow_supportfilesAll_DUautomated.json)
 
 ## Different feature modes that RoadTracker can handle
 
