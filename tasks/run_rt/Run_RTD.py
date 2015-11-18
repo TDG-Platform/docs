@@ -123,6 +123,8 @@ def main():
             return 
 
     filename = parsed_parms['filename']
+    if filename == 'False':
+        filename = ''
     gbd_input_path = os.path.join(os.path.join(wdir,'input'), 'data')
     input_dir = gbd_input_path
     full_filename = os.path.join(gbd_input_path, filename)
@@ -184,7 +186,7 @@ def main():
     if(parsed_parms.has_key('outputdir')):
         outdir = parsed_parms['outputdir']
     else:
-        outdir = os.path.join(gbd_base_outdir, '')
+        outdir = os.path.join(gbd_base_outdir, 'out')
 
     transfer_support = False
     if(os.path.isdir(gbd_base_outdir)):

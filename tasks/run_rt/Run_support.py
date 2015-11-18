@@ -79,7 +79,9 @@ def main():
             print 'no filename parm'
             return 
 
-    filename = parsed_parms['filename']
+    filename = str(parsed_parms['filename'])
+    if filename == 'False':
+        filename = ''
     gbd_input_path = os.path.join(os.path.join(wdir,'input'), 'data')
     input_dir = gbd_input_path
     full_filename = os.path.join(gbd_input_path, filename)
@@ -124,13 +126,13 @@ def main():
     if(parsed_parms.has_key('outputdir')):
         outdir = parsed_parms['outputdir']
     else:
-        outdir = os.path.join(gbd_base_outdir, '')
+        outdir = os.path.join(gbd_base_outdir, 'out')
 
     transfer_support = False
     if(os.path.isdir(gbd_base_outdir)):
         transfer_support = True
     
-    cost_exe = "/dglabs/bin/dglabs/GeoTracker_Drivers/Release_develop_x64/Cost_Driver_Release_develop_x64"
+    cost_exe = "/dglabs/bin/dglabs/GeoTracker_Drivers/Release_develop_x64/CostDriver_Release_develop_x64"
     if(parsed_parms.has_key('costexecutable')):
         cost_exe = parsed_parms['costexecutable']
 
@@ -191,8 +193,6 @@ def main():
                 shutil.copy2(this_file, outdir)
                 #check if there was a degraded image
                 if isDeg:
-                    degfile = 'DEG_' + root + '.img'
-                    if os.path.isfile(os.path.join(input_dir,degfile)):
                         shutil.copy2(os.path.join(input_dir,degfile), outdir)
 
     if(app_status == 0):
@@ -201,7 +201,7 @@ def main():
         status_string = '{"status":"failed","reason" : "Could not find support Files dir."}' 
     else:
         print 'application fail'
-        status_string = '{"status":"failed","reason" : "fail code returned by application system call."}'
+        status_string = '{"status":"failed","reason" : "non-zero status code returned by cost executable."}'
     if(not status_json_file.closed):
         status_json_file.close()
     if(os.path.exists(status_path)):
