@@ -69,7 +69,7 @@ https://github.com/DigitalGlobe/gbdxtools/blob/feature-simpleworkflows/examples/
     * Required = ‘false’
     * Type = ‘string’
     * name = ‘enable_pansharpen’
-* Enable/disable dynamic range adjustment (DRA). Choices are 'true' or 'false'. 
+* Enable/disable dynamic range adjustment (DRA). Choices are 'true' or 'false'. DRA should be disabled, if you want to run AOP on both PAN +MS simultaneously.  In order to apply DRA with a successful output, you must process the PAN and MS files separately.
     * Default = ‘true’
     * Required = ‘false’
     * type = ‘string’
