@@ -4,10 +4,7 @@ The AOP Strip Processor generates large scale, color balanced ortho mosaics in a
 
 **Example Script: Run in IPython using the GBDXTools Interface**
 
-pip install git+https://github.com/DigitalGlobe/gbdxtools@feature-simpleworkflows
 
-**_The Script can be found here:_**
-https://github.com/DigitalGlobe/gbdxtools/blob/feature-simpleworkflows/examples/launch_simple_workflow.py
 
 
 
