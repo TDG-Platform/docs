@@ -27,7 +27,7 @@ The AOP Strip Processor generates large scale, color balanced ortho mosaics in a
     print workflow.id
     print workflow.status
      
-**Run in IPython Example:**
+**Example Run in IPython:**
 
     In [316]: from gbdxtools import Interface
     In l317]: import json
