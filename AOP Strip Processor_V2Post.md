@@ -1,6 +1,6 @@
 # AOP Strip Processor (Advanced Ortho Product)
 
-The AOP Strip Processor generates large scale, color balanced ortho mosaics in a semi-automated fashion.  Level 1B imagery is processed according to defined inputs.  The AOP Strip Processor can be run through a simple Python script using the [GBDXTools Interface](https://github.com/DigitalGlobe/gbdxtools/blob/master/docs/user_guide.rst), which requires some initial setup, or through the [GBDX Web Application](https://gbdx.geobigdata.io/materials/).  Tasks and workflows can be added to AOP (described in Part II) or run separately after the AOP process is completed.
+The AOP Strip Processor generates large scale, color balanced ortho mosaics in a semi-automated fashion.  Level 1B imagery is processed according to defined inputs.  The AOP Strip Processor can be run through a simple Python script using  [gbdxtools](https://github.com/DigitalGlobe/gbdxtools/blob/master/docs/user_guide.rst), which requires some initial setup, or through the [GBDX Web Application](https://gbdx.geobigdata.io/materials/).  Tasks and workflows can be added to AOP (described in Part II) or run separately after the AOP process is completed.
 
 **Example Script: Run in IPython**
 
@@ -39,7 +39,7 @@ The AOP Strip Processor generates large scale, color balanced ortho mosaics in a
     In [323]: # Capture AOP task outputs
     In [324]: log = aoptask.get_output('log')
     In [325]: orthoed_output = aoptask.get_output('data')
-    In [326]: destination = 's3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/kathleen_Naples_WV03_Test1'
+    In [326]: destination = 's3://kathleen_Naples_WV03_Test1'
     In [327]: s3task = gbdx.Task("StageDataToS3", data=orthoed_output, destination=destination)
     In [328]: s3task2 = gbdx.Task("StageDataToS3", data=log, destination=destination)
     In [329]: workflow = gbdx.Workflow([ s3task, s3task2, aoptask ])  # the ordering doesn't matter here.
