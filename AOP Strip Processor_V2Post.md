@@ -17,7 +17,7 @@ The AOP Strip Processor generates large scale, color balanced ortho mosaics in a
      
     # Capture AOP task outputs log = aoptask.get_output('log') orthoed_output = aoptask.get_output('data')
         
-    destination = 's3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7-0aff4795d927/kathleen_Naples_WV03_Test1' 
+    destination = 's3://kathleen_Naples_WV03_Test1' 
     s3task = gbdx.Task("StageDataToS3", data=orthoed_output, destination=destination) 
     s3task2 = gbdx.Task("StageDataToS3", data=log, destination=destination)
 
