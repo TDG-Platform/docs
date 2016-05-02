@@ -52,13 +52,14 @@ The AOP Strip Processor generates large scale, color balanced ortho mosaics in a
 
 All sensors have been tested.  The S3 locations of the test data are given below.  Only script examples for WorldView-3 have been posted.
 
-10200100423D7A00 = WV01	  ‘s3://receiving-dgcs-tdgplatform-com/055250712010_01_003'
+10200100423D7A00 = WV01	's3://receiving-dgcs-tdgplatform-com/055250712010_01_003'
 
-103001002C34B800 = WV02 (waiting for data deliver...will update)
+103001004DAFAF00 = WV02	's3://receiving-dgcs-tdgplatform-com/055253506010_01_003'
 
-104001000E25D700 = WV03	  ‘s3://receiving-dgcs-tdgplatform-com/055249130010_01_003'
+104001000E25D700 = WV03	's3://receiving-dgcs-tdgplatform-com/055249130010_01_003'
 
-1050010001136C00 = GE01	(waiting for data deliver...will update)
+1050010001136C00 = GE01	's3://receiving-dgcs-tdgplatform-com/055254039010_01_003'
+
 
 **Description of Input Parameters and Options for the**** "aoptask":**
 
