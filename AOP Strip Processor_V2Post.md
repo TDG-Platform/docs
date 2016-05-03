@@ -86,7 +86,11 @@ All sensors have been tested.  The S3 locations of the test data are given below
 
 **OPTIONAL SETTINGS: Default = True or Auto**
 
-**_The Default setting will run the process or automatically determine the proper value to run the process. It is recommended to use ACOMP for the best image quality._**
+**_The Default setting will run the process or automatically determine the proper value to run the process. It is recommended to use ACOMP for the best image quality, therefore the Default ='True'. The one exception is WV01, where ACOMP should be set to 'False'. ACOMP for WV01 requires custom processing by out Team.  Please contact us for assitance.  _**
+
+Example aoptask for WV01:
+
+	aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=False, enable_pansharpen=False, enable_dra=False)
 
 * Enable/disable AComp. Choices are 'true' or 'false'. 
     * Default = ‘true’
