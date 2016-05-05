@@ -12,8 +12,7 @@ The AOP Strip Processor generates large scale, color balanced ortho mosaics in a
      # Make sure DRA is disabled if you are processing both the PAN+MS files
        
      data = "s3://receiving-dgcs-tdgplatform-com/055249130010_01_003"
-     aoptask = gbdx.Task("AOP_Strip_Processor", data=data,
-     enable_acomp=True, enable_pansharpen=False, enable_dra=False)
+     aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False)
      
     # Capture AOP task outputs log = aoptask.get_output('log') orthoed_output = aoptask.get_output('data')
         
