@@ -180,6 +180,10 @@ All sensors have been tested.  The S3 locations of the test data are given below
     * type = "string",
     * name = "ortho_interpolation_type"
 
+**Script to Change Interpolation method to Bilinear**
+
+	aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False, ortho_interpolation_type="Bilinear")
+
 * AComp AOD grid size in meters per pixel.
     * Default is 10.
     * Required = false,
