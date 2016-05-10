@@ -148,8 +148,6 @@ All sensors have been tested.  The S3 locations of the test data are given below
 
 **Script Example Reproject to UTM**
 
- 
-
 	aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False, ortho_epsg="EPSG:32633") # specify UTM Zone
     
     aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False, ortho_epsg="UTM") # Will automatically determine the UTM Zone
@@ -159,6 +157,7 @@ All sensors have been tested.  The S3 locations of the test data are given below
     * Required = false,
     * type = "string"
     * Name = "ortho_pixel_size"
+    
 * Ortho tiling scheme and zoom level, e.g. 'DGHalfMeter:18'. Overrides ortho_epsg and ortho_pixel_size.
     * Required = false,
     * type = "string",",
@@ -169,6 +168,11 @@ All sensors have been tested.  The S3 locations of the test data are given below
     * Required = false
     * Type = "string"
     * Name = "ortho_dem_specifier"
+
+
+**Script Example Change DEM to SRTM30**
+
+	aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False, ortho_dem_specifier="SRTM30")
 
 * Ortho pixel interpolation type. Options are 'Nearest', 'Bilinear', 'Cubic'. 
     * Default is 'Cubic’
