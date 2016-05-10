@@ -49,7 +49,7 @@ The AOP Strip Processor generates large scale, color balanced ortho mosaics in a
 
 **Test Datasets for All Sensors (Naples, Italy):**
 
-All sensors have been tested.  The S3 locations of the test data are given below.  Only script examples for WorldView-3 have been posted:
+All sensors have been tested.  The S3 locations of the test data are given below.  Script examples for various sensors have been posted:
 
 	10200100423D7A00 = WV01 's3://receiving-dgcs-tdgplatform-com/055250712010_01_003'
 	103001004DAFAF00 = WV02 's3://receiving-dgcs-tdgplatform-com/055253506010_01_003'
@@ -87,7 +87,7 @@ All sensors have been tested.  The S3 locations of the test data are given below
 
 **_The Default setting will run the process or automatically determine the proper value to run the process. It is recommended to use ACOMP for the best image quality, therefore the Default ='True'. The one exception is WV01, where ACOMP should be set to 'False'. ACOMP for WV01 requires custom processing by out Team.  Please contact us for assitance.  _**
 
-Example aoptask for WV01:
+**Example aoptask for WV01:**
 
 	aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=False, enable_pansharpen=False, enable_dra=False)
 
