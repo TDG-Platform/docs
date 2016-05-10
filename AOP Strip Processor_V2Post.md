@@ -158,7 +158,7 @@ All sensors have been tested.  The S3 locations of the test data are given below
     * type = "string"
     * Name = "ortho_pixel_size"
 
-**Script Example Changing Ortho Output Pixel Size**  (Default for non-pansharpened =2 meters); make sure both PanSharpen and DRA are disabled.
+**Script Example Changing Ortho Output Pixel Size**  (Default for non-pansharpened MS=2 meters); make sure both PanSharpen and DRA are disabled. Caveat: You are changing the PAN pixel size (Default = 0.50m) and the MS pixel size will be downsampled proportionally.
 
 	aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False, ortho_pixel_size="3")
     
