@@ -111,7 +111,7 @@ Example aoptask for WV01:
 
 **Script Example PanSharpen & DRA All Bands:**
 
-aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=True, enable_dra=True)
+	aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=True, enable_dra=True)
 
 **Script Example DRA MS Bands Only:**
 
