@@ -157,6 +157,10 @@ All sensors have been tested.  The S3 locations of the test data are given below
     * Required = false,
     * type = "string"
     * Name = "ortho_pixel_size"
+
+**Script Example Changing Ortho Output Pixel Size**  (Default for non-pansharpened =2 meters); make sure both PanSharpen and DRA are disabled.
+
+	aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False, ortho_pixel_size="3")
     
 * Ortho tiling scheme and zoom level, e.g. 'DGHalfMeter:18'. Overrides ortho_epsg and ortho_pixel_size.
     * Required = false,
