@@ -134,13 +134,13 @@ aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_
     * type": "string"
     * Name = "enable_tiling"
 
-* Comma-separated list of numeric strip parts to process. 
+* Set Input for 'ortho_tiling_scheme'. This consists of Comma-separated list of numeric strip parts to process. 
     * Default = process all strip parts
     * Required = false,
     * Type = "string",
     * Name = "parts"
     
-* Ortho EPSG projection. String 'UTM' is also allowed. Specify along with ortho_pixel_size. Overridden by ortho_tiling_scheme if specified. 
+* Ortho EPSG projection. String "UTM" is also allowed. Specify along with ortho_pixel_size. Overridden by ortho_tiling_scheme if specified. 
     * Default = 'EPSG:4326'  
     * Required = false
     * type = "string"
