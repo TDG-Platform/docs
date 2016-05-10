@@ -219,7 +219,6 @@ aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_
     * type = "string",
     * name = "tiling_zoom_level"
 
-**Example Code Run in IPython:**
 
 
 **Data Structure for Expected Outputs:**
