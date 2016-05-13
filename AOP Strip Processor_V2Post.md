@@ -194,7 +194,7 @@ All sensors have been tested.  The S3 locations of the test data are given below
     * type = "string",
     * name = "acomp_aod_grid_size"
 
-**The Dynamic Range Adjustment Mode (DRA) should be run using the default setting 'enable_dra+True', which will be adequate for most imagery.  The adjustments described below should only be used in special cases as described at the end of this document.**
+**The Dynamic Range Adjustment Mode (DRA) should be run using the default setting 'enable_dra=True', which will be adequate for most imagery.  The adjustments described below should only be used in special cases as discussed at the end of this document.**
 
 * Dynamic Range Adjustment mode. Options are 'IntensityAdjust', 'BaseLayerMatch'. 
     * Default is 'IntensityAdjust' 
@@ -250,6 +250,17 @@ Click on the Folder at the bottom of the list identified by the 'Sales Order Lin
 
 ![Second Directory](https://lh3.googleusercontent.com/-_lAVdacJf2c/VyJqZp78PAI/AAAAAAAAJao/1Px_21rWHBQEjbqyi_orY-BnTiH0-ZtGACLcB/s0/datastructure2.PNG "datastructure2.PNG")
 
+**Notes on Special DRA Settings:**
+
+**Dynamic range adjustment mode** – IntensityAdjust is for standalone, individual images that are not going to be mosaicked together. BaseLayerMatch uses a global base layer for color matching and helps maintain consistency when mosaicking. The base layer started out as color-balanced and mosaicked Landsat imagery but may have started incorporating higher-res imagery also.
+
+**Dynamic range adjustment low cutoff percentage** – Sets the black point in the histogram. Adjusting this will change the point in the histogram that is considered “black” and will darken and lighten the low end of the histogram. Setting the number lower (<0.5) will brighten the darker color tones and make the overall image lighter. Setting the number higher will saturate more of the darker color tones and make the overall image darker. Could start to lose detail in the darker areas if too heavy-handed. A light touch can make a huge difference so be careful.
+
+**Dynamic range adjustment high cutoff percentage** – Sets the white point in the histogram. Same general idea as the low cutoff percentage but operates on the brightest color tones to adjust what is considered saturated “white”. Setting this number lower (<99.95) will brighten the image while setting the number higher will darken the image. Again, a light touch is mandatory to keep things looking “normal”.
+
+**Dynamic range adjustment gamma value** – Adjusts the curvature of the transfer function from input to output. When gamma=1, that is a straightforward, linear transfer from input to output. When gamma>1, the image will get overall brighter. Conversely, the image will get overall darker when gamma<1. Works in conjunction with the histogram cutoff values but is a completely independent parameter. Operates like a root stretch but with much finer adjustment settings. All three parameters, low cutoff, high cutoff, and gamma, work together to adjust the overall brightness, contrast, and dynamic range of the image. They’re all independent and will affect the final DRAed image in similar, but different, ways. Setting these is more an art than a science and it’s highly recommended to NOT mess with these unless the image is one of those special cases and is totally screwed up. Then the art comes into play.
+
+**Dynamic range adjustment output bit depth** – Should NEVER be set to anything other than 8. DRA is valid and makes sense ONLY for 8bit output imagery. Running DRA to get a 16bit DRAed image will get you nothing since you still have to scale the image to 8bits/band for display purposes anyway.
 
 
 For background on the development and implementation of AOP refer to the [Advanced Ortho Processor PDF.](http://tu00aopapp006:8102/job/AOP-Docs/ws/build/latex/AOP-AdvancedOrthoProcessor.pdf)
