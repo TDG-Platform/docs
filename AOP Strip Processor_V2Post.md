@@ -85,7 +85,7 @@ All sensors have been tested.  The S3 locations of the test data are given below
 
 **OPTIONAL SETTINGS: Default = True or Auto**
 
-**_The Default setting will run the process or automatically determine the proper value to run the process. It is recommended to use ACOMP for the best image quality, therefore the Default ='True'. The one exception is WV01, where ACOMP should be set to 'False'. ACOMP for WV01 requires custom processing by out Team.  Please contact us for assitance.  _**
+**The Default setting will run the process or automatically determine the proper value to run the process. It is recommended to use ACOMP for the best image quality, therefore the Default ='True'. The one exception is WV01, where ACOMP should be set to 'False'. ACOMP for WV01 requires custom processing by out Team.  Please contact us for assitance.**
 
 **Example aoptask for WV01:**
 
@@ -194,7 +194,9 @@ All sensors have been tested.  The S3 locations of the test data are given below
     * type = "string",
     * name = "acomp_aod_grid_size"
 
-* Dynamic range adjustment mode. Options are 'IntensityAdjust', 'BaseLayerMatch'. 
+**The Dynamic Range Adjustment Mode (DRA) should be run using the default setting 'enable_dra+True', which will be adequate for most imagery.  The adjustments described below should only be used in special cases as described at the end of this document.**
+
+* Dynamic Range Adjustment mode. Options are 'IntensityAdjust', 'BaseLayerMatch'. 
     * Default is 'IntensityAdjust' 
         * 'BaseLayerMatch' is currently only compatible with EPSG:4326.",
     * Required = false,
