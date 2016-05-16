@@ -13,7 +13,7 @@ RX Anomaly Detection This task uses the Reed-Xiaoli Detector (RXD) algorithm to 
 	 
 	envitask = gbdx.Task("ENVI_RXAnomalyDetection")
 	envitask.inputs.task_name='RXAnomalyDetection'
-	envitask.inputs.file_types='til'
+	envitask.inputs.file_types='tif'
 	envitask.inputs.kernel_size='3'
     envitask.inputs.input_raster=data
 	
