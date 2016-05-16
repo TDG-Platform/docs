@@ -109,13 +109,10 @@ All sensors have been tested.  The S3 locations of the test data are given below
     * type = ‘string’
     * name = ‘enable_dra’
 
-**Script Example PanSharpen & DRA All Bands:**
+**Script Example PanSharpen & DRA All Bands:**This will produce an AComp'ed, Pansharpened, RGB Image
 
 	aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=True, enable_dra=True)
 
-**Script Example DRA MS Bands Only:**
-
-    aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, bands=MS, enable_dra=True)
 
 * Bands to process. Choices are 'PAN+MS', 'PAN', 'MS', 'Auto'. 
     * Default = 'Auto', which searches for band IDs in IMD files
@@ -123,6 +120,9 @@ All sensors have been tested.  The S3 locations of the test data are given below
     * type = "string"
     * name = "bands"
 
+**Script Example to Produce MS Bands Only:**
+
+    aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, bands=MS, enable_dra=False)
 
 **OPTIONAL SETTINGS: Default = False or a specified Valued**
 
