@@ -2,7 +2,7 @@
 
 The AOP Strip Processor generates large scale, color balanced ortho mosaics in a semi-automated fashion.  Level 1B imagery is processed according to defined inputs.  The AOP Strip Processor can be run through a simple Python script using  [gbdxtools](https://github.com/DigitalGlobe/gbdxtools/blob/master/docs/user_guide.rst), which requires some initial setup, or through the [GBDX Web Application](https://gbdx.geobigdata.io/materials/).  Tasks and workflows can be added to AOP (described here in [gbdxtools](https://github.com/DigitalGlobe/gbdxtools/blob/master/docs/running_workflows.rst)) or run separately after the AOP process is completed.
 
-**Example Script:**
+**Example Script:** These basic settings will run orthorectification and DG AComp.  See also examples listed under the optional settings below.
 
      from gbdxtools import Interface 
      import json
