@@ -87,7 +87,7 @@ All sensors have been tested.  The S3 locations of the test data are given below
 
 **The Default setting will run the process or automatically determine the proper value to run the process. It is recommended to use ACOMP for the best image quality, therefore the Default ='True'. The one exception is WV01, where ACOMP should be set to 'False'. ACOMP for WV01 requires custom processing by out Team.  Please contact us for assitance.**
 
-**Example aoptask for WV01:**
+**Example aoptask for WV01:**This produces an orthorectified panchromatic image.
 
 	aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=False, enable_pansharpen=False, enable_dra=False)
 
@@ -103,7 +103,7 @@ All sensors have been tested.  The S3 locations of the test data are given below
     * Type = ‘string’
     * name = ‘enable_pansharpen’
 
-* Enable/disable dynamic range adjustment (DRA). Choices are 'true' or 'false'. DRA should be disabled, if you want to run AOP on both PAN+MS simultaneously without PanSharpening. In order to apply DRA with a successful output to MS bands only with no Pansharpening, you must set "bands"=MS.
+* Enable/disable dynamic range adjustment (DRA). Choices are 'true' or 'false'. DRA should be disabled, if you want to run AOP on both PAN+MS simultaneously without PanSharpening. 
     * Default = ‘true’
     * Required = ‘false’
     * type = ‘string’
@@ -120,7 +120,7 @@ All sensors have been tested.  The S3 locations of the test data are given below
     * type = "string"
     * name = "bands"
 
-**Script Example to Produce MS Bands Only:**
+**Script Example to Produce MS Bands Only:**When only 8-band output is required.
 
     aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, bands=MS, enable_dra=False)
 
