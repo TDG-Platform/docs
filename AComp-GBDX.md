@@ -57,33 +57,33 @@ The AComp GBDX task can be run through a simple Python script using  [gbdxtools]
 **REQUIRED SETTINGS AND DEFINITIONS:**
 
 * S3 location of input data:
-    * Required = ‘True’
-    * type = ‘directory’
-    * name = ‘data’
+    * Required = 'True'
+    * type = 'directory'
+    * name = 'data'
     
 * Define the Output Directory: (a gbd-customer-data location)
-    * Required = ‘true’
-    * type = ‘directory’
-    * name = "data"
+    * Required = 'true'
+    * type = 'directory'
+    * name = 'data'
 
 **OPTIONAL SETTINGS:**
 
 * Comma-separated list of bands to exclude. Use band IDs from IMD file such as 'P', 'MS1', 'Multi', 'All-S', etc. Excluded bands are not processed. 
-    * Required = ‘false’
-    * type = ‘string’
-    * name = ‘exclude_bands’
+    * Required = 'false'
+    * type = 'string'
+    * name = 'exclude_bands'
 
 * AOD grid size in meters per pixel. Default is 10. 
     * Default = '10'
-    * Required = ‘false’
-    * Type = ‘string’
-    * name = ‘aod_grid_size’
+    * Required = 'false'
+    * Type = 'string'
+    * name = 'aod_grid_size'
 
 * Output bit depth. Choices are 16 or 32. Default is 16.
-    * Default = ‘16’
-    * Required = ‘false’
-    * type = ‘string’
-    * name = ‘bit_depth’
+    * Default = '16'
+    * Required = 'false'
+    * type = 'string'
+    * name = 'bit_depth'
 
 **Script Example specifying alternate AOD grid size and bit depth**
 
