@@ -64,7 +64,7 @@ The AComp GBDX task can be run through a simple Python script using  [gbdxtools]
 * Define the Output Directory: (a gbd-customer-data location)
     * Required = ‘true’
     * type = ‘directory’
-    * name = "destination"
+    * name = "data"
 
 **OPTIONAL SETTINGS:**
 
