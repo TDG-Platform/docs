@@ -188,12 +188,6 @@ All sensors have been tested.  The S3 locations of the test data are given below
 
 	aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False, ortho_interpolation_type="Bilinear")
 
-* AComp AOD grid size in meters per pixel.
-    * Default is 10.
-    * Required = false,
-    * type = "string",
-    * name = "acomp_aod_grid_size"
-
 **The Dynamic Range Adjustment Mode (DRA) should be run using the default setting 'enable_dra=True', which will be adequate for most imagery.  The adjustments described below should only be used in special cases as discussed at the end of this document.**
 
 * Dynamic Range Adjustment mode. Options are 'IntensityAdjust', 'BaseLayerMatch'. 
