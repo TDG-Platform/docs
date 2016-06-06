@@ -73,12 +73,6 @@ The AComp GBDX task can be run through a simple Python script using  [gbdxtools]
     * type = 'string'
     * name = 'exclude_bands'
 
-* AOD grid size in meters per pixel. Default is 10. 
-    * Default = '10'
-    * Required = 'false'
-    * Type = 'string'
-    * name = 'aod_grid_size'
-
 * Output bit depth. Choices are 16 or 32. Default is 16.
     * Default = '16'
     * Required = 'false'
