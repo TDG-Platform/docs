@@ -12,7 +12,7 @@ The AComp GBDX task operates on a variety of input data:
 
 * DG Level 2A images
 * DG Level 1B images (orthorectification is automatically applied first)
-* Landsat
+* Landsat8 images
 
 Input imagery must at least contain the VNIR multispectral bands, and optionally may also include panchromatic and/or SWIR data.
 
@@ -21,7 +21,7 @@ task will search through the given bucket to locate the input data and process t
 
 The AComp GBDX task can be run through a simple Python script using  [gbdxtools](https://github.com/DigitalGlobe/gbdxtools/blob/master/docs/user_guide.rst), which requires some initial setup, or through the [GBDX Web Application](https://gbdx.geobigdata.io/materials/).  Tasks and workflows can be added (described here in [gbdxtools](https://github.com/DigitalGlobe/gbdxtools/blob/master/docs/running_workflows.rst)) or run separately after the AComp process is completed.
 
-**Example Script:** These basic settings will run AComp on a Landsat image.  See also examples listed under the optional settings below.
+**Example Script:** These basic settings will run AComp on a Landsat8 image.  See also examples listed under the optional settings below.
 
     # Run atmospheric compensation on Landsat8 data
     from gbdxtools import Interface
