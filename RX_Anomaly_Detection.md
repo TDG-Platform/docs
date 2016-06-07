@@ -1,7 +1,7 @@
 # ENVI RX Anomaly Detection 
 
 RX Anomaly Detection This task uses the Reed-Xiaoli Detector (RXD) algorithm to identify the spectral or color differences between a region to test its neighboring pixels or the entire dataset.
-**Example Script: Run in IPython using the GBDXTools Interface** 
+**Example Script:** Run in IPython using the GBDXTools Interface
 	
     from gbdxtools import Interface 
     import json
