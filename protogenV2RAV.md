@@ -58,6 +58,8 @@ WorldView 2 or WorldView 3 multi-spectral imagery (8-band optical and VNIR data 
 
 Your Processed Imagery will be written as Binary .TIF image type UINT8x1 and placed in the specified S3 Customer Location (e.g.  s3://gbd-customer-data/unique customer id/named directory/).  
 
+**Known issues:**  Thin cloud (cloud edges) might be misinterpreted as vegetation.
+
 
 For background on the development and implementation of  Protogen  [Protogen Documentation](Insert link here)
 
