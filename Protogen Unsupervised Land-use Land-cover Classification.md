@@ -45,7 +45,7 @@ LULC layer
 
 ![enter image description here](https://lh3.googleusercontent.com/-eXo17ewGUGc/V1cM5oeHo2I/AAAAAAAAJnU/FfbcnUbEarARXvvXM9zaigQDijQlAFOJwCLcB/s0/Denver_lulc2_800x600.bmp "Denver_lulc2_800x600.bmp")
 
-If you need to generate the 8-Band MS data required as input for this task, you can use [gbdxtools](http://gbdxtools.readthedocs.io/en/latest/user_guide.html) and the following example script to generate the 8-Bands data and stage it to your Customer S3 Bucket.
+If you need to generate the 8-Band MS data required as input for this task, you can use [gbdxtools](http://gbdxtools.readthedocs.io/en/latest/user_guide.html) and the following example script to generate the 8-Bands data and stage it to your Customer S3 Bucket.  Click on this link for details regarding the the [Advanced Ortho Product Pre-Processing](https://github.com/TDG-Platform/docs/blob/master/AOP%20Strip%20Processor_V3.md).
 
 	from gbdxtools import Interface
  	import json
