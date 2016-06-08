@@ -10,6 +10,7 @@
 		
 
 **Known issues:**
+
 ***Vegetation:***  Thin cloud (cloud edges) might be misinterpreted as vegetation.
 
 ***Water:***  False positives maybe present due to certain types of concrete roofs or shadows.
