@@ -46,7 +46,28 @@ LULC layer
 
 If you need to generate the 8-Band MS data required as input for this task, use the following example script.
 
-add SCRIPT HERE FOR 8-BAND AOP
+from gbdxtools import Interface
+ import json
+ 
+ gbdx = Interface()
+
+ # WV03 Image over Naples, Italy
+ # Make sure DRA is disabled if you are processing both the PAN+MS files
+ data = "s3://receiving-dgcs-tdgplatform-com/055249130010_01_003"
+ aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, bands="MS", enable_dra=False)
+
+ # Capture AOP task outputs
+ log = aoptask.get_output('log')
+ orthoed_output = aoptask.get_output('data')
+ destination = 's3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/Protogen_8Bands/Naples'
+ s3task = gbdx.Task("StageDataToS3", data=orthoed_output, destination=destination)
+ s3task2 = gbdx.Task("StageDataToS3", data=log, destination=destination)
+
+ workflow = gbdx.Workflow([ s3task, s3task2, aoptask ])  # the ordering doesn't matter here.
+ workflow.execute()
+
+ print workflow.id
+ print workflow.status
 
 Source Algorithm:		PROTOGEN version 2.0.0, (May 13, 2016)		
 Author: 		Georgios Ouzounis,  DigitalGlobe Inc. 
