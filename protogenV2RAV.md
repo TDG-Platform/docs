@@ -19,7 +19,7 @@ RAV is an un-supervised protocol for computing vegetation masks from 8 band (opt
     print workflow.status
 	
 
-**Description of Input Parameters and Options for the**** "protogenV2RAV":**
+**Description of Input Parameters and Options for "protogenV2RAV":**
 
 WorldView 2 or WorldView 3 multi-spectral imagery (8-band optical and VNIR data sets) that has been atmospherically compensated by the AOP processor.  Supported formats are .TIF, .TIL, .VRT, .HDR.
 
@@ -61,5 +61,5 @@ Your Processed Imagery will be written as Binary .TIF image type UINT8x1 and pla
 **Known issues:**  Thin cloud (cloud edges) might be misinterpreted as vegetation.
 
 
-For background on the development and implementation of  Protogen  [Protogen Documentation](Insert link here)
+For background on the development and implementation of  Protogen  [Documentation under development](Insert link here)
 
