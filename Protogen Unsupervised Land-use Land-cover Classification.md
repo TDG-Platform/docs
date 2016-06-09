@@ -40,10 +40,14 @@ RGB view of the input
 		![enter image description here](https://lh3.googleusercontent.com/-fZLrWWu5KcM/V1cNpe2DDlI/AAAAAAAAJn0/vKFTazNMTSkjW4PVhXggGj4dJXe-OBzGgCLcB/s0/Denver_rgb2_800x600.bmp "Denver_rgb2_800x600.bmp")
 
 LULC layer		 
-
-
-
 ![enter image description here](https://lh3.googleusercontent.com/-eXo17ewGUGc/V1cM5oeHo2I/AAAAAAAAJnU/FfbcnUbEarARXvvXM9zaigQDijQlAFOJwCLcB/s0/Denver_lulc2_800x600.bmp "Denver_lulc2_800x600.bmp")
+
+Example 1B Datasets that you can process to generate the 8-Bnad input and then run the LULC Algorithm:
+
+	Tracy, CA: 	104001001D62F700 = WV03 's3://receiving-dgcs-tdgplatform-com/055382035010_01_003'
+	Naples, Italy: 	104001000E25D700 = WV03	's3://receiving-dgcs-tdgplatform-com/055249130010_01_003'
+
+
 
 If you need to generate the 8-Band MS data required as input for this task, you can use [gbdxtools](http://gbdxtools.readthedocs.io/en/latest/user_guide.html) and the following example script to generate the 8-Bands data and stage it to your Customer S3 Bucket.  Click on this link for details regarding the the [Advanced Ortho Product Pre-Processing](https://github.com/TDG-Platform/docs/blob/master/AOP%20Strip%20Processor_V3.md).
 
