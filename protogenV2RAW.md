@@ -1,4 +1,4 @@
-# 8-Band water Mask (protogenV2RAV)
+# 8-Band water Mask (protogenV2RAW)
 
 RAW is an un-supervised protocol for computing water masks from 8 band (optical + VNIR) image data-sets. The water mask is a binary image in which intensity 255 indicates the presence of water and intensity 0 the absence of water. 
 
