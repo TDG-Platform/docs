@@ -60,5 +60,5 @@ completed_time": null,
 Your processed imagery will be written to the specified S3 Customer Location in TIF format as well as the ENVI format (e.g. s3://gbd-customer-data/unique customer id/named directory/Image.tif).  
 
 
-For background on the development and implementation of geoIO and this task, please refer to the GitHub documentation [Adding geoIO Documentation](https://github.com/TDG-Platform/docs)
+For background on the development and implementation of geoIO and this task, please refer to the GitHub documentation [ Digital Globe geoIO Documentation](github.com/digitalglobe/geoio)
 
