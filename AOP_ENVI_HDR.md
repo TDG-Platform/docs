@@ -12,7 +12,7 @@
     workflow = gbdx.Workflow([aop2envi])
     workflow.savedata(
        aop2envi.outputs.output_data,
-       location='aop2envi_test1/output_data'
+       location='aop2envi/output_data'
     )
     
     print workflow.execute()
@@ -60,5 +60,5 @@ completed_time": null,
 Your processed imagery will be written to the specified S3 Customer Location in TIF format as well as the ENVI format (e.g. s3://gbd-customer-data/unique customer id/named directory/Image.tif).  
 
 
-For background on the development and implementation of geoIO and this task, please refer to the GitHub documentation [ Digital Globe geoIO Documentation](github.com/digitalglobe/geoio)
+For background on the development and implementation of geoIO and this task, please refer to the GitHub documentation [ Digital Globe geoIO Documentation](https://github.com/digitalglobe/geoio)
 
