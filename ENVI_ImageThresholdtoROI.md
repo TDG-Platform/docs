@@ -20,7 +20,7 @@
         task.outputs.output_roi_uri,
         location='ImgToROI'
     )
-​
+	
     print workflow.execute()
 	
 	
