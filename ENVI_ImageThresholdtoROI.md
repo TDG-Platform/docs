@@ -5,9 +5,8 @@
 **Example Script:** Run in IPython using the GBDXTools Interface
 	
     from gbdxtools import Interface
-​
     gbdx = Interface()
-​
+
     task = gbdx.Task("ENVI_ImageThresholdToROI")
     task.inputs.input_raster = "s3://gbd-customer-data/Imagepath/"
     task.inputs.file_types = "tif"
@@ -15,9 +14,8 @@
     task.inputs.roi_color = "[[0,255,0],[0,0,255]]"
     task.inputs.threshold = "[[138,221,0],[222,306,0]]"
     task.inputs.output_roi_uri_filename = "roi.xml"
-​
+	
     workflow = gbdx.Workflow([task])
-​
     workflow.savedata(
         task.outputs.output_roi_uri,
         location='ImgToROI'
@@ -29,7 +27,8 @@
 
 **Description of Input Parameters and Options for the "ENVI_ImageThresholdToROI":**
 This task will function on a multi-spectral image located in the S3 location: 
-Input imagery sensor types include: QuickBird, WorldView 1, WorldView 2, WorldView 3 and GeoEye
+Input imagery sensor types include but may not be limited to: QuickBird, WorldView 1, WorldView 2, WorldView 3 and GeoEye
+Tif files from the AOP_Strip_Processor were tested with this task to confirm functionality; however, the task may ingest additional raster image file types such as: ENVI .hdr,  
 	
 **REQUIRED SETTINGS AND DEFINITIONS:**
 
@@ -74,7 +73,7 @@ Input imagery sensor types include: QuickBird, WorldView 1, WorldView 2, WorldVi
 
 * Define the Output log Directory",
     * Required = false 
-	* Description = Specify a string with the fully-qualified path and filename for OUTPUT_ROI
+	* Description = Specify a string with the fully-qualified path and file name for OUTPUT_ROI
     * type = 'string'
     * name =  "output_roi_uri_filename"
 
