@@ -81,12 +81,12 @@ Tif files from the AOP_Strip_Processor were tested with this task to confirm fun
 	
 	
 ###Postman status @ 13:07 6/21/16
-"completed_time": "2016-06-20T18:08:53.313140+00:00",
+completed_time": "2016-06-21T15:13:49.155121+00:00",
   "state": {
     "state": "complete",
     "event": "succeeded"
   },
-  "submitted_time": "2016-06-20T17:58:56.112324+00:00",
+  "submitted_time": "2016-06-21T14:32:14.671243+00:00,
 
 
 **Data Structure for Expected Outputs:**
