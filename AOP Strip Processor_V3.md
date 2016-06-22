@@ -165,6 +165,12 @@ All sensors have been tested, with the exception of WV03-SWIR imagery.  The S3 l
     * type = "string".
     * name = "ortho_tiling_scheme"
 
+* Designate 'parts' of the strip to be processed.  This consists of a comma-separated list of numeric strip parts.
+	*Default = process the entire strip
+	*Required = false
+	*Type ="string"
+	*Name = "parts"
+
 * Ortho DEM specifier. Options are 'NED', 'SRTM30', 'SRTM90'. 
     * Default = 'SRTM90'
     * Required = false
