@@ -3,6 +3,7 @@
 **ENVI_ClassificationClumping** The Clumping task resolves the unclassified pixels produced from the Sieving classification task.  The selected classes are clumped together by first performing a dilate operation then an erode operation on the classification image using a kernel of the size specified in the parameters dialogue.  This task requires a classification has been run through the [Sieving Classification] (https://github.com/TDG-Platform/docs/blob/envi_tasks_docs/ENVI_ClassificationSieving.md) 
 
 *Example Script:** Run in IPython using the GBDXTools Interface
+
     from gbdxtools import Interface
 ​    gbdx = Interface()
 ​
