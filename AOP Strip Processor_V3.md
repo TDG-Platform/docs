@@ -122,7 +122,7 @@ All sensors have been tested, with the exception of WV03-SWIR imagery.  The S3 l
 
 **Script Example to Produce MS Bands Only:**When only 8-band output is required.
 
-    aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, bands=MS, enable_dra=False)
+    aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, bands='MS', enable_dra=False)
 
 **OPTIONAL SETTINGS: Default = False or a specified Valued that can be changed (e.g. changing the projection from the default WGS84 to UTM).**
 
