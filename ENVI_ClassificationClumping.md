@@ -25,7 +25,7 @@
         isodata.outputs.output_raster_uri,
         location="classification/isodata"
     )
-​
+	
     workflow.savedata(
         sieve.outputs.output_raster_uri,
         location="classification/sieve"
