@@ -4,15 +4,15 @@ The AOP Strip Processor generates large scale, color balanced ortho imagery in a
 
 **Example Script:** These basic settings will run orthorectification and DG AComp.  See also examples listed under the optional settings below.
 
-     from gbdxtools import Interface 
-     import json
-     gbdx = Interface()
+    from gbdxtools import Interface 
+    import json
+    gbdx = Interface()
        
-     # WV03 Image over Naples, Italy 
-     # Make sure DRA is disabled if you are processing both the PAN+MS files
+    # WV03 Image over Naples, Italy 
+    # Make sure DRA is disabled if you are processing both the PAN+MS files
        
-     data = "s3://receiving-dgcs-tdgplatform-com/055249130010_01_003"
-     aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False)
+    data = "s3://receiving-dgcs-tdgplatform-com/055249130010_01_003"
+    aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False)
      
     # Capture AOP task outputs log = aoptask.get_output('log') orthoed_output = aoptask.get_output('data')
         
@@ -57,7 +57,7 @@ All sensors have been tested.  The S3 locations of the test data are given below
 	1050010001136C00 = GE01 's3://receiving-dgcs-tdgplatform-com/055254039010_01_003'
 	101001000F18EA00 = QB02 's3://receiving-dgcs-tdgplatform-com/055269445010_01_003'
 
-**Description of Input Parameters and Options for the**** "aoptask":**
+**Description of Input Parameters and Options for the "aoptask":**
 
 **REQUIRED SETTINGS AND DEFINITIONS:**
 
@@ -124,9 +124,7 @@ All sensors have been tested.  The S3 locations of the test data are given below
 
     aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, bands=MS, enable_dra=False)
 
-**OPTIONAL SETTINGS: Default = False or a specified Valued**
-
-**_The Default setting does not run the specified process. Some of these processes (e.g. "enable_tiling" = “True”) may have dependencies that also require resetting. Some of the dependencies have “Auto” settings._**
+**OPTIONAL SETTINGS: Default = False or a specified Valued that can be changed (e.g. changing the projection from the default WGS84 to UTM).**
 
 * Enable/disable output tiling. Choices are 'true' or 'false'. 
     * Default = 'false'. If 'true', the 'ortho_tiling_scheme' input must be set.",
