@@ -85,7 +85,7 @@ All sensors have been tested.  The S3 locations of the test data are given below
 
 **OPTIONAL SETTINGS: Default = True or Auto**
 
-**The Default setting will run the process or automatically determine the proper value to run the process. It is recommended to use ACOMP for the best image quality, therefore the Default ='True'. The one exception is WV01, where ACOMP should be set to 'False'. ACOMP for WV01 requires custom processing by out Team.  Please contact us for assitance.**
+**The Default setting will run the process or automatically determine the proper value to run the process. It is recommended to use ACOMP for the best image quality, therefore the Default ='True'. The one exception is WV01 or any Panchromatic-only processed Imagery from other sensors, where ACOMP should be set to 'False'. For Panchromatic Imagery, you can only run the ortho-rectification process. An example is given below. Please contact us for assitance if you have any questions regarding the processesing of Panchromatic Imagery.**
 
 **Example aoptask for WV01:**This produces an orthorectified panchromatic image.
 
