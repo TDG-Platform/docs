@@ -49,7 +49,7 @@ The AOP Strip Processor generates large scale, color balanced ortho imagery in a
 
 **Test Datasets for All Sensors (Naples, Italy):**
 
-All sensors have been tested.  The S3 locations of the test data are given below.  Script examples for various sensors have been posted:
+All sensors have been tested, with the exception of WV03-SWIR imagery.  The S3 locations of the test data are given below.  Script examples for various sensors have been posted:
 
 	10200100423D7A00 = WV01 's3://receiving-dgcs-tdgplatform-com/055250712010_01_003'
 	103001004DAFAF00 = WV02 's3://receiving-dgcs-tdgplatform-com/055253506010_01_003'
@@ -150,7 +150,7 @@ All sensors have been tested.  The S3 locations of the test data are given below
     
     aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False, ortho_epsg="UTM") # Will automatically determine the UTM Zone
 
-* Ortho pixel size in meters. Specify along with ortho_epsg. Overridden by ortho_tiling_scheme if specified. 
+* Ortho pixel size in meters. Specify along with ortho_epsg. Overridden by ortho_tiling_scheme when specified. 
     * Default = 'Auto', which uses the pixel size of the input data.",
     * Required = false,
     * type = "string"
@@ -160,10 +160,10 @@ All sensors have been tested.  The S3 locations of the test data are given below
 
 	aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False, ortho_pixel_size="3")
     
-* Ortho tiling scheme and zoom level, e.g. 'DGHalfMeter:18'. Overrides ortho_epsg and ortho_pixel_size.
+* Set inputs for 'ortho tiling scheme'. This is a tiling scheme and zoom level, e.g. 'DGHalfMeter:18'. Overrides ortho_epsg and ortho_pixel_size.
     * Required = false,
-    * type = "string",",
-    * name  "ortho_tiling_scheme"
+    * type = "string".
+    * name = "ortho_tiling_scheme"
 
 * Ortho DEM specifier. Options are 'NED', 'SRTM30', 'SRTM90'. 
     * Default = 'SRTM90'
