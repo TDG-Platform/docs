@@ -1,6 +1,6 @@
 # AOP Strip Processor (Advanced Ortho Product)
 
-The AOP Strip Processor generates large scale, color balanced ortho mosaics in a semi-automated fashion.  Level 1B imagery is processed according to defined inputs.  The AOP Strip Processor can be run through a simple Python script using  [gbdxtools](https://github.com/DigitalGlobe/gbdxtools/blob/master/docs/user_guide.rst), which requires some initial setup, or through the [GBDX Web Application](https://gbdx.geobigdata.io/materials/).  Tasks and workflows can be added to AOP (described here in [gbdxtools](https://github.com/DigitalGlobe/gbdxtools/blob/master/docs/running_workflows.rst)) or run separately after the AOP process is completed.
+The AOP Strip Processor generates large scale, color balanced ortho imagery in a semi-automated fashion.  Level 1B imagery is processed according to defined inputs.  The AOP Strip Processor can be run through a simple Python script using  [gbdxtools](https://github.com/DigitalGlobe/gbdxtools/blob/master/docs/user_guide.rst), which requires some initial setup, or through the [GBDX Web Application](https://gbdx.geobigdata.io/materials/).  Tasks and workflows can be added to AOP (described here in [gbdxtools](https://github.com/DigitalGlobe/gbdxtools/blob/master/docs/running_workflows.rst)) or run separately after the AOP process is completed.
 
 **Example Script:** These basic settings will run orthorectification and DG AComp.  See also examples listed under the optional settings below.
 
@@ -20,8 +20,8 @@ The AOP Strip Processor generates large scale, color balanced ortho mosaics in a
     s3task = gbdx.Task("StageDataToS3", data=orthoed_output, destination=destination) 
     s3task2 = gbdx.Task("StageDataToS3", data=log, destination=destination)
 
-    workflow = gbdx.Workflow([ s3task, s3task2, aoptask ])  # the ordering
-    doesn't matter here. workflow.execute()
+    workflow = gbdx.Workflow([ s3task, s3task2, aoptask ])  # the ordering doesn't matter here. 
+    workflow.execute()
            
     print workflow.id
     print workflow.status
