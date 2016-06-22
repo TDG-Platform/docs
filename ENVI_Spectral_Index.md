@@ -34,6 +34,9 @@ Note:  The wavelength metadata is not available in the correct format from the A
 **Description of Input Parameters and Options for the "ENVI_Spectral_Index":**
 This task will work on Digital Globe images with a IMD file located in the S3 location: 
 Input imagery sensor types include: QuickBird, WorldView 1, WorldView 2, WorldView 3 and GeoEye
+
+**Description of Output and options for the "ENVI_Spectral_Index":**
+This task will provide a raster of the spectral index output in both an ENVI hdr format and tif format. 
 	
 **REQUIRED SETTINGS AND DEFINITIONS:**
 

@@ -76,11 +76,11 @@ Tif files from the AOP_Strip_Processor were tested with this task to confirm fun
 * Define the Output Metadata Directory",
     * Required = false 
 	* Description = GBDX Requirement. Output location for task meta data such as execution log and output JSON
-    * type = 'string'
+    * type = 'directory'
     * name =  "task_meta_data"
 	
 	
-###Postman status @ 13:07 6/21/16
+###Postman status @ 09:13 6/21/16
 completed_time": "2016-06-21T15:13:49.155121+00:00",
   "state": {
     "state": "complete",
@@ -91,8 +91,8 @@ completed_time": "2016-06-21T15:13:49.155121+00:00",
 
 **Data Structure for Expected Outputs:**
 
-Your Processed ROI file will be written to the specified S3 Customer Location in the ENVI roi.xml file format(e.g.  s3://gbd-customer-data/unique customer id/named directory/roi.xml).  
+Your Processed classification file will be written to the specified S3 Customer Location in the ENVI file format and tif format(e.g.  s3://gbd-customer-data/unique customer id/named directory/classification.hdr).  
 
 
-For background on the development and implementation of Spectral Index refer to the [ENVI Documentation](https://www.harrisgeospatial.com/docs/classificationtutorial.html)
+For background on the development and implementation of ISO Classification refer to the [ENVI Documentation](https://www.harrisgeospatial.com/docs/classificationtutorial.html)
 
