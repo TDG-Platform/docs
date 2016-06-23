@@ -6,7 +6,7 @@
 
     from gbdxtools import Interface
 ​    gbdx = Interface()
-​
+
     isodata = gbdx.Task("ENVI_ISODATAClassification")
     isodata.inputs.input_raster = "s3://gbd-customer-data/PathToImageFolder"
     isodata.inputs.file_types = "tif"
