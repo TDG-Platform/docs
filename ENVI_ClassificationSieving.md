@@ -1,8 +1,8 @@
 # ENVI_ClassificationSieving
 
-**ENVI_ClassificationSieving** The Sieving task solves the issue of isolated single pixels in a classification . Using a classification image as input, the task uses a filter of 4 to 8 pixels to determine if a pixel is isolated within a group.  The isolated pixels identified by the algorithm will then be written in a new raster as 'unclassified'. Use ENVIClassificationClumpingTask to remove the black pixels.
+**ENVI_ClassificationSieving** The Sieving task solves the issue of isolated single pixels in a classification . With a classification image as input, the task uses a filter of 4 to 8 pixels to determine if a pixel is isolated within a group.  The isolated pixels identified by the algorithm will then be written in a new raster as 'unclassified'. Use ENVIClassificationClumpingTask to remove the black pixels.
 
-*Example Script:** Run in IPython using the GBDXTools Interface
+**Example Script:** Run in IPython using the GBDXTools Interface
 
     from gbdxtools import Interface
     gbdx = Interface()
@@ -29,7 +29,7 @@
 
     print workflow.execute()
 
-**Description of Input Parameters and Options for the "ENVI_ClassificationSieving":**
+**Description of Input Parameters and Options for "ENVI_ClassificationSieving":**
 This task will function on a classification image located in the S3 location.  The file type input of the classification is preferred in the .hdr format.  An example of ENVI ISO Data Classification is provided in the sample script above. Additional options include:
 	
 **REQUIRED SETTINGS AND DEFINITIONS:**
