@@ -92,7 +92,7 @@ completed_time": "2016-06-21T15:13:49.155121+00:00",
 
 **Data Structure for Expected Outputs:**
 
-Your Processed ROI file will be written to the specified S3 Customer Location in the ENVI .hdr file format and tif format(e.g.  s3://gbd-customer-data/unique customer id/named directory/output.hdr).  
+Your processed classification file will be written to the specified S3 Customer Location in the ENVI .hdr file format and tif format(e.g.  s3://gbd-customer-data/unique customer id/named directory/output.hdr).  
 
 
 For background on the development and implementation of Classification Sieving refer to the [ENVI Documentation](https://www.harrisgeospatial.com/docs/sievingclasses.html)
