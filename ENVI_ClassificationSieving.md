@@ -5,12 +5,12 @@
 *Example Script:** Run in IPython using the GBDXTools Interface
 
     from gbdxtools import Interface
-​    gbdx = Interface()
+    gbdx = Interface()
 
     isodata = gbdx.Task("ENVI_ISODATAClassification")
     isodata.inputs.input_raster = "s3://gbd-customer-data/PathToImageFolder"
     isodata.inputs.file_types = "tif"
-​
+
     sieve = gbdx.Task("ENVI_ClassificationSieving")
     sieve.inputs.input_raster = isodata.outputs.output_raster_uri.value
     sieve.inputs.file_types = "hdr"
@@ -21,14 +21,13 @@
         isodata.outputs.output_raster_uri,
         location="classification/isodata"
     )
-​
+
     workflow.savedata(
         sieve.outputs.output_raster_uri,
         location="classification/sieve"
     )
-​    
+
     print workflow.execute()
-	
 
 **Description of Input Parameters and Options for the "ENVI_ClassificationSieving":**
 This task will function on a classification image located in the S3 location.  The file type input of the classification is preferred in the .hdr format.  An example of ENVI ISO Data Classification is provided in the sample script above. Additional options include:
