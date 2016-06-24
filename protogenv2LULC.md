@@ -42,37 +42,34 @@ RGB view of the input
 LULC layer		 
 ![enter image description here](https://lh3.googleusercontent.com/-eXo17ewGUGc/V1cM5oeHo2I/AAAAAAAAJnU/FfbcnUbEarARXvvXM9zaigQDijQlAFOJwCLcB/s0/Denver_lulc2_800x600.bmp "Denver_lulc2_800x600.bmp")
 
-Example 1B Datasets that you can process to generate the 8-Bnad input and then run the LULC Algorithm:
+Example 1B Datasets that you can process to generate the 8-Band input and then run the LULC Algorithm:
 
 	Tracy, CA: 	104001001D62F700 = WV03 's3://receiving-dgcs-tdgplatform-com/055382035010_01_003'
 	Naples, Italy: 	104001000E25D700 = WV03	's3://receiving-dgcs-tdgplatform-com/055249130010_01_003'
 
 
 
-If you need to generate the 8-Band MS data required as input for this task, you can use [gbdxtools](http://gbdxtools.readthedocs.io/en/latest/user_guide.html) and the following example script to generate the 8-Bands data and stage it to your Customer S3 Bucket.  Click on this link for details regarding the the [Advanced Ortho Product Pre-Processing](https://github.com/TDG-Platform/docs/blob/master/AOP%20Strip%20Processor_V3.md).
+If you need to generate the 8-Band MS data required as input for this task, you can use [gbdxtools](http://gbdxtools.readthedocs.io/en/latest/user_guide.html) and the following example script to generate the 8-Bands data. This example runs Fast-Ortho+AComp and Protogen LULC from end to end.  Click on this link for details regarding the the [Advanced Ortho Product Pre-Processing](https://github.com/TDG-Platform/docs/blob/master/AOP%20Strip%20Processor_V3.md).
 
-	from gbdxtools import Interface
- 	import json
- 
- 	gbdx = Interface()
+	# Runs Fast-Ortho+AComp, then feeds that data to the protogenv2LULC process
+ 	from gbdxtools import Interface 
+	import json
+	gbdx = Interface()
 
- 	# WV03 Image over Naples, Italy
- 	# Make sure DRA is disabled if you are processing both the PAN+MS files
- 	data = "s3://receiving-dgcs-tdgplatform-com/055249130010_01_003"
- 	aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, bands="MS", enable_dra=False)
+	data = "s3://receiving-dgcs-tdgplatform-com/054813633050_01_003"
+	aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False, bands='MS')
 
- 	# Capture AOP task outputs
- 	log = aoptask.get_output('log')
- 	orthoed_output = aoptask.get_output('data')
- 	destination = 's3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/Protogen_8Bands/Naples'
- 	s3task = gbdx.Task("StageDataToS3", data=orthoed_output, destination=destination)
- 	s3task2 = gbdx.Task("StageDataToS3", data=log, destination=destination)
+	# ProtogenPrep task is used to get AOP output into proper format for protogen task
+	pp_task = gbdx.Task("ProtogenPrep",raster=aoptask.outputs.data.value)      
+	prot_lulc_task = gbdx.Task("protogenV2LULC", raster=pp_task.outputs.data.value)
 
- 	workflow = gbdx.Workflow([ s3task, s3task2, aoptask ])  # the ordering doesn't matter here.
- 	workflow.execute()
+	# Run Combined Workflow
+	workflow = gbdx.Workflow([ aoptask, pp_task, prot_lulc_task ])
+	workflow.savedata(prot_lulc_task.outputs.data.value, location="/kathleen_complex_test2")
+	workflow.execute()
 
- 	print workflow.id
- 	print workflow.status
+	print workflow.id
+	print workflow.status
 
 Source Algorithm:		PROTOGEN version 2.0.0, (May 13, 2016)		
 Author: 		Georgios Ouzounis,  DigitalGlobe Inc. 
