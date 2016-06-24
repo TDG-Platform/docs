@@ -30,7 +30,7 @@ The AOP Strip Processor generates large scale, color balanced ortho imagery in a
     In [3]: from gbdxtools import Interface
     In [4]: import json
     In [5]: gbdx = Interface()
-    2016-06-24 16:29:53,856 - gbdxtools - INFO - Logger initialized
+      2016-06-24 16:29:53,856 - gbdxtools - INFO - Logger initialized
     In [6]: # WV03 Image over Naples, Italy
     In [7]: # Make sure Both Pansharpen and DRA is disabled if you are processing both the PAN+MS files
     In [8]: data = "s3://receiving-dgcs-tdgplatform-com/055249130010_01_003"
