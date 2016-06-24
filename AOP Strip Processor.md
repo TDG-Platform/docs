@@ -4,27 +4,24 @@ The AOP Strip Processor generates large scale, color balanced ortho imagery in a
 
 **Example Script:** These basic settings will run orthorectification and DG AComp.  See also examples listed under the optional settings below.
 
-    from gbdxtools import Interface 
+    # Quickstart Example producing an Orthorectified and Acomp output for MS + PAN
+    # First Initialize the Environment
+    from gbdxtools import Interface
     import json
     gbdx = Interface()
-       
-    # WV03 Image over Naples, Italy 
-    # Make sure DRA is disabled if you are processing both the PAN+MS files
-       
+
+    # WV03 Image over Naples, Italy
+    # Make sure Both Pansharpen and DRA is disabled if you are processing both the PAN+MS files
     data = "s3://receiving-dgcs-tdgplatform-com/055249130010_01_003"
     aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False)
-     
-    # Capture AOP task outputs log = aoptask.get_output('log') orthoed_output = aoptask.get_output('data')
-        
-    destination = 's3://kathleen_Naples_WV03_Test1' 
-    s3task = gbdx.Task("StageDataToS3", data=orthoed_output, destination=destination) 
-    s3task2 = gbdx.Task("StageDataToS3", data=log, destination=destination)
+    workflow = gbdx.Workflow([ aoptask ])  
+    workflow.savedata(aoptask.outputs.data, location='kathleen_Naples_WV03_QuickStart3')
 
-    workflow = gbdx.Workflow([ s3task, s3task2, aoptask ])  # the ordering doesn't matter here. 
     workflow.execute()
-           
+
     print workflow.id
     print workflow.status
+
      
 **Example Run in IPython:**
 
