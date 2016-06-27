@@ -23,7 +23,7 @@ The AOP_Strip_Processor (AOP) produces orthorectified imagery from raw (level 1B
     print workflow.status
 
      
-**Example Run in IPython Produces AComp'ed 8-Band + PAN Images:**
+**Example Run in IPython Produces Orthorectified and Atmospherically Compensated 8-Band + PAN Images:**
 
     In [1]: # Quickstart Example producing an Orthorectified and Acomp output for MS + PAN
     In [2]: # First Initialize the Environment
