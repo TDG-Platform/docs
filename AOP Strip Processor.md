@@ -1,8 +1,8 @@
 # AOP Strip Processor (Advanced Ortho Product)
 
-The AOP Strip Processor generates large scale, color balanced ortho imagery in a semi-automated fashion.  Level 1B imagery is processed according to defined inputs.  The AOP Strip Processor can be run through a simple Python script using  [gbdxtools](https://github.com/DigitalGlobe/gbdxtools/blob/master/docs/user_guide.rst), which requires some initial setup, or through the [GBDX Web Application](https://gbdx.geobigdata.io/materials/).  Tasks and workflows can be added to AOP (described here in [gbdxtools](https://github.com/DigitalGlobe/gbdxtools/blob/master/docs/running_workflows.rst)) or run separately after the AOP process is completed.
+The AOP Strip Processor produces orthorectified imagery from raw (level 1B) imagery.  There are many additional processing options including atmospheric compensataion (always recommended), pansharpening and dynamic range adjustment (DRA).  The AOP Strip Processor can be run through a simple Python script using  [gbdxtools](https://github.com/DigitalGlobe/gbdxtools/blob/master/docs/user_guide.rst), which requires some initial setup, or through the [GBDX Web Application](https://gbdx.geobigdata.io/materials/).  Tasks and workflows can be added to AOP (described here in [gbdxtools](https://github.com/DigitalGlobe/gbdxtools/blob/master/docs/running_workflows.rst)) or run separately after the AOP process is completed.
 
-**Example Script:** These basic settings will run orthorectification and DG AComp on an input dataset containing MS + PAN.  See also examples listed under the optional settings below.
+**Example Script:** Here is a quick example that uses the AOP Strip Processor to produce and orthorectified and atmospherically compensated dataset of Multispectral and Panchromatic output from a WorldView-3 image over Naples, Italy.  The output will be saved to a user-specified location under s3://bucket/prefix. 
 
     # Quickstart Example producing an Orthorectified and Acomp output for MS + PAN
     # First Initialize the Environment
