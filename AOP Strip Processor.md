@@ -54,9 +54,9 @@ All sensors have been tested, with the exception of WV03-SWIR imagery.  The S3 l
 
 **Summary of AOP Output Products:** Examples of the script changes required are given below.
 
-	1-Multispectral image only (8-band or 4-band) with atmospheric compensation
-	2-Multispectral + Panchromatic with atmospheric compensation
-	3-Pansharpened and DRA RGB Image with atmospheric compensation
+	1-Pansharpened and DRA RGB Image with atmospheric compensation
+	2-Multispectral image only (8-band or 4-band) with atmospheric compensation
+	3-Multispectral + Panchromatic with atmospheric compensation
 	4-Orthorectified Panchromatic Image (no spectral options available)
 
 **Example #1 Pansharpened and DRA RGB Image with atmospheric compensation:**
@@ -76,7 +76,7 @@ All sensors have been tested, with the exception of WV03-SWIR imagery.  The S3 l
 	aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=False, enable_pansharpen=False, enable_dra=False)
 
 
-**NOTE:**  The default ouput is an atmospherically compensated RGB image unless the options are set as shown in the examples.  Additioanlly, you **MUST** specify 'enable_pansharpen=False' AND 'enable_dra=False' to get multispectral output. Panchromatic images can be orthorectified using AOP, but all spectral options must be set to "false' or the process will not run.  Following example #4, if the source s3 bucket contains both multispectral and panchromatic images, both will be orthorectified, but nto atmospherically compensated. 
+**NOTE:**  The default ouput is an atmospherically compensated RGB image unless the options are set as shown in the examples.  Additioanlly, you **MUST** specify 'enable_pansharpen=False' AND 'enable_dra=False' to get multispectral output. Panchromatic images can be orthorectified using AOP, but all spectral options must be set to "false' or the process will not run.  Following example #4, if the source s3 bucket contains both multispectral and panchromatic images, both will be orthorectified, but not atmospherically compensated. 
 
 **REVIEW OF REQUIRED SETTINGS AND DEFINITIONS:**
 
@@ -89,10 +89,12 @@ All sensors have been tested, with the exception of WV03-SWIR imagery.  The S3 l
     * Required = ‘True’
     * aoptask = gbdx.Task("AOP_Strip_Processor,data=data,"opt1”,”opt2”,etc...)
 
-Define the Output Directory: (a gbd-customer-data location)
-    *Required = ‘true’
-    *type = ‘directory’
-    *workflow.savedata(aoptask.outputs.data, location='customer's s# bucket')
+* Define the Output Directory: (a gbd-customer-data location)
+    * Required = ‘true’
+    * type = ‘directory’
+    * workflow.savedata(aoptask.outputs.data, location='customer's s# bucket')
+
+
 
 **Data Structure for Expected Outputs:**
 
@@ -108,6 +110,7 @@ Click on the Folder at the bottom of the list identified by the 'Sales Order Lin
 
 
 ![Second Directory](https://lh3.googleusercontent.com/-_lAVdacJf2c/VyJqZp78PAI/AAAAAAAAJao/1Px_21rWHBQEjbqyi_orY-BnTiH0-ZtGACLcB/s0/datastructure2.PNG "datastructure2.PNG")
+
 
 
 **OPTIONAL SETTINGS FOR ADVANCED USERS ONLY: Description of Input Parameters and Options for the "aoptask"** Advanced users may choose to modify the spectral spatial processes run in the aoptask by setting these options.  Examples are given for the options most often applied.
@@ -248,20 +251,6 @@ Click on the Folder at the bottom of the list identified by the 'Sales Order Lin
 
 
 
-**Data Structure for Expected Outputs:**
-
-Your Processed Imagery will be written to your specified S3 Customer Location (e.g.  s3://gbd-customer-data/unique customer id/named directory/).  When you open the 'named directory' your files should look like this:
-
-![First Directory](https://lh3.googleusercontent.com/-YzyRjMprZ54/VyJqnZjA7oI/AAAAAAAAJaw/hqIopdghThsz9eU9uEN4sUpz8iA7WoscQCLcB/s0/datastructure1.PNG "datastructure1.PNG")
-
-There will be a *standard error file* (###.stderr) and a *standard output file* (###.stdout). These files track the progress of the process and can be downloaded and reviewed, especially if the task has failed to produce a final output.  You must include example lines [323], [324] and [328] in your script to record this output. The *workorder_'SOLI'.xml* file details the input parameters applied to the AOP Strip Processor.  
-
-Click on the Folder at the bottom of the list identified by the 'Sales Order Line Item' (SOLI). Inside this directory you will find the processed imagery output (e.g. below).  The .IMD and .XML files describe the spectral and physical characteristics of the Imagery Product.  The *assembly_MS.tif* and *assembly_PAN.tif* are the imagery files that can be viewed in standard GIS and Remote Sensing Software.  the .vrt files are GDAL virtual raster format that allows viewing of the complete image without making a mosaic.
-
-
-
-
-![Second Directory](https://lh3.googleusercontent.com/-_lAVdacJf2c/VyJqZp78PAI/AAAAAAAAJao/1Px_21rWHBQEjbqyi_orY-BnTiH0-ZtGACLcB/s0/datastructure2.PNG "datastructure2.PNG")
 
 **Notes on Special DRA Settings:**
 
