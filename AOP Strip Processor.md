@@ -60,7 +60,7 @@ All sensors have been tested, with the exception of WV03-SWIR imagery.  The S3 l
 	
 **Example #1 Multispectral image with atmospheric compensation:**
 
-	 aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, bands='MS', enable_dra=False)
+	 aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, bands='MS', enable_pansharpen=False, enable_dra=False)
 	
 **Example #2 Multispectral + Panchromatic with atmospheric compensation** (Same as line [9] in the example script):
 
@@ -70,7 +70,7 @@ All sensors have been tested, with the exception of WV03-SWIR imagery.  The S3 l
 
 	aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=True, enable_dra=True)
 
-**NOTE:**  The default ouput is a Pansharpened + DRA RGB image.  So you **MUST** specify enable_pansharpen='False' AND enable_dra='False' to get multispectral output.
+**NOTE:**  The default ouput is a Pansharpened + DRA RGB image.  So you **MUST** specify 'enable_pansharpen=False' AND 'enable_dra=False' to get multispectral output.
 
 **Description of Input Parameters and Options for the "aoptask":**
 
