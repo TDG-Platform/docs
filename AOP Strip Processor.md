@@ -57,6 +57,7 @@ All sensors have been tested, with the exception of WV03-SWIR imagery.  The S3 l
 	1-Multispectral image only (8-band or 4-band) with atmospheric compensation
 	2-Multispectral + Panchromatic with atmospheric compensation
 	3-Pansharpened and DRA RGB Image with atmospheric compensation
+	4-Orthorectified Panchromatic Image (no spectral options available)
 
 **Example #1 Pansharpened and DRA RGB Image with atmospheric compensation:**
 
@@ -70,12 +71,14 @@ All sensors have been tested, with the exception of WV03-SWIR imagery.  The S3 l
 
 	 aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False)
 	
+**Example #4 Orthorectified Panchromatic Image:**
 
-**NOTE:**  The default ouput is an atmospherically compensated RGB image unless the options are set as shown in the examples.  Additioanlly, you **MUST** specify 'enable_pansharpen=False' AND 'enable_dra=False' to get multispectral output. Panchromatic images can be orthorectified using AOP, but all spectral options must be set to "false' or the process will not run.
+	aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=False, enable_pansharpen=False, enable_dra=False)
 
-**Description of Input Parameters and Options for the "aoptask":**
 
-**REQUIRED SETTINGS AND DEFINITIONS:**
+**NOTE:**  The default ouput is an atmospherically compensated RGB image unless the options are set as shown in the examples.  Additioanlly, you **MUST** specify 'enable_pansharpen=False' AND 'enable_dra=False' to get multispectral output. Panchromatic images can be orthorectified using AOP, but all spectral options must be set to "false' or the process will not run.  Following example #4, if the source s3 bucket contains both multispectral and panchromatic images, both will be orthorectified, but nto atmospherically compensated. 
+
+**REVIEW OF REQUIRED SETTINGS AND DEFINITIONS:**
 
 * S3 location of 1B input data:
     * Required = ‘True’
@@ -86,26 +89,33 @@ All sensors have been tested, with the exception of WV03-SWIR imagery.  The S3 l
     * Required = ‘True’
     * aoptask = gbdx.Task("AOP_Strip_Processor,data=data,"opt1”,”opt2”,etc...)
 
-* Define the Output Directory: (a gbd-customer-data location)
-    * Required = ‘true’
-    * type = ‘directory’
-    * name = "destination"
+Define the Output Directory: (a gbd-customer-data location)
+    *Required = ‘true’
+    *type = ‘directory’
+    *workflow.savedata(aoptask.outputs.data, location='customer's s# bucket')
 
-* Define the Output log Directory",
+**Data Structure for Expected Outputs:**
+
+Your Processed Imagery will be written to your specified S3 Customer Location (e.g.  s3://gbd-customer-data/unique customer id/named directory/).  When you open the 'named directory' your files should look like this:
+
+![First Directory](https://lh3.googleusercontent.com/-YzyRjMprZ54/VyJqnZjA7oI/AAAAAAAAJaw/hqIopdghThsz9eU9uEN4sUpz8iA7WoscQCLcB/s0/datastructure1.PNG "datastructure1.PNG")
+
+There will be a *standard error file* (###.stderr) and a *standard output file* (###.stdout). These files track the progress of the process and can be downloaded and reviewed, especially if the task has failed to produce a final output.  You must include example lines [323], [324] and [328] in your script to record this output. The *workorder_'SOLI'.xml* file details the input parameters applied to the AOP Strip Processor.  
+
+Click on the Folder at the bottom of the list identified by the 'Sales Order Line Item' (SOLI). Inside this directory you will find the processed imagery output (e.g. below).  The .IMD and .XML files describe the spectral and physical characteristics of the Imagery Product.  The *assembly_MS.tif* and *assembly_PAN.tif* are the imagery files that can be viewed in standard GIS and Remote Sensing Software.  the .vrt files are GDAL virtual raster format that allows viewing of the complete image without making a mosaic.
+
+
+
+
+![Second Directory](https://lh3.googleusercontent.com/-_lAVdacJf2c/VyJqZp78PAI/AAAAAAAAJao/1Px_21rWHBQEjbqyi_orY-BnTiH0-ZtGACLcB/s0/datastructure2.PNG "datastructure2.PNG")
+
+
+**OPTIONAL SETTINGS FOR ADVANCED USERS ONLY: Description of Input Parameters and Options for the "aoptask"** Advanced users may choose to modify the spectral spatial processes run in the aoptask by setting these options.  Examples are given for the options most often applied.
+
+* Define the Output log Directory",to save stderr and stdout information; useful for tracking down errors if the process has failed.
     * Required = true      
     * type = directory
     * name =  "log"
-
-* Define Stage to S3 location:
-    * S3task = gbdx.Task("StageDataToS3",data=” ”,destination=” “)
-
-**OPTIONAL SETTINGS: Default = True or Auto**
-
-**The Default setting will run the process or automatically determine the proper value to run the process. It is recommended to use ACOMP for the best image quality, therefore the Default ='True'. The one exception is WV01 or any Panchromatic-only processed Imagery from other sensors, where ACOMP should be set to 'False'. For Panchromatic Imagery, you can only run the ortho-rectification process. An example is given below. Please contact us for assitance if you have any questions regarding the processesing of Panchromatic Imagery.**
-
-**Example aoptask for WV01:**This produces an orthorectified panchromatic image.
-
-	aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=False, enable_pansharpen=False, enable_dra=False)
 
 * Enable/disable AComp. Choices are 'true' or 'false'. 
     * Default = ‘true’
@@ -125,22 +135,11 @@ All sensors have been tested, with the exception of WV03-SWIR imagery.  The S3 l
     * type = ‘string’
     * name = ‘enable_dra’
 
-**Script Example PanSharpen & DRA All Bands:**This will produce an AComp'ed, Pansharpened, RGB Image
-
-	aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=True, enable_dra=True)
-
-
 * Bands to process. Choices are 'PAN+MS', 'PAN', 'MS', 'Auto'. 
     * Default = 'Auto', which searches for band IDs in IMD files
     * Required = false
     * type = "string"
     * name = "bands"
-
-**Script Example to Produce MS Bands Only:**When only 8-band output is required.
-
-    aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, bands='MS', enable_dra=False)
-
-**OPTIONAL SETTINGS: Default = False or a specified Valued that can be changed (e.g. changing the projection from the default WGS84 to UTM).**
 
 * Enable/disable output tiling. Choices are 'true' or 'false'. 
     * Default = 'false'. If 'true', the 'ortho_tiling_scheme' input must be set.",
