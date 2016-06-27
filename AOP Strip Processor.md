@@ -71,7 +71,7 @@ All sensors have been tested, with the exception of WV03-SWIR imagery.  The S3 l
 	 aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False)
 	
 
-**NOTE:**  The default ouput is a Pansharpened + DRA RGB image.  So you **MUST** specify 'enable_pansharpen=False' AND 'enable_dra=False' to get multispectral output. Panchromatic images can be orthorectified using AOP, but all spectral options must be set to "false' or the process will not run.
+**NOTE:**  The default ouput is an atmospherically compensated RGB image unless the options are set as shown in the examples.  Additioanlly, you **MUST** specify 'enable_pansharpen=False' AND 'enable_dra=False' to get multispectral output. Panchromatic images can be orthorectified using AOP, but all spectral options must be set to "false' or the process will not run.
 
 **Description of Input Parameters and Options for the "aoptask":**
 
