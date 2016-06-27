@@ -1,6 +1,6 @@
 # AOP Strip Processor (Advanced Ortho Product)
 
-The AOP Strip Processor produces orthorectified imagery from raw (level 1B) imagery.  There are many additional processing options including atmospheric compensataion (always recommended), pansharpening and dynamic range adjustment (DRA).  The AOP Strip Processor can be run through a simple Python script using  [gbdxtools](https://github.com/DigitalGlobe/gbdxtools/blob/master/docs/user_guide.rst), which requires some initial setup, or through the [GBDX Web Application](https://gbdx.geobigdata.io/materials/).  Tasks and workflows can be added to AOP (described here in [gbdxtools](https://github.com/DigitalGlobe/gbdxtools/blob/master/docs/running_workflows.rst)) or run separately after the AOP process is completed.
+The AOP_Strip_Processor (AOP) produces orthorectified imagery from raw (level 1B) imagery.  There are many additional processing options including atmospheric compensataion (always recommended), pansharpening and dynamic range adjustment (DRA).  The AOP Strip Processor can be run through a simple Python script using  [gbdxtools](https://github.com/DigitalGlobe/gbdxtools/blob/master/docs/user_guide.rst), which requires some initial setup, or through the [GBDX Web Application](https://gbdx.geobigdata.io/materials/).  Tasks and workflows can be added to AOP (described here in [gbdxtools](https://github.com/DigitalGlobe/gbdxtools/blob/master/docs/running_workflows.rst)) or run separately after the AOP process is completed.
 
 **Example Script:** Here is a quick example that uses the AOP Strip Processor to produce and orthorectified and atmospherically compensated dataset of Multispectral and Panchromatic output from a WorldView-3 image over Naples, Italy.  The output will be saved to a user-specified location under s3://bucket/prefix. 
 
@@ -51,6 +51,26 @@ All sensors have been tested, with the exception of WV03-SWIR imagery.  The S3 l
 	104001000E25D700 = WV03 's3://receiving-dgcs-tdgplatform-com/055249130010_01_003'
 	1050010001136C00 = GE01 's3://receiving-dgcs-tdgplatform-com/055254039010_01_003'
 	101001000F18EA00 = QB02 's3://receiving-dgcs-tdgplatform-com/055269445010_01_003'
+
+**Summary of AOP Output Products:** Examples of the script changes required are given below.
+
+	1-Multispectral image only (8-band or 4-band) with atmospheric compensation
+	2-Multispectral + Panchromatic with atmospheric compensation
+	3-Pansharpened and DRA RGB Image with atmospheric compensation
+	
+**Example #1 Multispectral image with atmospheric compensation:**
+
+	 aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, bands='MS', enable_dra=False)
+	
+**Example #2 Multispectral + Panchromatic with atmospheric compensation** (Same as line [9] in the example script):
+
+	 aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False)
+	
+**Example #3 Pansharpened and DRA RGB Image with atmospheric compensation:**
+
+	aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=True, enable_dra=True)
+
+**NOTE:**  The default ouput is a Pansharpened + DRA RGB image.  So you **MUST** specify enable_pansharpen='False' AND enable_dra='False' to get multispectral output.
 
 **Description of Input Parameters and Options for the "aoptask":**
 
