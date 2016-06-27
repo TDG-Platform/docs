@@ -62,7 +62,7 @@ All sensors have been tested, with the exception of WV03-SWIR imagery.  The S3 l
 
 	 aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, bands='MS', enable_pansharpen=False, enable_dra=False)
 	
-**Example #2 Multispectral + Panchromatic with atmospheric compensation** (Same as line [9] in the example script):
+**Example #2 Multispectral + Panchromatic Images with atmospheric compensation** (Same as line [9] in the example script):
 
 	 aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False)
 	
