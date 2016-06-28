@@ -52,6 +52,15 @@ The AComp GBDX task can be run through a simple Python script using  [gbdxtools]
     In [9]:
 
 
+**Test Datasets for Tracy, California**
+
+	104001001D62F700 = WV03 's3://receiving-dgcs-tdgplatform-com/055382035010_01_003'
+	103001000E8A7100 = WV02 's3://receiving-dgcs-tdgplatform-com/055168976010_01_003'
+	1050410013233600 = GE01	's3://receiving-dgcs-tdgplatform-com/055385387010_01_003'
+	101001000B3E9F00 = QB02 's3://receiving-dgcs-tdgplatform-com/055168847010_01_003'
+
+
+
 **Description of Input Parameters and Options for the AComp GBDX task**
 
 **REQUIRED SETTINGS AND DEFINITIONS:**
