@@ -56,24 +56,24 @@ All sensors have been tested, with the exception of WV03-SWIR imagery.  The S3 l
 
 **2.0 SUMMARY OF AOP OUTPUT PRODUCTS:** Examples of the script changes required are given below.
 
-	1-Pansharpened and DRA RGB Image with atmospheric compensation
-	2-Multispectral image only (8-band or 4-band) with atmospheric compensation
-	3-Multispectral + Panchromatic with atmospheric compensation
-	4-Orthorectified Panchromatic Image (no spectral options available)
+	2.1-Pansharpened and DRA RGB Image with atmospheric compensation
+	2.2-Multispectral image only (8-band or 4-band) with atmospheric compensation
+	2.3-Multispectral + Panchromatic with atmospheric compensation
+	2.4-Orthorectified Panchromatic Image (no spectral options available)
 
-**2.1 Example #1 Pansharpened and DRA RGB Image with atmospheric compensation:**
+**2.1 Example: Pansharpened and DRA RGB Image with atmospheric compensation:**
 
 	aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=True, enable_dra=True)
 	
-**2.2 Example #2 Multispectral image with atmospheric compensation:**
+**2.2 Example: Multispectral image with atmospheric compensation:**
 
 	 aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, bands='MS', enable_pansharpen=False, enable_dra=False)
 	
-**2.3 Example #3 Multispectral + Panchromatic Images with atmospheric compensation** (Same as line [9] in the example script):
+**2.3 Example: Multispectral + Panchromatic Images with atmospheric compensation** (Same as line [9] in the example script):
 
 	 aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False)
 	
-**2.4 Example #4 Orthorectified Panchromatic Image:**
+**2.4 Example: Orthorectified Panchromatic Image:**
 
 	aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=False, enable_pansharpen=False, enable_dra=False)
 
