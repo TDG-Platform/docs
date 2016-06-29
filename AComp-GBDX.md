@@ -1,7 +1,7 @@
 # AComp GBDX task
 
 The AComp GBDX task performs atmospheric compensation on 
-satellite imagery collected from DitialGlobe sensors as well as other sources. Atmospheric compensation is the process 
+satellite imagery collected from DigitalGlobe sensors as well as other sources. Atmospheric compensation is the process 
 of converting image Digital Number (DN) counts to surface reflectance. This removes:
 
 * Variation due to different illumination conditions
