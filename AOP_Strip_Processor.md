@@ -2,7 +2,9 @@
 
 The AOP_Strip_Processor (AOP) produces orthorectified imagery from raw (level 1B) imagery.  There are many additional processing options including atmospheric compensation (always recommended), pansharpening and dynamic range adjustment (DRA).  The AOP Strip Processor can be run through a simple Python script using  [gbdxtools](https://github.com/DigitalGlobe/gbdxtools/blob/master/docs/user_guide.rst), which requires some initial setup, or through the [GBDX Web Application](https://gbdx.geobigdata.io/materials/).  Tasks and workflows can be added to AOP (described here in [gbdxtools](https://github.com/DigitalGlobe/gbdxtools/blob/master/docs/running_workflows.rst)) or run separately after the AOP process is completed.
 
-**Example Script:** Here is a quick example that uses the AOP Strip Processor to produce an orthorectified and atmospherically compensated dataset of Multispectral and Panchromatic output from a WorldView-3 image over Naples, Italy.  The output will be saved to a user-specified location under s3://bucket/prefix. 
+**1.0 QUICKSTART EXAMPLES**
+
+**1.1 Example Script:** Here is a quick example that uses the AOP Strip Processor to produce an orthorectified and atmospherically compensated dataset of Multispectral and Panchromatic output from a WorldView-3 image over Naples, Italy.  The output will be saved to a user-specified location under s3://bucket/prefix. 
 
     # Quickstart Example producing an Orthorectified and Acomp output for MS + PAN
     # First Initialize the Environment
@@ -23,7 +25,7 @@ The AOP_Strip_Processor (AOP) produces orthorectified imagery from raw (level 1B
     print workflow.status
 
      
-**Example Run in IPython Produces Orthorectified and Atmospherically Compensated 8-Band + PAN Images:**
+**1.2 Example Run in IPython Produces Orthorectified and Atmospherically Compensated 8-Band + PAN Images:**
 
     In [1]: # Quickstart Example producing an Orthorectified and Acomp output for MS + PAN
     In [2]: # First Initialize the Environment
@@ -42,7 +44,7 @@ The AOP_Strip_Processor (AOP) produces orthorectified imagery from raw (level 1B
     In [13]: print workflow.id
       4362772047134837472
 
-**Test Datasets for All Sensors (Naples, Italy):**
+**1.3 Test Datasets for All Sensors (Naples, Italy):**
 
 All sensors have been tested, with the exception of WV03-SWIR imagery.  The S3 locations of the test data are given below.  Script examples for various sensors have been posted:
 
@@ -52,33 +54,33 @@ All sensors have been tested, with the exception of WV03-SWIR imagery.  The S3 l
 	1050010001136C00 = GE01 's3://receiving-dgcs-tdgplatform-com/055254039010_01_003'
 	101001000F18EA00 = QB02 's3://receiving-dgcs-tdgplatform-com/055269445010_01_003'
 
-**Summary of AOP Output Products:** Examples of the script changes required are given below.
+**2.0 SUMMARY OF AOP OUTPUT PRODUCTS:** Examples of the script changes required are given below.
 
 	1-Pansharpened and DRA RGB Image with atmospheric compensation
 	2-Multispectral image only (8-band or 4-band) with atmospheric compensation
 	3-Multispectral + Panchromatic with atmospheric compensation
 	4-Orthorectified Panchromatic Image (no spectral options available)
 
-**Example #1 Pansharpened and DRA RGB Image with atmospheric compensation:**
+**2.1 Example #1 Pansharpened and DRA RGB Image with atmospheric compensation:**
 
 	aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=True, enable_dra=True)
 	
-**Example #2 Multispectral image with atmospheric compensation:**
+**2.2 Example #2 Multispectral image with atmospheric compensation:**
 
 	 aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, bands='MS', enable_pansharpen=False, enable_dra=False)
 	
-**Example #3 Multispectral + Panchromatic Images with atmospheric compensation** (Same as line [9] in the example script):
+**2.3 Example #3 Multispectral + Panchromatic Images with atmospheric compensation** (Same as line [9] in the example script):
 
 	 aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False)
 	
-**Example #4 Orthorectified Panchromatic Image:**
+**2.4 Example #4 Orthorectified Panchromatic Image:**
 
 	aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=False, enable_pansharpen=False, enable_dra=False)
 
 
 **NOTE:**  The default ouput is an atmospherically compensated RGB image unless the options are set as shown in the examples.  ** YOU MUST** specify 'enable_pansharpen=False' AND 'enable_dra=False' to get multispectral output. Panchromatic images can be orthorectified using AOP, but all spectral options must be set to "false' or the process will not run.  Following example #4, if the source s3 bucket contains both multispectral and panchromatic images, both will be orthorectified, but not atmospherically compensated. 
 
-**REVIEW OF REQUIRED SETTINGS AND DEFINITIONS:**
+**3.0 REVIEW OF REQUIRED SETTINGS AND DEFINITIONS:**
 
 | Action       | Required       | Type  |  Name       | 
 | ------------- |:-------------| :-----| :------------- |
@@ -88,7 +90,7 @@ All sensors have been tested, with the exception of WV03-SWIR imagery.  The S3 l
 
 
 
-**Data Structure for Expected Outputs:**
+**4.0 DATA STRUCTURE FOR EXPECTED OUTPUTS:**
 
 Your Processed Imagery will be written to your specified S3 Customer Location (e.g.  s3://gbd-customer-data/unique customer id/named directory/).  When you open the 'named directory' your files should look like this:
 
@@ -105,7 +107,7 @@ Click on the Folder at the bottom of the list identified by the 'Sales Order Lin
 
 
 
-**OPTIONAL SETTINGS FOR ADVANCED USERS ONLY: Description of Input Parameters and Options for the "aoptask"** Advanced users may choose to modify the spectral spatial processes run in the aoptask by setting these options.  Examples are given for the options most often applied.
+**5.0 OPTIONAL SETTINGS FOR ADVANCED USERS ONLY: Description of Input Parameters and Options for the "aoptask"** Advanced users may choose to modify the spectral spatial processes run in the aoptask by setting these options.  Examples are given for the options most often applied.
 
 * Define the Output log Directory",to save stderr and stdout information; useful for tracking down errors if the process has failed.
     * Required = true      
