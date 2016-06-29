@@ -90,7 +90,7 @@ All sensors have been tested, with the exception of WV03-SWIR imagery.  The S3 l
 
 
 
-**4.0 DATA STRUCTURE FOR EXPECTED OUTPUTS:**
+**4.0 FILE STRUCTURE FOR EXPECTED OUTPUTS:**
 
 Your Processed Imagery will be written to your specified S3 Customer Location (e.g.  s3://gbd-customer-data/unique customer id/named directory/).  When you open the 'named directory' your files should look like this:
 
