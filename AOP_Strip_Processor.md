@@ -136,7 +136,7 @@ Click on the Folder at the bottom of the list identified by the 'Sales Order Lin
 
 
 
-**6.0 COMMON OPTIONS**
+**6.0 EXAMPLES FOR COMMON OPTION CHANGES**
 
 **6.1 Script Example Reproject to UTM**
 
