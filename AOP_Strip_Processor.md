@@ -132,154 +132,48 @@ Click on the Folder at the bottom of the list identified by the 'Sales Order Lin
 
 
 
-* Define the Output log Directory",to save stderr and stdout information; useful for tracking down errors if the process has failed.
-    * Required = true      
-    * type = directory
-    * name =  "log"
 
-* Enable/disable AComp. Choices are 'true' or 'false'. 
-    * Default = ‘true’
-    * Required = ‘false’
-    * type = ‘string’
-    * name = ‘enable_acomp’
 
-* Enable/disable pan sharpening. Choices are 'true' or 'false'. 
-    * Default = 'true'
-    * Required = ‘false’
-    * Type = ‘string’
-    * name = ‘enable_pansharpen’
 
-* Enable/disable dynamic range adjustment (DRA). Choices are 'true' or 'false'. DRA should be disabled, if you want to run AOP on both PAN+MS simultaneously without PanSharpening. 
-    * Default = ‘true’
-    * Required = ‘false’
-    * type = ‘string’
-    * name = ‘enable_dra’
 
-* Bands to process. Choices are 'PAN+MS', 'PAN', 'MS', 'Auto'. 
-    * Default = 'Auto', which searches for band IDs in IMD files
-    * Required = false
-    * type = "string"
-    * name = "bands"
+**6.0 COMMON OPTIONS**
 
-* Enable/disable output tiling. Choices are 'true' or 'false'. 
-    * Default = 'false'. If 'true', the 'ortho_tiling_scheme' input must be set.",
-    * Required = ‘false’
-    * type": "string"
-    * Name = "enable_tiling"
-
-* Set Input for 'ortho_tiling_scheme'. This consists of Comma-separated list of numeric strip parts to process. 
-    * Default = process all strip parts
-    * Required = false,
-    * Type = "string",
-    * Name = "parts"
-    
-* Ortho EPSG projection. String "UTM" is also allowed. Specify along with ortho_pixel_size. Overridden by ortho_tiling_scheme if specified. 
-    * Default = 'EPSG:4326'  
-    * Required = false
-    * type = "string"
-    * name = "ortho_epsg"
-
-**Script Example Reproject to UTM**
+**6.1 Script Example Reproject to UTM**
 
 	aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False, ortho_epsg="EPSG:32633") # specify UTM Zone
     
     aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False, ortho_epsg="UTM") # Will automatically determine the UTM Zone
 
-* Ortho pixel size in meters. Specify along with ortho_epsg. Overridden by ortho_tiling_scheme when specified. 
-    * Default = 'Auto', which uses the pixel size of the input data.",
-    * Required = false,
-    * type = "string"
-    * Name = "ortho_pixel_size"
 
-**Script Example Changing Ortho Output Pixel Size**  (Default for non-pansharpened MS=2 meters); make sure both PanSharpen and DRA are disabled. Caveat: You are changing the PAN pixel size (Default = 0.50m) and the MS pixel size will be downsampled proportionally.
+
+**6.2 Script Example Changing Ortho Output Pixel Size**  (Default for non-pansharpened MS=2 meters); make sure both PanSharpen and DRA are disabled. Caveat: You are changing the PAN pixel size (Default = 0.50m) and the MS pixel size will be downsampled proportionally.
 
 	aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False, ortho_pixel_size="3")
     
-* Set inputs for 'ortho tiling scheme'. This is a tiling scheme and zoom level, e.g. 'DGHalfMeter:18'. Overrides ortho_epsg and ortho_pixel_size.
-    * Required = false,
-    * type = "string".
-    * name = "ortho_tiling_scheme"
 
-* Designate 'parts' of the strip to be processed.  This consists of a comma-separated list of numeric strip parts.
-	*Default = process the entire strip
-	*Required = false
-	*Type ="string"
-	*Name = "parts"
-
-* Ortho DEM specifier. Options are 'NED', 'SRTM30', 'SRTM90'. 
-    * Default = 'SRTM90'
-    * Required = false
-    * Type = "string"
-    * Name = "ortho_dem_specifier"
-
-
-**Script Example Change DEM to SRTM30**
+**6.3 Script Example Change DEM to SRTM30**
 
 	aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False, ortho_dem_specifier="SRTM30")
 
-* Ortho pixel interpolation type. Options are 'Nearest', 'Bilinear', 'Cubic'. 
-    * Default is 'Cubic’
-    * Required": false,
-    * type = "string",
-    * name = "ortho_interpolation_type"
 
-**Script to Change Interpolation method to Bilinear**
+**6.4 Script to Change Interpolation method to Bilinear**
 
 	aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False, ortho_interpolation_type="Bilinear")
 
-**The Dynamic Range Adjustment Mode (DRA) should be run using the default setting 'enable_dra=True', which will be adequate for most imagery.  The adjustments described below should only be used in special cases as discussed at the end of this document.**
 
-* Dynamic Range Adjustment mode. Options are 'IntensityAdjust', 'BaseLayerMatch'. 
-    * Default is 'IntensityAdjust' 
-        * 'BaseLayerMatch' is currently only compatible with EPSG:4326.",
-    * Required = false,
-    * type = "string",
-    * name = "dra_mode"
+**NOTES ON SPECIAL DRA SETTINGS:**
 
-* Dynamic range adjustment low cutoff percentage. Range is from 0 to 100. 
-    * Default is 0.5. Only used for 'IntensityAdjust' mode.","
-    * Required": false,
-    * type = "string"
-    * Name = "dra_low_cutoff"
+**6.5 The Dynamic Range Adjustment Mode (DRA) should be run using the default setting 'enable_dra=True', which will be adequate for most imagery. ** 
 
-* Dynamic range adjustment high cutoff percentage. Range is from 0 to 100. 
-    * Default is 99.95. Only used for 'IntensityAdjust' mode
-    * Required = false
-    * type = "string"
-    * name = "dra_high_cutoff"
-    
-* Dynamic range adjustment gamma value. 
-    * Default = 1.25. Only used for 'IntensityAdjust' mode.
-    * Required = false
-    * type = "string"
-    * name = "dra_gamma"
+**6.5.1 Dynamic range adjustment mode** – IntensityAdjust is for standalone, individual images that are not going to be mosaicked together. BaseLayerMatch uses a global base layer for color matching and helps maintain consistency when mosaicking. The base layer started out as color-balanced and mosaicked Landsat imagery but may have started incorporating higher-res imagery also.
 
-* Dynamic range adjustment output bit depth. Choices are 8 or 16. 
-    * Default = 8. Only used for 'IntensityAdjust' mode.
-    * Required = false
-    * type = "string"
-    * name = "dra_bit_depth"
+**6.5.2 Dynamic range adjustment low cutoff percentage** – Sets the black point in the histogram. Adjusting this will change the point in the histogram that is considered “black” and will darken and lighten the low end of the histogram. Setting the number lower (<0.5) will brighten the darker color tones and make the overall image lighter. Setting the number higher will saturate more of the darker color tones and make the overall image darker. Could start to lose detail in the darker areas if too heavy-handed. A light touch can make a huge difference so be careful.
 
-* Zoom level (i.e. size) of output tiles if tiling is enabled. 
-    * Default = 12.
-    * Required = false
-    * type = "string",
-    * name = "tiling_zoom_level"
+**6.5.3 Dynamic range adjustment high cutoff percentage** – Sets the white point in the histogram. Same general idea as the low cutoff percentage but operates on the brightest color tones to adjust what is considered saturated “white”. Setting this number lower (<99.95) will brighten the image while setting the number higher will darken the image. Again, a light touch is mandatory to keep things looking “normal”.
 
+**6.5.4 Dynamic range adjustment gamma value** – Adjusts the curvature of the transfer function from input to output. When gamma=1, that is a straightforward, linear transfer from input to output. When gamma>1, the image will get overall brighter. Conversely, the image will get overall darker when gamma<1. Works in conjunction with the histogram cutoff values but is a completely independent parameter. Operates like a root stretch but with much finer adjustment settings. All three parameters, low cutoff, high cutoff, and gamma, work together to adjust the overall brightness, contrast, and dynamic range of the image. They’re all independent and will affect the final DRAed image in similar, but different, ways. Setting these is more an art than a science and it’s highly recommended to NOT mess with these unless the image is one of those special cases and is totally screwed up. Then the art comes into play.
 
-
-
-**Notes on Special DRA Settings:**
-
-**Dynamic range adjustment mode** – IntensityAdjust is for standalone, individual images that are not going to be mosaicked together. BaseLayerMatch uses a global base layer for color matching and helps maintain consistency when mosaicking. The base layer started out as color-balanced and mosaicked Landsat imagery but may have started incorporating higher-res imagery also.
-
-**Dynamic range adjustment low cutoff percentage** – Sets the black point in the histogram. Adjusting this will change the point in the histogram that is considered “black” and will darken and lighten the low end of the histogram. Setting the number lower (<0.5) will brighten the darker color tones and make the overall image lighter. Setting the number higher will saturate more of the darker color tones and make the overall image darker. Could start to lose detail in the darker areas if too heavy-handed. A light touch can make a huge difference so be careful.
-
-**Dynamic range adjustment high cutoff percentage** – Sets the white point in the histogram. Same general idea as the low cutoff percentage but operates on the brightest color tones to adjust what is considered saturated “white”. Setting this number lower (<99.95) will brighten the image while setting the number higher will darken the image. Again, a light touch is mandatory to keep things looking “normal”.
-
-**Dynamic range adjustment gamma value** – Adjusts the curvature of the transfer function from input to output. When gamma=1, that is a straightforward, linear transfer from input to output. When gamma>1, the image will get overall brighter. Conversely, the image will get overall darker when gamma<1. Works in conjunction with the histogram cutoff values but is a completely independent parameter. Operates like a root stretch but with much finer adjustment settings. All three parameters, low cutoff, high cutoff, and gamma, work together to adjust the overall brightness, contrast, and dynamic range of the image. They’re all independent and will affect the final DRAed image in similar, but different, ways. Setting these is more an art than a science and it’s highly recommended to NOT mess with these unless the image is one of those special cases and is totally screwed up. Then the art comes into play.
-
-**Dynamic range adjustment output bit depth** – Should NEVER be set to anything other than 8. DRA is valid and makes sense ONLY for 8bit output imagery. Running DRA to get a 16bit DRAed image will get you nothing since you still have to scale the image to 8bits/band for display purposes anyway.
+**6.5.6 Dynamic range adjustment output bit depth** – Should NEVER be set to anything other than 8. DRA is valid and makes sense ONLY for 8bit output imagery. Running DRA to get a 16bit DRAed image will get you nothing since you still have to scale the image to 8bits/band for display purposes anyway.
 
 
 For background on the development and implementation of AOP refer to the [Advanced Ortho Processor PDF.](http://tu00aopapp006:8102/job/AOP-Docs/ws/build/latex/AOP-AdvancedOrthoProcessor.pdf)
