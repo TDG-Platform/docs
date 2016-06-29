@@ -109,6 +109,29 @@ Click on the Folder at the bottom of the list identified by the 'Sales Order Lin
 
 **5.0 OPTIONAL SETTINGS FOR ADVANCED USERS ONLY: Description of Input Parameters and Options for the "aoptask"** Advanced users may choose to modify the spectral spatial processes run in the aoptask by setting these options.  Examples are given for the options most often applied.
 
+
+| Action       | Required       | Default | Type  |  Name       | 
+| ------------- |:-------------| :-----| :------------- | :-----------|
+| Define the output log directory | False | None | directory | log = aoptask.get_output('log')|
+|Enable/disable AComp | False | True | string | enable_acomp |
+|Enable/disable pan sharpening | False | True | string | enable_pansharpen|
+| Enable/disable dynamic range adjustment (DRA) | False | True | string | enable_dra |
+| Select Bands to process ('PAN+MS', 'PAN', 'MS', 'Auto') |False | None | string | bands|
+| Enable/disable output tiling | False | None | string | enable_tiling|
+|Zoom level (tiling is enabled)| False | 12 | string |tiling_zoom_level |
+| Process part of the image | False | Process Entire Image | string | parts |
+|Ortho EPSG projection (UTM is also allowed) | False | EPSG:4326 | string | ortho_epsg |
+| Ortho pixel size in meters | False | Input pixel size | string | ortho_pixel_size |
+| Ortho pixel interpolation ('Nearest', 'Bilinear', 'Cubic') | False | Cubic | String | ortho_interpolation_type |
+|Specify Ortho DEM ('NED', 'SRTM30', 'SRTM90') | False | SRTM90 | string | ortho_dem_specifier |
+|Dynamic Range Adjustment (DRA) mode ('IntensityAdjust', 'BaseLayerMatch')| False | 'IntensityAdjust' | string | dra_mode |
+| DRA low cutoff percentage (range: 0-100) | False | 0.5 | string | dra_low_cutoff |
+|DRA high cutoff percentage (range: 0-100) | False | 99.95 | string | dra_high_cutof |
+|DRA gamma value | False | 1.25 | string | dra_gamma |
+| DRA output bit depth (8 or 16) | False | 8 | string | dra_bit_depth |
+
+
+
 * Define the Output log Directory",to save stderr and stdout information; useful for tracking down errors if the process has failed.
     * Required = true      
     * type = directory
