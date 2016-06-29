@@ -80,19 +80,11 @@ All sensors have been tested, with the exception of WV03-SWIR imagery.  The S3 l
 
 **REVIEW OF REQUIRED SETTINGS AND DEFINITIONS:**
 
-* S3 location of 1B input data:
-    * Required = ‘True’
-    * type = ‘directory’
-    * name = ‘data’
-    
-* Define the AOP Task:
-    * Required = ‘True’
-    * aoptask = gbdx.Task("AOP_Strip_Processor,data=data,"opt1”,”opt2”,etc...)
-
-* Define the Output Directory: (a gbd-customer-data location)
-    * Required = ‘true’
-    * type = ‘directory’
-    * workflow.savedata(aoptask.outputs.data, location='customer's s# bucket')
+| Action       | Required       | Type  |  Name       | 
+| ------------- |:-------------| :-----| :------------- |
+| S3 location of 1B input image    | True | directory |data   |
+| Define the aoptask     | True   | script |  aoptask = gbdx.Task ("AOP_Strip_Processor,data=data,"opt1”,”opt2”,etc...  ) |
+| Define output directory | True   | directory | workflow.savedata = (aoptask.outputs.data, location='customer's s# bucket'  ) | 
 
 
 
