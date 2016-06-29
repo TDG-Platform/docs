@@ -96,7 +96,7 @@ Your Processed Imagery will be written to your specified S3 Customer Location (e
 
 ![First Directory](https://lh3.googleusercontent.com/-YzyRjMprZ54/VyJqnZjA7oI/AAAAAAAAJaw/hqIopdghThsz9eU9uEN4sUpz8iA7WoscQCLcB/s0/datastructure1.PNG "datastructure1.PNG")
 
-There will be a *standard error file* (###.stderr) and a *standard output file* (###.stdout). These files track the progress of the process and can be downloaded and reviewed, especially if the task has failed to produce a final output.  You must include example lines [323], [324] and [328] in your script to record this output. The *workorder_'SOLI'.xml* file details the input parameters applied to the AOP Strip Processor.  
+There will be a *standard error file* (###.stderr) and a *standard output file* (###.stdout). These files track the progress of the process and can be downloaded and reviewed, especially if the task has failed to produce a final output.  To create these log files see *Define Output Log* under the advaced settings . The *workorder_'SOLI'.xml* file details the input parameters applied to the AOP Strip Processor.  
 
 Click on the Folder at the bottom of the list identified by the 'Sales Order Line Item' (SOLI). Inside this directory you will find the processed imagery output (e.g. below).  The .IMD and .XML files describe the spectral and physical characteristics of the Imagery Product.  The *assembly_MS.tif* and *assembly_PAN.tif* are the imagery files that can be viewed in standard GIS and Remote Sensing Software.  the .vrt files are GDAL virtual raster format that allows viewing of the complete image without making a mosaic.
 
