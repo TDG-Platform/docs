@@ -51,7 +51,7 @@ In [5]: gbdx = Interface()
 In [6]: # WV03 Image over Naples, Italy
 In [7]: # Make sure both pan sharpening and DRA are disabled in order to get separate PAN and MS outputs.
 In [8]: data = "s3://receiving-dgcs-tdgplatform-com/055249130010_01_003"
-In [9]: aoptask = gbdx.Task('AOP_Strip_Processor', data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False)
+In [9]: aoptask = gbdx.Task('AOP_Strip_Processor', data=data, enable_pansharpen=False, enable_dra=False)
 In [10]: workflow = gbdx.Workflow([ aoptask ])  
 In [11]: workflow.savedata(aoptask.outputs.data, location='Naples_WV03_QuickStart')
 In [12]: workflow.execute()
