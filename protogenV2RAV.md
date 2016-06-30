@@ -13,7 +13,7 @@ RAV can be run with Python using   [gbdxtools](https://github.com/DigitalGlobe/g
 
 ### Quickstart
 
-This script gives the example of  .
+This script gives the example of RAV with a single tif file as input. 
 
 ```python
 # Quickstart Example producing a single band vegetation mask from a tif file.
@@ -26,7 +26,7 @@ This script gives the example of  .
     prototask = gbdx.Task("protogenV2RAV", raster=raster)
 
     workflow = gbdx.Workflow([ prototask ])  
-    workflow.savedata(prototask.outputs.data, location="protogen/RAV")
+    workflow.savedata(prototask.outputs.data, location="RAV")
     workflow.execute()
 
     print workflow.id
@@ -61,11 +61,38 @@ log  |     N    | S3 location where logs are stored.
 
 
 ### Advanced
-Currently advanced options are not available for this task.
+To link the workflow of 1 input image into AOP_Strip_Processor into a protogen task you must use the follow GBDX tools script in python
+
+```python
+#First initalize the environment 
+#AOP strip processor has input values known to complete the Protogen tasks
+
+from gbdxtools import Interface
+gbdx = Interface()
+
+data = "s3://receiving-dgcs-tdgplatform-com/055026839010_01_003"
+
+aoptask2 = gbdx.Task('AOP_Strip_Processor', data=data, bands='MS', enable_acomp=True, enable_pansharpen=False, enable_dra=False)     # creates acomp'd multispectral image
+
+gluetask = gbdx.Task('gdal-cli')                                  # move aoptask output to root where prototask can find it
+gluetask.inputs.data = aoptask2.outputs.data.value
+gluetask.inputs.execution_strategy = 'runonce'
+gluetask.inputs.command = """mv $indir/*/*.tif $outdir/"""
+prototask = gbdx.Task('protogenV2RAV')
+prototask.inputs.raster = gluetask.outputs.data.value
+
+
+workflow = gbdx.Workflow([aoptask2, gluetask, prototask])
+workflow.savedata(prototask.outputs.data, 'RAV')
+  
+workflow.execute()
+
+workflow.status
+```
 
 ###Postman status @ 06/07/16
 
-**Successful run with Tif file.  Testing additional input formats still in progress.  .VRT is currently not functioning (6/30/2016)**
+**Successful run with Tif file.  
 
 
 
@@ -73,10 +100,12 @@ Currently advanced options are not available for this task.
 
 Your Processed Imagery will be written as Binary .TIF image type UINT8x1 and placed in the specified S3 Customer Location (e.g.  s3://gbd-customer-data/unique customer id/named directory/).  
 
-###Known issues
-To run the task in a single workflow with AOP the task must first be 
-Thin cloud (cloud edges) might be misinterpreted as vegetation. 
+###Known Issues
+1) To run the task in a single workflow with AOP the tif file must first be removed from the AOP folder with the additional python commands listed in Advanced
 
+2) Thin cloud (cloud edges) might be misinterpreted as vegetation. 
+
+3) Testing additional input formats still in progress.  .VRT is currently not functioning (6/30/2016)**
 
 For background on the development and implementation of  Protogen  [Documentation under development](Insert link here)
 
