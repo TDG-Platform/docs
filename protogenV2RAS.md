@@ -1,56 +1,97 @@
 # 8-Band Soil Mask (protogenV2RAS)
 
 RAS is an un-supervised protocol for computing bare soil masks from 8 band (optical + VNIR) image data-sets. The bare soil mask is a binary image in which intensity 255 indicates the presence of soil and intensity 0 the absence of soil. Bare soil is different from rock or stone. 
+RAS can be run with Python using   [gbdxtools](https://github.com/DigitalGlobe/gbdxtools) or through the [GBDX Web Application](https://gbdx.geobigdata.io/materials/).  
 
-**Example Script:** Run in IPython using the [GBDXTools Interface] (https://github.com/DigitalGlobe/gbdxtools)
+### Table of Contents
+ * [Quickstart](#quickstart) - Get started!
+ * [Inputs](#inputs) - Required and optional task inputs.
+ * [Outputs](#outputs) - Task outputs and example contents.
+ * [Advanced](#advanced) - Additional information for advanced users.
+ * [Known Issues](#known issues) - current or past issues known to exist.
 
+### Quickstart
 
-    from gbdxtools import Interface 
+This script gives the example of RAS with a single tif file as input. 
+
+```python
+# Quickstart Example producing a single band vegetation mask from a tif file.
+# First Initialize the Environment
+	
+	from gbdxtools import Interface 
     import json
     gbdx = Interface()
-    raster = 's3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/PathToImage/image.tif'
+    raster = 's3://gbd-customer-data/PathToImage/image.tif'
     prototask = gbdx.Task("protogenV2RAS", raster=raster)
 
     workflow = gbdx.Workflow([ prototask ])  
-    workflow.savedata(prototask.outputs.data, location="protogen/RAS")
+    workflow.savedata(prototask.outputs.data, location="RAS")
     workflow.execute()
 
     print workflow.id
     print workflow.status
+```
 	
+### Inputs
 
-**Description of Input Parameters and Options for "protogenV2RAS":**
+This task will process only WorldView 2 or WorldView 3 multi-spectral imagery (8-band optical and VNIR data sets) that has been atmospherically compensated by the AOP processor.  Supported formats are .TIF, .TIL, .VRT, .HDR.
 
-WorldView 2 or WorldView 3 multi-spectral imagery (8-band optical and VNIR data sets) that has been atmospherically compensated by the AOP processor.  Supported formats are .TIF, .TIL, .HDR.
+The following table lists the RAS Protogen task inputs.
+All inputs are **required**
 
-**REQUIRED SETTINGS AND DEFINITIONS:**
-
-* Define the Task:
-    * Required = ‘true’
-    * gbdxtask = gbdx.Task("protogenV2RAS")
-
-* S3 location of input data 'raster'(Must be run through AOP_strip_processor to have ortho-rectification and atmospheric compensation. Formats.TIF, .TIL, .HDR.   ):
-    * Required = ‘true’
-    * type = ‘directory’
-    * name = ‘raster’
-    
-* Define the Output Directory: The output directory of text file(a gbd-customer-data location)
-    * Required = ‘true’
-    * type = ‘output’
-    * name = "data"
-
-* Define Stage to S3 location:
-    * workflow.savedata(prototask.outputs.data, location="S3Location/")
+Name                     |       Default         |        Valid Values             |   Description
+-------------------------|:---------------------:|---------------------------------|-----------------
+raster                   |          N/A          | S3 URL   .TIF only              | S3 location of input .tif file processed through AOP_Strip_Processor.
+data                     |         true          | Folder name in S3 location      | This will explain the output file location and provide the output in .TIF format.
 
 **OPTIONAL SETTINGS: Required = False**
 
 * NA - No additional optional settings for this task exist
 
 
+### Outputs
 
-###Postman status @ 06/09/16
+The following table lists the RAS Protogen task outputs.
 
-**Successful run with Tif file.  Testing additional input formats still in progress.  .VRT is currently not functioning (6/7/2016)**
+Name | Required |   Description
+-----|:--------:|-----------------
+data |     Y    | This will explain the output file location and provide the output in .TIF format.
+log  |     N    | S3 location where logs are stored.
+
+
+### Advanced
+To link the workflow of 1 input image into AOP_Strip_Processor into a protogen task you must use the follow GBDX tools script in python
+
+```python
+#First initalize the environment 
+#AOP strip processor has input values known to complete the Protogen tasks
+
+from gbdxtools import Interface
+gbdx = Interface()
+
+data = "s3://receiving-dgcs-tdgplatform-com/055026839010_01_003"
+
+aoptask2 = gbdx.Task('AOP_Strip_Processor', data=data, bands='MS', enable_acomp=True, enable_pansharpen=False, enable_dra=False)     # creates acomp'd multispectral image
+
+gluetask = gbdx.Task('gdal-cli')         # move aoptask output to root where prototask can find it
+gluetask.inputs.data = aoptask2.outputs.data.value
+gluetask.inputs.execution_strategy = 'runonce'
+gluetask.inputs.command = """mv $indir/*/*.tif $outdir/"""
+prototask = gbdx.Task('protogenV2RAS')
+prototask.inputs.raster = gluetask.outputs.data.value
+
+
+workflow = gbdx.Workflow([aoptask2, gluetask, prototask])
+workflow.savedata(prototask.outputs.data, 'RAS')
+  
+workflow.execute()
+
+workflow.status
+```
+
+###Postman status @ 06/07/16
+
+**Successful run with Tif file.  
 
 
 
@@ -58,10 +99,14 @@ WorldView 2 or WorldView 3 multi-spectral imagery (8-band optical and VNIR data 
 
 Your Processed Imagery will be written as Binary .TIF image type UINT8x1 and placed in the specified S3 Customer Location (e.g.  s3://gbd-customer-data/unique customer id/named directory/).  
 
-**Known issues:**  False positives maybe present due to certain types of ceramic roofing material and some types of asphalt.
+###Known Issues
+1) To run the task in a single workflow with AOP the tif file must first be removed from the AOP folder with the additional python commands listed in Advanced
 
-**Limitations:** Isolated soil patches of surface area smaller or equal to 4m^2 are discarded. 
+2)False positives maybe present due to certain types of ceramic roofing material and some types of asphalt.
 
+3)Limitations: Isolated soil patches of surface area smaller or equal to 4m^2 are discarded. 
+
+4) Testing additional input formats still in progress.  .VRT is currently not functioning (6/30/2016)**
 
 For background on the development and implementation of  Protogen  [Documentation under development](Insert link here)
 
