@@ -5,7 +5,7 @@
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and example contents.
  * [Advanced](#advanced) - Additional information for advanced users.
- * [Known Issues](#known-issues) - current or past issues known to exist.
+ * [Known Issues](#known-issues) - Current or past issues known to exist.
 
 ### Quickstart
 This script gives the example of RAW with a single tif file as input. 
