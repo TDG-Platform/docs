@@ -19,7 +19,6 @@ This script uses AOP_Strip_Processor to produce orthorectified and atmospherical
 # Quickstart Example producing an Orthorectified and AComp output for MS + PAN
 # First Initialize the Environment
 from gbdxtools import Interface
-import json
 gbdx = Interface()
 
 # WV03 Image over Naples, Italy
@@ -45,16 +44,15 @@ Running the script in an IPython session produces these results:
 In [1]: # Quickstart Example producing an Orthorectified and AComp output for MS + PAN
 In [2]: # First Initialize the Environment
 In [3]: from gbdxtools import Interface
-In [4]: import json
-In [5]: gbdx = Interface()
+In [4]: gbdx = Interface()
   2016-06-24 16:29:53,856 - gbdxtools - INFO - Logger initialized
-In [6]: # WV03 Image over Naples, Italy
-In [7]: # Make sure both pan sharpening and DRA are disabled in order to get separate PAN and MS outputs.
-In [8]: data = "s3://receiving-dgcs-tdgplatform-com/055249130010_01_003"
-In [9]: aoptask = gbdx.Task('AOP_Strip_Processor', data=data, enable_pansharpen=False, enable_dra=False)
-In [10]: workflow = gbdx.Workflow([ aoptask ])  
-In [11]: workflow.savedata(aoptask.outputs.data, location='Naples_WV03_QuickStart')
-In [12]: workflow.execute()
+In [5]: # WV03 Image over Naples, Italy
+In [6]: # Make sure both pan sharpening and DRA are disabled in order to get separate PAN and MS outputs.
+In [7]: data = "s3://receiving-dgcs-tdgplatform-com/055249130010_01_003"
+In [8]: aoptask = gbdx.Task('AOP_Strip_Processor', data=data, enable_pansharpen=False, enable_dra=False)
+In [9]: workflow = gbdx.Workflow([ aoptask ])  
+In [10]: workflow.savedata(aoptask.outputs.data, location='Naples_WV03_QuickStart')
+In [11]: workflow.execute()
 Out[12]: u'4362772047134837472'
 In [13]: print workflow.id
   4362772047134837472
