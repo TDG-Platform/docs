@@ -8,7 +8,7 @@ AOP_Strip_Processor can be run with Python using   [gbdxtools](https://github.co
  * [Quickstart](#quickstart) - Get started!
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and example contents.
- * [Advanced](#advanced) - Additional information for advanced users.
+ * [Advanced Options](#advanced-options) - Additional information for advanced users.
 
 
 ### Quickstart
@@ -192,7 +192,7 @@ The `log` output port contains the location where a trace of log messages genera
 
 
 
-### Advanced
+### Advanced Options
 
 ##### Specifying Strip Parts
 The `parts` input can be used to limit processing to a subset of an input strip. This requires advance knowledge of the layout of a strip order. One way to get this information is by looking in the input strip's `GIS_FILES` directory at the *_PRODUCT_SHAPE.shp vectors. That particular file shows the boundaries of each part (scene) of a strip. Once those numeric values are known, set `parts` to a comma-separated list, e.g. `2, 3, 4`.
