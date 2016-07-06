@@ -29,8 +29,25 @@
  * 
  
 **QuickStart**
+This script gives the example of LULC with a single tif file as input.
 
+    # Quickstart Example producing an unsupervised Landuse Landcover Classification from a tif file.
+    # First Initialize the Environment
 
+    from gbdxtools import Interface 
+    import json
+    gbdx = Interface()
+    
+    # Input data
+    raster = 's3://gbd-customer-data/PathToImage/image.tif'
+    prototask = gbdx.Task("protogenV2RAC", raster=raster)
+
+    workflow = gbdx.Workflow([ prototask ])  
+    workflow.savedata(prototask.outputs.data, location="LULC")
+    workflow.execute()
+
+    print workflow.id
+    print workflow.status
 
 		
 
