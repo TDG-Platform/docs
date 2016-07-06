@@ -28,7 +28,7 @@
  * [Known Issues](#known-issues) - current or past issues known to exist.
  * 
  
-**QuickStart**
+### QuickStart
 This script gives the example of LULC with a single tif file as input.
 
     # Quickstart Example producing an unsupervised Landuse Landcover Classification from a tif file.
@@ -49,9 +49,16 @@ This script gives the example of LULC with a single tif file as input.
     print workflow.id
     print workflow.status
 
-		
+### Inputs
 
-**Known issues:**
+
+### Outputs
+
+
+### Advanced Options
+This script runs FastOrtho+ AComp; outputs a multispectral image (8-band or 4-band); stages the output data from Task1 and uses that data as the final input for the LULC Task.	
+
+###Known issues:
 
 ***Vegetation:***  Thin cloud (cloud edges) might be misinterpreted as vegetation.
 
