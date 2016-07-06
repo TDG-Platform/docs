@@ -26,7 +26,7 @@
  * [Outputs](#outputs) - Task outputs and example contents.
  * [Advanced](#advanced) - Additional information for advanced users.
  * [Known Issues](#known-issues) - current or past issues known to exist.
- * 
+
  
 ### QuickStart
 This script gives the example of LULC with a single tif file as input.
@@ -50,15 +50,36 @@ This script gives the example of LULC with a single tif file as input.
     print workflow.status
 
 ### Inputs
-
+This task will process only WorldView 2 or WorldView 3 multi-spectral imagery (8-band optical and VNIR data sets) that has been atmospherically compensated by the AOP processor. Supported formats are .TIF, .TIL, .VRT, .HDR.
 
 ### Outputs
 
 
 ### Advanced Options
-This script runs FastOrtho+ AComp; outputs a multispectral image (8-band or 4-band); stages the output data from Task1 and uses that data as the final input for the LULC Task.	
+This script runs FastOrtho+ AComp; outputs a multispectral image (8-band only); stages the output data from the aoptask and uses that data as the final input for the LULC Task.	
 
-###Known issues:
+	# Runs Fast-Ortho+AComp, then feeds that data to the protogenv2LULC process
+	from gbdxtools import Interface 
+	import json
+	gbdx = Interface()
+
+	data = "s3://receiving-dgcs-tdgplatform-com/054813633050_01_003"
+	aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False, bands='MS')
+
+	# ProtogenPrep task is used to get AOP output into proper format for protogen task
+	pp_task = gbdx.Task("ProtogenPrep",raster=aoptask.outputs.data.value)      
+	prot_lulc_task = gbdx.Task("protogenV2LULC", raster=pp_task.outputs.data.value)
+
+	# Run Combined Workflow
+	workflow = gbdx.Workflow([ aoptask, pp_task, prot_lulc_task ])
+	workflow.savedata(prot_lulc_task.outputs.data.value, location="/kathleen_complex_test2")
+	workflow.execute()
+
+	print workflow.id
+	print workflow.status
+
+
+### Known issues:
 
 ***Vegetation:***  Thin cloud (cloud edges) might be misinterpreted as vegetation.
 
