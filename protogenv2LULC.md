@@ -2,21 +2,7 @@
 
 		
 		
-**Task Description:**		LULC is an un-supervised protocol for computing a coarse class LULC layer from 8 band (optical + VNIR) image data-sets. The LULC layer is an RGB image in which unique colors are assigned to unique classes. See table below for details.
-
-
- Color |  RGB Value     |Class Description
-:-------|:----------------|--------
-  Green  | [0,255,0] |All types of vegetation (healthy chlorophyll content)
-   Blue  | [0,0,128] | All types of water, excluding flood waters (murky)
-  Brown | [128,64,0} | All types of soils, excluding rocks and stone
-  Light Blue  | [128,255,255] | All types of clouds excluding smoke
-  Purple  | [164,74,164] | Shadows
-  Gray | [128,128,128]  |  Unclassified (equivalent to man-made  materials, rock, stone)    
-  Black  | [0,0,0]   | No-data   
-
-
-
+**Task Description:**		LULC is an un-supervised protocol for computing a coarse class LULC layer from 8 band (optical + VNIR) image data-sets. The LULC layer is an RGB image in which unique colors are assigned to unique classes (See Outputs for descrition).   you can use [gbdxtools](http://gbdxtools.readthedocs.io/en/latest/user_guide.html) and the following examples script to generate the landuse landcover classification output. If you need to generate the 8-Band MS data required as input for this task see [Advanced Options](#advanced-options). 
 
 
 
@@ -59,7 +45,18 @@ Example 1B Datasets that you can process to generate the 8-Band input and then r
 
 ### Outputs
 
-RGB .TIF image of type UINT8x3.
+RGB .TIF image of type UINT8x3. The data will be displayed using the following color codes:
+
+ Color |  RGB Value     |Class Description
+:-------|:----------------|--------
+  Green  | [0,255,0] |All types of vegetation (healthy chlorophyll content)
+   Blue  | [0,0,128] | All types of water, excluding flood waters (murky)
+  Brown | [128,64,0} | All types of soils, excluding rocks and stone
+  Light Blue  | [128,255,255] | All types of clouds excluding smoke
+  Purple  | [164,74,164] | Shadows
+  Gray | [128,128,128]  |  Unclassified (equivalent to man-made  materials, rock, stone)    
+  Black  | [0,0,0]   | No-data   
+
 
 ### Advanced Options
 This script runs FastOrtho+ AComp; outputs a multispectral image (8-band only); stages the output data from the aoptask and uses that data as the final input for the LULC Task.	
@@ -115,7 +112,7 @@ This script runs FastOrtho+ AComp; outputs a multispectral image (8-band only); 
 
 
 
-If you need to generate the 8-Band MS data required as input for this task, you can use [gbdxtools](http://gbdxtools.readthedocs.io/en/latest/user_guide.html) and the following example script to generate the 8-Bands data. This example runs Fast-Ortho+AComp and Protogen LULC from end to end.  Click on this link for details regarding the the [Advanced Ortho Product Pre-Processing](https://github.com/TDG-Platform/docs/blob/master/AOP%20Strip%20Processor_V3.md).
+If you need to generate the 8-Band MS data required as input for this task, you can use  and the following example script to generate the 8-Bands data. This example runs Fast-Ortho+AComp and Protogen LULC from end to end.  Click on this link for details regarding the the [Advanced Ortho Product Pre-Processing](https://github.com/TDG-Platform/docs/blob/master/AOP%20Strip%20Processor_V3.md).
 
 	# Runs Fast-Ortho+AComp, then feeds that data to the protogenv2LULC process
  	from gbdxtools import Interface 
