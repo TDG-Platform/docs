@@ -99,5 +99,5 @@ If you need to generate the 8-Band MS data required as input for this task, you 
 
 ***Clouds:***  Certain types of concrete might be misinterpreted as cloud. Thin cloud areas may be interpreted as soil or vegetation.
 		
-**Limitations:**		The layer uses smoothing operators in cross-class interfaces for noise reduction. This might result in loss/misinterpretation of small class patches (8m^2).
+**Limitations:**		The layer uses smoothing operators in cross-class interfaces for noise reduction. This might result in loss/misinterpretation of small class patches 8m^2.
 		
