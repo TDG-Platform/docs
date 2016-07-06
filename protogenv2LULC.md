@@ -1,11 +1,36 @@
-
+# Unsupervised Landuse Landcover Classification (protogenV2LULC)
 
 		
 		
 **Task Description:**		LULC is an un-supervised protocol for computing a coarse class LULC layer from 8 band (optical + VNIR) image data-sets. The LULC layer is an RGB image in which unique colors are assigned to unique classes. See table below for details.
-		
 
-![enter image description here](https://lh3.googleusercontent.com/iyUmINzySFb28juMhXs3H5Dsq5CDe8l691fO8_FuZ5ioRp4TckGuPJjmq1tuNFYjrVT8PVP0=s0 "Class_Descriptions.PNG")
+
+ Color |  RGB Value     |Class Description
+:-------|:----------------|--------
+  Green  | [0,255,0] |All types of vegetation (healthy chlorophyll content)
+   Blue  | [0,0,128] | All types of water, excluding flood waters (murky)
+  Brown | [128,64,0} | All types of soils, excluding rocks and stone
+  Light Blue  | [128,255,255] | All types of clouds excluding smoke
+  Purple  | [164,74,164] | Shadows
+  Gray | [128,128,128]  |  Unclassified (equivalent to man-made  materials, rock, stone)    
+  Black  | [0,0,0]   | No-data   
+
+
+
+
+
+
+### Table of Contents
+ * [Quickstart](#quickstart) - Get started!
+ * [Inputs](#inputs) - Required and optional task inputs.
+ * [Outputs](#outputs) - Task outputs and example contents.
+ * [Advanced](#advanced) - Additional information for advanced users.
+ * [Known Issues](#known-issues) - current or past issues known to exist.
+ * 
+ 
+**QuickStart**
+
+
 
 		
 
