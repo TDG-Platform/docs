@@ -1,0 +1,42 @@
+{
+    "name": "FileCount",
+    "description": "Runs a task that counts files in directory.",
+    "inputPortDescriptors": [
+        {
+            "required": true,
+            "description": "A directory to count files in.",
+            "name": "directory",
+            "type": "directory"
+        },
+        {
+            "name": "recursive",
+            "description": "Should the operation be recursive (include subdirectories).",
+            "type": "string"
+        }
+    ],
+    "outputPortDescriptors":[
+        {
+            "name": "file_count",
+            "description": "String port for number of files.",
+            "type": "string"
+        },
+        {
+            "name": "file_count_result",
+            "description": "Output dir with file_count.json",
+            "type": "directory"
+        }
+    ],
+    "containerDescriptors": [
+        {
+            "type": "DOCKER",
+            "properties": {
+                "image": "tdgp/file_count_task"
+            }
+        }
+    ],
+    "properties":
+    {
+        "timeout": 7200,
+        "isPublic": true
+    }
+}

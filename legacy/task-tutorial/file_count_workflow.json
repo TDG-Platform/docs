@@ -1,0 +1,41 @@
+{
+    "name": "Files count",
+    "tasks": [
+        {
+            "name": "FileCount",
+            "taskType": "FileCount",
+            "inputs": [
+                {
+                    "name": "directory",
+                    "value": "https://test-tdgplatform-com.s3.amazonaws.com/data/test_folder"
+                },
+                {
+                    "name": "recursive",
+                    "value": "y"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "file_count_result"
+                },
+                {
+                    "name": "file_count"
+                }
+            ]
+        },
+        {
+            "name": "StageToS3",
+            "taskType": "StageDataToS3",
+            "inputs": [
+                {
+                    "name": "data",
+                    "source": "FileCount:file_count_result"
+                },
+                {
+                    "name": "destination",
+                    "value": "https://gbd-customer-data.s3.amazonaws.com/nate-test/dmitryzv"
+                }
+            ]
+        }
+    ]
+}

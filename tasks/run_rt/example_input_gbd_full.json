@@ -1,7 +1,0 @@
-{ "featuretype": "trails",
-    "filename": "Canonical_1262009_2013-08-17_RE5_3A_174475.tif",
-    "inputshpname": "t.shp",
-    "missingfeatures" : "true",
-    "numthreads" : "8",
-    "outputshpfilename" : "ttt_out.shp"
-}

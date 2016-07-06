@@ -1,0 +1,38 @@
+{
+     "name" : "radwarp_wf",
+  "tasks" : [ {
+    "inputs" : [ {
+      "name" : "data",
+      "value" : "s3://gbd-customer-data/57ed2ec1-6742-46e5-aed7-5009c4096491/warp_example"
+    }, {
+      "name" : "source",
+      "value" : "source.tif"
+    }, {
+      "name" : "reference",
+      "value" : "reference.tif"
+    }, {
+      "name" : "output",
+      "value" : "warped.tif"
+    } ],
+    "outputs" : [ {
+      "name" : "output"
+    } ],
+    "name" : "Radwarp",
+    "taskType" : "radwarp"
+  } ,
+        {
+            "inputs": [
+                {
+                    "name": "data",
+                    "source": "Radwarp:output"
+                },
+                {
+                    "name": "destination",
+                    "value": "s3://gbd-customer-data/57ed2ec1-6742-46e5-aed7-5009c4096491/warp_example/"
+                }
+            ],
+            "name": "StageToS3",
+            "taskType": "StageDataToS3"
+        }
+ ]
+}

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GENERATED USING -c OPTION -->
+<executableInput>
+    <parameters>
+        <item parameter="Gamma">1.25</item>
+    </parameters>
+    <files>
+        <fileGroup>
+            <fileBundle>
+                <file type="Stacked">/mnt/work/input/canonical/can.tif</file>
+                <ApplyNoDra_bitDepth/>
+             <!--
+                <file type="Metadata">2011-02-17T043804_RE4_3A-NAC_6683391_113276/METADATA.XML</file>
+             -->
+                <file type="DRA_LUT"></file>
+                <file type="Output">/mnt/work/output/rgb_draed/out.tif</file>
+
+                <outputRedBand>3</outputRedBand>
+                <outputGrnBand>2</outputGrnBand>
+                <outputBluBand>1</outputBluBand>
+            </fileBundle>
+        </fileGroup>
+    </files>
+</executableInput>

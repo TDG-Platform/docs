@@ -1,0 +1,34 @@
+{
+   "name": "dra_test_wf",
+    "tasks": [
+        {
+            "name": "dra_test",
+            "taskType": "dra_test",
+            "inputs": [
+                {
+                    "name": "canonical",
+                    "value": "s3://gbd-customer-data/57ed2ec1-6742-46e5-aed7-5009c4096491/dra_test"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "rgb_draed"
+                }
+            ]
+        },
+        {
+            "inputs": [
+                {
+                    "name": "data",
+                    "source": "dra_test:rgb_draed"
+                },
+                {
+                    "name": "destination",
+                    "value": "s3://gbd-customer-data/57ed2ec1-6742-46e5-aed7-5009c4096491/dra_test/out"
+                }
+            ],
+            "name": "StageToS3",
+            "taskType": "StageDataToS3"
+        }
+    ]
+}
