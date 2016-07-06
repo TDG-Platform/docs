@@ -58,26 +58,33 @@ This task will process only WorldView 2 or WorldView 3 multi-spectral imagery (8
 ### Advanced Options
 This script runs FastOrtho+ AComp; outputs a multispectral image (8-band only); stages the output data from the aoptask and uses that data as the final input for the LULC Task.	
 
-	# Runs Fast-Ortho+AComp, then feeds that data to the protogenv2LULC process
-	from gbdxtools import Interface 
-	import json
+	# This Script runs the AOP Processor; moves the output to a file that is accessible 
+	# to the Protogen task, and runs the protogenV2LULC Task.
+	# First initalize the environment 
+
+	from gbdxtools import Interface
 	gbdx = Interface()
+	import json
 
-	data = "s3://receiving-dgcs-tdgplatform-com/054813633050_01_003"
-	aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False, bands='MS')
+	# Read the data
+	data = "s3://receiving-dgcs-tdgplatform-com/055382035010_01_003"
 
-	# ProtogenPrep task is used to get AOP output into proper format for protogen task
-	pp_task = gbdx.Task("ProtogenPrep",raster=aoptask.outputs.data.value)      
-	prot_lulc_task = gbdx.Task("protogenV2LULC", raster=pp_task.outputs.data.value)
+	# Run AOP to create acomp'd multispectral image
+	aoptask2 = gbdx.Task('AOP_Strip_Processor', data=data, bands='MS', enable_acomp=True, enable_pansharpen=False, enable_dra=False)     
 
-	# Run Combined Workflow
-	workflow = gbdx.Workflow([ aoptask, pp_task, prot_lulc_task ])
-	workflow.savedata(prot_lulc_task.outputs.data.value, location="/kathleen_complex_test2")
+	# Move aoptask output to root where prototask can find it
+	gluetask = gbdx.Task('gdal-cli')                                 
+	gluetask.inputs.data = aoptask2.outputs.data.value
+	gluetask.inputs.execution_strategy = 'runonce'
+	gluetask.inputs.command = """mv $indir/*/*.tif $outdir/"""
+	prototask = gbdx.Task('protogenV2RAC')
+	prototask.inputs.raster = gluetask.outputs.data.value
+
+	workflow = gbdx.Workflow([aoptask2, gluetask, prototask])
+	workflow.savedata(prototask.outputs.data, 'kathleen_Tracy_Protogen/WV03')
+
 	workflow.execute()
-
-	print workflow.id
-	print workflow.status
-
+	workflow.status
 
 ### Known issues:
 
