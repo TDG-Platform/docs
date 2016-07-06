@@ -24,7 +24,7 @@
  * [Quickstart](#quickstart) - Get started!
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and example contents.
- * [Advanced](#advanced) - Additional information for advanced users.
+ * [Advanced Options](#advanced-options) - Additional information for advanced users.
  * [Known Issues](#known-issues) - current or past issues known to exist.
 
  
@@ -51,6 +51,11 @@ This script gives the example of LULC with a single tif file as input.
 
 ### Inputs
 This task will process only WorldView 2 or WorldView 3 multi-spectral imagery (8-band optical and VNIR data sets) that has been atmospherically compensated by the AOP processor. Supported formats are .TIF, .TIL, .VRT, .HDR.
+
+Example 1B Datasets that you can process to generate the 8-Band input and then run the LULC Algorithm:
+
+	Tracy, CA: 	104001001D62F700 = WV03 's3://receiving-dgcs-tdgplatform-com/055382035010_01_003'
+	Naples, Italy: 	104001000E25D700 = WV03	's3://receiving-dgcs-tdgplatform-com/055249130010_01_003'
 
 ### Outputs
 
@@ -107,18 +112,6 @@ This script runs FastOrtho+ AComp; outputs a multispectral image (8-band only); 
 
 
 
-		LULC (TASK OUPUT) EXAMPLE
-		
-RGB view of the input		 
-		![enter image description here](https://lh3.googleusercontent.com/-fZLrWWu5KcM/V1cNpe2DDlI/AAAAAAAAJn0/vKFTazNMTSkjW4PVhXggGj4dJXe-OBzGgCLcB/s0/Denver_rgb2_800x600.bmp "Denver_rgb2_800x600.bmp")
-
-LULC layer		 
-![enter image description here](https://lh3.googleusercontent.com/-eXo17ewGUGc/V1cM5oeHo2I/AAAAAAAAJnU/FfbcnUbEarARXvvXM9zaigQDijQlAFOJwCLcB/s0/Denver_lulc2_800x600.bmp "Denver_lulc2_800x600.bmp")
-
-Example 1B Datasets that you can process to generate the 8-Band input and then run the LULC Algorithm:
-
-	Tracy, CA: 	104001001D62F700 = WV03 's3://receiving-dgcs-tdgplatform-com/055382035010_01_003'
-	Naples, Italy: 	104001000E25D700 = WV03	's3://receiving-dgcs-tdgplatform-com/055249130010_01_003'
 
 
 
