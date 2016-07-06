@@ -54,6 +54,7 @@ This task will process only WorldView 2 or WorldView 3 multi-spectral imagery (8
 
 ### Outputs
 
+RGB .TIF image of type UINT8x3.
 
 ### Advanced Options
 This script runs FastOrtho+ AComp; outputs a multispectral image (8-band only); stages the output data from the aoptask and uses that data as the final input for the LULC Task.	
@@ -98,12 +99,7 @@ This script runs FastOrtho+ AComp; outputs a multispectral image (8-band only); 
 		
 **Limitations:**		The layer uses smoothing operators in cross-class interfaces for noise reduction. This might result in loss/misinterpretation of small class patches (8m^2).
 		
-**Task input:**		WorldView 2 or WorldView 3 multi-spectral imagery (8-band optical and VNIR data sets) that has been atmospherically compensated by the AOP processor.  Supported formats are .TIF, .TIL, .VRT, .HDR.  
-		
 
-
-
-**Task output:**		RGB .TIF image of type UINT8x3.
 		
 
 
