@@ -59,7 +59,7 @@ RGB .TIF image of type UINT8x3. The data will be displayed using the following c
 
 
 ### Advanced Options
-This script runs FastOrtho+ AComp; outputs a multispectral image (8-band only); stages the output data from the aoptask and uses that data as the final input for the LULC Task.	
+If you need to generate the 8-Band MS data required as input for this task, you can use  and the following example script to preprocess your data. This example runs Fast-Ortho+AComp and Protogen LULC from end to end.  Click on this link for details regarding the the [Advanced Ortho Product Pre-Processing](https://github.com/TDG-Platform/docs/blob/master/AOP_Strip_Processor.md).	
 
 	# This Script runs the AOP Processor; moves the output to a file that is accessible 
 	# to the Protogen task, and runs the protogenV2LULC Task.
@@ -101,42 +101,3 @@ This script runs FastOrtho+ AComp; outputs a multispectral image (8-band only); 
 		
 **Limitations:**		The layer uses smoothing operators in cross-class interfaces for noise reduction. This might result in loss/misinterpretation of small class patches (8m^2).
 		
-
-		
-
-
-
-
-
-
-
-
-
-If you need to generate the 8-Band MS data required as input for this task, you can use  and the following example script to generate the 8-Bands data. This example runs Fast-Ortho+AComp and Protogen LULC from end to end.  Click on this link for details regarding the the [Advanced Ortho Product Pre-Processing](https://github.com/TDG-Platform/docs/blob/master/AOP%20Strip%20Processor_V3.md).
-
-	# Runs Fast-Ortho+AComp, then feeds that data to the protogenv2LULC process
- 	from gbdxtools import Interface 
-	import json
-	gbdx = Interface()
-
-	data = "s3://receiving-dgcs-tdgplatform-com/054813633050_01_003"
-	aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False, bands='MS')
-
-	# ProtogenPrep task is used to get AOP output into proper format for protogen task
-	pp_task = gbdx.Task("ProtogenPrep",raster=aoptask.outputs.data.value)      
-	prot_lulc_task = gbdx.Task("protogenV2LULC", raster=pp_task.outputs.data.value)
-
-	# Run Combined Workflow
-	workflow = gbdx.Workflow([ aoptask, pp_task, prot_lulc_task ])
-	workflow.savedata(prot_lulc_task.outputs.data.value, location="/kathleen_complex_test2")
-	workflow.execute()
-
-	print workflow.id
-	print workflow.status
-
-Source Algorithm:		PROTOGEN version 2.0.0, (May 13, 2016)		
-Author: 		Georgios Ouzounis,  DigitalGlobe Inc. 
-					georgios.ouzounis@digitalglobe.com
-
-
-> Written with [StackEdit](https://stackedit.io/).
