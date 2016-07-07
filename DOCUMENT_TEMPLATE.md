@@ -20,7 +20,6 @@ This script gives the example of (task name).
 # First Initialize the Environment
 	
 	from gbdxtools import Interface 
-    import json
     gbdx = Interface()
     raster = 's3://gbd-customer-data/PathToImage/image.tif'
     taskname = gbdx.Task("TaskNameInGBDX", raster=raster)
