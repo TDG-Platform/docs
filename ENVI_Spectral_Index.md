@@ -101,15 +101,15 @@ workflow = gbdx.Workflow([aoptask, aop2envi, envi_ndvi])
 
 workflow.savedata(
   aoptask.outputs.data,
-  location='NDVI/Luca/AOP'
+  location='NDVI/AOP'
 )
 workflow.savedata(
   aop2envi.outputs.output_data,
-  location='NDVI/Luca/hdr'
+  location='NDVI/hdr'
 )
 workflow.savedata(
   envi_ndvi.outputs.output_raster_uri,
-  location='NDVI/Luca/SI/output_raster_uri'
+  location='NDVI/SI/output_raster_uri'
 )
 
 print workflow.execute()
