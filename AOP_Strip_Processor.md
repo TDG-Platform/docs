@@ -1,7 +1,6 @@
 # AOP_Strip_Processor
 
-(Contact us if your customer is having a specific problem. Tech Owner: Tim Harris & Editor: Kathleen Johnson)
-
+ * [Contact Us](#contact-us)
 
 This task runs the Advanced Ortho Processing (AOP) algorithm to produce orthorectified imagery from raw (level 1B) imagery.  There are many additional processing options including atmospheric compensation (ACOMP) (which is always recommended), pansharpening and dynamic range adjustment (DRA).  
 
@@ -212,3 +211,7 @@ The included DRA algorithm has several inputs that affect the final 8-bit RGB re
  * `dra_gamma` - Adjusts the curvature of the transfer function from input to output. When gamma=1, that is a straightforward, linear transfer from input to output. When gamma>1, the image will get overall brighter. Conversely, the image will get overall darker when gamma<1. Works in conjunction with the histogram cutoff values but is a completely independent parameter. Operates like a root stretch but with much finer adjustment settings. All three parameters, low cutoff, high cutoff, and gamma, work together to adjust the overall brightness, contrast, and dynamic range of the image. They’re all independent and will affect the final DRAed image in similar, but different, ways. Setting these is more an art than a science and it’s highly recommended to NOT mess with these unless the image is one of those special cases and is totally screwed up. Then the art comes into play.
 
  * `dra_bit_depth` - Typically it only makes sense to apply dynamic range adjustment to convert imagery to 8-bit. The 16-bit option is available mainly for debugging purposes, but isn't useful in normal situations.
+
+### Contact Us   
+If your customer is having a specific problem. Tech Owner: Tim Harris & Editor: Kathleen Johnson
+
