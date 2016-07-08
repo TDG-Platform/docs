@@ -43,7 +43,9 @@ This script gives the example of ENVI Spectral Index with a single tif file as i
 ```
 	
 ### Inputs	
-
+**Description of Input Parameters and Options for the "ENVI_Spectral_Index":**
+This task will work on Digital Globe images with a IMD file located in the S3 location: 
+Input imagery sensor types include: QuickBird, WorldView 1, WorldView 2, WorldView 3 and GeoEye
 The following table lists the Spectral Index task inputs.
 All inputs are **required**
 
@@ -67,12 +69,12 @@ data |     Y    | This will explain the output file location and provide the out
 log  |     N    | S3 location where logs are stored.
 
 
-**Description of Input Parameters and Options for the "ENVI_Spectral_Index":**
-This task will work on Digital Globe images with a IMD file located in the S3 location: 
-Input imagery sensor types include: QuickBird, WorldView 1, WorldView 2, WorldView 3 and GeoEye
-
 **Description of Output and options for the "ENVI_Spectral_Index":**
 This task will provide a raster of the spectral index output in both an ENVI hdr format and tif format. 
+
+**Data Structure for Expected Outputs:**
+
+The processed imagery will be written to the specified S3 Customer Location in a 1 band TIF format(e.g.  s3://gbd-customer-data/unique customer id/named directory/). 
 
 ### Advanced
 To link the workflow of 1 input image into AOP_Strip_Processor into a protogen task you must use the follow GBDX tools script in python
@@ -83,7 +85,7 @@ To link the workflow of 1 input image into AOP_Strip_Processor into a protogen t
 from gbdxtools import Interface
 gbdx = Interface()
 
-data = "s3://receiving-dgcs-tdgplatform-com/055418555010_01_003"
+data = "s3://receiving-dgcs-tdgplatform-com/ImageLocation"
 aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False, bands='MS')
 
 # Capture AOP task outputs 
@@ -115,37 +117,6 @@ workflow.savedata(
 print workflow.execute()
 
 ```
-**REQUIRED SETTINGS AND DEFINITIONS:**
-
-* Define the index",
-    * Required = true      
-    * type = "string"
-    * name =  "index"
-
-* S3 location of input data (1B data will process by TIL or a strip run through AOP will be in TIF format):
-    * Required = true
-    * type = ‘directory’
-    * name = ‘input_raster’
-
-* Define the Output Directory: (a gbd-customer-data location)
-    * Required = true
-    * type = ‘directory’
-    * name = "output_raster_uri_filename"
-
-
-**OPTIONAL SETTINGS AND DEFINITIONS:**
-
-* Define the File Types",
-    * Required = false 
-	* Description = specify file types as input (eg. hdr)
-    * type = 'string'
-    * name =  "file_types"
-
-* Define the Output log Directory",
-    * Required = false 
-	* Description = Output location for task meta data such as execution log and output JSON
-    * type = directory
-    * name =  "task_meta_data"
 
 ###Postman status @ 13:07 6/15/16
   "completed_time": "2016-06-15T18:31:02.876281+00:00",
@@ -155,10 +126,7 @@ print workflow.execute()
   },
   "submitted_time": "2016-06-15T18:08:16.235596+00:00",
 
-
-**Data Structure for Expected Outputs:**
-
-Your Processed Imagery will be written to the specified S3 Customer Location in a 1 band TIF format(e.g.  s3://gbd-customer-data/unique customer id/named directory/).  
+ 
 
 ###Known Issues
 1) To run the task in a single workflow with AOP the tif file must first be removed from the AOP folder with the additional python commands listed in Advanced
