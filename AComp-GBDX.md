@@ -26,7 +26,7 @@ Input imagery must at least contain the VNIR multispectral bands, and optionally
 ### Quickstart
 
 
-**Example Script:** These basic settings will run AComp on a Landsat8 image.  See also examples listed under the optional settings below.
+**Example Script:** These basic settings will run AComp on a Landsat8 image.  See also examples listed under the [Advanced Options](#advanced-options).
 
     # Run atmospheric compensation on Landsat8 data
     from gbdxtools import Interface
@@ -76,45 +76,6 @@ task will search through the given bucket to locate the input data and process t
 
 The AComp GBDX task can be run through a simple Python script using  [gbdxtools](https://github.com/DigitalGlobe/gbdxtools/blob/master/docs/user_guide.rst), which requires some initial setup, or through the [GBDX Web Application](https://gbdx.geobigdata.io/materials/).  Tasks and workflows can be added (described here in [gbdxtools](https://github.com/DigitalGlobe/gbdxtools/blob/master/docs/running_workflows.rst)) or run separately after the AComp process is completed.
 
-**Example Script:** These basic settings will run AComp on a Landsat8 image.  See also examples listed under the optional settings below.
-
-    # Run atmospheric compensation on Landsat8 data
-    from gbdxtools import Interface
-    gbdx = Interface()
-    import json
-    acomp = gbdx.Task('AComp_0.23.2.1', data='s3://landsat-pds/L8/033/032/LC80330322015035LGN00')
-    workflow = gbdx.Workflow([acomp])
-    workflow.savedata(acomp.outputs.data, location='acomp_output_folder')
-    workflow.execute()
-           
-    print workflow.id
-    print workflow.status
-     
-**Example Run in IPython:**
-
-    In [1]: from gbdxtools import Interface
-    In [2]: gbdx = Interface()
-    2016-06-06 10:53:09,026 - gbdxtools - INFO - Logger initialized
-    In [3]: acomp = gbdx.Task('AComp_0.23.2.1', data='s3://landsat-pds/L8/033/032/LC80330322015035LGN00')
-    In [4]: workflow = gbdx.Workflow([acomp])
-    In [5]: workflow.savedata(acomp.outputs.data, location='acomp_output_folder')
-    In [6]: workflow.execute()
-    Out[6]: u'4349739083145886153'
-    In [7]: print workflow.id
-    4349739083145886153
-    In [8]: print workflow.status
-    2016-06-06 10:53:41,301 - gbdxtools - DEBUG - Get status of workflow: 4349739083145886153
-    {u'state': u'pending', u'event': u'submitted'}
-    In [9]:
-
-
-**Test Datasets for Tracy, California**
-
-	10400100076AB300 = WV03 's3://receiving-dgcs-tdgplatform-com/055442993010_01_003'
-	103001000E8A7100 = WV02 's3://receiving-dgcs-tdgplatform-com/055168976010_01_003'
-	1050410013233600 = GE01	's3://receiving-dgcs-tdgplatform-com/055385387010_01_003'
-	101001000B3E9F00 = QB02 's3://receiving-dgcs-tdgplatform-com/055168847010_01_003'
-
 
 
 **Description of Input Parameters and Options for the AComp GBDX task**
@@ -131,7 +92,7 @@ The AComp GBDX task can be run through a simple Python script using  [gbdxtools]
     * type = 'directory'
     * name = 'data'
 
-**OPTIONAL SETTINGS:**
+### Advanced Options
 
 * Comma-separated list of bands to exclude. Use band IDs from IMD file such as 'P', 'MS1', 'Multi', 'All-S', etc. Excluded bands are not processed. 
     * Required = 'false'
