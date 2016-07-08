@@ -22,9 +22,9 @@ Input imagery must at least contain the VNIR multispectral bands, and optionally
  * [Outputs](#outputs) - Task outputs and example contents.
  * [Advanced Options](#advanced-options) - Additional information for advanced users.
 
-
 ### Quickstart
 
+The AComp GBDX task can be run through a simple Python script using  [gbdxtools](https://github.com/DigitalGlobe/gbdxtools/blob/master/docs/user_guide.rst), which requires some initial setup, or through the [GBDX Web Application](https://gbdx.geobigdata.io/materials/).  Tasks and workflows can be added (described here in [gbdxtools](https://github.com/DigitalGlobe/gbdxtools/blob/master/docs/running_workflows.rst)) or run separately after the AComp process is completed.
 
 **Example Script:** These basic settings will run AComp on a Landsat8 image.  See also examples listed under the [Advanced Options](#advanced-options).
 
@@ -65,32 +65,32 @@ Input imagery must at least contain the VNIR multispectral bands, and optionally
    WV03  | 10400100076AB300 | s3://receiving-dgcs-tdgplatform-com/055442993010_01_003
    GE01  |  1050410013233600  |  s3://receiving-dgcs-tdgplatform-com/055385387010_01_003
    QB02  |  101001000B3E9F00  |  s3://receiving-dgcs-tdgplatform-com/055168847010_01_003
-   
-   
-   
 
 ### Inputs
 
 To use this task, set the "data" input parameter (described below) to point at an S3 bucket containing the image data to process. Note that this
 task will search through the given bucket to locate the input data and process the data it finds. In order to process VNIR or VNIR + PAN data, simply point the "data" input parameter at the directory within the bucket containing the VNIR or VNIR + PAN data for a single catalog ID. If SWIR data is to also be processed, the process is slightly different. Since SWIR data is normally ordered separately from VNIR in GBDX and therefore has a different catalog ID, in order to process VNIR+SWIR or VNIR+PAN+SWIR, it is necessary to point the "data" input parameter at a parent directory containing both a single VNIR (or VNIR+PAN) catalog ID directory and also a single corresponding SWIR catalog ID directory. Note that the SWIR data must intersect the VNIR data and be "acquired during the same overpass" in order to obtain valid results. SWIR data acquired during the same overpass will have a catalog ID that is differentiated from the VNIR catalog ID solely by having an "A" in the 4th position of the catalog ID. For example, the SWIR catalog ID 104A010008437000 was acquired during the same overpass as the the VNIR catalog ID 1040010008437000.
 
-The AComp GBDX task can be run through a simple Python script using  [gbdxtools](https://github.com/DigitalGlobe/gbdxtools/blob/master/docs/user_guide.rst), which requires some initial setup, or through the [GBDX Web Application](https://gbdx.geobigdata.io/materials/).  Tasks and workflows can be added (described here in [gbdxtools](https://github.com/DigitalGlobe/gbdxtools/blob/master/docs/running_workflows.rst)) or run separately after the AComp process is completed.
-
-
-
 **Description of Input Parameters and Options for the AComp GBDX task**
 
-**REQUIRED SETTINGS AND DEFINITIONS:**
+The following table lists the AComp-GBDX inputs. All inputs are optional with default values, with the exception of 'data' which specifies the task's input data location and output data location.
 
-* S3 location of input data:
-    * Required = 'True'
-    * type = 'directory'
-    * name = 'data'
-    
-* Define the Output Directory: (a gbd-customer-data location)
-    * Required = 'true'
-    * type = 'directory'
-    * name = 'data'
+Name                     |       Default         |        Valid Values             |   Description
+-------------------------|:---------------------:|---------------------------------|-----------------
+data (in)      |   N/A   | S3 URL                                | S3 location of 1B input data.
+data (out)     |   N/A   | S3 URL                                | S3 gbd-customer-data location
+exclude_bands  |   Off	 |  'P', 'MS1', 'Multi', 'All-S'         | Comma-separated list of bands to exclude; excluded bands are not processed. 
+bit_depth      |   16    |  16 or 32                             |
+aod_grid_size  |   input data grid size   |  ????                                 | specify an alternate grid size
+
+
+**Script Example specifying exclusion of panchromatic bands**
+
+	acomp = gbdx.Task('AComp_0.23.2.1', exclude_bands='P')
+
+**Script Example specifying alternate AOD grid size and bit depth**
+
+	acomp = gbdx.Task('AComp_0.23.2.1', data=data, aod_grid_size=15, bit_depth=32 )
 
 ### Outputs
 
@@ -99,20 +99,7 @@ On completion, the processed imagery will be written to your specified S3 Custom
 
 ### Advanced Options
 
-* Comma-separated list of bands to exclude. Use band IDs from IMD file such as 'P', 'MS1', 'Multi', 'All-S', etc. Excluded bands are not processed. 
-    * Required = 'false'
-    * type = 'string'
-    * name = 'exclude_bands'
 
-* Output bit depth. Choices are 16 or 32. Default is 16.
-    * Default = '16'
-    * Required = 'false'
-    * type = 'string'
-    * name = 'bit_depth'
-
-**Script Example specifying alternate AOD grid size and bit depth**
-
-	acomp = gbdx.Task('AComp_0.23.2.1', data=data, aod_grid_size=15, bit_depth=32 )
 
 
 
