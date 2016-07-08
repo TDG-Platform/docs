@@ -1,10 +1,22 @@
 # ENVI RX Anomaly Detection 
 
 RX Anomaly Detection This task uses the Reed-Xiaoli Detector (RXD) algorithm to identify the spectral or color differences between a region to test its neighboring pixels or the entire dataset.
+
+### Table of Contents
+ * [Quickstart](#quickstart) - Get started!
+ * [Inputs](#inputs) - Required and optional task inputs.
+ * [Outputs](#outputs) - Task outputs and example contents.
+ * [Advanced](#advanced) - Additional information for advanced users.
+ * [Known Issues](#known issues) - current or past issues known to exist.
+
+### Quickstart
+
 **Example Script:** Run in IPython using the GBDXTools Interface
-	
+
+```python
+# Quickstart **Example Script Run in Python using the gbdxTools InterfaceExample producing a single band vegetation mask from a tif file.
+# First Initialize the Environment
     from gbdxtools import Interface 
-    import json
     gbdx = Interface()
        
     # launch workflow ENVI_RXAnomalyDetection -> S3
@@ -22,97 +34,44 @@ RX Anomaly Detection This task uses the Reed-Xiaoli Detector (RXD) algorithm to 
 	workflow.savedata(envitask.outputs.output_raster_uri, location='envi_task_output')
 	
 	print workflow.execute()
-	
-	
+```	
 
+### Inputs
 **Description of Input Parameters and Options for the**** "RXAnomalyDetection":**
 
-**REQUIRED SETTINGS AND DEFINITIONS:**
+The following table lists the ENVI_RXAnomalyDetection task inputs:
 
-* S3 location of input data (1B data will process by TIL or a strip run through AOP will be in TIF format):
-    * Required = ‘True’
-    * type = ‘directory’
-    * name = ‘data’
-    
-* Define the ENVI Task:
-    * Required = ‘True’
-    * envitask = gbdx.Task("ENVI_RXAnomalyDetection")
+Name                                |       Default         |        Valid Values             |   Description
+------------------------------------|:---------------------:|---------------------------------|-----------------
+gbdx.Task("ENVI_RXAnomalyDetection")|          N/A          | string                          | string of task name "ENVI_RXAnomalyDetection" 
+data                                |         true          | Folder name in S3 location      | This will explain the input file location in either the DG 1b format or following the AOP_Strip_Processor
 
-* Define the Output Directory: (a gbd-customer-data location)
-    * Required = ‘true’
-    * type = ‘directory’
-    * name = "destination"
-* Define the Output log Directory",
-    * Required = true      
-    * type = directory
-    * name =  "log"
+	
+### Outputs
 
-* Define Stage to S3 location:
-    * S3task = gbdx.Task("StageDataToS3",“data=” ”,destination=”)
+The following table lists the ENVI_RXAnomalyDetection task outputs:
+
+Name        | Required |   Description
+------------|:--------:|-----------------
+destination |     Y    | This will explain the output file location directory and provide the output in .TIF format.
+log         |     N    | S3 location where logs are stored.
+
 
 **OPTIONAL SETTINGS: Required = False**
 
 **_The Default setting does not run the specified process. Some of these processes (e.g. "enable_tiling" = “True”) may have dependencies that also require resetting. Some of the dependencies have “Auto” settings.**
 
-* Comma-separated list of file type extensions, use this to filter input files 
-    * Required = ‘false’
-    * type = ‘string’
-    * name = ‘file_types’
-* Set this property to true to suppress vegetation anomalies in the RXD results. The options are true or false (default). 
-    * Default = 'false'
-    * Required = ‘false’
-    * type = ‘string’
-    * name = ‘suppress_vegetation’
-* Select the mean calculation method:  Specify one of the values from the CHOICE_LIST, indicating which mean calculation method to use.  Global: Derive the mean spectrum from the full dataset, Local: Derive the mean spectrum from the **KERNEL\_SIZE** around a given pixel.
-    * Required = ‘false’
-    * type = ‘string’
-    * name = ‘mean\_calculation_method’
-* Select the RXD method to use.  Specify one of the values from the CHOICE_LIST, indicating which method to use. RXD: Standard RXD algorithm, UTD: Uniform Target Detector algorithm, RXD-UTD: Hybrid of the RXD and UTD algorithms.
-
-    * Required = ‘false’
-    * type = ‘string’
-    * name = ‘anomaly\_detection_method’
-	
- •	Select the kernel size for the analysis. Specify the kernel size in pixels, around a given pixel that will be used to create a mean spectrum.  Use an odd number. The minimum value is 3, and the maximum value is (number of columns - 1) less than (number of rows - 1).  Specify **KERNEL_SIZE** only when using the 'Local' option for **MEAN\_CALCULATION_METHOD.**
-
-    * Default is 3
-    * Required = ‘false’
-    * type = ‘string’
-    * name = ‘kernel_size’
-	
- •	Select the kernel size for the analysis. Specify the kernel size in pixels, around a given pixel that will be used to create a mean spectrum.  Use an odd number. The minimum value is 3, and the maximum value is (number of columns - 1) less than (number of rows - 1).  Specify KERNEL_SIZE only when using the 'Local' option for **MEAN\_CALCULATION\_METHOD.**
-
-    * Required = ‘false’
-    * type = ‘directory’
-    * name = ‘task\_meta_data’
+Name                         |       Default         |        Valid Values             |   Description
+-----------------------------|:---------------------:|---------------------------------|-----------------
+file_types                   |          N/A          | string of file types e.g. .TIF  | This will list the file type to use as input into the task
+suppress_vegetation          |         False         | string 'true' or 'false'        | Set this property to true to suppress vegetation anomalies in the RXD results. The options are true or false 
+mean\_calculation_method’    |           ?           | string                          | Specify one of the values from the CHOICE_LIST, indicating which mean calculation method to use.  Global: Derive the mean spectrum from the full dataset, Local: Derive the mean spectrum from the **KERNEL\_SIZE** around a given pixel
+anomaly\_detection_method    |           ?           | string                          | Specify one of the values from the CHOICE_LIST, indicating which method to use. RXD: Standard RXD algorithm, UTD: Uniform Target Detector algorithm, RXD-UTD: Hybrid of the RXD and UTD algorithms
+kernel_size                  |           3           | string                          | Specify the kernel size in pixels, around a given pixel that will be used to create a mean spectrum.  Use an odd number. The minimum value is 3, and the maximum value is (number of columns - 1) less than (number of rows - 1).  Specify **KERNEL_SIZE** only when using the 'Local' option for **MEAN\_CALCULATION_METHOD.**
+task\_meta_data              |          N/A          | directory                       | Specify an output location for task metadata
 
 
-**Sample Output: Test Run 4/27/16, On R&D Cluster**
-
-    [3]: envitask = gbdx.Task("ENVI_RXAnomalyDetection")
-    [4]: envitask.inputs.task_name='RXAnomalyDetection'
-    [5]: envitask.inputs.file_types='til'
-    [6]: envitask.inputs.kernel_size='3'
-    [7]: data = "s3://receiving-dgcs-tdgplatform-com/054813633050_01_003/054813633050_01/054813633050_01_P001_MUL/"
-    [8]: envitask.inputs.input_raster=data
-    [9]: workflow = gbdx.Workflow([ envitask ] )
-    [10]: workflow.savedata(envitask.outputs.task_meta_data, location=' s3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/ENVI/')
-    [11]: workflow.savedata(envitask.outputs.output_raster_uri, location=' s3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/ENVI/')
-    [12]: print workflow.execute()
-     
-    4320185934977513853 
-
-
-
-###Postman status @ 16:22 4/27/16
-   "completed_time": null,
-   "state": {
-    "state": "complete",
-    "event": "succeeded"
-  },
-  "submitted_time": "2016-04-27T17:46:54.537965+00:00",
-
-
+    
 
 
 **Data Structure for Expected Outputs:**
