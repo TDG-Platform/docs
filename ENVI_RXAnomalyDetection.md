@@ -1,4 +1,4 @@
-# ENVI RX Anomaly Detection 
+# ENVI RX Anomaly Detection (ENVI_RXAnomalyDetection)
 
 RX Anomaly Detection This task uses the Reed-Xiaoli Detector (RXD) algorithm to identify the spectral or color differences between a region to test its neighboring pixels or the entire dataset.
 
@@ -70,9 +70,12 @@ anomaly\_detection_method    |           ?           | string                   
 kernel_size                  |           3           | string                          | Specify the kernel size in pixels, around a given pixel that will be used to create a mean spectrum.  Use an odd number. The minimum value is 3, and the maximum value is (number of columns - 1) less than (number of rows - 1).  Specify **KERNEL_SIZE** only when using the 'Local' option for **MEAN\_CALCULATION_METHOD.**
 task\_meta_data              |          N/A          | directory                       | Specify an output location for task metadata
 
-
+### Advanced
+Advanced examples for this task are under development
     
 
+###Known Issues
+1)To run an extended workflow including the image preprocessing step with AOP_Strip_Processor use the advanced script. 
 
 **Data Structure for Expected Outputs:**
 
