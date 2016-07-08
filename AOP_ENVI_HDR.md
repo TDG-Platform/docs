@@ -7,9 +7,9 @@
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and example contents.
  * [Advanced](#advanced) - Additional information for advanced users.
- * [Known Issues](#known issues) - current or past issues known to exist.
+ * [Known Issues](#known-issues) - current or past issues known to exist.
  
- ### Quickstart
+### Quickstart
 
 This script gives the example of AOP_ENVI_HDR with a single output folder from AOP as input. 
 
