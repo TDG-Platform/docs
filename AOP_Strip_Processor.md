@@ -1,6 +1,6 @@
 # AOP_Strip_Processor
 
- * [Contact Us](#contact-us)
+[Contact Us](#contact-us)
 
 This task runs the Advanced Ortho Processing (AOP) algorithm to produce orthorectified imagery from raw (level 1B) imagery.  There are many additional processing options including atmospheric compensation (ACOMP) (which is always recommended), pansharpening and dynamic range adjustment (DRA).  
 
