@@ -16,6 +16,16 @@ The AComp GBDX task operates on a variety of input data:
 
 Input imagery must at least contain the VNIR multispectral bands, and optionally may also include panchromatic and/or SWIR data.
 
+### Table of Contents
+ * [Quickstart](#quickstart) - Get started!
+ * [Inputs](#inputs) - Required and optional task inputs.
+ * [Outputs](#outputs) - Task outputs and example contents.
+ * [Advanced Options](#advanced-options) - Additional information for advanced users.
+
+
+### Quickstart
+
+
 To use this task, set the "data" input parameter (described below) to point at an S3 bucket containing the image data to process. Note that this
 task will search through the given bucket to locate the input data and process the data it finds. In order to process VNIR or VNIR + PAN data, simply point the "data" input parameter at the directory within the bucket containing the VNIR or VNIR + PAN data for a single catalog ID. If SWIR data is to also be processed, the process is slightly different. Since SWIR data is normally ordered separately from VNIR in GBDX and therefore has a different catalog ID, in order to process VNIR+SWIR or VNIR+PAN+SWIR, it is necessary to point the "data" input parameter at a parent directory containing both a single VNIR (or VNIR+PAN) catalog ID directory and also a single corresponding SWIR catalog ID directory. Note that the SWIR data must intersect the VNIR data and be "acquired during the same overpass" in order to obtain valid results. SWIR data acquired during the same overpass will have a catalog ID that is differentiated from the VNIR catalog ID solely by having an "A" in the 4th position of the catalog ID. For example, the SWIR catalog ID 104A010008437000 was acquired during the same overpass as the the VNIR catalog ID 1040010008437000.
 
