@@ -92,6 +92,11 @@ The AComp GBDX task can be run through a simple Python script using  [gbdxtools]
     * type = 'directory'
     * name = 'data'
 
+### Outputs
+
+On completion, the processed imagery will be written to your specified S3 Customer Location (e.g.  s3://gbd-customer-data/unique customer id/named directory/).   The AComp output files will be located Within the 'named directory'. The specific layout and names of the output files will depend on the specific input files and the options selected. 
+
+
 ### Advanced Options
 
 * Comma-separated list of bands to exclude. Use band IDs from IMD file such as 'P', 'MS1', 'Multi', 'All-S', etc. Excluded bands are not processed. 
@@ -110,6 +115,4 @@ The AComp GBDX task can be run through a simple Python script using  [gbdxtools]
 	acomp = gbdx.Task('AComp_0.23.2.1', data=data, aod_grid_size=15, bit_depth=32 )
 
 
-**Expected Outputs:**
 
-On completion, the processed imagery will be written to your specified S3 Customer Location (e.g.  s3://gbd-customer-data/unique customer id/named directory/).   The AComp output files will be located Within the 'named directory'. The specific layout and names of the output files will depend on the specific input files and the options selected. 
