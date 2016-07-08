@@ -81,8 +81,16 @@ data (in)      |   N/A   | S3 URL                                | S3 location o
 data (out)     |   N/A   | S3 URL                                | S3 gbd-customer-data location
 exclude_bands  |   Off	 |  'P', 'MS1', 'Multi', 'All-S'         | Comma-separated list of bands to exclude; excluded bands are not processed. 
 bit_depth      |   16    |  16 or 32                             |
-aod_grid_size  |   input data grid size   |  ????                                 | specify and alternate grid size
+aod_grid_size  |   input data grid size   |  ????                                 | specify an alternate grid size
 
+
+**Script Example specifying exclusion of panchromatic bands**
+
+	acomp = gbdx.Task('AComp_0.23.2.1', exclude_bands='P')
+
+**Script Example specifying alternate AOD grid size and bit depth**
+
+	acomp = gbdx.Task('AComp_0.23.2.1', data=data, aod_grid_size=15, bit_depth=32 )
 
 ### Outputs
 
@@ -92,9 +100,6 @@ On completion, the processed imagery will be written to your specified S3 Custom
 ### Advanced Options
 
 
-**Script Example specifying alternate AOD grid size and bit depth**
-
-	acomp = gbdx.Task('AComp_0.23.2.1', data=data, aod_grid_size=15, bit_depth=32 )
 
 
 
