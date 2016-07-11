@@ -1,13 +1,13 @@
 # ENVI RX Anomaly Detection (ENVI_RXAnomalyDetection)
 
-RX Anomaly Detection This task uses the Reed-Xiaoli Detector (RXD) algorithm to identify the spectral or color differences between a region to test its neighboring pixels or the entire dataset.
+This task uses the Reed-Xiaoli Detector (RXD) algorithm to identify the spectral or color differences between a region to test its neighbouring pixels or the entire dataset.
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and example contents.
  * [Advanced](#advanced) - Additional information for advanced users.
- * [Known Issues](#known issues) - current or past issues known to exist.
+ * [Known Issues](#known-issues) - current or past issues known to exist.
 
 ### Quickstart
 
@@ -37,14 +37,14 @@ RX Anomaly Detection This task uses the Reed-Xiaoli Detector (RXD) algorithm to 
 ```	
 
 ### Inputs
-**Description of Input Parameters and Options for the**** "RXAnomalyDetection":**
+**Description of Input Parameters and Options for the "RXAnomalyDetection":**
 
 The following table lists the ENVI_RXAnomalyDetection task inputs:
 
 Name                                |       Default         |        Valid Values             |   Description
 ------------------------------------|:---------------------:|---------------------------------|-----------------
 gbdx.Task("ENVI_RXAnomalyDetection")|          N/A          | string                          | string of task name "ENVI_RXAnomalyDetection" 
-data                                |         true          | Folder name in S3 location      | This will explain the input file location in either the DG 1b format or following the AOP_Strip_Processor
+input_raster                        |         true          | Folder name in S3 location      | This will explain the input file location in either the DG 1b format or following the AOP_Strip_Processor
 
 	
 ### Outputs
@@ -59,7 +59,7 @@ log         |     N    | S3 location where logs are stored.
 
 **OPTIONAL SETTINGS: Required = False**
 
-**_The Default setting does not run the specified process. Some of these processes (e.g. "enable_tiling" = “True”) may have dependencies that also require resetting. Some of the dependencies have “Auto” settings.**
+**The Default setting does not run the specified process. Some of these processes (e.g. "enable_tiling" = “True”) may have dependencies that also require resetting. Some of the dependencies have “Auto” settings.**
 
 Name                         |       Default         |        Valid Values             |   Description
 -----------------------------|:---------------------:|---------------------------------|-----------------
