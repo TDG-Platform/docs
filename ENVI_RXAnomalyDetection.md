@@ -14,7 +14,7 @@ This task uses the Reed-Xiaoli Detector (RXD) algorithm to identify the spectral
 **Example Script:** Run in IPython using the GBDXTools Interface
 
 ```python
-# Quickstart **Example Script Run in Python using the gbdxTools InterfaceExample producing a single band vegetation mask from a tif file.
+# Quickstart Example Script Run in Python using the gbdxTools Interface.  The script will produce a single band tif file showing areas of anomaly.
 # First Initialize the Environment
     from gbdxtools import Interface 
     gbdx = Interface()
