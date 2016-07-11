@@ -22,7 +22,7 @@ This script gives the example of ENVI Spectral Index with a single tif file as i
     gbdx = Interface()
     
     aop2envi = gbdx.Task("AOP_ENVI_HDR")
-    aop2envi.inputs.image = 's3://gbd-customer-data/a157fdce-bb1d-42b3-96a9-66942896a787/denver_aop'
+    aop2envi.inputs.image = 's3://gbd-customer-data/Image_location'
     
 	envi_ndvi = gbdx.Task("ENVI_SpectralIndex")
     envi_ndvi.inputs.input_raster = aop2envi.outputs.output_data.value
