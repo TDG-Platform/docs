@@ -8,7 +8,7 @@ Note:  The wavelength metadata is not available in the correct format from the A
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and example contents.
  * [Advanced](#advanced) - Additional information for advanced users.
- * [Known Issues](#known issues) - current or past issues known to exist.
+ * [Known Issues](#known-issues) - current or past issues known to exist.
 
 ### Quickstart
 
@@ -117,14 +117,6 @@ workflow.savedata(
 print workflow.execute()
 
 ```
-
-###Postman status @ 13:07 6/15/16
-  "completed_time": "2016-06-15T18:31:02.876281+00:00",
-  "state": {
-    "state": "complete",
-    "event": "succeeded"
-  },
-  "submitted_time": "2016-06-15T18:08:16.235596+00:00",
 
  
 
