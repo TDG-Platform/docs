@@ -93,7 +93,7 @@ dra_high_cutoff          |         99.95         | 0.0 - 100.0                  
 dra_gamma                |          1.25         | Nonzero float value             | Gamma value for `dra_mode` == `IntensityAdjust`.
 dra_bit_depth            |           8           | 8, 16                           | Output bit depth for `dra_mode` == `IntensityAdjust`.
 dra_baselayer_prefix     | s3://dg-baselayer/v2/ | S3 URL                          | S3 location of base layer for `dra_mode` == `BaseLayerMatch`. Base layer must be tiled to tiling scheme DGHalfMeter:9.
-tiling_zoom_level        |          12           | Integer (see tiling scheme)     | Zoom level (i.e. size) of output tiles for `enable_tiling` == `true`.
+[tiling_zoom_level](tiling-zoom-level)        |          12           | Integer (see tiling scheme)     | Zoom level (i.e. size) of output tiles for `enable_tiling` == `true`.
 
 [Contact Us](#contact-us) if your customer has a specific question regarding these options.
 
@@ -231,7 +231,7 @@ The `log` output port contains the location where a trace of log messages genera
   * This sets the resampling method applied during the AOP process. The default setting is ortho_interpolation_type='Cubic'. Other options are Bilinear and Nearest Neighbor.  However, for spectral analysis Bilinear is preferred because it affects the spectral DN the least.
 
 ##### Tiling Zoom Level
-  * The zoom-level for viewing can be set when enable_tiling ='True'
+  * The output zoom-level for viewing can be set when enable_tiling ='True'.  The default is 12m.  
 
 ##### Using Dynamic Range Adjustment
 The included DRA algorithm has several inputs that affect the final 8-bit RGB result:
