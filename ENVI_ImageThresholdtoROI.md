@@ -29,8 +29,8 @@
     )
 	
     print workflow.execute()
-```python	
-
+	
+```
 ### Inputs	
 
 **Description of Input Parameters and Options for the "ENVI_ImageThresholdToROI":**
@@ -41,7 +41,7 @@ Tif files from the AOP_Strip_Processor were tested with this task to confirm fun
 **REQUIRED SETTINGS AND DEFINITIONS:**
 
 Name                     |       Default         |                 Valid Values                        |   Description
--------------------------|:---------------------:|-----------------------------------------------------|-----------------
+-------------------------|:---------------------:|-----------------------------------------------------|---------------------------------
 input_raster             |          N/A          | S3 URL   directory                                  | S3 location of input data specify the input raster for applying the thresholds
 roi_color                |          N/A          | 3,n byte array with RGB color (see example script)  | Define ROI color where n is the number of ROIs specified by ROI_NAME
 threshold                |          N/A          | [minimum, maximum, zero-based band number]          | specify an array that represents a threshold: [minimum, maximum, zero-based band number] You can have one or more thresholds to one or more ROIs
