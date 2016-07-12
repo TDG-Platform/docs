@@ -228,14 +228,10 @@ The `log` output port contains the location where a trace of log messages genera
   * The default DEM (digital elevation model) used in the orthorectification process is SRTM90 (Shuttle Radar Topography Mission).  Other options include [SRTM30](#http://www2.jpl.nasa.gov/srtm/) and [NED](#http://nationalmap.gov/elevation.html).
 
 ##### Specify Interpolation Method
-  * This sets the resampling method applied during the AOP process. The default setting is cubic. Other options are Bilinear and Nearest neighbor.  However, for spectral analysis Bilinear is preferred because it affects the spectral DN the least.
-
+  * This sets the resampling method applied during the AOP process. The default setting is ortho_interpolation_type='Cubic'. Other options are Bilinear and Nearest Neighbor.  However, for spectral analysis Bilinear is preferred because it affects the spectral DN the least.
 
 ##### Tiling Zoom Level
-  * 
-
-
-
+  * The zoom-level for viewing can be set when enable_tiling ='True'
 
 ##### Using Dynamic Range Adjustment
 The included DRA algorithm has several inputs that affect the final 8-bit RGB result:
