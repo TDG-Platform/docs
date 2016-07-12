@@ -78,12 +78,12 @@ All inputs are **optional** with default values, with the exception of `data` wh
 Name                     |       Default         |        Valid Values             |   Description
 -------------------------|:---------------------:|---------------------------------|-----------------
 data                     |          N/A          | S3 URL                          | S3 location of 1B input data.
-[enable_acomp](#Run-DG-AComp)             |         true          | true, false                     | Run atmospheric compensation.
-[enable_pansharpen](#Pansharpening)   |         true          | true, false                     | Pan sharpen multispectral data.
-[enable_dra](#Using-Dynamic-Range-Adjustment)                 |         true          | true, false                     | Apply dynamic range adjustment.
+[enable_acomp](#run-dg-acomp)             |         true          | true, false                     | Run atmospheric compensation.
+[enable_pansharpen](#pansharpening)   |         true          | true, false                     | Pan sharpen multispectral data.
+[enable_dra](#using-dynamic-range-adjustment)                 |         true          | true, false                     | Apply dynamic range adjustment.
 [enable_tiling](#enable_tiling)           |         false         | true, false                     | Tile output images according to the `ortho_tiling_scheme` input.
-[bands](#Select-Bands-to-Process)          |         Auto          | PAN+MS, PAN, MS, Auto           | Bands to process. `Auto` inspects input data for band info.
-[parts](#Specifying-Strip-Parts)                    |       All Parts       | Comma-separated part numbers    | List of strip parts to include in processing.
+[bands](#select-bands-to-process)          |         Auto          | PAN+MS, PAN, MS, Auto           | Bands to process. `Auto` inspects input data for band info.
+[parts](#specifying-strip-parts)                    |       All Parts       | Comma-separated part numbers    | List of strip parts to include in processing.
 [ortho_epsg](#ortho_epsg) |       EPSG:4326      | EPSG codes, UTM                 | EPSG code of projection for orthorectification. `UTM` automatically determines EPSG code from strip coordinates.
 ortho_pixel_size         |         Auto          | Pixel size in meters, Auto      | Pixel size of orthorectified output. `Auto` inspects input data for collected pixel size.
 ortho_tiling_scheme      |          N/A          | Ex: DGHalfMeter:18              | Tiling scheme and zoom level for orthorectification. Overrides `ortho_epsg` and `ortho_pixel_size`.
