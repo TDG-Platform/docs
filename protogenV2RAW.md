@@ -6,7 +6,7 @@
  * [Outputs](#outputs) - Task outputs and example contents.
  * [Advanced](#advanced) - Additional information for advanced users.
  * [Known Issues](#known-issues) - Current or past issues known to exist.
- * [Contact Us](#ontact-us) - Contact tech or document owner.
+ * [Contact Us](#contact-us) - Contact tech or document owner.
 
 ### Quickstart
 This script gives the example of RAW with a single tif file as input. 
