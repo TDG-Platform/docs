@@ -78,7 +78,7 @@ All inputs are **optional** with default values, with the exception of `data` wh
 Name                     |       Default         |        Valid Values             |   Description
 -------------------------|:---------------------:|---------------------------------|-----------------
 data                     |          N/A          | S3 URL                          | S3 location of 1B input data.
-enable_acomp             |         true          | true, false                     | Run atmospheric compensation.
+[enable_acomp](#enable_acomp)             |         true          | true, false                     | Run atmospheric compensation.
 enable_pansharpen        |         true          | true, false                     | Pan sharpen multispectral data.
 enable_dra               |         true          | true, false                     | Apply dynamic range adjustment.
 enable_tiling            |         false         | true, false                     | Tile output images according to the `ortho_tiling_scheme` input.
@@ -194,7 +194,10 @@ The `log` output port contains the location where a trace of log messages genera
 
 
 
-### Advanced Options
+### Advanced Options:
+
+#### enable_acomp
+
 
 ##### Specifying Strip Parts
 The `parts` input can be used to limit processing to a subset of an input strip. This requires advance knowledge of the layout of a strip order. One way to get this information is by looking in the input strip's `GIS_FILES` directory at the *_PRODUCT_SHAPE.shp vectors. That particular file shows the boundaries of each part (scene) of a strip. Once those numeric values are known, set `parts` to a comma-separated list, e.g. `2, 3, 4`.
@@ -212,6 +215,6 @@ The included DRA algorithm has several inputs that affect the final 8-bit RGB re
 
  * `dra_bit_depth` - Typically it only makes sense to apply dynamic range adjustment to convert imagery to 8-bit. The 16-bit option is available mainly for debugging purposes, but isn't useful in normal situations.
 
-## Contact Us   
+#### Contact Us   
 If your customer is having a specific problem. Tech Owner: Tim Harris & Editor: Kathleen Johnson
 
