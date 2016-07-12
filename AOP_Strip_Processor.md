@@ -78,16 +78,16 @@ Name                     |       Default         |        Valid Values          
 data                     |          N/A          | S3 URL                          | S3 location of 1B input data.
 [enable_acomp](#run-dg-acomp)             |         true          | true, false                     | Run atmospheric compensation.
 [enable_pansharpen](#pansharpening)   |         true          | true, false                     | Pan sharpen multispectral data.
-[enable_dra](#dynamic-range-adjustment)                 |         true          | true, false                     | Apply dynamic range adjustment.
+[enable_dra](#dynamic-range-adjustment) |         true          | true, false                     | Apply dynamic range adjustment.
 [enable_tiling](#set-tiling)           |         false         | true, false                     | Tile output images according to the `ortho_tiling_scheme` input.
-[bands](#select-bands-to-process)          |         Auto          | PAN+MS, PAN, MS, Auto           | Bands to process. `Auto` inspects input data for band info.
+[bands](#select-bands-to-process)   |         Auto          | PAN+MS, PAN, MS, Auto           | Bands to process. `Auto` inspects input data for band info.
 [parts](#specifying-strip-parts)                    |       All Parts       | Comma-separated part numbers    | List of strip parts to include in processing.
 [ortho_epsg](#change-projection) |       EPSG:4326      | EPSG codes, UTM                 | EPSG code of projection for orthorectification. `UTM` automatically determines EPSG code from strip coordinates.
-[ortho_pixel_size](#set-pixel-size)         |         Auto          | Pixel size in meters, Auto      | Pixel size of orthorectified output. `Auto` inspects input data for collected pixel size.
+[ortho_pixel_size](#set-pixel-size) |         Auto          | Pixel size in meters, Auto      | Pixel size of orthorectified output. `Auto` inspects input data for collected pixel size.
 [ortho_tiling_scheme](#set-ortho-tiling-scheme)      |          N/A          | Ex: DGHalfMeter:18              | Tiling scheme and zoom level for orthorectification. Overrides `ortho_epsg` and `ortho_pixel_size`.
 [ortho_dem_specifier](#specify-dem)      |        SRTM90         | NED, SRTM30, SRTM90             | DEM identifier for orthorectification.
 [ortho_interpolation_type](#specify-interpolation-method) |         Cubic         | Nearest, Bilinear, Cubic        | Pixel interpolation type for orthorectification.
-dra_mode                 |    IntensityAdjust    | IntensityAdjust, BaseLayerMatch | Dynamic range adjustment type. `BaseLayerMatch` only supported for geographic projection (EPSG:4326).
+[dra_mode](#using-dynamic-range-adjustment)                 |    IntensityAdjust    | IntensityAdjust, BaseLayerMatch | Dynamic range adjustment type. `BaseLayerMatch` only supported for geographic projection (EPSG:4326).
 dra_low_cutoff           |          0.5          | 0.0 - 100.0                     | Low cutoff percentage for `dra_mode` == `IntensityAdjust`.
 dra_high_cutoff          |         99.95         | 0.0 - 100.0                     | High cutoff percentage for `dra_mode` == `IntensityAdjust`.
 dra_gamma                |          1.25         | Nonzero float value             | Gamma value for `dra_mode` == `IntensityAdjust`.
@@ -207,7 +207,7 @@ The `log` output port contains the location where a trace of log messages genera
   * The default for 'enable_dra' is on (True) and it must be set to 'False' to produce a 4-band or 8-band image (+/- panchromatic band). For all other Dynamic Range Adjustment Settings:  [see below](#using-dynammic-range-adjustment)
 
 ##### Set Tiling
-  * enable_tiling
+  * The 'enable_tiling' setting allows the image to be rendered according to a specified grid size.  Tiling is used to improve performance of subsequent image processing steps in the workflow, especially when computing resources are limited. The default setting is off.
 
 ##### *Select Bands to Process
   * 'bands' allows you to select the bands to be processes for further applications.  The default is 'Auto', which will process all of the bands (including panchromatic) that are in the S3 input data location.  Other options are PAN+MS, PAN, MS. Use when the next application of algorithm in your workflow requires specific band inputs.
@@ -219,10 +219,10 @@ The `log` output port contains the location where a trace of log messages genera
   * The 'ortho_epsg' The default is EPSG:4326 which is WGS84 geographic coordinates.  For some cases, such as for change detection, square pixel are required so you must reproject the image to a UTM grid.  You can specify the EPSG code if you know it, or set ortho_epsg='UTM' and the AOP processor will select the appropriate UTM zone.
   
 ##### Set Pixel Size
-  * The default setting is the same as the input pixel size. 
+  * The output image pixel size can be specified in meters. The default setting is the same as the input pixel size ('Auto'). 
   
 ##### Set Tiling Scheme
-
+  * A custom tiling scheme can be specified that overrides 'ortho_epsg' and 'ortho_pixel_size'
 
 ##### Specify DEM
   * The default DEM (digital elevation model) used in the orthorectification process is SRTM90 (Shuttle Radar Topography Mission).  Other options include [SRTM30](#http://www2.jpl.nasa.gov/srtm/) and [NED](#http://nationalmap.gov/elevation.html).
