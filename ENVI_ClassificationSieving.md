@@ -36,7 +36,7 @@
     )
 
     print workflow.execute()
-```python
+```
 
 
 ### Inputs	
