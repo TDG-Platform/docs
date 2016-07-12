@@ -73,7 +73,7 @@ The following table lists additional datasets over Naples, Italy, for various Di
 
 ### Inputs
 The following table lists the AOP_Strip_Processor inputs.
-All inputs are **optional** with default values, with the exception of `data` which specifies the task's input data location.
+All inputs are **optional** with default values, with the exception of `data` which specifies the task's input data location. Click on the name for a more detailed description of the use case.
 
 Name                     |       Default         |        Valid Values             |   Description
 -------------------------|:---------------------:|---------------------------------|-----------------
@@ -82,7 +82,7 @@ data                     |          N/A          | S3 URL                       
 [enable_pansharpen](#Pansharpening)   |         true          | true, false                     | Pan sharpen multispectral data.
 [enable_dra](#Using-Dynamic_Range_Adjustment)                 |         true          | true, false                     | Apply dynamic range adjustment.
 [enable_tiling](#enable_tiling)           |         false         | true, false                     | Tile output images according to the `ortho_tiling_scheme` input.
-[bands](#bands)          |         Auto          | PAN+MS, PAN, MS, Auto           | Bands to process. `Auto` inspects input data for band info.
+[bands](#Select-Bands-to-Process)          |         Auto          | PAN+MS, PAN, MS, Auto           | Bands to process. `Auto` inspects input data for band info.
 [parts](#Specifying-Strip_parts)                    |       All Parts       | Comma-separated part numbers    | List of strip parts to include in processing.
 [ortho_epsg](#ortho_epsg) |       EPSG:4326      | EPSG codes, UTM                 | EPSG code of projection for orthorectification. `UTM` automatically determines EPSG code from strip coordinates.
 ortho_pixel_size         |         Auto          | Pixel size in meters, Auto      | Pixel size of orthorectified output. `Auto` inspects input data for collected pixel size.
@@ -202,16 +202,15 @@ The `log` output port contains the location where a trace of log messages genera
 
 ##### *Pansharpening
 
-'enable_pansharpen' 
+'enable_pansharpen' output is a high-resolution RGB image.  The process merges the lower resolution multispectral image with the higer resolution panchromatic image to produce a high resolution multispectral image (RGB).
 
-**enable_dra** [see below}(#Using-Dynammic-Range-Adjustment)
+**enable_dra** [see below](#Using-Dynammic-Range-Adjustment)
 
-##### *enable_tiling
+##### enable_tiling
 
-##### *bands
+##### Select Bands to Process
 
-
-
+'bands' allows you to select the bands to be processes for further applications.  The default is 'Auto', which will process all of the bands (including panchromatic) that are in the S3 input data location.  Other options are PAN+MS, PAN, MS. Use when the next application of algorithm in your workflow requires specific band inputs.
 
 ##### Specifying Strip Parts
 The `parts` input can be used to limit processing to a subset of an input strip. This requires advance knowledge of the layout of a strip order. One way to get this information is by looking in the input strip's `GIS_FILES` directory at the *_PRODUCT_SHAPE.shp vectors. That particular file shows the boundaries of each part (scene) of a strip. Once those numeric values are known, set `parts` to a comma-separated list, e.g. `2, 3, 4`.
