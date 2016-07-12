@@ -8,6 +8,7 @@ This task uses the Reed-Xiaoli Detector (RXD) algorithm to identify the spectral
  * [Outputs](#outputs) - Task outputs and example contents.
  * [Advanced](#advanced) - Additional information for advanced users.
  * [Known Issues](#known-issues) - current or past issues known to exist.
+ * [Contact Us](#contact-us) - Contact tech or document owner.
 
 ### Quickstart
 
@@ -84,3 +85,5 @@ Your Processed Imagery will be written to the specified S3 Customer Location in 
 
 For background on the development and implementation of RX Anomaly Detection refer to the [ENVI Documentation](https://www.harrisgeospatial.com/docs/rxanomalydetection.html)
 
+###Contact Us
+Document Owner - Carl Reeder - creeder@digitalglobe.com
