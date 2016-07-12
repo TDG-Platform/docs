@@ -10,6 +10,7 @@ RAV can be run with Python using   [gbdxtools](https://github.com/DigitalGlobe/g
  * [Outputs](#outputs) - Task outputs and example contents.
  * [Advanced](#advanced) - Additional information for advanced users.
  * [Known Issues](#known-issues) - Current or past issues known to exist.
+ * [Contact Us](#contact-us) - Contact tech or document owner.
 
 ### Quickstart
 
@@ -109,3 +110,6 @@ Your Processed Imagery will be written as Binary .TIF image type UINT8x1 and pla
 
 For background on the development and implementation of  Protogen  [Documentation under development](Insert link here)
 
+###Contact Us
+Tech Owner - Georgios Ouzounis - gouzouni@digitalglobe.com
+Document Owner - Carl Reeder - creeder@digitalglobe.com
