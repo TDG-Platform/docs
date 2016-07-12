@@ -203,10 +203,11 @@ The `log` output port contains the location where a trace of log messages genera
 ##### Pansharpening
   * The 'enable_pansharpen' output is a high-resolution RGB image.  The process merges the lower resolution multispectral image with the higer resolution panchromatic image to produce a high resolution multispectral image (RGB). The default is to run pansharpening.  It must be set to 'False' if you want preserve the full 8-band or 4-band image from the input image.
 
-  **enable_dra** [see below](#using-dynammic-range-adjustment)
+##### All Dynamic Range Adjustment Settings:  [see below](#using-dynammic-range-adjustment)
+  * The default for 'enable_dra' is on (True) and it must be set to 'False' to produce a 4-band or 8-band image (+/- panchromatic band).
 
 ##### Set Tiling
-  enable_tiling
+  * enable_tiling
 
 ##### *Select Bands to Process
   * 'bands' allows you to select the bands to be processes for further applications.  The default is 'Auto', which will process all of the bands (including panchromatic) that are in the S3 input data location.  Other options are PAN+MS, PAN, MS. Use when the next application of algorithm in your workflow requires specific band inputs.
