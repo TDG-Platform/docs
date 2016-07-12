@@ -78,13 +78,13 @@ All inputs are **optional** with default values, with the exception of `data` wh
 Name                     |       Default         |        Valid Values             |   Description
 -------------------------|:---------------------:|---------------------------------|-----------------
 data                     |          N/A          | S3 URL                          | S3 location of 1B input data.
-[enable_acomp](#Run-DG-AComp)             |         true          | true, false                     | Run atmospheric compensation.
-[enable_pansharpen](#Pansharpening)   |         true          | true, false                     | Pan sharpen multispectral data.
-[enable_dra](#Using-Dynamic-Range-Adjustment)                 |         true          | true, false                     | Apply dynamic range adjustment.
-[enable_tiling](#enable_tiling)           |         false         | true, false                     | Tile output images according to the `ortho_tiling_scheme` input.
-[bands](#Select-Bands-to-Process)          |         Auto          | PAN+MS, PAN, MS, Auto           | Bands to process. `Auto` inspects input data for band info.
-[parts](#Specifying-Strip-Parts)                    |       All Parts       | Comma-separated part numbers    | List of strip parts to include in processing.
-[ortho_epsg](#ortho_epsg) |       EPSG:4326      | EPSG codes, UTM                 | EPSG code of projection for orthorectification. `UTM` automatically determines EPSG code from strip coordinates.
+[enable_acomp](#run-dg-acomp)             |         true          | true, false                     | Run atmospheric compensation.
+[enable_pansharpen](#pansharpening)   |         true          | true, false                     | Pan sharpen multispectral data.
+[enable_dra](#using-dynamic-range-adjustment)                 |         true          | true, false                     | Apply dynamic range adjustment.
+[enable_tiling](#set-tiling)           |         false         | true, false                     | Tile output images according to the `ortho_tiling_scheme` input.
+[bands](#select-bands-to-process)          |         Auto          | PAN+MS, PAN, MS, Auto           | Bands to process. `Auto` inspects input data for band info.
+[parts](#specifying-strip-parts)                    |       All Parts       | Comma-separated part numbers    | List of strip parts to include in processing.
+[ortho_epsg](#change-projection) |       EPSG:4326      | EPSG codes, UTM                 | EPSG code of projection for orthorectification. `UTM` automatically determines EPSG code from strip coordinates.
 ortho_pixel_size         |         Auto          | Pixel size in meters, Auto      | Pixel size of orthorectified output. `Auto` inspects input data for collected pixel size.
 ortho_tiling_scheme      |          N/A          | Ex: DGHalfMeter:18              | Tiling scheme and zoom level for orthorectification. Overrides `ortho_epsg` and `ortho_pixel_size`.
 ortho_dem_specifier      |        SRTM90         | NED, SRTM30, SRTM90             | DEM identifier for orthorectification.
@@ -196,21 +196,25 @@ The `log` output port contains the location where a trace of log messages genera
 
 ### Advanced Options & Use Cases:
 
-##### *Run DG AComp
-'enable_acomp' runs the DG Atmospheric Compensation Process.  This will remove haze and provide the best surface reflectance output for spectral analysis of imagery. It is set as default to run.
+  ##### *Run DG AComp
+  'enable_acomp' runs the DG Atmospheric Compensation Process.  This will remove haze and provide the best surface reflectance output for spectral analysis of imagery. It is set as default to run.
 
-##### Pansharpening
-'enable_pansharpen' output is a high-resolution RGB image.  The process merges the lower resolution multispectral image with the higer resolution panchromatic image to produce a high resolution multispectral image (RGB). The default is to run pansharpening.  It must be set to 'False' if you want preserve the full 8-band or 4-band image from the input image.
+  ##### *Pansharpening
+  'enable_pansharpen' output is a high-resolution RGB image.  The process merges the lower resolution multispectral image with the higer resolution panchromatic image to produce a high resolution multispectral image (RGB). The default is to run pansharpening.  It must be set to 'False' if you want preserve the full 8-band or 4-band image from the input image.
 
-**enable_dra** [see below](#Using-Dynammic-Range-Adjustment)
+  **enable_dra** [see below](#using-dynammic-range-adjustment)
 
-##### enable_tiling
+  ##### *Set Tiling
+  enable_tiling
 
-##### Select Bands to Process
-'bands' allows you to select the bands to be processes for further applications.  The default is 'Auto', which will process all of the bands (including panchromatic) that are in the S3 input data location.  Other options are PAN+MS, PAN, MS. Use when the next application of algorithm in your workflow requires specific band inputs.
+  ##### *Select Bands to Process
+  'bands' allows you to select the bands to be processes for further applications.  The default is 'Auto', which will process all of the bands (including panchromatic) that are in the S3 input data location.  Other options are PAN+MS, PAN, MS. Use when the next application of algorithm in your workflow requires specific band inputs.
 
-##### Specifying Strip Parts
-The `parts` input can be used to limit processing to a subset of an input strip. This requires advance knowledge of the layout of a strip order. One way to get this information is by looking in the input strip's `GIS_FILES` directory at the *_PRODUCT_SHAPE.shp vectors. That particular file shows the boundaries of each part (scene) of a strip. Once those numeric values are known, set `parts` to a comma-separated list, e.g. `2, 3, 4`.
+  ##### Specifying Strip Parts
+  The `parts` input can be used to limit processing to a subset of an input strip. This requires advance knowledge of the layout of a strip order. One way to get this information is by looking in the input strip's `GIS_FILES` directory at the *_PRODUCT_SHAPE.shp vectors. That particular file shows the boundaries of each part (scene) of a strip. Once those numeric values are known, set `parts` to a comma-separated list, e.g. `2, 3, 4`.
+
+  ###### Change Projection
+  'ortho_epsg' The default is EPSG:4326 which is WGS84 geographic coordinates.  For some cases, such as for change detection, square pixel are required so you must reproject the image to a UTM grid.  You can specify the EPSG code if you know it, or set ortho_epsg='UTM' and the AOP processor will select the appropriate UTM zone.
 
 ##### Using Dynamic Range Adjustment
 The included DRA algorithm has several inputs that affect the final 8-bit RGB result:
