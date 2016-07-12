@@ -231,5 +231,5 @@ The included DRA algorithm has several inputs that affect the final 8-bit RGB re
  * `dra_bit_depth` - Typically it only makes sense to apply dynamic range adjustment to convert imagery to 8-bit. The 16-bit option is available mainly for debugging purposes, but isn't useful in normal situations.
 
 #### Contact Us   
-If your customer is having a specific problem. Tech Owner: [Tim Harris](Tim.Harris@digitalglobe.com) & Editor: [Kathleen Johnson](kajohnso@digitalglobe.com)
+If your customer is having a specific problem. Tech Owner: Tim Harris (Tim.Harris@digitalglobe.com) & Editor: Kathleen Johnson (Kathleen.Johnson@digitalglobe.com)
 
