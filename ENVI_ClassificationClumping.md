@@ -95,3 +95,5 @@ Your post-classification file will be written to the specified S3 Customer Locat
 
 For background on the development and implementation of Classification Clumping refer to the [ENVI Documentation](https://www.harrisgeospatial.com/docs/clumpingclasses.html)
 
+###Contact Us
+Document Owner - Carl Reeder - creeder@digitalglobe.com
