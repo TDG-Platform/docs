@@ -78,13 +78,13 @@ All inputs are **optional** with default values, with the exception of `data` wh
 Name                     |       Default         |        Valid Values             |   Description
 -------------------------|:---------------------:|---------------------------------|-----------------
 data                     |          N/A          | S3 URL                          | S3 location of 1B input data.
-[enable_acomp](#enable_acomp)             |         true          | true, false                     | Run atmospheric compensation.
-enable_pansharpen        |         true          | true, false                     | Pan sharpen multispectral data.
-enable_dra               |         true          | true, false                     | Apply dynamic range adjustment.
-enable_tiling            |         false         | true, false                     | Tile output images according to the `ortho_tiling_scheme` input.
-bands                    |         Auto          | PAN+MS, PAN, MS, Auto           | Bands to process. `Auto` inspects input data for band info.
-parts                    |       All Parts       | Comma-separated part numbers    | List of strip parts to include in processing.
-ortho_epsg               |       EPSG:4326       | EPSG codes, UTM                 | EPSG code of projection for orthorectification. `UTM` automatically determines EPSG code from strip coordinates.
+[enable_acomp](#Run-DG-AComp)             |         true          | true, false                     | Run atmospheric compensation.
+[enable_pansharpen](#Pansharpening)   |         true          | true, false                     | Pan sharpen multispectral data.
+[enable_dra](#Using-Dynamic_Range_Adjustment)                 |         true          | true, false                     | Apply dynamic range adjustment.
+[enable_tiling](#enable_tiling)           |         false         | true, false                     | Tile output images according to the `ortho_tiling_scheme` input.
+[bands](#bands)          |         Auto          | PAN+MS, PAN, MS, Auto           | Bands to process. `Auto` inspects input data for band info.
+[parts](#Specifying-Strip_parts)                    |       All Parts       | Comma-separated part numbers    | List of strip parts to include in processing.
+[ortho_epsg](#ortho_epsg) |       EPSG:4326      | EPSG codes, UTM                 | EPSG code of projection for orthorectification. `UTM` automatically determines EPSG code from strip coordinates.
 ortho_pixel_size         |         Auto          | Pixel size in meters, Auto      | Pixel size of orthorectified output. `Auto` inspects input data for collected pixel size.
 ortho_tiling_scheme      |          N/A          | Ex: DGHalfMeter:18              | Tiling scheme and zoom level for orthorectification. Overrides `ortho_epsg` and `ortho_pixel_size`.
 ortho_dem_specifier      |        SRTM90         | NED, SRTM30, SRTM90             | DEM identifier for orthorectification.
@@ -194,9 +194,23 @@ The `log` output port contains the location where a trace of log messages genera
 
 
 
-### Advanced Options:
+### Advanced Options & Use Cases:
 
-#### enable_acomp
+##### *Run DG AComp
+
+'enable_acomp' runs the DG Atmospheric Compensation Process.  This will remove haze and provide the best surface reflectance output for spectral analysis of imagery. It is set as default to run.
+
+##### *Pansharpening
+
+'enable_pansharpen' 
+
+**enable_dra** [see below}(#Using-Dynammic-Range-Adjustment)
+
+##### *enable_tiling
+
+##### *bands
+
+
 
 
 ##### Specifying Strip Parts
