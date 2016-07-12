@@ -7,8 +7,8 @@
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and example contents.
  * [Advanced](#advanced) - Additional information for advanced users.
- * [Known Issues](#known-issues) - current or past issues known to exist.
 
+### Quickstart
 *Example Script:* Run in IPython using the GBDXTools Interface
 
 ```python
@@ -82,8 +82,8 @@ Name                       |       Default         |        Valid Values        
 file_types                 |          N/A          | string                          | Comma separated list of permitted file type extensions. Use this to filter input files
 dilate_kernel              |         3 X 3         | string                          | Specify 2D array of zeros and ones that represents the structuring element (kernel) used for a dilate operation.Dilation is a morphological operation that uses a structuring element to expand the shapes contained in the input image
 erode_kernel               |         3 X 3         | string                          | Specify 2D array of zeros and ones that represents the structuring element (kernel) used for an erode operation
-output_raster_uri          |     first to last     | string                          | Specify the order of class names in which sieving is applied to the classification image. 
-task_meta_data             |          N/A          | string                          | Comma separated list of permitted file type extensions. Use this to filter input files
+class_order                |     first to last     | string                          | Specify the order of class names in which sieving is applied to the classification image. 
+task_meta_data             |          N/A          | string                          | Output location for task meta data such as execution log and output JSON
 output_raster_uri_filename |         true          | Folder name in S3 location      | Specify the file name
 	
 
