@@ -2,9 +2,23 @@
 
 PANTEX10 is an un-supervised protocol for computing a built-up expectation layer from 8 band (optical + VNIR) image data-sets. This is a binary image in which intensity 255 indicates that it is likely that a pixel coincides with a built-up area and intensity 0 that a pixel does not coincide with a built-up area.  The building stock defining the built-up areas excludes those with roofs covered with ceramic tiles.
 
+
+### Table of Contents
+ * [Quickstart](#quickstart) - Get started!
+ * [Inputs](#inputs) - Required and optional task inputs.
+ * [Outputs](#outputs) - Task outputs and example contents.
+ * [Advanced](#advanced) - Additional information for advanced users.
+ * [Known Issues](#known-issues) - current or past issues known to exist.
+ * [Contact Us](#contact-us) - Contact tech or document owner.
+
+### Quickstart
+
 **Example Script:** Run in IPython using the [GBDXTools Interface] (https://github.com/DigitalGlobe/gbdxtools)
 
 
+This script gives the example of Pantex with a single tif file as input. 
+
+```python
     from gbdxtools import Interface 
     import json
     gbdx = Interface()
@@ -17,30 +31,26 @@ PANTEX10 is an un-supervised protocol for computing a built-up expectation layer
 
     print workflow.id
     print workflow.status
-	
-
+```	
+### Inputs
 **Description of Input Parameters and Options for "protogenV2PANTEX10":**
 
-WorldView 2 or WorldView 3 multi-spectral imagery (8-band optical and VNIR data sets) that has been atmospherically compensated by the AOP processor.  Supported formats are .TIF, .TIL, .HDR.
+WorldView 2 or WorldView 3 multi-spectral imagery (8-band optical and VNIR data sets) that has been atmospherically compensated by the AOP processor.  Supported formats are .TIF
+
+Name                     |       Default         |        Valid Values             |   Description
+-------------------------|:---------------------:|---------------------------------|-----------------
+raster                   |          N/A          | S3 URL   .TIF only              | S3 location of input .tif file processed through AOP_Strip_Processor.
 
 **REQUIRED SETTINGS AND DEFINITIONS:**
 
-* Define the Task:
-    * Required = ‘true’
-    * gbdxtask = gbdx.Task("protogenV2PANTEX10")
+### Outputs
 
-* S3 location of input data 'raster'(Must be run through AOP_strip_processor to have ortho-rectification and atmospheric compensation. Formats.TIF, .TIL, .HDR.   ):
-    * Required = ‘true’
-    * type = ‘directory’
-    * name = ‘raster’
-    
-* Define the Output Directory: The output directory of text file(a gbd-customer-data location)
-    * Required = ‘true’
-    * type = ‘output’
-    * name = "data"
+The following table lists the Pantex Protogen task outputs.
 
-* Define Stage to S3 location:
-    * workflow.savedata(prototask.outputs.data, location="S3Location/")
+Name | Required |   Description
+-----|:--------:|-----------------
+data |     Y    | This will explain the output file location and provide the output in .TIF format.
+log  |     N    | S3 location where logs are stored.
 
 **OPTIONAL SETTINGS: Required = False**
 
@@ -65,3 +75,6 @@ Your Processed Imagery will be written as Binary .TIF image type UINT8x1 and pla
 
 For background on the development and implementation of  Protogen  [Documentation under development](Insert link here)
 
+###Contact Us
+Tech Owner - Georgios Ouzounis - gouzouni@digitalglobe.com
+Document Owner - Carl Reeder - creeder@digitalglobe.com
