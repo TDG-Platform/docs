@@ -8,7 +8,7 @@ Note:  The wavelength metadata is not available in the correct format from the A
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and example contents.
  * [Advanced](#advanced) - Additional information for advanced users.
- * [Known Issues](#known-issues) - current or past issues known to exist.
+ * [Contact Us](#contact-us) - Contact tech or document owner.
 
 ### Quickstart
 
@@ -125,3 +125,5 @@ print workflow.execute()
 
 For background on the development and implementation of Spectral Index refer to the [ENVI Documentation](https://www.harrisgeospatial.com/docs/spectralindices.html)
 
+###Contact Us
+Document Owner - Carl Reeder - creeder@digitalglobe.com
