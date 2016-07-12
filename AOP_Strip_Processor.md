@@ -1,7 +1,5 @@
 # AOP_Strip_Processor
 
-[Contact Us](#contact-us)
-
 This task runs the Advanced Ortho Processing (AOP) algorithm to produce orthorectified imagery from raw (level 1B) imagery.  There are many additional processing options including atmospheric compensation (ACOMP) (which is always recommended), pansharpening and dynamic range adjustment (DRA).  
 
 AOP_Strip_Processor can be run with Python using   [gbdxtools](https://github.com/DigitalGlobe/gbdxtools) or through the [GBDX Web Application](https://gbdx.geobigdata.io/materials/).  
@@ -96,6 +94,9 @@ dra_gamma                |          1.25         | Nonzero float value          
 dra_bit_depth            |           8           | 8, 16                           | Output bit depth for `dra_mode` == `IntensityAdjust`.
 dra_baselayer_prefix     | s3://dg-baselayer/v2/ | S3 URL                          | S3 location of base layer for `dra_mode` == `BaseLayerMatch`. Base layer must be tiled to tiling scheme DGHalfMeter:9.
 tiling_zoom_level        |          12           | Integer (see tiling scheme)     | Zoom level (i.e. size) of output tiles for `enable_tiling` == `true`.
+
+[Contact Us](#contact-us) if your customer has a specific question regarding these options.
+
 
 The AOP task inputs can be set in various combinations to generate several different types of output imagery:
 
@@ -196,24 +197,24 @@ The `log` output port contains the location where a trace of log messages genera
 
 ### Advanced Options & Use Cases:
 
-  ##### *Run DG AComp
+##### *Run DG AComp
   'enable_acomp' runs the DG Atmospheric Compensation Process.  This will remove haze and provide the best surface reflectance output for spectral analysis of imagery. It is set as default to run.
 
-  ##### *Pansharpening
+##### *Pansharpening
   'enable_pansharpen' output is a high-resolution RGB image.  The process merges the lower resolution multispectral image with the higer resolution panchromatic image to produce a high resolution multispectral image (RGB). The default is to run pansharpening.  It must be set to 'False' if you want preserve the full 8-band or 4-band image from the input image.
 
   **enable_dra** [see below](#using-dynammic-range-adjustment)
 
-  ##### *Set Tiling
+##### *Set Tiling
   enable_tiling
 
-  ##### *Select Bands to Process
+##### *Select Bands to Process
   'bands' allows you to select the bands to be processes for further applications.  The default is 'Auto', which will process all of the bands (including panchromatic) that are in the S3 input data location.  Other options are PAN+MS, PAN, MS. Use when the next application of algorithm in your workflow requires specific band inputs.
 
-  ##### Specifying Strip Parts
+##### Specifying Strip Parts
   The `parts` input can be used to limit processing to a subset of an input strip. This requires advance knowledge of the layout of a strip order. One way to get this information is by looking in the input strip's `GIS_FILES` directory at the *_PRODUCT_SHAPE.shp vectors. That particular file shows the boundaries of each part (scene) of a strip. Once those numeric values are known, set `parts` to a comma-separated list, e.g. `2, 3, 4`.
 
-  ###### Change Projection
+###### Change Projection
   'ortho_epsg' The default is EPSG:4326 which is WGS84 geographic coordinates.  For some cases, such as for change detection, square pixel are required so you must reproject the image to a UTM grid.  You can specify the EPSG code if you know it, or set ortho_epsg='UTM' and the AOP processor will select the appropriate UTM zone.
 
 ##### Using Dynamic Range Adjustment
@@ -230,5 +231,5 @@ The included DRA algorithm has several inputs that affect the final 8-bit RGB re
  * `dra_bit_depth` - Typically it only makes sense to apply dynamic range adjustment to convert imagery to 8-bit. The 16-bit option is available mainly for debugging purposes, but isn't useful in normal situations.
 
 #### Contact Us   
-If your customer is having a specific problem. Tech Owner: Tim Harris & Editor: Kathleen Johnson
+If your customer is having a specific problem. Tech Owner: Tim Harris (Tim.Harris@digitalglobe.com) & Editor: Kathleen Johnson (Kathleen.Johnson@digitalglobe.com)
 

@@ -10,6 +10,7 @@ RAV can be run with Python using   [gbdxtools](https://github.com/DigitalGlobe/g
  * [Outputs](#outputs) - Task outputs and example contents.
  * [Advanced](#advanced) - Additional information for advanced users.
  * [Known Issues](#known-issues) - Current or past issues known to exist.
+ * [Contact Us](#contact-us) - Contact tech or document owner.
 
 ### Quickstart
 
@@ -43,7 +44,7 @@ All inputs are **required**
 Name                     |       Default         |        Valid Values             |   Description
 -------------------------|:---------------------:|---------------------------------|-----------------
 raster                   |          N/A          | S3 URL   .TIF only              | S3 location of input .tif file processed through AOP_Strip_Processor.
-data                     |         true          | Folder name in S3 location      | This will explain the output file location and provide the output in .TIF format.
+
 
 **OPTIONAL SETTINGS: Required = False**
 
@@ -109,3 +110,6 @@ Your Processed Imagery will be written as Binary .TIF image type UINT8x1 and pla
 
 For background on the development and implementation of  Protogen  [Documentation under development](Insert link here)
 
+###Contact Us
+Tech Owner - Georgios Ouzounis - gouzouni@digitalglobe.com
+Document Owner - Carl Reeder - creeder@digitalglobe.com
