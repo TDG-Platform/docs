@@ -201,7 +201,7 @@ The `log` output port contains the location where a trace of log messages genera
   * The 'enable_acomp' option runs the DG Atmospheric Compensation Process.  The default setting is on (True).  This will remove haze and provide the best surface reflectance output for spectral analysis of imagery. 
 
 ##### Pansharpening
-  * The 'enable_pansharpen' output is a high-resolution RGB image.  The process merges the lower resolution multispectral image with the higer resolution panchromatic image to produce a high resolution multispectral image (RGB). The default is to run pansharpening.  It must be set to 'False' if you want preserve the full 8-band or 4-band image from the input image.
+  * The 'enable_pansharpen' output is a high-resolution RGB image.  The process merges the lower resolution multispectral image with the higher resolution panchromatic image to produce a high resolution multispectral image (RGB). The default is to run pansharpening.  It must be set to 'False' if you want preserve the full 8-band or 4-band image from the input image.
 
 ##### Dynamic Range Adjustment
   * The default for 'enable_dra' is on (True) and it must be set to 'False' to produce a 4-band or 8-band image (+/- panchromatic band). For all other Dynamic Range Adjustment Settings:  [see below](#using-dynammic-range-adjustment)
