@@ -12,7 +12,7 @@
 *Example Script:* Run in IPython using the GBDXTools Interface
 
 ```python
-# Quickstart **Example Script Run in Python using the gbdxTools InterfaceExample producing a single band vegetation mask from a tif file.
+# Quickstart **Example Script Run in Python using the gbdxTools Interface
 # First Initialize the Environment 
    
 	from gbdxtools import Interface
@@ -84,7 +84,7 @@ dilate_kernel              |         3 X 3         | string                     
 erode_kernel               |         3 X 3         | string                          | Specify 2D array of zeros and ones that represents the structuring element (kernel) used for an erode operation
 class_order                |     first to last     | string                          | Specify the order of class names in which sieving is applied to the classification image. 
 task_meta_data             |          N/A          | string                          | Output location for task meta data such as execution log and output JSON
-output_raster_uri_filename |         true          | Folder name in S3 location      | Specify the file name
+output_raster_uri_filename |         output          | Folder name in S3 location      | Specify the file name
 	
 
 
