@@ -52,7 +52,6 @@ All inputs are **required**
 Name                     |       Default         |        Valid Values             |   Description
 -------------------------|:---------------------:|---------------------------------|-----------------
 raster                   |          N/A          | S3 URL   .TIF only              | S3 location of input .tif file processed through AOP_Strip_Processor.
-data                     |         true          | Folder name in S3 location      | This will explain the output file location and provide the output in .TIF format.
 
 **OPTIONAL SETTINGS: Required = False**
 
