@@ -2,8 +2,16 @@
 
 **ENVI_ClassificationSieving** The Sieving task solves the issue of isolated single pixels in a classification . With a classification image as input, the task uses a filter of 4 to 8 pixels to determine if a pixel is isolated within a group.  The isolated pixels identified by the algorithm will then be written in a new raster as 'unclassified'. Use ENVIClassificationClumpingTask to remove the black pixels.
 
+### Table of Contents
+ * [Quickstart](#quickstart) - Get started!
+ * [Inputs](#inputs) - Required and optional task inputs.
+ * [Outputs](#outputs) - Task outputs and example contents.
+ * [Advanced](#advanced) - Additional information for advanced users.
+
+ ### Quickstart 
 **Example Script:** Run in IPython using the GBDXTools Interface
 
+```python
     from gbdxtools import Interface
     gbdx = Interface()
 
@@ -28,66 +36,40 @@
     )
 
     print workflow.execute()
+```python
 
+
+### Inputs	
 **Description of Input Parameters and Options for "ENVI_ClassificationSieving":**
 This task will function on a classification image located in the S3 location.  The file type input of the classification is preferred in the .hdr format.  An example of ENVI ISO Data Classification is provided in the sample script above. Additional options include:
+
+All inputs are **required**
+
+Name                     |       Default         |        Valid Values             |   Description
+-------------------------|:---------------------:|---------------------------------|-----------------
+input_raster             |          N/A          | S3 URL   ENVI .hdr only         | S3 location of input data specify a raster on which to perform classification sieving 
 	
-**REQUIRED SETTINGS AND DEFINITIONS:**
 
-* S3 location of input data (Input classification file must be in ENVI format ):
-    * Required = true
-    * type = ‘directory’
-	* Description = Specify a raster on which to perform classification sieving 
-    * name = ‘input_raster’
+### Outputs
 
-* Define the Output Directory: (a gbd-customer-data location)
-    * Required = true
-    * type = ‘directory’
-	* description = Specify a string with the fully-qualified path and file name for OUTPUT_RASTER
-    * name = "output_raster_uri"
+The following table lists the Spectral Index task outputs.
 
+Name                | Required |   Description
+--------------------|:--------:|-----------------
+output_raster_uri   |     Y    | Specify a string with the fully-qualified path and file name for OUTPUT_RASTER.
+	
 
 **OPTIONAL SETTINGS AND DEFINITIONS:**
 
-* Define the File Types",
-    * Required = false 
-	* Description = Comma separated list of permitted file type extensions. Use this to filter input files
-    * type = 'string'
-    * name =  "file_types"
+Name                       |       Default         |        Valid Values             |   Description
+---------------------------|:---------------------:|---------------------------------|-----------------
+file_types                 |          N/A          | string                          | Comma separated list of permitted file type extensions. Use this to filter input files
+minimum_size               |         3 X 3         | string                          | Specify the minimum size of a blob to keep. If a minimum size is not defined, the minimum size will be set to two
+pixel_connectivity         |   The default is 8    | string                          | Specify 4 (four-neighbor) or 8 (eight-neighbor) regions around a pixel are searched, for continuous blobs. 
+class_order                |     first to last     | string                          | Specify the order of class names in which sieving is applied to the classification image. 
+task_meta_data             |          N/A          | string                          | Output location for task meta data such as execution log and output JSON
+output_raster_uri_filename |         true          | Folder name in S3 location      | Specify the file name
 
-* Define the Minimum Size",
-    * Required = false 
-	* Description = Specify the minimum size of a blob to keep. If a minimum size is not defined, the minimum size will be set to two.
-    * type = 'string'
-    * name =  "minimum_size"
-	
-* Define the Pixel Connectivity",
-    * Required = false 
-	* Description = Specify 4 (four-neighbor) or 8 (eight-neighbor) regions around a pixel are searched, for continuous blobs. The default is 8
-    * type = 'string'
-    * name =  "pixel_connectivity"
-
-* Define the Class Order",
-    * Required = false 
-	* Description = Specify the order of class names in which sieving is applied to the classification image. If you do not specify this keyword, the classes are processed from first to last
-    * type = 'string'
-    * name =  "class_order"	
-	
-* Define the Output Metadata Directory",
-    * Required = false 
-	* Description = GBDX Requirement. Output location for task meta data such as execution log and output JSON
-    * type = 'string'
-    * name =  "task_meta_data"
-	
-	
-	
-###Postman status @ 09:13 6/21/16
-completed_time": "2016-06-21T15:13:49.155121+00:00",
-  "state": {
-    "state": "complete",
-    "event": "succeeded"
-  },
-  "submitted_time": "2016-06-21T14:32:14.671243+00:00,
 
 
 **Data Structure for Expected Outputs:**
@@ -96,4 +78,3 @@ Your processed classification file will be written to the specified S3 Customer 
 
 
 For background on the development and implementation of Classification Sieving refer to the [ENVI Documentation](https://www.harrisgeospatial.com/docs/sievingclasses.html)
-
