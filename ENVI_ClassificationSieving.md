@@ -68,7 +68,7 @@ minimum_size               |         3 X 3         | string                     
 pixel_connectivity         |   The default is 8    | string                          | Specify 4 (four-neighbor) or 8 (eight-neighbor) regions around a pixel are searched, for continuous blobs. 
 class_order                |     first to last     | string                          | Specify the order of class names in which sieving is applied to the classification image. 
 task_meta_data             |          N/A          | string                          | Output location for task meta data such as execution log and output JSON
-output_raster_uri_filename |         true          | Folder name in S3 location      | Specify the file name
+output_raster_uri_filename |         output         | Folder name in S3 location     | Specify the file name
 
 
 
