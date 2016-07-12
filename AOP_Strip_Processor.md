@@ -95,8 +95,6 @@ data                     |          N/A          | S3 URL                       
 [dra_baselayer_prefix](#using-dynamic-range-adjustment)     | s3://dg-baselayer/v2/ | S3 URL                          | S3 location of base layer for `dra_mode` == `BaseLayerMatch`. Base layer must be tiled to tiling scheme DGHalfMeter:9.
 [tiling_zoom_level](tiling-zoom-level)        |          12           | Integer (see tiling scheme)     | Zoom level (i.e. size) of output tiles for `enable_tiling` == `true`.
 
-[Contact Us](#contact-us) if your customer has a specific question regarding these options.
-
 
 The AOP task inputs can be set in various combinations to generate several different types of output imagery:
 
@@ -195,46 +193,46 @@ The `log` output port contains the location where a trace of log messages genera
 
 
 
-### Advanced Options & Use Cases:
+### Advanced Options & Use Cases:  [Contact Us](#contact-us) if your customer has a specific question regarding these options.
 
-##### Run DG AComp
+#### Run DG AComp
   * The 'enable_acomp' option runs the DG Atmospheric Compensation Process.  The default setting is on (True).  This will remove haze and provide the best surface reflectance output for spectral analysis of imagery. 
 
-##### Pansharpening
+#### Pansharpening
   * The 'enable_pansharpen' output is a high-resolution RGB image.  The process merges the lower resolution multispectral image with the higher resolution panchromatic image to produce a high resolution multispectral image (RGB). The default is to run pansharpening.  It must be set to 'False' if you want preserve the full 8-band or 4-band image from the input image.
 
-##### Dynamic Range Adjustment
+#### Dynamic Range Adjustment
   * The default for 'enable_dra' is on (True) and it must be set to 'False' to produce a 4-band or 8-band image (+/- panchromatic band). For all other Dynamic Range Adjustment Settings:  [see below](#using-dynammic-range-adjustment)
 
-##### Set Tiling
+#### Set Tiling
   * The 'enable_tiling' setting allows the image to be rendered according to a specified grid size.  Tiling is used to improve performance of subsequent image processing steps in the workflow, especially when computing resources are limited. The default setting is off.
 
-##### *Select Bands to Process
+#### Select Bands to Process
   * 'bands' allows you to select the bands to be processes for further applications.  The default is 'Auto', which will process all of the bands (including panchromatic) that are in the S3 input data location.  Other options are PAN+MS, PAN, MS. Use when the next application of algorithm in your workflow requires specific band inputs.
 
-##### Specifying Strip Parts
+#### Specifying Strip Parts
   * The `parts` input can be used to limit processing to a subset of an input strip. This requires advance knowledge of the layout of a strip order. One way to get this information is by looking in the input strip's `GIS_FILES` directory at the *_PRODUCT_SHAPE.shp vectors. That particular file shows the boundaries of each part (scene) of a strip. Once those numeric values are known, set `parts` to a comma-separated list, e.g. `2, 3, 4`.
 
-##### Change Projection
+#### Change Projection
   * The 'ortho_epsg' The default is EPSG:4326 which is WGS84 geographic coordinates.  For some cases, such as for change detection, square pixel are required so you must reproject the image to a UTM grid.  You can specify the EPSG code if you know it, or set ortho_epsg='UTM' and the AOP processor will select the appropriate UTM zone.
   
-##### Set Pixel Size
+#### Set Pixel Size
   * The output image pixel size can be specified in meters. The default setting is the same as the input pixel size ('Auto'). 
   
-##### Set Tiling Scheme
+#### Set Tiling Scheme
   * A custom tiling scheme can be specified that overrides 'ortho_epsg' and 'ortho_pixel_size'
 
-##### Specify DEM
+#### Specify DEM
   * The default DEM (digital elevation model) used in the orthorectification process is SRTM90 (Shuttle Radar Topography Mission).  Other options include [SRTM30](#http://www2.jpl.nasa.gov/srtm/) and [NED](#http://nationalmap.gov/elevation.html).
 
-##### Specify Interpolation Method
+#### Specify Interpolation Method
   * This sets the resampling method applied during the AOP process. The default setting is ortho_interpolation_type='Cubic'. Other options are Bilinear and Nearest Neighbor.  However, for spectral analysis Bilinear is preferred because it affects the spectral DN the least.
 
-##### Tiling Zoom Level
+#### Tiling Zoom Level
   * The output zoom-level for viewing can be set when enable_tiling ='True'.  The default is 12m.  
 
-##### Using Dynamic Range Adjustment
-The included DRA algorithm has several inputs that affect the final 8-bit RGB result:
+#### Using Dynamic Range Adjustment
+The included DRA algorithm has several inputs that affect the final 8-bit RGB result. Please read all of the options carefully before making any adjustments.  The default DRA setting will work best for most cases.
 
  * `dra_mode` - IntensityAdjust is for standalone, individual images that are not going to be mosaicked together. BaseLayerMatch uses a global base layer for color matching and helps maintain consistency when mosaicking. The base layer started out as color-balanced and mosaicked Landsat imagery but may have started incorporating higher-res imagery also.
 
