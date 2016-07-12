@@ -6,6 +6,7 @@
  * [Outputs](#outputs) - Task outputs and example contents.
  * [Advanced](#advanced) - Additional information for advanced users.
  * [Known Issues](#known-issues) - Current or past issues known to exist.
+ * [Contact Us](#ontact-us) - Contact tech or document owner.
 
 ### Quickstart
 This script gives the example of RAW with a single tif file as input. 
@@ -98,8 +99,12 @@ Your Processed Imagery will be written as Binary .TIF image type UINT8x1 and pla
 
 2)False positives maybe present due to certain types of concrete roofs or shadows.
 
-3) Testing additional input formats still in progress.  .VRT is currently not functioning (6/30/2016)**
+3) Testing additional input formats still in progress.  .VRT is currently not functioning (6/30/2016)
 
 
 For background on the development and implementation of  Protogen  [Documentation under development](Insert link here)
+
+###Contact Us
+Tech Owner - Georgios Ouzounis - gouzouni@digitalglobe.com
+Document Owner - Carl Reeder - creeder@digitalglobe.com
 
