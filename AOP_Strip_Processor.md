@@ -1,7 +1,5 @@
 # AOP_Strip_Processor
 
-[Contact Us](#contact-us)
-
 This task runs the Advanced Ortho Processing (AOP) algorithm to produce orthorectified imagery from raw (level 1B) imagery.  There are many additional processing options including atmospheric compensation (ACOMP) (which is always recommended), pansharpening and dynamic range adjustment (DRA).  
 
 AOP_Strip_Processor can be run with Python using   [gbdxtools](https://github.com/DigitalGlobe/gbdxtools) or through the [GBDX Web Application](https://gbdx.geobigdata.io/materials/).  
@@ -96,6 +94,9 @@ dra_gamma                |          1.25         | Nonzero float value          
 dra_bit_depth            |           8           | 8, 16                           | Output bit depth for `dra_mode` == `IntensityAdjust`.
 dra_baselayer_prefix     | s3://dg-baselayer/v2/ | S3 URL                          | S3 location of base layer for `dra_mode` == `BaseLayerMatch`. Base layer must be tiled to tiling scheme DGHalfMeter:9.
 tiling_zoom_level        |          12           | Integer (see tiling scheme)     | Zoom level (i.e. size) of output tiles for `enable_tiling` == `true`.
+
+[Contact Us](#contact-us) if your customer has a specific question regarding these options.
+
 
 The AOP task inputs can be set in various combinations to generate several different types of output imagery:
 
@@ -230,5 +231,5 @@ The included DRA algorithm has several inputs that affect the final 8-bit RGB re
  * `dra_bit_depth` - Typically it only makes sense to apply dynamic range adjustment to convert imagery to 8-bit. The 16-bit option is available mainly for debugging purposes, but isn't useful in normal situations.
 
 #### Contact Us   
-If your customer is having a specific problem. Tech Owner: Tim Harris & Editor: Kathleen Johnson
+If your customer is having a specific problem. Tech Owner: [Tim Harris](Tim.Harris@digitalglobe.com) & Editor: [Kathleen Johnson](kajohnso@digitalglobe.com)
 
