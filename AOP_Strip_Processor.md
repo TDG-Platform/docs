@@ -88,11 +88,11 @@ data                     |          N/A          | S3 URL                       
 [ortho_dem_specifier](#specify-dem)      |        SRTM90         | NED, SRTM30, SRTM90             | DEM identifier for orthorectification.
 [ortho_interpolation_type](#specify-interpolation-method) |         Cubic         | Nearest, Bilinear, Cubic        | Pixel interpolation type for orthorectification.
 [dra_mode](#using-dynamic-range-adjustment)                 |    IntensityAdjust    | IntensityAdjust, BaseLayerMatch | Dynamic range adjustment type. `BaseLayerMatch` only supported for geographic projection (EPSG:4326).
-dra_low_cutoff           |          0.5          | 0.0 - 100.0                     | Low cutoff percentage for `dra_mode` == `IntensityAdjust`.
-dra_high_cutoff          |         99.95         | 0.0 - 100.0                     | High cutoff percentage for `dra_mode` == `IntensityAdjust`.
-dra_gamma                |          1.25         | Nonzero float value             | Gamma value for `dra_mode` == `IntensityAdjust`.
-dra_bit_depth            |           8           | 8, 16                           | Output bit depth for `dra_mode` == `IntensityAdjust`.
-dra_baselayer_prefix     | s3://dg-baselayer/v2/ | S3 URL                          | S3 location of base layer for `dra_mode` == `BaseLayerMatch`. Base layer must be tiled to tiling scheme DGHalfMeter:9.
+[dra_low_cutoff](#using-dynamic-range-adjustment)           |          0.5          | 0.0 - 100.0                     | Low cutoff percentage for `dra_mode` == `IntensityAdjust`.
+[dra_high_cutoff](#using-dynamic-range-adjustment)          |         99.95         | 0.0 - 100.0                     | High cutoff percentage for `dra_mode` == `IntensityAdjust`.
+[dra_gamma](#using-dynamic-range-adjustment)                |          1.25         | Nonzero float value             | Gamma value for `dra_mode` == `IntensityAdjust`.
+[dra_bit_depth](#using-dynamic-range-adjustment)            |           8           | 8, 16                           | Output bit depth for `dra_mode` == `IntensityAdjust`.
+[dra_baselayer_prefix](#using-dynamic-range-adjustment)     | s3://dg-baselayer/v2/ | S3 URL                          | S3 location of base layer for `dra_mode` == `BaseLayerMatch`. Base layer must be tiled to tiling scheme DGHalfMeter:9.
 [tiling_zoom_level](tiling-zoom-level)        |          12           | Integer (see tiling scheme)     | Zoom level (i.e. size) of output tiles for `enable_tiling` == `true`.
 
 [Contact Us](#contact-us) if your customer has a specific question regarding these options.
