@@ -6,7 +6,7 @@
  * [Quickstart](#quickstart) - Get started!
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and example contents.
-
+ * [Contact Us](#contact-us) - Contact tech or document owner.
 
 **Example Script:** Run in IPython using the GBDXTools Interface
 
@@ -73,3 +73,5 @@ Your Processed ROI file will be written to the specified S3 Customer Location in
 
 For background on the development and implementation of Spectral Index refer to the [ENVI Documentation](https://www.harrisgeospatial.com/docs/enviimagethresholdtoroitask.html)
 
+###Contact Us
+Document Owner - Carl Reeder - creeder@digitalglobe.com
