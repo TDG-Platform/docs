@@ -78,7 +78,7 @@ Name                     |       Default         |        Valid Values          
 data                     |          N/A          | S3 URL                          | S3 location of 1B input data.
 [enable_acomp](#run-dg-acomp)             |         true          | true, false                     | Run atmospheric compensation.
 [enable_pansharpen](#pansharpening)   |         true          | true, false                     | Pan sharpen multispectral data.
-[enable_dra](#using-dynamic-range-adjustment)                 |         true          | true, false                     | Apply dynamic range adjustment.
+[enable_dra](#dynamic-range-adjustment)                 |         true          | true, false                     | Apply dynamic range adjustment.
 [enable_tiling](#set-tiling)           |         false         | true, false                     | Tile output images according to the `ortho_tiling_scheme` input.
 [bands](#select-bands-to-process)          |         Auto          | PAN+MS, PAN, MS, Auto           | Bands to process. `Auto` inspects input data for band info.
 [parts](#specifying-strip-parts)                    |       All Parts       | Comma-separated part numbers    | List of strip parts to include in processing.
@@ -203,8 +203,8 @@ The `log` output port contains the location where a trace of log messages genera
 ##### Pansharpening
   * The 'enable_pansharpen' output is a high-resolution RGB image.  The process merges the lower resolution multispectral image with the higer resolution panchromatic image to produce a high resolution multispectral image (RGB). The default is to run pansharpening.  It must be set to 'False' if you want preserve the full 8-band or 4-band image from the input image.
 
-##### All Dynamic Range Adjustment Settings:  [see below](#using-dynammic-range-adjustment)
-  * The default for 'enable_dra' is on (True) and it must be set to 'False' to produce a 4-band or 8-band image (+/- panchromatic band).
+##### Dynamic Range Adjustment
+  * The default for 'enable_dra' is on (True) and it must be set to 'False' to produce a 4-band or 8-band image (+/- panchromatic band). For all other Dynamic Range Adjustment Settings:  [see below](#using-dynammic-range-adjustment)
 
 ##### Set Tiling
   * enable_tiling
@@ -226,7 +226,6 @@ The `log` output port contains the location where a trace of log messages genera
 
 ##### Specify DEM
   * The default DEM (digital elevation model) used in the orthorectification process is SRTM90 (Shuttle Radar Topography Mission).  Other options include [SRTM30](#http://www2.jpl.nasa.gov/srtm/) and [NED](#http://nationalmap.gov/elevation.html).
-
 
 ##### Specify Interpolation Method
   * This sets the resampling method applied during the AOP process. The default setting is cubic. Other options are Bilinear and Nearest neighbor.  However, for spectral analysis Bilinear is preferred because it affects the spectral DN the least.
