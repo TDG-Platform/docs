@@ -2,8 +2,15 @@
 
 **ENVI_ImageThresholdToROI** This task creates ROIs from band thresholds. You can specify one or more thresholds for one or more ROIs.
 
+### Table of Contents
+ * [Quickstart](#quickstart) - Get started!
+ * [Inputs](#inputs) - Required and optional task inputs.
+ * [Outputs](#outputs) - Task outputs and example contents.
+
+
 **Example Script:** Run in IPython using the GBDXTools Interface
-	
+
+```python
     from gbdxtools import Interface
     gbdx = Interface()
 
@@ -22,8 +29,9 @@
     )
 	
     print workflow.execute()
-	
-	
+```python	
+
+### Inputs	
 
 **Description of Input Parameters and Options for the "ENVI_ImageThresholdToROI":**
 This task will function on a multi-spectral image located in the S3 location: 
@@ -32,58 +40,30 @@ Tif files from the AOP_Strip_Processor were tested with this task to confirm fun
 	
 **REQUIRED SETTINGS AND DEFINITIONS:**
 
-* S3 location of input data (1B data will process by TIL or a strip run through AOP will be in TIF format):
-    * Required = true
-    * type = ‘directory’
-	* Description = specify the input raster for applying the thresholds
-    * name = ‘input_raster’
-
-* Define ROI color 
-    * Required = true
-    * type = ‘string’
-	* Description = Specify a (3,n) byte array with the RGB colors for each ROI, where n is the number of ROIs specified by ROI_NAME
-    * name = ‘roi_color’
+Name                     |       Default         |                 Valid Values                        |   Description
+-------------------------|:---------------------:|-----------------------------------------------------|-----------------
+input_raster             |          N/A          | S3 URL   directory                                  | S3 location of input data specify the input raster for applying the thresholds
+roi_color                |          N/A          | 3,n byte array with RGB color (see example script)  | Define ROI color where n is the number of ROIs specified by ROI_NAME
+threshold                |          N/A          | [minimum, maximum, zero-based band number]          | specify an array that represents a threshold: [minimum, maximum, zero-based band number] You can have one or more thresholds to one or more ROIs
+roi_name                 |          N/A          | String  (see example script)                        | Specify a string or array of strings with the names of each ROI
 	
-* Define ROI threshold 
-    * Required = true
-    * type = ‘string’
-	* Description = specify an array that represents a threshold: [minimum, maximum, zero-based band number].  You can have one or more thresholds to one or more ROIs
-    * name = ‘roi_color’
 
-* Define ROI name 
-    * Required = true
-    * type = ‘string’
-	* Description = Specify a string or array of strings with the names of each ROI
-    * name = ‘roi_color’
+### Outputs
 
-* Define the Output Directory: (a gbd-customer-data location)
-    * Required = true
-    * type = ‘directory’
-	* description = Specify a string with the fully-qualified path and filename for OUTPUT_ROI
-    * name = "output_roi_uri"
+The following table lists the ENVI_ImageThresholdToROI task outputs.
+
+Name                | Required |   Description
+--------------------|:--------:|-----------------
+output_raster_uri   |     Y    | Specify a string with the fully-qualified path and file name for OUTPUT_RASTER.
 
 
 **OPTIONAL SETTINGS AND DEFINITIONS:**
 
-* Define the File Types",
-    * Required = false 
-	* Description = Comma separated list of permitted file type extensions. Use this to filter input files
-    * type = 'string'
-    * name =  "file_types"
+Name                       |       Default         |        Valid Values             |   Description
+---------------------------|:---------------------:|---------------------------------|-----------------
+file_types                 |          N/A          | string                          | Comma separated list of permitted file type extensions. Use this to filter input files
+output_roi_uri_filename    |         true          | Folder name in S3 location      | Specify the file name
 
-* Define the Output log Directory",
-    * Required = false 
-	* Description = Specify a string with the fully-qualified path and file name for OUTPUT_ROI
-    * type = 'string'
-    * name =  "output_roi_uri_filename"
-
-###Postman status @ 13:07 6/20/16
-"completed_time": "2016-06-20T18:08:53.313140+00:00",
-  "state": {
-    "state": "complete",
-    "event": "succeeded"
-  },
-  "submitted_time": "2016-06-20T17:58:56.112324+00:00",
 
 
 **Data Structure for Expected Outputs:**
