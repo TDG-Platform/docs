@@ -21,6 +21,7 @@ Input imagery must at least contain the VNIR multispectral bands, and optionally
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and example contents.
  * [Advanced Options](#advanced-options) - Additional information for advanced users.
+ * [Known Issues](#known-issues)
 
 ### Quickstart
 
@@ -99,7 +100,8 @@ On completion, the processed imagery will be written to your specified S3 Custom
 
 ### Advanced Options
 
-
+###Known Issues
+AComp0.23.2.1 currently does not run end-to-end with ENVI Tasks.  A "glueTask" to link these processes is under development.
 
 
 
