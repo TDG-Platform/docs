@@ -103,8 +103,35 @@ On completion, the processed imagery will be written to your specified S3 Custom
 
 ### Advanced Options
 
-Here we present specific examples for running AComp on VNIR+SWIR:
+Script Example running AComp on VNIR+SWIR:
 
+	# Runs AComp_0.23.2.1, then sends that data to the protogenV2LULC process
+	from gbdxtools import Interface 
+	import json
+	gbdx = Interface()
+	
+	# Test Imagery for Tracy, CA: WV02
+	# Setup AComp Task
+	acompTask = gbdx.Task('AComp_0.23.2.1', exclude_bands='P', data='s3://receiving-dgcs-tdgplatform-com/055168976010_01_003')
+
+	# Stage AComp output for the Protogen Task
+	pp_task = gbdx.Task("ProtogenPrep",raster=acompTask.outputs.data.value)    
+	
+	# Setup ProtogenV2LULC Task
+	prot_lulc = gbdx.Task("protogenV2LULC",raster=pp_task.outputs.data.value)
+
+	# Run Combined Workflow
+	workflow = gbdx.Workflow([ acompTask, pp_task, prot_lulc ])
+	workflow.savedata(prot_lulc.outputs.data.value, location="S3 gbd-customer-data location")
+	workflow.execute()
+	
+	print workflow.id
+	print workflow.status
+
+
+
+
+Script Example linking AComp to [protogenV2LULC](https://github.com/TDG-Platform/docs/blob/master/protogenV2LULC.md):
 
 
 ###Known Issues
