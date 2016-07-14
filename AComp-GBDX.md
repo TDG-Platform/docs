@@ -80,7 +80,7 @@ The following table lists the AComp-GBDX inputs. All inputs are optional with de
 
 Name                     |       Default         |        Valid Values             |   Description
 -------------------------|:---------------------:|---------------------------------|-----------------
-data (in)      |   N/A   | S3 URL                                | S3 location of 1B input data.
+data (in)      |   N/A   | S3 URL                                | S3 location of input data.
 data (out)     |   N/A   | S3 URL                                | S3 gbd-customer-data location
 exclude_bands  |   Off	 |  'P', 'MS1', 'Multi', 'All-S'         | Comma-separated list of bands to exclude; excluded bands are not processed. 
 bit_depth      |   16    |  16 or 32                             | Bit depth refers to how many digits the spectral information for each pixel is stored in
