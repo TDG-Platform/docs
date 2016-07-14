@@ -105,6 +105,11 @@ On completion, the processed imagery will be written to your specified S3 Custom
 
 Script Example running AComp on VNIR+SWIR:
 
+
+
+
+Script Example linking AComp to [protogenV2LULC](https://github.com/TDG-Platform/docs/blob/master/protogenV2LULC.md):
+
 	# Runs AComp_0.23.2.1, then sends that data to the protogenV2LULC process
 	from gbdxtools import Interface 
 	import json
@@ -128,10 +133,6 @@ Script Example running AComp on VNIR+SWIR:
 	print workflow.id
 	print workflow.status
 
-
-
-
-Script Example linking AComp to [protogenV2LULC](https://github.com/TDG-Platform/docs/blob/master/protogenV2LULC.md):
 
 
 ###Known Issues
