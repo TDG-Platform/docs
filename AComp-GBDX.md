@@ -20,7 +20,7 @@ Input imagery must at least contain the VNIR multispectral bands, and optionally
  * [Quickstart](#quickstart) - Get started!
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and example contents.
- * [Advanced Options](#advanced-options) - Details on linking to a second task and running VNIR+SWIR
+ * [Advanced Options](#advanced-options) - Examples linking to a second task and running VNIR+SWIR
  * [Known Issues](#known-issues)
 
 ### Quickstart
