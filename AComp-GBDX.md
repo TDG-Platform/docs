@@ -20,7 +20,7 @@ Input imagery must at least contain the VNIR multispectral bands, and optionally
  * [Quickstart](#quickstart) - Get started!
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and example contents.
- * [Advanced Options](#advanced-options) - Additional information for advanced users.
+ * [Advanced Options](#advanced-options) - Details on running VNIR+SWIR
  * [Known Issues](#known-issues)
 
 ### Quickstart
@@ -84,7 +84,7 @@ data (in)      |   N/A   | S3 URL                                | S3 location o
 data (out)     |   N/A   | S3 URL                                | S3 gbd-customer-data location
 exclude_bands  |   Off	 |  'P', 'MS1', 'Multi', 'All-S'         | Comma-separated list of bands to exclude; excluded bands are not processed. 
 bit_depth      |   16    |  16 or 32                             | Bit depth refers to how many digits the spectral information for each pixel is stored in
-aod_grid_size  |   input data grid size   |  ????                                 | specify an alternate grid size
+aod_grid_size  |   10m   |  Integer values in meters             | Aerosol Optical Depth (e.g. @ 2m image resolution a 5X5m patch is averaged to determine the AOD)
 
 
 **Script Example specifying exclusion of panchromatic bands**
