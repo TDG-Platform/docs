@@ -35,7 +35,7 @@ The AComp GBDX task can be run through a simple Python script using  [gbdxtools]
     import json
     acomp = gbdx.Task('AComp_0.23.2.1', data='s3://landsat-pds/L8/033/032/LC80330322015035LGN00')
     workflow = gbdx.Workflow([acomp])
-    workflow.savedata(acomp.outputs.data, location='acomp_output_folder')
+    workflow.savedata(acomp.outputs.data, location='S3 gbd-customer-data location')
     workflow.execute()
            
     print workflow.id
@@ -48,7 +48,7 @@ The AComp GBDX task can be run through a simple Python script using  [gbdxtools]
     2016-06-06 10:53:09,026 - gbdxtools - INFO - Logger initialized
     In [3]: acomp = gbdx.Task('AComp_0.23.2.1', data='s3://landsat-pds/L8/033/032/LC80330322015035LGN00')
     In [4]: workflow = gbdx.Workflow([acomp])
-    In [5]: workflow.savedata(acomp.outputs.data, location='acomp_output_folder')
+    In [5]: workflow.savedata(acomp.outputs.data, location='S3 gbd-customer-data location')
     In [6]: workflow.execute()
     Out[6]: u'4349739083145886153'
     In [7]: print workflow.id
