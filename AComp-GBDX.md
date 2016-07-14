@@ -99,6 +99,7 @@ aod_grid_size  |   10m   |  Integer values in meters             | Aerosol Optic
 
 On completion, the processed imagery will be written to your specified S3 Customer Location (e.g.  s3://gbd-customer-data/unique customer id/named directory/).   The AComp output files will be located Within the 'named directory'. The specific layout and names of the output files will depend on the specific input files and the options selected. 
 
+[Contact Us](#contact-us) If your Customer has questions regarding required inputs, expected outputs and Advanced Options.
 
 ### Advanced Options
 
@@ -110,4 +111,6 @@ Here we present specific examples for running AComp on VNIR+SWIR:
 AComp0.23.2.1 currently does not run end-to-end with ENVI Tasks.  A "glueTask" to link these processes is under development.
 
 
+### Contact Us
+Tech Owner: Alex Comer & Editor:  Kathleen Johnson
 
