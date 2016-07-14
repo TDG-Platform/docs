@@ -70,7 +70,9 @@ The AComp GBDX task can be run through a simple Python script using  [gbdxtools]
 ### Inputs
 
 To use this task, set the "data" input parameter (described below) to point at an S3 bucket containing the image data to process. Note that this
-task will search through the given bucket to locate the input data and process the data it finds. In order to process VNIR or VNIR + PAN data, simply point the "data" input parameter at the directory within the bucket containing the VNIR or VNIR + PAN data for a single catalog ID. If SWIR data is to also be processed, the process is slightly different. Since SWIR data is normally ordered separately from VNIR in GBDX and therefore has a different catalog ID, in order to process VNIR+SWIR or VNIR+PAN+SWIR, it is necessary to point the "data" input parameter at a parent directory containing both a single VNIR (or VNIR+PAN) catalog ID directory and also a single corresponding SWIR catalog ID directory. Note that the SWIR data must intersect the VNIR data and be "acquired during the same overpass" in order to obtain valid results. SWIR data acquired during the same overpass will have a catalog ID that is differentiated from the VNIR catalog ID solely by having an "A" in the 4th position of the catalog ID. For example, the SWIR catalog ID 104A010008437000 was acquired during the same overpass as the the VNIR catalog ID 1040010008437000.
+task will search through the given bucket to locate the input data and process the data it finds. In order to process VNIR or VNIR + PAN data, simply point the "data" input parameter at the directory within the bucket containing the VNIR or VNIR + PAN data for a single catalog ID. 
+
+If SWIR data is to also be processed, the workflow is slightly different. A summary follows here, but refer to [Advanced Options](#advanced-options) for examples. Since SWIR data is normally ordered separately from VNIR in GBDX and therefore has a different catalog ID, in order to process VNIR+SWIR or VNIR+PAN+SWIR, it is necessary to point the "data" input parameter at a parent directory containing both a single VNIR (or VNIR+PAN) catalog ID directory and also a single corresponding SWIR catalog ID directory. Note that the SWIR data must intersect the VNIR data and be "acquired during the same overpass" in order to obtain valid results. SWIR data acquired during the same overpass will have a catalog ID that is differentiated from the VNIR catalog ID solely by having an "A" in the 4th position of the catalog ID. For example, the SWIR catalog ID 104A010008437000 was acquired during the same overpass as the the VNIR catalog ID 1040010008437000.
 
 **Description of Input Parameters and Options for the AComp GBDX task**
 
@@ -81,7 +83,7 @@ Name                     |       Default         |        Valid Values          
 data (in)      |   N/A   | S3 URL                                | S3 location of 1B input data.
 data (out)     |   N/A   | S3 URL                                | S3 gbd-customer-data location
 exclude_bands  |   Off	 |  'P', 'MS1', 'Multi', 'All-S'         | Comma-separated list of bands to exclude; excluded bands are not processed. 
-bit_depth      |   16    |  16 or 32                             |
+bit_depth      |   16    |  16 or 32                             | Bit depth refers to how many digits the spectral information for each pixel is stored in
 aod_grid_size  |   input data grid size   |  ????                                 | specify an alternate grid size
 
 
@@ -99,6 +101,10 @@ On completion, the processed imagery will be written to your specified S3 Custom
 
 
 ### Advanced Options
+
+Here we present specific examples for running AComp on VNIR+SWIR:
+
+
 
 ###Known Issues
 AComp0.23.2.1 currently does not run end-to-end with ENVI Tasks.  A "glueTask" to link these processes is under development.
