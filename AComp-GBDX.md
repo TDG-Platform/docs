@@ -160,7 +160,7 @@ Script Example linking AComp to [protogenV2LULC](https://github.com/TDG-Platform
 
 *AComp_0.23.2.1 currently does not run end-to-end with ENVI Tasks.  A "glueTask" to link these processes is under development.
 
-*There may be alignment problems between VNIR and SWIR output.  A resolution to this problem is expected soon.  in the menatime, if you encounter a problem, please contact uu.
+*There may be alignment problems between VNIR and SWIR output.  A resolution to this problem is expected soon.  In the meantime, if you encounter a problem, please contact us.
 
 
 ### Contact Us
