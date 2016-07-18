@@ -193,7 +193,7 @@ The `log` output port contains the location where a trace of log messages genera
 
 
 
-### Advanced Options & Use Cases:  [Contact Us](#contact-us) if your customer has a specific question regarding these options.
+### Advanced Options 
 
 #### Run DG AComp
   * The 'enable_acomp' option runs the DG Atmospheric Compensation Process.  The default setting is on (True).  This will remove haze and provide the best surface reflectance output for spectral analysis of imagery. 
