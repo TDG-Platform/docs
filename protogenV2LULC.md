@@ -26,7 +26,7 @@ This script gives the example of LULC with a single tif file as input.
     
     # Input data
     raster = 's3://gbd-customer-data/PathToImage/image.tif'
-    prototask = gbdx.Task("protogenV2RAC", raster=raster)
+    prototask = gbdx.Task("protogenV2LULC", raster=raster)
 
     workflow = gbdx.Workflow([ prototask ])  
     workflow.savedata(prototask.outputs.data, location="LULC")
