@@ -7,7 +7,7 @@ Complete description of task function:
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
  * [Inputs](#inputs) - Required and optional task inputs.
- * [Outputs](#outputs) - Task outputs.
+ * [Outputs](#outputs) - Task outputs and example contents.
  * [Advanced](#advanced) - Additional information for advanced users.
  * [Known Issues](#known-issues) - current or past issues known to exist.
 
