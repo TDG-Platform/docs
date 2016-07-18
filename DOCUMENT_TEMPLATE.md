@@ -7,7 +7,7 @@ Complete description of task function:
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
  * [Inputs](#inputs) - Required and optional task inputs.
- * [Outputs](#outputs) - Task outputs and example contents.
+ * [Outputs](#outputs) - Task outputs.
  * [Advanced](#advanced) - Additional information for advanced users.
  * [Known Issues](#known-issues) - current or past issues known to exist.
 
@@ -67,5 +67,5 @@ Explain the output format of the task (e.g. .TIF image type UINT8x1 and placed i
 
 List issues current or past with the task (e.g. Version x does not ingest vrt files)
 
-For background on the development and implementation of (task name) see [Documentation under development](Insert link here).
+For background on the development and implementation of (task name) see [here](Insert link here).
 
