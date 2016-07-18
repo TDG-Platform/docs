@@ -105,7 +105,28 @@ On completion, the processed imagery will be written to your specified S3 Custom
 
 Script Example running AComp on VNIR+SWIR:
 
+	# Runs AComp_0.23.2.1 on corresponding VNIR and SWIR images
+	# Test Imagery is WV03 VNIR+SWIR for the NorCal AOI
+	from gbdxtools import Interface 
+	import json
+	gbdx = Interface()
 
+	# Stage VNIR and SWIR in the same parent directory
+	destination = 's3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/kathleen_AComp3'
+	s3task1 = gbdx.Task("StageDataToS3", data='s3://receiving-dgcs-tdgplatform-com/055427378010_01_003', destination=destination) # VNIR image
+	s3task2 = gbdx.Task("StageDataToS3", data='s3://receiving-dgcs-tdgplatform-com/055486759010_01_003', destination=destination) # SWIR image)
+	workflow = gbdx.Workflow([ s3task1, s3task2 ]) # needs to excute and complete this workflow first
+
+	# Setup AComp Task
+	acompTask = gbdx.Task('AComp_0.23.2.1', data='s3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/kathleen_AComp3')
+
+	# Run AComp Workflow
+	workflow = gbdx.Workflow([ acompTask ])
+	workflow.savedata(acompTask.outputs.data.value, location="kathleen_AComp/Output3")
+	workflow.execute()
+
+	print workflow.id
+	print workflow.status
 
 
 Script Example linking AComp to [protogenV2LULC](https://github.com/TDG-Platform/docs/blob/master/protogenV2LULC.md):
