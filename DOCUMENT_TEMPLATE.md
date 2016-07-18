@@ -34,37 +34,29 @@ This script gives the example of (task name).
 	
 ### Inputs
 
-List input requirements or limitation and supported file formats such as: .TIF, .TIL, .VRT, .HDR.
+List input requirements, limitations and supported file formats such as: .TIF, .TIL, .VRT, .HDR.
 
-The following table lists the (task name) task inputs.
-All inputs are **required**
+The following table lists all the (task name) task inputs. Mandatory settings are listed as "Required = True" and optional parameter settings are listed as "Required = False"
 
-Name                     |       Default         |        Valid Values             |   Description
--------------------------|:---------------------:|---------------------------------|-----------------
-raster                   |          N/A          | S3 URL   .TIF only              | S3 location of input .tif file processed through AOP_Strip_Processor.
-data                     |         true          | Folder name in S3 location      | This will explain the output file location and provide the output in .TIF format.
 
-**OPTIONAL SETTINGS: Required = False**
-
-* List optional settings for the task here
+Name             |       Required        |         Default             |        Valid Values         |   Description
+-----------------|:---------------------:|-----------------------------|-----------------------------|-----------------------------------------
+raster           |         True          |          N/A                | S3 URL   .TIF only          | S3 location of input .tif file to be processed through (task name).
+Optional         |        False          |      "Optional string"      |           string            | This will describe the parameter, a range of suggested values and options
 
 
 ### Outputs
 
 The following table lists the (task name) task outputs.
 
-Name | Required |   Description
------|:--------:|-----------------
-data |     Y    | This will explain the output file location and provide the output in .TIF format.
-log  |     N    | S3 location where logs are stored.
+Name             |       Required        |         Default             |        Valid Values         |   Description
+-----------------|:---------------------:|-----------------------------|-----------------------------|-----------------------------------------
+data             |        True           |          N/A                | S3 URL   .TIF only          | S3 location of ouput .tif file processed through (task name).
+log              |        False          |          N/A                |  Folder name in S3 location | This will explain the output file location and provide the output in .TIF format.
 
 
 ### Advanced
 Include a script example of a workflow with additional tasks linked together or a more complex workflow demonstrating advanced algorithm parameters
- 
-###Postman status @ 06/07/16
-
-**Successful run with Tif file.  
 
 
 **Data Structure for Expected Outputs:**
