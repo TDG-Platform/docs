@@ -10,9 +10,9 @@ of converting image Digital Number (DN) counts to surface reflectance. This remo
 
 The AComp GBDX task operates on a variety of input data:
 
-* DG Level 3D ([requires special handling](#processing-level-3d)
-* DG Level 2A images
 * DG Level 1B images (orthorectification is automatically applied first)
+* DG Level 2A images
+* DG Level 3D ([requires special handling](#processing-level-3d))
 * Landsat8 images
 
 Input imagery must at least contain the VNIR multispectral bands, and optionally may also include panchromatic and/or SWIR data.
