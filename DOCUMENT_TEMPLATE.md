@@ -38,16 +38,19 @@ print workflow.status
 The following table lists all taskname inputs.
 Mandatory (optional) settings are listed as Required = True (Required = False).
 
+  Name  |  Required  |  Default  |  Valid Values  |  Description  
+--------|:----------:|-----------|----------------|---------------
+inputshere
 
-Name            |   Required       |   Default      |  Valid Values  |   Description
-----------------|:----------------:|----------------|----------------|----------------                       
 
 ### Outputs
 
-The following table lists all (task name) outputs.
+The following table lists all taskname outputs.
+Mandatory (optional) settings are listed as Required = True (Required = False).
 
-Name            |   Required       |   Default      |  Valid Values  |   Description
-----------------|:----------------:|----------------|----------------|----------------                       
+  Name  |  Required  |  Default  |  Valid Values  |  Description
+--------|:----------:|-----------|----------------|---------------
+outputshere
 
 
 **Output structure**
