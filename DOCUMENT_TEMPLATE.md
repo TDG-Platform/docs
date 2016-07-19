@@ -56,7 +56,7 @@ log              |        False          |          N/A                |  Folder
 
 
 ### Advanced
-Include a script example of a workflow with additional tasks linked together or a more complex workflow demonstrating advanced algorithm parameters
+Include a script example of a workflow with additional tasks linked together or a more complex workflow demonstrating advanced algorithm parameters.
 
 
 **Data Structure for Expected Outputs:**
@@ -64,7 +64,8 @@ Include a script example of a workflow with additional tasks linked together or 
 Explain the output format of the task (e.g. .TIF image type UINT8x1 and placed in the specified S3 Customer Location) (e.g.  s3://gbd-customer-data/unique customer id/named directory/).  
 
 ###Known Issues
-1) List issues current or past with the task (e.g. Version x does not ingest vrt files)
 
-For background on the development and implementation of (task name)  [Documentation under development](Insert link here)
+List issues current or past with the task (e.g. Version x does not ingest vrt files)
+
+For background on the development and implementation of (task name) see [here](Insert link here).
 
