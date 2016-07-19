@@ -1,71 +1,72 @@
-# Task Name (TaskNameInGBDX)
+# taskname
 
-Complete description of task function:  
+Task description.
 
-(task name) can be run with Python using   [gbdxtools](https://github.com/DigitalGlobe/gbdxtools) or through the [GBDX Web Application](https://gbdx.geobigdata.io/materials/).  
+taskname can be run with Python using [gbdxtools](https://github.com/DigitalGlobe/gbdxtools) or through the [GBDX Web Application](https://gbdx.geobigdata.io/materials/).  
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
  * [Inputs](#inputs) - Required and optional task inputs.
- * [Outputs](#outputs) - Task outputs and example contents.
+ * [Outputs](#outputs) - Task outputs and output structure.
  * [Advanced](#advanced) - Additional information for advanced users.
- * [Known Issues](#known-issues) - current or past issues known to exist.
+ * [Issues](#issues) - Current or past known issues.
+ * [Background](#background) - Background information.
+ * [Contact](#contact) - Contact information.
 
 ### Quickstart
 
-This script gives the example of (task name). 
+Quick start example.
 
 ```python
-# Quickstart is a basic example using default parameters and input values for (task name).  
-# First Initialize the Environment
-	
-	from gbdxtools import Interface 
-    gbdx = Interface()
-    raster = 's3://gbd-customer-data/PathToImage/image.tif'
-    taskname = gbdx.Task("TaskNameInGBDX", raster=raster)
+# Quickstart example for taskname.  
 
-    workflow = gbdx.Workflow([ taskname ])  
-    workflow.savedata(taskname.outputs.data, location="taskname")
-    workflow.execute()
+from gbdxtools import Interface
+gbdx = Interface()
+raster = 's3://gbd-customer-data/PathToImage/image.tif'
+taskname = gbdx.Task('taskname', raster=raster)
 
-    print workflow.id
-    print workflow.status
+workflow = gbdx.Workflow([taskname])  
+workflow.savedata(taskname.outputs.data, location='taskname')
+workflow.execute()
+
+print workflow.id
+print workflow.status
 ```
-	
+
 ### Inputs
 
-List input requirements, limitations and supported file formats such as: .TIF, .TIL, .VRT, .HDR.
+The following table lists all taskname inputs.
+Mandatory (optional) settings are listed as Required = True (Required = False).
 
-The following table lists all the (task name) task inputs. Mandatory settings are listed as "Required = True" and optional parameter settings are listed as "Required = False"
 
-
-Name             |       Required        |         Default             |        Valid Values         |   Description
------------------|:---------------------:|-----------------------------|-----------------------------|-----------------------------------------
-raster           |         True          |          N/A                | S3 URL   .TIF only          | S3 location of input .tif file to be processed through (task name).
-Optional         |        False          |      "Optional string"      |           string            | This will describe the parameter, a range of suggested values and options
-
+Name            |   Required       |   Default      |  Valid Values  |   Description
+----------------|:----------------:|----------------|----------------|----------------                       
 
 ### Outputs
 
-The following table lists the (task name) task outputs.
+The following table lists all (task name) outputs.
 
-Name             |       Required        |         Default             |        Valid Values         |   Description
------------------|:---------------------:|-----------------------------|-----------------------------|-----------------------------------------
-data             |        True           |          N/A                | S3 URL   .TIF only          | S3 location of ouput .tif file processed through (task name).
-log              |        False          |          N/A                |  Folder name in S3 location | This will explain the output file location and provide the output in .TIF format.
+Name            |   Required       |   Default      |  Valid Values  |   Description
+----------------|:----------------:|----------------|----------------|----------------                       
+
+
+**Output structure**
+
+Explain output structure via example.
 
 
 ### Advanced
-Include a script example of a workflow with additional tasks linked together or a more complex workflow demonstrating advanced algorithm parameters.
+Include example(s) with complicated parameter settings and/or example(s) where
+taskname is used as part of a workflow involving other GBDX tasks.
 
 
-**Data Structure for Expected Outputs:**
+### Issues
+List known past/current issues with taskname (e.g., version x does not ingest vrt files).
 
-Explain the output format of the task (e.g. .TIF image type UINT8x1 and placed in the specified S3 Customer Location) (e.g.  s3://gbd-customer-data/unique customer id/named directory/).  
 
-###Known Issues
+### Background
+For background on the development and implementation of taskname see [here](Insert link here).
 
-List issues current or past with the task (e.g. Version x does not ingest vrt files)
 
-For background on the development and implementation of (task name) see [here](Insert link here).
-
+### Contact
+List contact information for technical support.
