@@ -10,8 +10,9 @@ of converting image Digital Number (DN) counts to surface reflectance. This remo
 
 The AComp GBDX task operates on a variety of input data:
 
-* DG Level 2A images
 * DG Level 1B images (orthorectification is automatically applied first)
+* DG Level 2A images
+* DG Level 3D ([requires special handling](#known-issues))
 * Landsat8 images
 
 Input imagery must at least contain the VNIR multispectral bands, and optionally may also include panchromatic and/or SWIR data.
@@ -83,17 +84,17 @@ Name                     |       Default         |        Valid Values          
 data (in)      |   N/A   | S3 URL                                | S3 location of input data.
 data (out)     |   N/A   | S3 URL                                | S3 gbd-customer-data location
 exclude_bands  |   Off	 |  'P', 'MS1', 'Multi', 'All-S'         | Comma-separated list of bands to exclude; excluded bands are not processed. 
-bit_depth      |   16    |  16 or 32                             | Bit depth refers to how many digits the spectral information for each pixel is stored in
-aod_grid_size  |   10m   |  Integer values in meters             | Aerosol Optical Depth (e.g. @ 2m image resolution a 5X5m patch is averaged to determine the AOD)
+bit_depth      |   16    |  11, 16 or 32                             | Bit depth refers to how many digits the spectral information for each pixel is stored in
+
 
 
 **Script Example specifying exclusion of panchromatic bands**
 
 	acomp = gbdx.Task('AComp_0.23.2.1', exclude_bands='P')
 
-**Script Example specifying alternate AOD grid size and bit depth**
+**Script Example specifying alternate bit depth**
 
-	acomp = gbdx.Task('AComp_0.23.2.1', data=data, aod_grid_size=15, bit_depth=32 )
+	acomp = gbdx.Task('AComp_0.23.2.1', data=data, bit_depth=32 )
 
 ### Outputs
 
@@ -157,6 +158,8 @@ Script Example linking AComp to [protogenV2LULC](https://github.com/TDG-Platform
 
 
 ###Known Issues
+
+*Processing Level 3D imagery  will require you to order the imagery outside the platform and upload it to your S3-customer location.
 
 *AComp_0.23.2.1 currently does not run end-to-end with ENVI Tasks.  A "glueTask" to link these processes is under development.
 

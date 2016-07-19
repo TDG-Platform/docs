@@ -2,12 +2,23 @@
 
 The image2image task will remove misregistrations between two images.  It will attempt to find similar image features that are misregistered by up to 20 pixels and warp the source image accordingly.  There is also an option to specify a warp boundary via a polygon shapefile.  In this case, there is a full warp nested inside the boundary and no warp outside the boundary, with a smooth transition in between.  The warped source will have the same metadata as the source and be output with the suffix “_radwarp” appended to the original filename.
 
-# Inputs:
+
+
+### Table of Contents
+ * [Quickstart](#quickstart) - Get started!
+ * [Inputs](#inputs) - Required and optional task inputs.
+ * [Outputs](#outputs) - Task outputs and example contents.
+ * [Advanced Options](#advanced-options) - Examples linking to a second task and running VNIR+SWIR
+ * [Known Issues](#known-issues)
+
+### Quickstart
+
+### Inputs:
 1. Source image that will be warped, staged in an s3 bucket
 2. Reference image which the source will be registered to, staged in an s3 bucket
 3. OPTIONAL shapefile to be used as the warp boundary, staged in an s3 bucket
 
-# Output:
+### Output:
 The warped source
 
 # Example GBDX Run:
