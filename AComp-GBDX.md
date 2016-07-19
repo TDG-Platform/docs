@@ -10,6 +10,7 @@ of converting image Digital Number (DN) counts to surface reflectance. This remo
 
 The AComp GBDX task operates on a variety of input data:
 
+* DG Level 3D ([requires special handling](#processing-level-3d)
 * DG Level 2A images
 * DG Level 1B images (orthorectification is automatically applied first)
 * Landsat8 images
@@ -91,9 +92,9 @@ bit_depth      |   16    |  11, 16 or 32                             | Bit depth
 
 	acomp = gbdx.Task('AComp_0.23.2.1', exclude_bands='P')
 
-**Script Example specifying alternate AOD grid size and bit depth**
+**Script Example specifying alternate bit depth**
 
-	acomp = gbdx.Task('AComp_0.23.2.1', data=data, aod_grid_size=15, bit_depth=32 )
+	acomp = gbdx.Task('AComp_0.23.2.1', data=data, bit_depth=32 )
 
 ### Outputs
 
@@ -157,6 +158,8 @@ Script Example linking AComp to [protogenV2LULC](https://github.com/TDG-Platform
 
 
 ###Known Issues
+
+*Processing Level 3D imagery  will require you to order the imagery outside the platform and upload the it to your S3-customer location.
 
 *AComp_0.23.2.1 currently does not run end-to-end with ENVI Tasks.  A "glueTask" to link these processes is under development.
 
