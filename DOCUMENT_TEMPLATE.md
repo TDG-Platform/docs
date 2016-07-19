@@ -44,7 +44,8 @@ Name            |   Required       |   Default      |  Valid Values  |   Descrip
 
 ### Outputs
 
-The following table lists all (task name) outputs.
+The following table lists all taskname outputs.
+Mandatory (optional) settings are listed as Required = True (Required = False).
 
 Name            |   Required       |   Default      |  Valid Values  |   Description
 ----------------|:----------------:|----------------|----------------|----------------                       
