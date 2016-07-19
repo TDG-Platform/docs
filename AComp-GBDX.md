@@ -83,8 +83,8 @@ Name                     |       Default         |        Valid Values          
 data (in)      |   N/A   | S3 URL                                | S3 location of input data.
 data (out)     |   N/A   | S3 URL                                | S3 gbd-customer-data location
 exclude_bands  |   Off	 |  'P', 'MS1', 'Multi', 'All-S'         | Comma-separated list of bands to exclude; excluded bands are not processed. 
-bit_depth      |   16    |  16 or 32                             | Bit depth refers to how many digits the spectral information for each pixel is stored in
-aod_grid_size  |   10m   |  Integer values in meters             | Aerosol Optical Depth (e.g. @ 2m image resolution a 5X5m patch is averaged to determine the AOD)
+bit_depth      |   16    |  11, 16 or 32                             | Bit depth refers to how many digits the spectral information for each pixel is stored in
+
 
 
 **Script Example specifying exclusion of panchromatic bands**
