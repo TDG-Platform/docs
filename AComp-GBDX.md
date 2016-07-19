@@ -159,7 +159,7 @@ Script Example linking AComp to [protogenV2LULC](https://github.com/TDG-Platform
 
 ###Known Issues
 
-*Processing Level 3D imagery  will require you to order the imagery outside the platform and upload the it to your S3-customer location.
+*Processing Level 3D imagery  will require you to order the imagery outside the platform and upload it to your S3-customer location.
 
 *AComp_0.23.2.1 currently does not run end-to-end with ENVI Tasks.  A "glueTask" to link these processes is under development.
 
