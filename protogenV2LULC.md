@@ -80,7 +80,7 @@ If you need to generate the 8-Band MS data required as input for this task, you 
 	gluetask.inputs.data = aoptask2.outputs.data.value
 	gluetask.inputs.execution_strategy = 'runonce'
 	gluetask.inputs.command = """mv $indir/*/*.tif $outdir/"""
-	prototask = gbdx.Task('protogenV2RAC')
+	prototask = gbdx.Task('protogenV2LULC')
 	prototask.inputs.raster = gluetask.outputs.data.value
 
 	workflow = gbdx.Workflow([aoptask2, gluetask, prototask])
