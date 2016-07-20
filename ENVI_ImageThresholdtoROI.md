@@ -6,6 +6,7 @@
  * [Quickstart](#quickstart) - Get started!
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and example contents.
+ * [Advanced](#advanced) - Full task workflow with optional parameters used as example 
  * [Contact Us](#contact-us) - Contact tech or document owner.
 
 **Example Script:** Run in IPython using the GBDXTools Interface
@@ -64,7 +65,33 @@ Name                       |       Default         |        Valid Values        
 file_types                 |          N/A          | string                          | Comma separated list of permitted file type extensions. Use this to filter input files
 output_roi_uri_filename    |         true          | Folder name in S3 location      | Specify the file name
 
+###Advanced
 
+```python
+    from gbdxtools import Interface
+    gbdx = Interface()
+    data = "s3://receiving-dgcs-tdgplatform-com/055026839010_01_003"
+    aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False, bands='MS')
+
+    # Capture AOP task outputs 
+    #orthoed_output = aoptask.get_output('data')
+
+    task = gbdx.Task("ENVI_ImageThresholdToROI")
+    task.inputs.input_raster = aoptask.outputs.data.value
+    task.inputs.file_types = "tif"
+    task.inputs.roi_name = "[\"Water\", \"Land\"]"
+    task.inputs.roi_color = "[[0,255,0],[0,0,255]]"
+    task.inputs.threshold = "[[138,221,0],[222,306,0]]"
+    task.inputs.output_roi_uri_filename = "roi.xml"
+
+    workflow = gbdx.Workflow([ aoptask, task ])
+    workflow.savedata(
+        task.outputs.output_roi_uri,
+        location='ENVI/ImgToROI'
+    )
+
+    print workflow.execute()
+    ```
 
 **Data Structure for Expected Outputs:**
 
