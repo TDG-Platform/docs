@@ -104,7 +104,8 @@ On completion, the processed imagery will be written to your specified S3 Custom
 
 ### Advanced Options
 
-Script Example running AComp on Level 3D Imagery:
+
+[Script Example running AComp on Level 3D Imagery:](#known-issues)
 
 	# Runs AComp_0.23.2.1 on Level 3D images
 	# Test Imagery is WV03 Jefferson County, CO - Elk Meadow Park
@@ -122,6 +123,7 @@ Script Example running AComp on Level 3D Imagery:
 
 	print workflow.id
 	print workflow.status
+
 
 
 Script Example running AComp on VNIR+SWIR:
@@ -148,6 +150,7 @@ Script Example running AComp on VNIR+SWIR:
 
 	print workflow.id
 	print workflow.status
+
 
 
 Script Example linking AComp to [protogenV2LULC](https://github.com/TDG-Platform/docs/blob/master/protogenV2LULC.md):
