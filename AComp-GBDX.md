@@ -104,6 +104,26 @@ On completion, the processed imagery will be written to your specified S3 Custom
 
 ### Advanced Options
 
+Script Example running AComp on Level 3D Imagery:
+
+	# Runs AComp_0.23.2.1 on Level 3D images
+	# Test Imagery is WV03 Jefferson County, CO - Elk Meadow Park
+	from gbdxtools import Interface 
+	import json
+	gbdx = Interface()
+
+	# Setup AComp Task; requires full path to input dataset
+	acompTask = gbdx.Task('AComp_0.23.2.1', data='s3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/kathleen_AComp/054621123010_01')
+
+	# Run Workflow
+	workflow = gbdx.Workflow([ acompTask ])
+	workflow.savedata(acompTask.outputs.data.value, location='S3 gbd-customer-data location')
+	workflow.execute()
+
+	print workflow.id
+	print workflow.status
+
+
 Script Example running AComp on VNIR+SWIR:
 
 	# Runs AComp_0.23.2.1 on corresponding VNIR and SWIR images
@@ -123,7 +143,7 @@ Script Example running AComp on VNIR+SWIR:
 
 	# Run AComp Workflow
 	workflow = gbdx.Workflow([ acompTask ])
-	workflow.savedata(acompTask.outputs.data.value, location="kathleen_AComp/Output3")
+	workflow.savedata(acompTask.outputs.data.value, location='S3 gbd-customer-data location')
 	workflow.execute()
 
 	print workflow.id
@@ -149,7 +169,7 @@ Script Example linking AComp to [protogenV2LULC](https://github.com/TDG-Platform
 
 	# Run Combined Workflow
 	workflow = gbdx.Workflow([ acompTask, pp_task, prot_lulc ])
-	workflow.savedata(prot_lulc.outputs.data.value, location="S3 gbd-customer-data location")
+	workflow.savedata(prot_lulc.outputs.data.value, location='S3 gbd-customer-data location')
 	workflow.execute()
 	
 	print workflow.id
