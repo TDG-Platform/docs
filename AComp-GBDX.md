@@ -114,11 +114,11 @@ On completion, the processed imagery will be written to your specified S3 Custom
 	gbdx = Interface()
 
 	# Setup AComp Task; requires full path to input dataset
-	acompTask = gbdx.Task('AComp_0.23.2.1', data='s3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/kathleen_AComp/054621123010_01')
+	acompTask = gbdx.Task('AComp_0.23.2.1', data='data='S3 gbd-customer-data location-input')
 
 	# Run Workflow
 	workflow = gbdx.Workflow([ acompTask ])
-	workflow.savedata(acompTask.outputs.data.value, location='S3 gbd-customer-data location')
+	workflow.savedata(acompTask.outputs.data.value, location='S3 gbd-customer-data location-output')
 	workflow.execute()
 
 	print workflow.id
@@ -141,11 +141,11 @@ Script Example running AComp on VNIR+SWIR:
 	workflow = gbdx.Workflow([ s3task1, s3task2 ]) # needs to excute and complete this workflow first
 
 	# Setup AComp Task
-	acompTask = gbdx.Task('AComp_0.23.2.1', data='s3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/kathleen_AComp3')
+	acompTask = gbdx.Task('AComp_0.23.2.1', data='data='s3://receiving-dgcs-tdgplatform-com/s3task_output')
 
 	# Run AComp Workflow
 	workflow = gbdx.Workflow([ acompTask ])
-	workflow.savedata(acompTask.outputs.data.value, location='S3 gbd-customer-data location')
+	workflow.savedata(acompTask.outputs.data.value, location='S3 gbd-customer-data location--')
 	workflow.execute()
 
 	print workflow.id
