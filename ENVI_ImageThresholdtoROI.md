@@ -91,7 +91,7 @@ output_roi_uri_filename    |         true          | Folder name in S3 location 
     )
 
     print workflow.execute()
-    ```
+```
 
 **Data Structure for Expected Outputs:**
 
