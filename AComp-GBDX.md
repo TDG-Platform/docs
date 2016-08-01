@@ -8,10 +8,10 @@ of converting image Digital Number (DN) counts to surface reflectance. This remo
 * Variation due to different viewing geometries
 * Atmospheric effects
 
-The AComp GBDX task operates on a variety of input data:
+The AComp GBDX task operates on a variety of input imagery types:
 
-* DG Level 1B images (orthorectification is automatically applied first)
-* DG Level 2 images
+* DG Level 1B (orthorectification is automatically applied first)
+* DG Level 2 ([requires special handling](#known-issues))
 * DG Level 3 ([requires special handling](#known-issues))
 * Landsat8 images
 
@@ -84,7 +84,7 @@ Name                     |       Default         |        Valid Values          
 data (in)      |   N/A   | S3 URL                                | S3 location of input data.
 data (out)     |   N/A   | S3 URL                                | S3 gbd-customer-data location
 exclude_bands  |   Off	 |  'P', 'MS1', 'Multi', 'All-S'         | Comma-separated list of bands to exclude; excluded bands are not processed. 
-bit_depth      |   16    |  11, 16 or 32                             | Bit depth refers to how many digits the spectral information for each pixel is stored in
+bit_depth      |   16    |  11, 16 or 32                         | Bit depth refers to how many digits the spectral information for each pixel is stored in
 
 
 
@@ -182,7 +182,7 @@ Script Example linking AComp to [protogenV2LULC](https://github.com/TDG-Platform
 
 ###Known Issues
 
-*Processing Level 3D imagery  will require you to order the imagery outside the platform and upload it to your S3-customer location.
+*Processing Level 2 or Level 3 imagery  will require you to order the imagery outside the platform and upload it to your S3-customer location.
 
 *AComp_0.23.2.1 currently does not run end-to-end with ENVI Tasks.  A "glueTask" to link these processes is under development.
 
