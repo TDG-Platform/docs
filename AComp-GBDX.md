@@ -34,7 +34,7 @@ The AComp GBDX task can be run through a simple Python script using  [gbdxtools]
     from gbdxtools import Interface
     gbdx = Interface()
     import json
-    acomp = gbdx.Task('AComp_0.23.2.1', data='s3://landsat-pds/L8/033/032/LC80330322015035LGN00')
+    acomp = gbdx.Task('AComp_1.0', data='s3://landsat-pds/L8/033/032/LC80330322015035LGN00')
     workflow = gbdx.Workflow([acomp])
     workflow.savedata(acomp.outputs.data, location='S3 gbd-customer-data location')
     workflow.execute()
@@ -47,7 +47,7 @@ The AComp GBDX task can be run through a simple Python script using  [gbdxtools]
     In [1]: from gbdxtools import Interface
     In [2]: gbdx = Interface()
     2016-06-06 10:53:09,026 - gbdxtools - INFO - Logger initialized
-    In [3]: acomp = gbdx.Task('AComp_0.23.2.1', data='s3://landsat-pds/L8/033/032/LC80330322015035LGN00')
+    In [3]: acomp = gbdx.Task('AComp_1.0', data='s3://landsat-pds/L8/033/032/LC80330322015035LGN00')
     In [4]: workflow = gbdx.Workflow([acomp])
     In [5]: workflow.savedata(acomp.outputs.data, location='S3 gbd-customer-data location')
     In [6]: workflow.execute()
@@ -90,11 +90,11 @@ bit_depth      |   16    |  11, 16 or 32                         | Bit depth ref
 
 **Script Example specifying exclusion of panchromatic bands**
 
-	acomp = gbdx.Task('AComp_0.23.2.1', exclude_bands='P')
+	acomp = gbdx.Task('AComp_1.0', exclude_bands='P')
 
 **Script Example specifying alternate bit depth**
 
-	acomp = gbdx.Task('AComp_0.23.2.1', data=data, bit_depth=32 )
+	acomp = gbdx.Task('AComp_1.0', data=data, bit_depth=32 )
 
 ### Outputs
 
@@ -107,14 +107,14 @@ On completion, the processed imagery will be written to your specified S3 Custom
 
 [Script Example running AComp on Level 3D Imagery:](#known-issues)
 
-	# Runs AComp_0.23.2.1 on Level 3D images
+	# Runs AComp_1.0 on Level 3D images
 	# Test Imagery is WV03 Jefferson County, CO - Elk Meadow Park
 	from gbdxtools import Interface 
 	import json
 	gbdx = Interface()
 
 	# Setup AComp Task; requires full path to input dataset
-	acompTask = gbdx.Task('AComp_0.23.2.1', data='data='S3 gbd-customer-data location-input')
+	acompTask = gbdx.Task('AComp_1.0', data='data='S3 gbd-customer-data location-input')
 
 	# Run Workflow
 	workflow = gbdx.Workflow([ acompTask ])
@@ -128,7 +128,7 @@ On completion, the processed imagery will be written to your specified S3 Custom
 
 Script Example running AComp on VNIR+SWIR:
 
-	# Runs AComp_0.23.2.1 on corresponding VNIR and SWIR images
+	# Runs AComp_1.0 on corresponding VNIR and SWIR images
 	# Test Imagery is WV03 VNIR+SWIR for the NorCal AOI
 	from gbdxtools import Interface 
 	import json
@@ -141,7 +141,7 @@ Script Example running AComp on VNIR+SWIR:
 	workflow = gbdx.Workflow([ s3task1, s3task2 ]) # needs to excute and complete this workflow first
 
 	# Setup AComp Task
-	acompTask = gbdx.Task('AComp_0.23.2.1', data='data='s3://receiving-dgcs-tdgplatform-com/s3task_output')
+	acompTask = gbdx.Task('AComp_1.0', data='data='s3://receiving-dgcs-tdgplatform-com/s3task_output')
 
 	# Run AComp Workflow
 	workflow = gbdx.Workflow([ acompTask ])
@@ -155,14 +155,14 @@ Script Example running AComp on VNIR+SWIR:
 
 Script Example linking AComp to [protogenV2LULC](https://github.com/TDG-Platform/docs/blob/master/protogenV2LULC.md):
 
-	# Runs AComp_0.23.2.1, then sends that data to the protogenV2LULC process
+	# Runs AComp_1.0, then sends that data to the protogenV2LULC process
 	from gbdxtools import Interface 
 	import json
 	gbdx = Interface()
 	
 	# Test Imagery for Tracy, CA: WV02
 	# Setup AComp Task
-	acompTask = gbdx.Task('AComp_0.23.2.1', exclude_bands='P', data='s3://receiving-dgcs-tdgplatform-com/055168976010_01_003')
+	acompTask = gbdx.Task('AComp_1.0', exclude_bands='P', data='s3://receiving-dgcs-tdgplatform-com/055168976010_01_003')
 
 	# Stage AComp output for the Protogen Task
 	pp_task = gbdx.Task("ProtogenPrep",raster=acompTask.outputs.data.value)    
@@ -184,7 +184,7 @@ Script Example linking AComp to [protogenV2LULC](https://github.com/TDG-Platform
 
 *Processing Level 2 or Level 3 imagery  will require you to order the imagery outside the platform and upload it to your S3-customer location.
 
-*AComp_0.23.2.1 currently does not run end-to-end with ENVI Tasks.  A "glueTask" to link these processes is under development.
+*AComp_1.0 currently does not run end-to-end with ENVI Tasks.  A "glueTask" to link these processes is under development.
 
 *There may be alignment problems between VNIR and SWIR output.  A resolution to this problem is expected soon.  In the meantime, if you encounter a problem, please contact us.
 
