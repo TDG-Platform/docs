@@ -12,6 +12,7 @@
  * [Outputs](#outputs) - Task outputs and example contents.
  * [Advanced Options](#advanced-options) - Additional information for advanced users.
  * [Known Issues](#known-issues) - current or past issues known to exist.
+ * [Contact Us](#contact-us)
 
  
 ### QuickStart
@@ -101,3 +102,5 @@ If you need to generate the 8-Band MS data required as input for this task, you 
 		
 **Limitations:**		The layer uses smoothing operators in cross-class interfaces for noise reduction. This might result in loss/misinterpretation of small class patches 8m^2.
 		
+### Contact Us
+Tech Owner: [Georgios Ouzounis](#gouzouni@digitalglobe.com) & Editor:  [Kathleen Johnson](#kathleen.johnsons@digitalglobe.com)
