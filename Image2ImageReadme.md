@@ -5,9 +5,10 @@ The image2image task will remove misregistrations between two images.  It will a
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
  * [Inputs](#inputs) - Required and optional task inputs.
+ * [Technical Notes](#technical-notes) - Detailed Description of Inputs
  * [Outputs](#outputs) - Task outputs and example contents.
- * [Advanced Options](#advanced-options) - Examples linking to a second task and running VNIR+SWIR
  * [Known Issues](#known-issues)
+ * [Contact Us](#contact-us)
 
 ### Quickstart
 
@@ -34,11 +35,15 @@ This script uses Image2Image to produce co-registered images from the test datas
     print workflow.id
     print workflow.status
 
+
+#### Test Datasets:
+Sensor                   |       CATID           |   S3 URL
+-------------------------|:---------------------:|---------------------------------
+Comming Soon             |                      |
+     
+     
      
 ### Inputs:
-1. Source image that will be warped, staged in an s3 bucket: 'source_data'
-2. Reference image which the source will be registered to, staged in an s3 bucket: 'reference_data'
-3. OPTIONAL shapefile to be used as the warp boundary, staged in an s3 bucket: 'boundary_directory'
 
 Name                     |       File Type       |   Description
 -------------------------|:---------------------:|---------------------------------
@@ -46,28 +51,12 @@ source_data         |  directory   | S3 location of the Image that provides the 
 source_filename     |  geotiff     | source file must be set in the task command line
 reference_data      |  directory   | S3 location of the Image that will be warped
 reference_filename  |  geotiff     | reference file must be set in the task command line
-boundary_directory  |  directory   | S3 location of the all the input data; only requiredt if there is a boundary shapefile 
+boundary_directory  |  directory   | S3 location of the all the input data; only required if there is a boundary shapefile 
 boundary_filename   |  shapefile   | file that limits the areal extent of the image warping
 
-
-
-
-
-4. Identify which image you want to use as the source and which one you want to use as the reference.  Modify the "Inputs" object to reflect this.
-    1. Give the full s3 path to the source image as the value to the name "source_data".  In the above example, you will remove "s3://gbd-customer-data/596bd3ed-ffad-496f-9394-291648fb8250/small/test_01ss.tif" and replace it with the full path to your source file.
-    2. Repeat for the "reference_data" key.
-    3. Set the "source_filename" to be the name of the file.  This is equivalent to copying the filename in part (a) and using it for the "source_filename" value.
-    4. Repeat for the "reference_filename" key.
-
-5. If you want to only warp inside a boundary, make sure you have a polygon shapefile handy.  Find the directory where it resides in your s3 bucket, and modify the "boundary_directory" value in the example above.  i.e. remove "s3://gbd-customer-data/596bd3ed-ffad-496f-9394-291648fb8250/small" and replace it with the s3 location where your shapefile resides.  Also, modify the "boundary_filename" value "right_boundary" with your filename.  Do not include the extension.  For example, if your shapefile name is "CityBoundary.shp", only enter "CityBoundary".
-
-6. The second task in the example workflow stages the output to an s3 bucket.  Make sure the "source" key's value matches the image2image task from part 3.  Also modify the destination to be an s3 location of your choice.  The example puts the output in the following location: "s3://gbd-customer-data/596bd3ed-ffad-496f-9394-291648fb8250/small/out".
-
-7. Submit your workflow!
-
-# Technical Notes
+#### Technical Notes
 *  Images should both be north up
-*  Images with different number of bands will use blue band.  The folling formats are assumed, but the program should work regardless.
+*  Images with different number of bands will use blue band.  The following formats are assumed, but the program should work regardless.
   * PAN
   * RGB
   * BGRN
@@ -87,5 +76,11 @@ boundary_filename   |  shapefile   | file that limits the areal extent of the im
 *  Supports up to a factor of 5 resolution difference
 
 
+
 ### Output:
 The warped source
+
+NEEDS MORE DETAIL
+
+### Contact Us
+Tech Owner: [Mike Aschenbeck](#acomermichael.aschenbeck@digitalglobe.com) & Editor:  [Kathleen Johnson](#kathleen.johnsons@digitalglobe.com)
