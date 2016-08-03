@@ -13,80 +13,39 @@ The image2image task will remove misregistrations between two images.  It will a
 
 ### Quickstart
 
+This script uses Image2Image to produce co-registered images from the test dataset:
+
+    # Image2Image Test Dataset
+    from gbdxtools import Interface
+    gbdx = Interface()
+    import json
+    
+    source_data = "s3://gbd-customer-data/596bd3ed-ffad-496f-9394-291648fb8250/small/test_01ss.tif"
+    reference_data = "s3://gbd-customer-data/596bd3ed-ffad-496f-9394-291648fb8250/small/test_02ss.tif"
+    boundary_directory = "s3://gbd-customer-data/596bd3ed-ffad-496f-9394-291648fb8250/small"
+
+    im2imtask = gbdx.Task('image2image', source_data=source_data, reference_data=reference_data, 
+	    boundary_directory=boundary_directory, source_filename='test_01ss.tif', 
+	    reference_filename='test_02ss.tif', boundary_filename='right_boundary')
+
+    workflow = gbdx.Workflow([ im2imtask ])
+
+    workflow.savedata(im2imtask.outputs.out, location='S3 gbd-customer-data location')
+    workflow.execute()
+
+    print workflow.id
+    print workflow.status
+
+     
+
 ### Inputs:
 1. Source image that will be warped, staged in an s3 bucket
 2. Reference image which the source will be registered to, staged in an s3 bucket
 3. OPTIONAL shapefile to be used as the warp boundary, staged in an s3 bucket
 
-### Output:
-The warped source
-
-# Example GBDX Run:
-The following example will warp "test_01ss.tif" to "test_02ss.tif" inside the "right_boundary.shp" shapefile.  Just paste it into a JSON file and submit it to GBDX via postman.
 
 
-    {
-         "name": "test_im2im_workflow",
-         "tasks": [
-             {
-                 "name": "im2im_task_test",
-                 "outputs": [
-                     {
-                         "name": "out"
-                     }
-                 ],
-                 "inputs": [
-                     {
-                         "name": "source_data",
-                         "value": "s3://gbd-customer-data/596bd3ed-ffad-496f-9394-291648fb8250/small/test_01ss.tif"
-                     },
-                     {
-                         "name": "reference_data",
-                         "value": "s3://gbd-customer-data/596bd3ed-ffad-496f-9394-291648fb8250/small/test_02ss.tif"
-                     },
-                     {
-                         "name": "source_filename",
-                         "value": "test_01ss.tif"
-                     },
-                     {
-                         "name": "reference_filename",
-                         "value": "test_02ss.tif"
-                     },
-                     {
-                         "name": "boundary_directory",
-                         "value": "s3://gbd-customer-data/596bd3ed-ffad-496f-9394-291648fb8250/small"
-                     },
-                     {
-                         "name": "boundary_filename",
-                         "value": "right_boundary"
-                         
-                     }
-                 ],
-                 "taskType": "image2image"
-             },
-             {
-                 "name": "StagetoS3",
-                 "inputs": [
-                     {
-                         "name": "data",
-                         "source": "im2im_task_test:out"
-                     },
-                     {
-                         "name": "destination",
-                         "value": "s3://gbd-customer-data/596bd3ed-ffad-496f-9394-291648fb8250/small/out"
-                     }
-                 ],
-                 "taskType": "StageDataToS3"
-             }
-         ]
-     }
-     
-# Running Your Own:
-1. Make sure you have postman set up properly with a current access key.  Also, have your source image, reference image, and optional shapefile stored in an s3 bucket.
 
-2. Name your workflow.  In the example above, replace "test_im2im_workflow" with whatever you want to use as your workflow name.
-
-3. Name your image2image task.  In the example above, replace "im2im_task_test" with your the task name you want to use.
 
 4. Identify which image you want to use as the source and which one you want to use as the reference.  Modify the "Inputs" object to reflect this.
     1. Give the full s3 path to the source image as the value to the name "source_data".  In the above example, you will remove "s3://gbd-customer-data/596bd3ed-ffad-496f-9394-291648fb8250/small/test_01ss.tif" and replace it with the full path to your source file.
@@ -120,3 +79,7 @@ The following example will warp "test_01ss.tif" to "test_02ss.tif" inside the "r
 *  There is a 20 pixel search radius (reduced to 5 if factor of five resolution difference)
   *  No warping beyond this radius
 *  Supports up to a factor of 5 resolution difference
+
+
+### Output:
+The warped source
