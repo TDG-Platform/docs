@@ -78,9 +78,10 @@ boundary_filename   |  shapefile   | file that limits the areal extent of the im
 
 
 ### Output:
-The warped source
+RADWarp outputs the warped source image that is registered to the reference image.
 
-NEEDS MORE DETAIL
+The warped source will be placed in the output s3 bucket.  This tiff image will have the same metadata as the source.  It will be output with the suffix “_radwarp” appended to the original source filename.
+
 
 ### Contact Us
 Tech Owner: [Mike Aschenbeck](#acomermichael.aschenbeck@digitalglobe.com) & Editor:  [Kathleen Johnson](#kathleen.johnsons@digitalglobe.com)
