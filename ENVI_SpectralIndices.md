@@ -24,7 +24,7 @@ Quick start example.
 from gbdxtools import Interface
 gbdx = Interface()
 aop2envi = gbdx.Task("AOP_ENVI_HDR")
-aop2envi.inputs.image = 's3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/ENVI/SI/AOP/055026839010_01/'
+aop2envi.inputs.image = 's3://gbd-customer-data/PathToDeliveredImage'
 envi_ndvi = gbdx.Task("ENVI_SpectralIndices")
 envi_ndvi.inputs.input_raster = aop2envi.outputs.output_data.value
 envi_ndvi.inputs.file_types = "hdr"
@@ -68,11 +68,12 @@ output_raster_uri|True|None| |Outputor OUTPUT_RASTER. -- Value Type: ENVIURI
 
 **Output structure**
 
-Explain output structure via example.
+The output of this task will be a single tif with multiple bands representing the indices listed
 
 
 ### Advanced
-Include example(s) with complicated parameter settings and/or example(s) where this task is used as part of a workflow involving other GBDX tasks.
+For advanced parameters and a full list of indices compatible with this task refer to the following link:
+http://www.harrisgeospatial.com/docs/alphabeticallistspectralindices.html
 
 
 ### Issues
@@ -80,8 +81,10 @@ List known past/current issues with this task (e.g., version x does not ingest v
 
 
 ### Background
-For background on the development and implementation of this task see [here](Insert link here).
+1) To run the task in a single workflow with AOP the tif file must first be removed from the AOP folder with the additional python commands listed in Advanced
+
+For background on the development and implementation of Spectral Index refer to the [ENVI Documentation](https://www.harrisgeospatial.com/docs/spectralindices.html)
 
 
 ### Contact
-List contact information for technical support.
+Document Owner - Carl Reeder - creeder@digitalglobe.com
