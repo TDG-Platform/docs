@@ -54,8 +54,8 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 --------|:----------:|-----------|----------------|---------------
 file_types|False|None| |GBDX Option. Comma seperated list of permitted file type extensions. Use this to filter input files -- Value Type: STRING[*]
 index|True|None| |Specify a string, or array of strings, representing the pre-defined spectral indices to apply to the input raster. -- Value Type: STRING[*]
-input_raster|True|None| |Specify a raster from which to generate a spectral index raster. -- Value Type: ENVIRASTER
-output_raster_uri_filename|False|None| |Outputor OUTPUT_RASTER. -- Value Type: ENVIURI
+input_raster|True|None|.TIF .HDR |Specify a raster from which to generate a spectral index raster. -- Value Type: ENVIRASTER
+output_raster_uri_filename|False|None| string |Outputor OUTPUT_RASTER. -- Value Type: ENVIURI
 
 ### Outputs
 The following table lists all taskname outputs.
@@ -63,12 +63,12 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 
   Name  |  Required  |  Default  |  Valid Values  |  Description  
 --------|:----------:|-----------|----------------|---------------
-task_meta_data|False|None| |GBDX Option. Output location for task meta data such as execution log and output JSON
-output_raster_uri|True|None| |Outputor OUTPUT_RASTER. -- Value Type: ENVIURI
+task_meta_data|False|None|.log |GBDX Option. Output location for task meta data such as execution log and output JSON
+output_raster_uri|True|None|.TIF |Outputor OUTPUT_RASTER. -- Value Type: ENVIURI
 
 **Output structure**
 
-The output of this task will be a single tif with multiple bands representing the indices listed
+The output of this task will be a single tif with multiple bands representing the indices listed.
 
 
 ### Advanced
@@ -77,11 +77,9 @@ http://www.harrisgeospatial.com/docs/alphabeticallistspectralindices.html
 
 
 ### Issues
-List known past/current issues with this task (e.g., version x does not ingest vrt files).
-
+Currently the task in the Web App 2.0 will process an image with NDVI and the WorldView soil index listed in the quickstart example (Aug 8th, 2016). However, custom workflows with gbdxtools may include any of the indices compatible with the task (see link in Advanced section)
 
 ### Background
-1) To run the task in a single workflow with AOP the tif file must first be removed from the AOP folder with the additional python commands listed in Advanced
 
 For background on the development and implementation of Spectral Index refer to the [ENVI Documentation](https://www.harrisgeospatial.com/docs/spectralindices.html)
 
