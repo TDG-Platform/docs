@@ -52,8 +52,8 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 
   Name  |  Required  |  Default  |  Valid Values  |  Description  
 --------|:----------:|-----------|----------------|---------------
-file_types|False|None| |GBDX Option. Comma seperated list of permitted file type extensions. Use this to filter input files -- Value Type: STRING[*]
-index|True|None| |Specify a string, or array of strings, representing the pre-defined spectral indices to apply to the input raster. -- Value Type: STRING[*]
+file_types|False|None|.TIF .HDR |GBDX Option. Comma seperated list of permitted file type extensions. Use this to filter input files -- Value Type: STRING[*]
+index|True|None| see link in 'Advanced' section |Specify a string, or array of strings, representing the pre-defined spectral indices to apply to the input raster. -- Value Type: STRING[*]
 input_raster|True|None|.TIF .HDR |Specify a raster from which to generate a spectral index raster. -- Value Type: ENVIRASTER
 output_raster_uri_filename|False|None| string |Outputor OUTPUT_RASTER. -- Value Type: ENVIURI
 
@@ -77,7 +77,8 @@ http://www.harrisgeospatial.com/docs/alphabeticallistspectralindices.html
 
 Example of workflow with Spectral Indices including preprocessing steps in gbdxtools
 
-'''python
+```python
+
 from gbdxtools import Interface
 gbdx = Interface()
 
@@ -105,7 +106,7 @@ workflow.savedata(
 
 workflow.execute()
 workflow.status
-'''
+```
 
 
 ### Issues
