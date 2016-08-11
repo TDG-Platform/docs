@@ -23,6 +23,7 @@ Quick start example.
 # First Initialize the Environment
 from gbdxtools import Interface
 gbdx = Interface()
+
 aop2envi = gbdx.Task("AOP_ENVI_HDR")
 aop2envi.inputs.image = 's3://gbd-customer-data/PathToDeliveredImage'
 envi_ndvi = gbdx.Task("ENVI_SpectralIndices")
@@ -30,6 +31,7 @@ envi_ndvi.inputs.input_raster = aop2envi.outputs.output_data.value
 envi_ndvi.inputs.file_types = "hdr"
 # Specify a string/list of indicies to run on the input_raster variable.  The order of indicies wi
 envi_ndvi.inputs.index = '["Normalized Difference Vegetation Index", "WorldView Soil Index"]'
+
 workflow = gbdx.Workflow([aop2envi, envi_ndvi])
 workflow.savedata(
 	       aop2envi.outputs.output_data,
@@ -93,6 +95,7 @@ envi_ndvi.inputs.input_raster = aop2envi.outputs.output_data.value
 envi_ndvi.inputs.file_types = "hdr"
 # Specify a string/list of indicies to run on the input_raster variable.  The order of indicies wi
 envi_ndvi.inputs.index = '["Normalized Difference Vegetation Index", "WorldView Built-Up Index", "WorldView Non-Homogeneous Feature Difference", "WorldView Water Index", "WorldView Soil Index"]'
+
 workflow = gbdx.Workflow([aoptask, aop2envi, envi_ndvi])
 workflow.savedata(
    aop2envi.outputs.output_data,
@@ -110,7 +113,7 @@ workflow.status
 
 
 ### Issues
-Currently the task in the Web App 2.0 will process an image with NDVI and the WorldView soil index listed in the quickstart example (Aug 8th, 2016). However, custom workflows with gbdxtools may include any of the indices compatible with the task (see link in Advanced section)
+Currently the advanced task in the Web App 2.0 will process an image with Normalized Difference Vegetation Index, WorldView Built-Up Index, WorldView Non-Homogeneous Feature Difference, WorldView Water Index, WorldView Soil Index (Aug 8th, 2016). However, custom workflows with gbdxtools may include any of the indices compatible with the task (see link in Advanced section)
 
 ### Background
 
