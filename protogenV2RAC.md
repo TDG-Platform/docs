@@ -20,18 +20,18 @@ This script gives the example of RAC with a single tif file as input.
 # Quickstart Example producing a single band vegetation mask from a tif file.
 # First Initialize the Environment
 	
-	from gbdxtools import Interface 
-    import json
-    gbdx = Interface()
-    raster = 's3://gbd-customer-data/PathToImage/image.tif'
-    prototask = gbdx.Task("protogenV2RAC", raster=raster)
+from gbdxtools import Interface 
+gbdx = Interface()
+    
+raster = 's3://gbd-customer-data/PathToImage/image.tif'
+prototask = gbdx.Task("protogenV2RAC", raster=raster)
 
-    workflow = gbdx.Workflow([ prototask ])  
-    workflow.savedata(prototask.outputs.data, location="RAC")
-    workflow.execute()
+workflow = gbdx.Workflow([ prototask ])  
+workflow.savedata(prototask.outputs.data, location="RAC")
+workflow.execute()
 
-    print workflow.id
-    print workflow.status
+print workflow.id
+print workflow.status
 ```
 	
 ### Inputs
