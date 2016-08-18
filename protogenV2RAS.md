@@ -19,18 +19,18 @@ This script gives the example of RAS with a single tif file as input.
 # Quickstart Example producing a single band vegetation mask from a tif file.
 # First Initialize the Environment
 	
-	from gbdxtools import Interface 
-    import json
-    gbdx = Interface()
-    raster = 's3://gbd-customer-data/PathToImage/image.tif'
-    prototask = gbdx.Task("protogenV2RAS", raster=raster)
+from gbdxtools import Interface 
+gbdx = Interface()
 
-    workflow = gbdx.Workflow([ prototask ])  
-    workflow.savedata(prototask.outputs.data, location="RAS")
-    workflow.execute()
+raster = 's3://gbd-customer-data/PathToImage/image.tif'
+prototask = gbdx.Task("protogenV2RAS", raster=raster)
 
-    print workflow.id
-    print workflow.status
+workflow = gbdx.Workflow([ prototask ])  
+workflow.savedata(prototask.outputs.data, location="RAS")
+workflow.execute()
+
+print workflow.id
+print workflow.status
 ```
 	
 ### Inputs
