@@ -19,19 +19,19 @@ This script gives the example of RAV with a single tif file as input.
 ```python
 # Quickstart Example producing a single band vegetation mask from a tif file.
 # First Initialize the Environment
-	
-	from gbdxtools import Interface 
-    import json
-    gbdx = Interface()
-    raster = 's3://gbd-customer-data/PathToImage/image.tif'
-    prototask = gbdx.Task("protogenV2RAV", raster=raster)
 
-    workflow = gbdx.Workflow([ prototask ])  
-    workflow.savedata(prototask.outputs.data, location="RAV")
-    workflow.execute()
+from gbdxtools import Interface
+gbdx = Interface()
 
-    print workflow.id
-    print workflow.status
+raster = 's3://gbd-customer-data/PathToImage/image.tif'
+prototask = gbdx.Task("protogenV2RAV", raster=raster)
+
+workflow = gbdx.Workflow([ prototask ])  
+workflow.savedata(prototask.outputs.data, location="RAV")
+workflow.execute()
+
+print workflow.id
+print workflow.status
 ```
 	
 ### Inputs
