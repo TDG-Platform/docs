@@ -20,7 +20,6 @@ This script gives the example of Pantex with a single tif file as input.
 
 ```python
     from gbdxtools import Interface 
-    import json
     gbdx = Interface()
     raster = 's3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/PathToImage/image.tif'
     prototask = gbdx.Task("protogenV2PANTEX10", raster=raster)
