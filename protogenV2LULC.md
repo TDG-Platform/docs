@@ -18,24 +18,25 @@
 ### QuickStart
 This script gives the example of LULC with a single tif file as input.
 
-    # Quickstart Example producing an unsupervised Landuse Landcover Classification from a tif file.
-    # First Initialize the Environment
+```python
+# Quickstart Example producing an unsupervised Landuse Landcover Classification from a tif file.
+# First Initialize the Environment
 
-    from gbdxtools import Interface 
-    import json
-    gbdx = Interface()
+from gbdxtools import Interface 
+gbdx = Interface()
     
-    # Input data
-    raster = 's3://gbd-customer-data/PathToImage/image.tif'
-    prototask = gbdx.Task("protogenV2LULC", raster=raster)
+# Input data
+raster = 's3://gbd-customer-data/PathToImage/image.tif'
+prototask = gbdx.Task("protogenV2LULC", raster=raster)
 
-    workflow = gbdx.Workflow([ prototask ])  
-    workflow.savedata(prototask.outputs.data, location="LULC")
-    workflow.execute()
+workflow = gbdx.Workflow([ prototask ])  
+workflow.savedata(prototask.outputs.data, location="LULC")
+workflow.execute()
 
-    print workflow.id
-    print workflow.status
+print workflow.id
+print workflow.status
 
+````
 ### Inputs
 This task will process only WorldView 2 or WorldView 3 multi-spectral imagery (8-band optical and VNIR data sets) that has been atmospherically compensated by the AOP processor. Supported formats are .TIF, .TIL, .VRT, .HDR.
 
