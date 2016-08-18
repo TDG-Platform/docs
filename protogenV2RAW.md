@@ -15,18 +15,17 @@ This script gives the example of RAW with a single tif file as input.
 # Quickstart Example producing a single band vegetation mask from a tif file.
 # First Initialize the Environment
 	
-	from gbdxtools import Interface 
-    import json
-    gbdx = Interface()
-    raster = 's3://gbd-customer-data/PathToImage/image.tif'
-    prototask = gbdx.Task("protogenV2RAW", raster=raster)
+from gbdxtools import Interface 
+gbdx = Interface()
+raster = 's3://gbd-customer-data/PathToImage/image.tif'
+prototask = gbdx.Task("protogenV2RAW", raster=raster)
 
-    workflow = gbdx.Workflow([ prototask ])  
-    workflow.savedata(prototask.outputs.data, location="RAW")
-    workflow.execute()
+workflow = gbdx.Workflow([ prototask ])  
+workflow.savedata(prototask.outputs.data, location="RAW")
+workflow.execute()
 
-    print workflow.id
-    print workflow.status
+print workflow.id
+print workflow.status
 ```	
 ### Inputs
 
