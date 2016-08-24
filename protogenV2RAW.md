@@ -12,7 +12,7 @@
 This script gives the example of RAW with a single tif file as input. 
 
 ```python
-# Quickstart Example producing a single band vegetation mask from a tif file.
+# Quickstart Example producing a single band water mask from a tif file.
 # First Initialize the Environment
 	
 from gbdxtools import Interface 
