@@ -16,7 +16,7 @@ RAS can be run with Python using   [gbdxtools](https://github.com/DigitalGlobe/g
 This script gives the example of RAS with a single tif file as input. 
 
 ```python
-# Quickstart Example producing a single band vegetation mask from a tif file.
+# Quickstart Example producing a single band soil mask from a tif file.
 # First Initialize the Environment
 	
 from gbdxtools import Interface 
