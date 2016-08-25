@@ -65,7 +65,7 @@ input_raster             |          N/A          | S3 URL   .TIF only           
 
 ### Outputs
 
-The following table lists the Spectral Index task outputs.
+The following table lists the Classification Clumping task outputs.
 
 Name            | Required |   Description
 ----------------|:--------:|-----------------
