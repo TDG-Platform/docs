@@ -1,6 +1,6 @@
 # ENVI_ClassificationClumping
 
-**ENVI_ClassificationClumping** The Clumping task resolves the unclassified pixels produced from the Sieving classification task.  The selected classes are clumped together by first performing a dilate operation then an erode operation on the classification image using a kernel of the size specified in the parameters dialogue.  This task requires a classification has been run through the [Sieving Classification] (https://github.com/TDG-Platform/docs/blob/envi_tasks_docs/ENVI_ClassificationSieving.md)
+**ENVI_ClassificationClumping** The Clumping task resolves the unclassified pixels produced from the Sieving classification task.  The selected classes are clumped together by first performing a dilate operation then an erode operation on the classification image using a kernel of the size specified in the parameters dialogue.  This task requires a classification has been run and in the example workflow below, the Sieving task is utilized [Sieving Classification] (https://github.com/TDG-Platform/docs/blob/envi_tasks_docs/ENVI_ClassificationSieving.md)
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
@@ -53,15 +53,14 @@
 ### Inputs	
 
 **Description of Input Parameters and Options for the "ENVI_ClassificationClumping":**
-This task will work on Digital Globe images with a IMD file located in the S3 location: 
-Input imagery sensor types include: QuickBird, WorldView 1, WorldView 2, WorldView 3 and GeoEye
-The following table lists the ENVI_ClassificationClumping task:
+This task will function on a classification raster dataset.  
+The following table lists the inputs for ENVI_ClassificationClumping task:
 
 All inputs are **required**
 
 Name                     |       Default         |        Valid Values             |   Description
 -------------------------|:---------------------:|---------------------------------|-----------------
-input_raster             |          N/A          | S3 URL   .TIF only              | S3 location of input data Specify a sieving output raster on which to perform classification clumping
+input_raster             |          N/A          | S3 URL   .hdr, .TIF              | S3 location of input data Specify a classification raster output raster on which to perform classification clumping
 
 ### Outputs
 
@@ -72,7 +71,7 @@ Name            | Required |   Description
 output_raster   |     Y    | This will explain the output file location and provide the output in .TIF format.
 
 
-This task will function on a Sieving classification image located in the S3 location.  The file type input of the classification is preferred in the .hdr format.  An example of ENVI ISO Data Classification and Sieving are provided in the sample script above to demonstrate a full workflow. Additional options include:
+This task will function on a classification image located in the S3 location.  The file type input of the classification is preferred in the .hdr format.  An example of ENVI ISO Data Classification and Sieving are provided in the sample script above to demonstrate a full workflow. Additional options include:
 
 
 **OPTIONAL SETTINGS AND DEFINITIONS:**
