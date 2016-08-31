@@ -1,4 +1,4 @@
-# AComp 1.0
+# AComp (DG Atmospheric Compensation)
 
 The AComp GBDX task performs atmospheric compensation on 
 satellite imagery collected from DigitalGlobe sensors as well as other sources. Atmospheric compensation is the process 
