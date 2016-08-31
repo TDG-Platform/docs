@@ -190,5 +190,5 @@ Script Example linking AComp to [protogenV2LULC](https://github.com/TDG-Platform
 
 
 ### Contact Us
-Tech Owner: [Alex Comer](#acomer@digitalglobe.com) & Editor:  [Kathleen Johnson](#kathleen.johnsons@digitalglobe.com)
+Tech Owners: [Fabio Pacifici](#fpacific@digitalglobe.com), [Alex Comer](#acomer@digitalglobe.com) & Editor:  [Kathleen Johnson](#kathleen.johnsons@digitalglobe.com)
 
