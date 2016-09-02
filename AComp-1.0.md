@@ -141,7 +141,7 @@ Script Example running AComp on VNIR+SWIR:
 	workflow = gbdx.Workflow([ s3task1, s3task2 ]) # needs to excute and complete this workflow first
 
 	# Setup AComp Task
-	acompTask = gbdx.Task('AComp_1.0', data='s3://receiving-dgcs-tdgplatform-com/s3task_output')
+	acompTask = gbdx.Task('AComp_1.0', data='s3://Customer location where data has been staged')
 
 	# Run AComp Workflow
 	workflow = gbdx.Workflow([ acompTask ])
