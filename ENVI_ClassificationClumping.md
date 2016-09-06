@@ -94,7 +94,7 @@ output_raster_uri_filename |         output          | Folder name in S3 locatio
 Your post-classification file will be written to the specified S3 Customer Location in the ENVI .hdr file format and tif format(e.g.  s3://gbd-customer-data/unique customer id/named directory/output.hdr).  
 
 
-For background on the development and implementation of Classification Clumping refer to the [ENVI Documentation](https://www.harrisgeospatial.com/docs/clumpingclasses.html)
+For background on the development and implementation of Classification Clumping refer to the [ENVI Documentation](http://www.harrisgeospatial.com/docs/enviclassificationclumpingtask.html)
 
 ###Contact Us
 Document Owner - Carl Reeder - creeder@digitalglobe.com
