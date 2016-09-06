@@ -71,7 +71,7 @@ Name            | Required |   Description
 output_raster   |     Y    | This will explain the output file location and provide the output in .TIF format.
 
 
-This task will function on a classification image located in the S3 location.  The file type input of the ENVI classification raster is preferred in the .hdr format.  An example of ENVI ISO Data Classification and Sieving are provided in the sample script above to demonstrate a full workflow. Additional options include:
+This task will function on a classification image located in the S3 location.  The file type input of the ENVI classification raster is preferred in the .hdr format.  An example of ENVI ISO Data Classification and Sieving are provided in the sample script above to demonstrate a full workflow. The Sieving task is recommended to precede the clumping task to further refine the ENVI classification raster.  Additional options include:
 
 
 **OPTIONAL SETTINGS AND DEFINITIONS:**
