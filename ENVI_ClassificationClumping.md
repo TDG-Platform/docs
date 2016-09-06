@@ -1,6 +1,8 @@
 # ENVI_ClassificationClumping
 
-**ENVI_ClassificationClumping** The Clumping task resolves the unclassified pixels produced from the Sieving classification task.  The selected classes are clumped together by first performing a dilate operation then an erode operation on the classification image using a kernel of the size specified in the parameters dialogue.  This task requires a classification has been run and in the example workflow below, the Sieving task is utilized ([Sieving Classification]). (https://github.com/TDG-Platform/docs/blob/envi_tasks_docs/ENVI_ClassificationSieving.md)
+**ENVI_ClassificationClumping** This task performs a clumping method on a classification image. This operation clumps adjacent similar classified areas using morphological operators. Classified images often suffer from a lack of spatial coherency (speckle or holes in classified areas). Low pass filtering could be used to smooth these images, but the class information would be contaminated by adjacent class codes. Clumping classes solves this problem. The selected classes are clumped together by first performing a dilate operation then an erode operation on the classified image using one specified kernel (structuring element) for each operation
+
+This task requires a classification has been run and in the example workflow below, the Sieving task is utilized ([Sieving Classification]). (https://github.com/TDG-Platform/docs/blob/envi_tasks_docs/ENVI_ClassificationSieving.md)
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
