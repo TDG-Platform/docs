@@ -71,7 +71,7 @@ The output of this task is a Json file listing the available indices, based on t
 from gbdxtools import Interface
 gbdx = Interface()
 
-data = "s3://receiving-dgcs-tdgplatform-com/055026839010_01_003"
+data = "s3://receiving-dgcs-tdgplatform-com/pathto_1B_image"
 aoptask = gbdx.Task('AOP_Strip_Processor', data=data, bands='MS', enable_acomp=True, enable_pansharpen=False, enable_dra=False)    
 # creates acomp'd multispectral image
 
@@ -100,7 +100,7 @@ wf_id = workflow.id
 ```
 
 ### Issues
-NA
+Additional parsing of the output list of indices is necessary before using the list as input for the ENVI Spectral Indices task. An example of this workflow is in development.  
 
 ### Background
 For background on the development and implementation of ENVI Query Spectral Indices see [here](http://www.harrisgeospatial.com/docs/ENVIQuerySpectralIndicesTask.html).
