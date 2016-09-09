@@ -13,7 +13,7 @@ The AComp GBDX task operates on a variety of input imagery types:
 * DG Level 1B (orthorectification is automatically applied first)
 * DG Level 2 ([requires special handling](#known-issues))
 * DG Level 3 ([requires special handling](#known-issues))
-* Landsat8 images
+* Landsat-8 images
 
 Input imagery must at least contain the VNIR multispectral bands, and optionally may also include panchromatic and/or SWIR data.
 
@@ -99,6 +99,15 @@ bit_depth      |   16    |  11, 16 or 32                         | Bit depth ref
 ### Outputs
 
 On completion, the processed imagery will be written to your specified S3 Customer Location (e.g.  s3://gbd-customer-data/unique customer id/named directory/).   The AComp output files will be located Within the 'named directory'. The specific layout and names of the output files will depend on the specific input files and the options selected. 
+
+**Description of Output Files**
+
+Data Input Type          | Description of Output Files  | Runs FastOrtho to produce Final Output
+-------------------------|:------------------------------|------------------------------
+Landsat-8                | .TIF                          |  NO   (individual .tif files)
+DG Sensors Level 1B      | .TIF, .IMD                    |  YES  (single mosaic .tif)
+DG Sensors Level 2 and Level 3 |  .TIF, .TIL, .IMD       |  NO   (individual .tif files)
+
 
 [Contact Us](#contact-us) If your Customer has questions regarding required inputs, expected outputs and Advanced Options.
 
