@@ -73,7 +73,6 @@ The AComp GBDX task can be run through a simple Python script using  [gbdxtools]
 To use this task, set the "data" input parameter (described below) to point at an S3 bucket containing the image data to process. Note that this
 task will search through the given bucket to locate the input data and process the data it finds. In order to process VNIR or VNIR + PAN data, simply point the "data" input parameter at the directory within the bucket containing the VNIR or VNIR + PAN data for a single catalog ID. 
 
-If SWIR data is to also be processed, the workflow is slightly different. A summary follows here, but refer to [Advanced Options](#advanced-options) for examples. Since SWIR data is normally ordered separately from VNIR in GBDX and therefore has a different catalog ID, in order to process VNIR+SWIR or VNIR+PAN+SWIR, it is necessary to point the "data" input parameter at a parent directory containing both a single VNIR (or VNIR+PAN) catalog ID directory and also a single corresponding SWIR catalog ID directory. Note that the SWIR data must intersect the VNIR data and be "acquired during the same overpass" in order to obtain valid results. SWIR data acquired during the same overpass will have a catalog ID that is differentiated from the VNIR catalog ID solely by having an "A" in the 4th position of the catalog ID. For example, the SWIR catalog ID 104A010008437000 was acquired during the same overpass as the the VNIR catalog ID 1040010008437000.
 
 **Description of Input Parameters and Options for the AComp GBDX task**
 
@@ -132,34 +131,6 @@ DG Sensors Level 2 and Level 3 |  .TIF, .TIL, .IMD       |  NO   (individual .ti
 
 	print workflow.id
 	print workflow.status
-
-
-
-Script Example running AComp on VNIR+SWIR:
-
-	# Runs AComp_1.0 on corresponding VNIR and SWIR images
-	# Test Imagery is WV03 VNIR+SWIR for the NorCal AOI
-	from gbdxtools import Interface 
-	import json
-	gbdx = Interface()
-
-	# Stage VNIR and SWIR in the same parent directory
-	destination = 's3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/kathleen_AComp3'
-	s3task1 = gbdx.Task("StageDataToS3", data='s3://receiving-dgcs-tdgplatform-com/055427378010_01_003', destination=destination) # VNIR image
-	s3task2 = gbdx.Task("StageDataToS3", data='s3://receiving-dgcs-tdgplatform-com/055486759010_01_003', destination=destination) # SWIR image)
-	workflow = gbdx.Workflow([ s3task1, s3task2 ]) # needs to excute and complete this workflow first
-
-	# Setup AComp Task
-	acompTask = gbdx.Task('AComp_1.0', data='s3://Customer location where data has been staged')
-
-	# Run AComp Workflow
-	workflow = gbdx.Workflow([ acompTask ])
-	workflow.savedata(acompTask.outputs.data.value, location='S3 gbd-customer-data location--')
-	workflow.execute()
-
-	print workflow.id
-	print workflow.status
-
 
 
 Script Example linking AComp to [protogenV2LULC](https://github.com/TDG-Platform/docs/blob/master/protogenV2LULC.md):
