@@ -110,7 +110,7 @@ DG Sensors Level 1B      | .TIF, .IMD                    |  YES  (single mosaic 
 DG Sensors Level 2 and Level 3 |  .TIF, .TIL, .IMD       |  NO   (individual .tif files)
 
 
-[Contact Us](#contact-us) If your Customer has questions regarding required inputs, expected outputs and Advanced Options.
+[Contact Us](#contact-us) If your Customer has questions regarding required inputs, expected outputs and [Advanced Options](advanced-options).
 
 ### Advanced Options
 
