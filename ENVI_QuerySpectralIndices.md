@@ -11,6 +11,7 @@ This task can be run with Python using [gbdxtools](https://github.com/DigitalGlo
  * [Outputs](#outputs) - Task outputs and output structure.
  * [Advanced](#advanced) - Additional information for advanced users.
  * [Issues](#issues) - Current or past known issues.
+ * [Runtime](#runtime) - Results of task benchmark tests.
  * [Background](#background) - Background information.
  * [Contact](#contact) - Contact information.
 
@@ -33,7 +34,7 @@ envi_query.inputs.file_types = "hdr"
 workflow = gbdx.Workflow([aop2envi, envi_query])
 
 workflow.savedata(
-  envi_ndvi.outputs.output_raster_uri,
+  envi_query.outputs.task_meta_data,
     location='ENVI_QuerySpectralIndices'
 )
 
@@ -77,13 +78,11 @@ aoptask = gbdx.Task('AOP_Strip_Processor', data=data, bands='MS', enable_acomp=T
 
 aop2envi = gbdx.Task("AOP_ENVI_HDR")
 aop2envi.inputs.image = aoptask.outputs.data.value
-aop2envi.domain = "ondemand"
 
 
 envi_query = gbdx.Task("ENVI_QuerySpectralIndices")
 envi_query.inputs.input_raster = aop2envi.outputs.output_data.value
 envi_query.inputs.file_types = "hdr"
-envi_query.domain = "ondemand"
 
 
 workflow = gbdx.Workflow([aoptask, aop2envi, envi_query])
@@ -98,6 +97,19 @@ status = workflow.status["state"]
 wf_id = workflow.id
 
 ```
+
+### Runtime
+
+The following table lists all applicable runtime outputs. (This section will be completed the Algorithm Curation team)
+For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
+
+  Sensor Name  |  Average runtime  |  Total Area (k2)  |  Time(min)  |  Time/Area k2
+--------|:----------:|-----------|----------------|---------------
+QB | 41,551,668 | 312.07 | 158.26 | 0.51 |
+WV01| 1,028,100,320 |351.72 | NA|NA |
+WV02|35,872,942|329.87|176.04 | 0.53|
+WV03|35,371,971|196.27| 232.00|1.18 |
+GE| 57,498,000|332.97|241.53 | 0.73|
 
 ### Issues
 Additional parsing of the output list of indices is necessary before using the list as input for the ENVI Spectral Indices task. An example of this workflow is in development.  
