@@ -113,6 +113,43 @@ DG Sensors Level 2 and Level 3 |  .TIF, .TIL, .IMD       |  NO   (individual .ti
 
 ### Advanced Options
 
+#### Running AComp on VNIR+SWIR Imagery from WorldView-3
+
+First the VNIR and SWIR images must be staged to the same parent directory.  An example is given below as a reminder.
+
+	from gbdxtools import Interface 
+	import json
+	gbdx = Interface()
+
+	# Stage VNIR and SWIR in the same parent directory
+	destination = 's3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/'s3:// your designated parent directory'
+	s3task1 = gbdx.Task("StageDataToS3", data='s3://receiving-dgcs-tdgplatform-com/055427378010_01_003', destination=destination) # VNIR image
+	s3task2 = gbdx.Task("StageDataToS3", data='s3://receiving-dgcs-tdgplatform-com/055486759010_01_003', destination=destination) # SWIR image)
+	workflow = gbdx.Workflow([ s3task1, s3task2 ])
+	workflow.execute()
+
+	print workflow.id
+	print workflow.status
+
+These tasks can be combined, but it works best to stage the data first in a separate task to make sure the imagery has been completely copied before starting the AComp task.
+
+Script Example running AComp on VNIR+SWIR:
+
+	# Runs AComp_1.0 on corresponding VNIR and SWIR images from WorldView-3
+	from gbdxtools import Interface 
+	import json
+	gbdx = Interface()
+
+	# Setup AComp Task
+	acompTask = gbdx.Task('AComp_1.0', data='s3://Customer location where data has been staged')
+
+	# Run AComp Workflow
+	workflow = gbdx.Workflow([ acompTask ])
+	workflow.savedata(acompTask.outputs.data.value, location='S3 gbd-customer-data location--')
+	workflow.execute()
+
+	print workflow.id
+	print workflow.status
 
 [Script Example running AComp on Level 3D Imagery:](#known-issues)
 
