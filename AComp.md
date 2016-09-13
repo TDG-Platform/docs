@@ -28,9 +28,9 @@ Input imagery must at least contain the VNIR multispectral bands, and optionally
 
 The AComp GBDX task can be run through a simple Python script using  [gbdxtools](https://github.com/DigitalGlobe/gbdxtools/blob/master/docs/user_guide.rst), which requires some initial setup, or through the [GBDX Web Application](https://gbdx.geobigdata.io/materials/).  Tasks and workflows can be added (described here in [gbdxtools](https://github.com/DigitalGlobe/gbdxtools/blob/master/docs/running_workflows.rst)) or run separately after the AComp process is completed.
 
-**Example Script:** These basic settings will run AComp on a Landsat8 image.  See also examples listed under the [Advanced Options](#advanced-options).
+**Example Script:** These basic settings will run AComp on a Landsat-8 image.  See also examples listed under the [Advanced Options](#advanced-options).
 
-    # Run atmospheric compensation on Landsat8 data
+    # Run atmospheric compensation on Landsat-8 data
     from gbdxtools import Interface
     gbdx = Interface()
     import json
