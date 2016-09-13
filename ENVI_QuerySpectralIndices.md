@@ -49,7 +49,7 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 
   Name  |  Required  |  Default  |  Valid Values  |  Description  
 --------|:----------:|-----------|----------------|---------------
-file_types|False|None| |GBDX Option. Comma separated list of permitted file type extensions. Use this to filter input files -- Value Type: STRING[*]
+file_types|False|None| .hdr, .tif |GBDX Option. Comma separated list of permitted file type extensions. Use this to filter input files -- Value Type: STRING
 input_raster|True|None| |Specify a raster to query for available spectral indices. -- Value Type: ENVIRASTER
 
 ### Outputs
@@ -58,8 +58,8 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 
   Name  |  Required  |  Default  |  Valid Values  |  Description  
 --------|:----------:|-----------|----------------|---------------
-task_meta_data|False|None| |GBDX Option. Output location for task meta data such as execution log and output JSON
-available_indices|True|None| |A string array with the spectral indices that can be computed for the input raster. -- Value Type: STRING[*]
+task_meta_data|True|None|s3 location |GBDX Option. Output location for task meta data such as execution log and output JSON
+available_indices|false|None| NA |A string array with the spectral indices that can be computed for the input raster. -- Value Type: STRING
 
 **Output structure**
 
