@@ -28,3 +28,13 @@ Third party tasks
 Each task will be tested with applicable imagery and settings.  The test results will be normalized based on a runtime per geographic area.  These metrics will be reported within each task document in the format shown in Table 1. 
 
 Table 1. Example results of AOP_Strip_Processor task
+
+
+Sensor     |  Resolution |  Total Pixels |  Total Area k2 | Runtime (Min.Sec)| Runtime (Min/Area k2)
+-----------|:-----------:|----------------|---------------|------------------|--------------------
+QB   | Pan - 0.61m MS – 2.44m |41,551,668| 312.07|  460.603| 1.48
+   | S3 URL | S3 location of input .tif file processed through AOP_Strip
+WV01 |  N/A  |     string of index name        |
+WV02|
+WV02|
+WV03|
