@@ -5,23 +5,23 @@ Our main test goal for the GBDX tasks is to develop a set of average runtimes fo
 A secondary objective is to provide a set of python test scripts which will support automated testing of gbdx tasks using gbdxtools.  These scripts will be included in the GitHUB and GBDX university documentation and provide gbdx consumers with examples of how to run a task. 
 
 #Definitions
-#CI environment - is the practice of merging all developer working copies to a shared mainline several times a day.
+**CI environment** - is the practice of merging all developer working copies to a shared mainline several times a day.
 
-#GAC – Geospatial Big data Algorithm Curation team – Team responsible for curation and documentation of tasks on the GBDX platform.
+**GAC** – Geospatial Big data Algorithm Curation team – Team responsible for curation and documentation of tasks on the GBDX platform.
 
-#GBDX – Geospatial Big Data Platform – Digital Globe’s GBDX platform provides customers with a fast and easy way to search, order, and process images and their data. The Digital Globe, Inc. platform or ecosystem is where consumers and producers of geospatial and image based algorithms (Tasks) interact.
+**GBDX** – Geospatial Big Data Platform – Digital Globe’s GBDX platform provides customers with a fast and easy way to search, order, and process images and their data. The Digital Globe, Inc. platform or ecosystem is where consumers and producers of geospatial and image based algorithms (Tasks) interact.
 
-#GBDX tasks – Algorithms available on the GBDX platform – this refers to a single algorithm and not a string of algorithms which is known as a workflow
+**GBDX tasks** – Algorithms available on the GBDX platform – this refers to a single algorithm and not a string of algorithms which is known as a workflow
 
-#GBDX Rest API – You can use GBDX's REST APIs and services to search the catalog, order imagery data, run tasks and workflows, access your AWS S3 bucket, and much more.
+**GBDX** Rest API – You can use GBDX's REST APIs and services to search the catalog, order imagery data, run tasks and workflows, access your AWS S3 bucket, and much more.
 
-#gbdxtools – gbdxtools is a package for ordering imagery and launching workflows on Digital Globe’s GBDX platform.  
+**gbdxtools** – gbdxtools is a package for ordering imagery and launching workflows on Digital Globe’s GBDX platform.  
 
-#GBDX University - A library of resources to help you get the most value out of the GBDX platform.	
+**GBDX University** - A library of resources to help you get the most value out of the GBDX platform.	
 
-#GBDX- Web App – The web application is a graphical user interface (GUI) where you can define your area of interest, create material sets, and process imagery data.
+**GBDX- Web App** – The web application is a graphical user interface (GUI) where you can define your area of interest, create material sets, and process imagery data.
 
-#Areas to be tested
+*#Areas to be tested
 
 Within GBDX list of tasks tested for correct functionality, the following task categories will be tested:
 ENVI tasks
@@ -31,7 +31,7 @@ Third party tasks
 
 Each task will be tested with applicable imagery and settings.  The test results will be normalized based on a runtime per geographic area.  These metrics will be reported within each task document in the format shown in Table 1. 
 
-Table 1. Example results of AOP_Strip_Processor task
+**Table 1.** Example results of AOP_Strip_Processor task
 
 Sensor     |  Resolution |  Total Pixels |  Total Area k2 | Runtime (Min.Sec)| Runtime (Min/Area k2)
 -----------|:-----------:|----------------|---------------|------------------|--------------------
@@ -97,4 +97,46 @@ Verify exports of all output data types out of the GBDX S3 environment are succe
 
 #Regression – Seeks to find new defects in already tested, functional areas
 Experience has shown that as releases are produced and software is fixed, the emergence of new and/or reemergence of old issues is common. The purpose of regression testing is to uncover software errors and insure the latest version of a product continues to run successfully.  Also, regression testing provides a general assurance that additional errors were not introduced in the latest build.  
+The test cases for this type of tests will be recorded on our [Confluence site](https://confluence-pdl.digitalglobe.com:8092/display/IMP/Test+Cases).
 
+Regression tests are implemented accordingly as follows:
+
+•	New functionality introduced in the current test cycle will be added to the Regression Test(s) in the next test cycle
+
+•	If warranted, a JIRA ticket will be written for any and all defects.  As code fixes or “patches” are implemented into each build of the product, regression testing will be performed 
+
+•	Future full regression test passes will someday be completely automated
+
+•	Depending on the patch/change/fix to the product, a full regression test pass, a partial regression test pass, or a quick smoke test will be performed  
+
+Example Regression Test -
+Verify that Acomp processing still works with the new updates to the algorithm.
+
+#End-to-End – Verifying customer scenarios from start to finish
+
+This type of manual testing can be viewed as being "full" functional testing to the maximum. We learn from our customer’s usage patterns and build these tests based on their experiences and requirements. A single End-to-End test case is always made up of a series of steps/actions that a customer would take while using the product. Also, each test always includes some input and finishes with a verified output or output set of information.
+
+**Example End-to-End Test**
+Run all steps including Ordering imagery to test the ENVI_ClassificationClumping task which includes the AOP_Strip_Processor, AOP_ENVI_HDR glue task, ENVI_ISODATAClassification, ENVI_ClassificationSieving and finally the ENVI_ClassificationClumping tasks in a single workflow.
+
+**Performance** – Speed measurements 
+Basic performance testing measurements will be created on a single-user, single-instance case in the GBDX default domain only. They will be run and monitored to uncover performance bottlenecks and provide a benchmark for estimating runtime of longer chains of workflows in GBDX.  Performance tests will be measured on a single instance run (no concurrent processing timings) and the results will captured as a result of performing functional tests with the sample imagery.   
+
+Standard benchmark image data sets will be created and used for performance testing for each product (see Table 3). This is to simulate our most common customer scenarios when collecting performance measurements.
+
+#Example Performance Test –
+Verify the runtime for ENVI_SpectralIndex using gbdxtools on the default domain.
+
+**Test Environments**
+The currently available domains to run tasks in GBDX are included in Table 2. Variation in runtime performance of a task is expected across these domains. Therefore, tests of runtime will be completed on the default domain ONLY except for the AOP_Strip_Processor task, which will execute on the Raid domain. 
+
+
+**Table 2.** Domain options and specifics available on GBDX
+Domain   |  Instance Type | Storage |  EBS Root | CPU| Mem(gig)|On Demand Price| Spt Est Price
+-----------|:-----------:|----------------|---------------|-------|-----------|-----|
+default  | r3.2xlarge || 500| 8|61|$0.665| (75%) $0.498
+compute | c3.4xlarge |2x160 SSD| 80|16|30|$0.84| (50%) $0.42
+gpu |g2.2xlarge || 500| 8|15|$0.65| (75%) $0.488
+nvidiagpu |g2.2xlarge || 500| 8|15|$0.65| (99.8%) $0.649
+ondemand |r3.2xlarge || 500| 8|61|$0.665| (75%) $0.498
+raid | d2.4xlarge |12x2000 HDD| 80|16|122|$2.76| (25%) $0.690 , (50%) $1.38, 
