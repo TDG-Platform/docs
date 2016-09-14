@@ -103,7 +103,7 @@ wf_id = workflow.id
 The following table lists all applicable runtime outputs. (This section will be completed the Algorithm Curation team)
 For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
 
-  Sensor Name  |  Average runtime  |  Total Area (k2)  |  Time(min)  |  Time/Area k2
+  Sensor Name  |  Average runtime  |  Total Area (k2)  |  Time(sec)  |  Time/Area k2
 --------|:----------:|-----------|----------------|---------------
 QB | 41,551,668 | 312.07 | 158.26 | 0.51 |
 WV01| 1,028,100,320 |351.72 | NA|NA |
