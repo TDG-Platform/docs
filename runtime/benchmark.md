@@ -209,4 +209,4 @@ World View 3 |[1040010019920800](https://browse.digitalglobe.com/imagefinder/sho
 Geo Eye 1  |[1050010003C9C800](https://browse.digitalglobe.com/imagefinder/showBrowseMetadata?catalogId=1050010003C9C800) |Pan -MS1|2016/04/13| 332.97|7,770/7,400|Pan - 0.46m MS – 1.84m|s3://receiving-dgcs-tdgplatform-com/055217125010_01_003
 
 
-The image bounding boxes in Image 1 demonstrate the location and extent of each test image.  All DG seniors available on GBDX were ordered and will be tested within the benchmark process.  
+All DG sensors available on GBDX were ordered and will be tested within the benchmark process.  
