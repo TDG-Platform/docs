@@ -1,6 +1,6 @@
 # 8-Band Soil Mask (protogenV2RAS)
 
-RAS is an un-supervised protocol for computing bare soil masks from 8 band (optical + VNIR) image data-sets. The bare soil mask is a binary image in which intensity 255 indicates the presence of soil and intensity 0 the absence of soil. Bare soil is different from rock or stone. 
+RAS is an un-supervised protocol for computing bare soil masks from 8 band (optical + VNIR) image data-sets. The bare soil mask is a binary image in which intensity 255 indicates the presence of soil and intensity 0 the absence of soil. Bare soil is different from rock or stone.
 RAS can be run with Python using   [gbdxtools](https://github.com/DigitalGlobe/gbdxtools) or through the [GBDX Web Application](https://gbdx.geobigdata.io/materials/).  
 
 ### Table of Contents
@@ -8,18 +8,19 @@ RAS can be run with Python using   [gbdxtools](https://github.com/DigitalGlobe/g
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and example contents.
  * [Advanced](#advanced) - Additional information for advanced users.
+ * [Runtime](#runtime) - Results of task benchmark tests.
  * [Known Issues](#known issues) - current or past issues known to exist.
  * [Contact Us](#contact-us) - Contact tech or document owner.
 
 ### Quickstart
 
-This script gives the example of RAS with a single tif file as input. 
+This script gives the example of RAS with a single tif file as input.
 
 ```python
 # Quickstart Example producing a single band soil mask from a tif file.
 # First Initialize the Environment
-	
-from gbdxtools import Interface 
+
+from gbdxtools import Interface
 gbdx = Interface()
 
 raster = 's3://gbd-customer-data/PathToImage/image.tif'
@@ -32,7 +33,7 @@ workflow.execute()
 print workflow.id
 print workflow.status
 ```
-	
+
 ### Inputs
 
 This task will process only WorldView 2 or WorldView 3 multi-spectral imagery (8-band optical and VNIR data sets) that has been atmospherically compensated by the AOP processor.  Supported formats are .TIF, .TIL, .VRT, .HDR.
@@ -60,11 +61,13 @@ data |     Y    | This will explain the output file location and provide the out
 log  |     N    | S3 location where logs are stored.
 
 
+Your Processed Imagery will be written as Binary .TIF image type UINT8x1 and placed in the specified S3 Customer Location (e.g.  s3://gbd-customer-data/unique customer id/named directory/).  
+
 ### Advanced
 To link the workflow of 1 input image into AOP_Strip_Processor into a protogen task you must use the follow GBDX tools script in python
 
 ```python
-#First initalize the environment 
+#First initalize the environment
 #AOP strip processor has input values known to complete the Protogen tasks
 
 from gbdxtools import Interface
@@ -85,28 +88,28 @@ prototask.inputs.raster = gluetask.outputs.data.value
 
 workflow = gbdx.Workflow([aoptask2, gluetask, prototask])
 workflow.savedata(prototask.outputs.data, 'RAS')
-  
+
 workflow.execute()
 
 workflow.status
 ```
+### Runtime
 
-###Postman status @ 06/07/16
+The following table lists all applicable runtime outputs. (This section will be completed the Algorithm Curation team)
+For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
 
-**Successful run with Tif file.  
+  Sensor Name  |  Total Pixels  |  Total Area (k2)  |  Time(min)  |  Time/Area k2
+--------|:----------:|-----------|----------------|---------------
+WV02|35,872,942|329.87|152.56 |0.46|
+WV03|35,371,971|196.27| 112.36|0.57 |
 
-
-
-**Data Structure for Expected Outputs:**
-
-Your Processed Imagery will be written as Binary .TIF image type UINT8x1 and placed in the specified S3 Customer Location (e.g.  s3://gbd-customer-data/unique customer id/named directory/).  
 
 ###Known Issues
 1) To run the task in a single workflow with AOP the tif file must first be removed from the AOP folder with the additional python commands listed in Advanced
 
 2)False positives maybe present due to certain types of ceramic roofing material and some types of asphalt.
 
-3)Limitations: Isolated soil patches of surface area smaller or equal to 4m^2 are discarded. 
+3)Limitations: Isolated soil patches of surface area smaller or equal to 4m^2 are discarded.
 
 4) Testing additional input formats still in progress.  .VRT is currently not functioning (6/30/2016)**
 
@@ -115,4 +118,3 @@ For background on the development and implementation of  Protogen  [Documentatio
 ###Contact Us
 Tech Owner - Georgios Ouzounis - gouzouni@digitalglobe.com
 Document Owner - Carl Reeder - creeder@digitalglobe.com
-

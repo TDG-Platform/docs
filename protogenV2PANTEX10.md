@@ -8,6 +8,7 @@ PANTEX10 is an un-supervised protocol for computing a built-up expectation layer
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and example contents.
  * [Advanced](#advanced) - Additional information for advanced users.
+ * [Runtime](#runtime) - Results of task benchmark tests.
  * [Known Issues](#known-issues) - current or past issues known to exist.
  * [Contact Us](#contact-us) - Contact tech or document owner.
 
@@ -16,10 +17,10 @@ PANTEX10 is an un-supervised protocol for computing a built-up expectation layer
 **Example Script:** Run in IPython using the [GBDXTools Interface] (https://github.com/DigitalGlobe/gbdxtools)
 
 
-This script gives the example of Pantex with a single tif file as input. 
+This script gives the example of Pantex with a single tif file as input.
 
 ```python
-    from gbdxtools import Interface 
+    from gbdxtools import Interface
     gbdx = Interface()
     raster = 's3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/PathToImage/image.tif'
     prototask = gbdx.Task("protogenV2PANTEX10", raster=raster)
@@ -30,7 +31,7 @@ This script gives the example of Pantex with a single tif file as input.
 
     print workflow.id
     print workflow.status
-```	
+```
 ### Inputs
 **Description of Input Parameters and Options for "protogenV2PANTEX10":**
 
@@ -55,19 +56,22 @@ log  |     N    | S3 location where logs are stored.
 
 * NA - No additional optional settings for this task exist
 
+### Runtime
 
+The following table lists all applicable runtime outputs. (This section will be completed the Algorithm Curation team)
+For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
 
-###Postman status @ 06/09/16
-
-**Successful run with Tif file.  Testing additional input formats still in progress.  .VRT is currently not functioning (6/7/2016)**
-
+  Sensor Name  |  Total Pixels  |  Total Area (k2)  |  Time(min)  |  Time/Area k2
+--------|:----------:|-----------|----------------|---------------
+WV02|35,872,942|329.87|118.36 |0.36|
+WV03|35,371,971|196.27| 161.39|0.82 |
 
 
 **Data Structure for Expected Outputs:**
 
 Your Processed Imagery will be written as Binary .TIF image type UINT8x1 and placed in the specified S3 Customer Location (e.g.  s3://gbd-customer-data/unique customer id/named directory/).  
 
-**Known issues:**  Highly granular rock-covered areas might be interpreted as built-up areas.
+###Known issues:  Highly granular rock-covered areas might be interpreted as built-up areas.
 
 **Limitations:** Ceramic roofs are not considered.  
 
