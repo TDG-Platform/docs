@@ -199,12 +199,13 @@ Our documented test cases outline the steps for verifying requirements or system
 All tests require test imagery. A standard set of test images were ordered for a calibration location over Cape Town, South Africa.  Details of the test images are explained in Table 2. Calibration images were chosen for relative area comparability.  However, the pixel count, square area, and available spectral bands are not identical.  Therefore the test data suite will test for variation across sensors rather than a standard set to average multiple input files.  
 
 Table 3. Test imagery specifics for benchmark suite of data
-Spcecraft  |  Catalog ID | Imaging Bands |  Image Date | Area (k2) |Lines/Samples|Resolution| S3 Location 
+
+Spcecraft  |  Catalog ID | Imaging Bands |  Image Date | Area (k2) |Lines/Samples|Resolution| S3 Location
 ---------|:--------------:|---------|-----------|-----|---------|---------------|----------------
 Quick Bird |[101001000F480700](https://browse.digitalglobe.com/imagefinder/showBrowseMetadata?catalogId=101001000F480700) |Pan –MS1|2012/05/06| 312.07|6,876/6,043|Pan - 0.61m MS – 2.44m|s3://receiving-dgcs-tdgplatform-com/054876960040_01_003
+World View 1| [1020010011CFF500](https://browse.digitalglobe.com/imagefinder/showBrowseMetadata?catalogId=1020010011CFF500) |Pan| 2011/01/12|351.72|35,180/29,224|Pan - 0.5m|s3://receiving-dgcs-tdgplatform-com/054876516120_01_003
 
 
-compute | c3.4xlarge |2x160 SSD| 80|16|30|$0.84| (50%) $0.42
 gpu |g2.2xlarge || 500| 8|15|$0.65| (75%) $0.488
 nvidiagpu |g2.2xlarge || 500| 8|15|$0.65| (99.8%) $0.649
 ondemand |r3.2xlarge || 500| 8|61|$0.665| (75%) $0.498
