@@ -133,7 +133,7 @@ The currently available domains to run tasks in GBDX are included in Table 2. Va
 
 **Table 2.** Domain options and specifics available on GBDX
 Domain   |  Instance Type | Storage |  EBS Root | CPU | Mem(gig)|On Demand Price| Spt Est Price
----------|:--------------:|---------|-----------|-----|---------|---------------|--------------
+---------|:--------------:|---------|-----------|-----|---------|---------------|----------------
 default  | r3.2xlarge || 500| 8|61|$0.665| (75%) $0.498
 compute | c3.4xlarge |2x160 SSD| 80|16|30|$0.84| (50%) $0.42
 gpu |g2.2xlarge || 500| 8|15|$0.65| (75%) $0.488
