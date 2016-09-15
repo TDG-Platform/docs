@@ -204,13 +204,9 @@ Spcecraft  |  Catalog ID | Imaging Bands |  Image Date | Area (k2) |Lines/Sample
 ---------|:--------------:|---------|-----------|-----|---------|---------------|----------------
 Quick Bird |[101001000F480700](https://browse.digitalglobe.com/imagefinder/showBrowseMetadata?catalogId=101001000F480700) |Pan –MS1|2012/05/06| 312.07|6,876/6,043|Pan - 0.61m MS – 2.44m|s3://receiving-dgcs-tdgplatform-com/054876960040_01_003
 World View 1| [1020010011CFF500](https://browse.digitalglobe.com/imagefinder/showBrowseMetadata?catalogId=1020010011CFF500) |Pan| 2011/01/12|351.72|35,180/29,224|Pan - 0.5m|s3://receiving-dgcs-tdgplatform-com/054876516120_01_003
-
-
-gpu |g2.2xlarge || 500| 8|15|$0.65| (75%) $0.488
-nvidiagpu |g2.2xlarge || 500| 8|15|$0.65| (99.8%) $0.649
-ondemand |r3.2xlarge || 500| 8|61|$0.665| (75%) $0.498
-raid | d2.4xlarge |12x2000 HDD| 80|16|122|$2.76| (25%) $0.690 , (50%) $1.38 
-supertask| m3.xlarge|2x40 SSD|80|4|15|$0.266|(20%) $0.052 , (50%) $0.133
+World View 2 |[1030010011360000](https://browse.digitalglobe.com/imagefinder/showBrowseMetadata?catalogId=1030010011360000) |Pan – MS1 +MS2|2012/02/15| 329.87|8,302/4,321|Pan - 0.5m MS – 2 m| s3://receiving-dgcs-tdgplatform-com/054876618060_01_003
+World View 3 |[1040010019920800](https://browse.digitalglobe.com/imagefinder/showBrowseMetadata?catalogId=1040010019920800) |Pan – MS1 +MS2|2016/02/25| 196.27|10,651/ 3,321|Pan – 0.31.m MS – 1.24m| s3://receiving-dgcs-tdgplatform-com/055605759010_01_003
+Geo Eye 1  |[1050010003C9C800](https://browse.digitalglobe.com/imagefinder/showBrowseMetadata?catalogId=1050010003C9C800) |Pan -MS1|2016/04/13| 332.97|7,770/7,400|Pan - 0.46m MS – 1.84m|s3://receiving-dgcs-tdgplatform-com/055217125010_01_003
 
 
 The image bounding boxes in Image 1 demonstrate the location and extent of each test image.  All DG seniors available on GBDX were ordered and will be tested within the benchmark process.  
