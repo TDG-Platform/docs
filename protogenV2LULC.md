@@ -99,7 +99,7 @@ If you need to generate the 8-Band MS data required as input for this task, you 
 The following table lists all applicable runtime outputs. (This section will be completed the Algorithm Curation team)
 For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
 
-  Sensor Name  |  Total Pixels  |  Total Area (k2)  |  Time(min)  |  Time/Area k2
+  Sensor Name  |  Total Pixels  |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
 --------|:----------:|-----------|----------------|--------------
 WV02|35,872,942|329.87|328.19 |0.99|
 WV03|35,371,971|196.27| 459.06|2.34 |
