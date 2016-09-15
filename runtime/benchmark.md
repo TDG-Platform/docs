@@ -140,4 +140,76 @@ compute | c3.4xlarge |2x160 SSD| 80|16|30|$0.84| (50%) $0.42
 gpu |g2.2xlarge || 500| 8|15|$0.65| (75%) $0.488
 nvidiagpu |g2.2xlarge || 500| 8|15|$0.65| (99.8%) $0.649
 ondemand |r3.2xlarge || 500| 8|61|$0.665| (75%) $0.498
-raid | d2.4xlarge |12x2000 HDD| 80|16|122|$2.76| (25%) $0.690 , (50%) $1.38, 
+raid | d2.4xlarge |12x2000 HDD| 80|16|122|$2.76| (25%) $0.690 , (50%) $1.38 
+supertask| m3.xlarge|2x40 SSD|80|4|15|$0.266|(20%) $0.052 , (50%) $0.133
+
+•	EC2 instances – hosted in the AWS Cloud, which provides on-demand delivery of IT resources and applications via the Internet with pay-as-you-go pricing.
+
+#Test Resources
+Testing and documentation will occur on a prioritized basis dictated by the JIRA backlog, which is organized by the PM. We have a total of 2 test resources available. The GAC team will focus on the following milestones for the GBDX list of tasks in 2016:
+
+•	Verify and test ENVI tasks
+•	Verify and test DG Preprocessing tasks
+•	Verify and test DG Analytics tasks
+
+
+**Test Deliverables**
+Our deliverables from the GAC team include the following: 
+•	GAC Plan for GBDX tasks 
+•	Test Plan (this document itself)
+•	Defect/Bugs/Enhancements
+•	Test Case Results included in GitHUB documentation
+•	Test Cases/Suites/Scripts/Data
+•	Test Case Results included in GBDX University
+9.1	Reports
+9.1.1	Defects/Bugs/Enhancements Reporting
+JIRA issues created as defects will be tracked based on the following:
+•	if an issue needs to be addressed 
+•	if it is closed
+•	if it remains open
+
+For any defect, improvement request or suggestion, the GAC Team will use this template in JIRA:
+
+ISSUE TYPE:
+<DEFECT, IMPROVEMENT, or SUGGESTION>
+
+TO REPRODUCE:
+<Step by step of what you executed>
+<Include login info and environment info>
+
+WHAT HAPPENS:
+<Paste in error message, fault message, or any messages if you received one, or say “Nothing happens” >
+<Paste in any other helpful log information, or console output, or error other information here>
+
+WHAT SHOULD HAPPEN:
+<Specify what you think should have happened here>
+
+NOTES:
+<Any additional information about the issue/suggestion should go here. (i.e. - “is it intermittent?” or “this issue only happens when x occurs”, etc.>
+<Explain any workarounds here if possible>
+<If blocked, put notes here about what is blocked>
+
+Test Cases/Suites/Scripts/Data
+These other documentation media types will be stored internally and backed up regularly for 3 years within our DG corporate network.
+
+Test Case Overview
+Our documented test cases outline the steps for verifying requirements or system functionality.  Test cases will be documented in the Confluence site.
+
+**Test Data**
+All tests require test imagery. A standard set of test images were ordered for a calibration location over Cape Town, South Africa.  Details of the test images are explained in Table 2. Calibration images were chosen for relative area comparability.  However, the pixel count, square area, and available spectral bands are not identical.  Therefore the test data suite will test for variation across sensors rather than a standard set to average multiple input files.  
+
+Table 3. Test imagery specifics for benchmark suite of data
+Spcecraft  |  Catalog ID | Imaging Bands |  Image Date | Area (k2) |Lines/Samples|Resolution| S3 Location 
+---------|:--------------:|---------|-----------|-----|---------|---------------|----------------
+Quick Bird |[101001000F480700](https://browse.digitalglobe.com/imagefinder/showBrowseMetadata?catalogId=101001000F480700) |Pan –MS1|2012/05/06| 312.07|6,876/6,043|Pan - 0.61m MS – 2.44m|s3://receiving-dgcs-tdgplatform-com/054876960040_01_003
+
+
+compute | c3.4xlarge |2x160 SSD| 80|16|30|$0.84| (50%) $0.42
+gpu |g2.2xlarge || 500| 8|15|$0.65| (75%) $0.488
+nvidiagpu |g2.2xlarge || 500| 8|15|$0.65| (99.8%) $0.649
+ondemand |r3.2xlarge || 500| 8|61|$0.665| (75%) $0.498
+raid | d2.4xlarge |12x2000 HDD| 80|16|122|$2.76| (25%) $0.690 , (50%) $1.38 
+supertask| m3.xlarge|2x40 SSD|80|4|15|$0.266|(20%) $0.052 , (50%) $0.133
+
+
+The image bounding boxes in Image 1 demonstrate the location and extent of each test image.  All DG seniors available on GBDX were ordered and will be tested within the benchmark process.  
