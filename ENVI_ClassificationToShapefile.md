@@ -107,7 +107,7 @@ For details on the methods of testing the runtimes of the task visit the followi
 
   Sensor Name  |  Total Pixels  |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
 --------|:----------:|-----------|----------------|---------------
-QB | 41,551,668 | 312.07 | 158.26 | 0.51 |
+QB | 41,551,668 | 312.07 | 1,337.20 | 4.28 |
 WV02|35,872,942|329.87|176.04 | 0.53|
 WV03|35,371,971|196.27| 232.00|1.18 |
 GE| 57,498,000|332.97|241.53 | 0.73|
