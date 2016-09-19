@@ -15,44 +15,44 @@ This task requires a classification has been run and in the example workflow bel
 
 ```python
 # Quickstart **Example Script Run in Python using the gbdxTools Interface
-# First Initialize the Environment 
-   
-	from gbdxtools import Interface
-    gbdx = Interface()
-	
-    isodata = gbdx.Task("ENVI_ISODATAClassification")
-    isodata.inputs.input_raster = "s3://gbd-customer-data/PathToImageFolder"
-	isodata.inputs.file_types = "tif"
-	
-    sieve = gbdx.Task("ENVI_ClassificationSieving")
-    sieve.inputs.input_raster = isodata.outputs.output_raster_uri.value
-    sieve.inputs.file_types = "hdr"
+# First Initialize the Environment
 
-    clump = gbdx.Task("ENVI_ClassificationClumping")
-    clump.inputs.input_raster = sieve.outputs.output_raster_uri.value
-    clump.inputs.file_types = "hdr"
-	
-    workflow = gbdx.Workflow([isodata, sieve, clump])
-	
-    workflow.savedata(
-        isodata.outputs.output_raster_uri,
-        location="classification/isodata"
-    )
-	
-    workflow.savedata(
-        sieve.outputs.output_raster_uri,
-        location="classification/sieve"
-    )
-	
-    workflow.savedata(
-        clump.outputs.output_raster_uri,
-        location="classification/clump"
-    )
+from gbdxtools import Interface
+gbdx = Interface()
 
-    print workflow.execute()
-```	
+isodata = gbdx.Task("ENVI_ISODATAClassification")
+isodata.inputs.input_raster = "s3://gbd-customer-data/PathToImageFolder"
+isodata.inputs.file_types = "tif"
 
-### Inputs	
+sieve = gbdx.Task("ENVI_ClassificationSieving")
+sieve.inputs.input_raster = isodata.outputs.output_raster_uri.value
+sieve.inputs.file_types = "hdr"
+
+clump = gbdx.Task("ENVI_ClassificationClumping")
+clump.inputs.input_raster = sieve.outputs.output_raster_uri.value
+clump.inputs.file_types = "hdr"
+
+workflow = gbdx.Workflow([isodata, sieve, clump])
+
+workflow.savedata(
+    isodata.outputs.output_raster_uri,
+    location="classification/isodata"
+)
+
+workflow.savedata(
+    sieve.outputs.output_raster_uri,
+    location="classification/sieve"
+)
+
+workflow.savedata(
+    clump.outputs.output_raster_uri,
+    location="classification/clump"
+)
+
+print workflow.execute()
+```
+
+### Inputs
 
 **Description of Input Parameters and Options for the "ENVI_ClassificationClumping":**
 This task will function on an ENVI classification raster dataset.  
@@ -83,10 +83,10 @@ Name                       |       Default         |        Valid Values        
 file_types                 |          N/A          | string                          | Comma separated list of permitted file type extensions. Use this to filter input files
 dilate_kernel              |         3 X 3         | string                          | Specify 2D array of zeros and ones that represents the structuring element (kernel) used for a dilate operation.Dilation is a morphological operation that uses a structuring element to expand the shapes contained in the input image
 erode_kernel               |         3 X 3         | string                          | Specify 2D array of zeros and ones that represents the structuring element (kernel) used for an erode operation
-class_order                |     first to last     | string                          | Specify the order of class names in which sieving is applied to the classification image. 
+class_order                |     first to last     | string                          | Specify the order of class names in which sieving is applied to the classification image.
 task_meta_data             |          N/A          | string                          | Output location for task meta data such as execution log and output JSON
 output_raster_uri_filename |         output          | Folder name in S3 location      | Specify the file name
-	
+
 
 
 **Data Structure for Expected Outputs:**
