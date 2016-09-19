@@ -199,6 +199,23 @@ Script Example linking AComp to [protogenV2LULC](https://github.com/TDG-Platform
 
 
 
+### Runtime
+
+The following table lists all applicable runtime outputs. 
+For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
+
+  Sensor Name  |  Average runtime  |  Total Area (k2)  |  Time(min)  |  Time/Area k2
+--------|:----------:|-----------|----------------|---------------
+QB |  | 312.07 |  |  |
+WV01|  |351.72 | | |
+WV02||329.87| | |
+WV03||196.27| | |
+GE| |332.97| | |
+
+
+
+
+
 ###Known Issues
 
 *Processing Level 2 or Level 3 imagery will require you to order the imagery outside the platform and upload it to your S3-customer location.
