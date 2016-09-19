@@ -4,6 +4,7 @@
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
+ * [Runtime](#runtime) - Results of task benchmark tests.
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and example contents.
  * [Contact Us](#contact-us) - Contact tech or document owner.
@@ -12,34 +13,47 @@
 
 ```python
 # Quickstart **Example Script Run in Python using the gbdxTools Interface
-# First Initialize the Environment 
+# First Initialize the Environment
 
     from gbdxtools import Interface
     import json
-	
+
     gbdx = Interface()
-	
+
     envitask = gbdx.Task("ENVI_ISODATAClassification")
     envitask.inputs.file_types = 'tif'
     envitask.inputs.input_raster = "s3://gbd-customer-data/pathToImage/output_raster_uri/outputfile.tif"
     envitask.outputs.output_raster = "ENVI"
-	
+
     workflow = gbdx.Workflow([ envitask ])
-	
+
     workflow.savedata(
         envitask.outputs.output_raster_uri,
         location="output_raster_uri"
     )
     workflow.execute()
-	
+
     print workflow.id
 	workflow.status
-```	
+```
 
-### Inputs	
+### Runtime
+
+The following table lists all applicable runtime outputs. (This section will be completed the Algorithm Curation team)
+For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
+
+  Sensor Name  |  Total Pixels  |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
+--------|:----------:|-----------|----------------|---------------
+QB | 41,551,668 | 312.07 | 308.27 | 0.99 |
+WV02|35,872,942|329.87|1,939.17 | 5.88|
+WV03|35,371,971|196.27| 858.28|4.37|
+GE| 57,498,000|332.97|490.32| 1.47|
+
+
+### Inputs
 
 **Description of Input Parameters and Options for the "ENVI_ISODATAClassification":**
-This task will function on a multi-spectral image located in the S3 location: 
+This task will function on a multi-spectral image located in the S3 location:
 Input imagery sensor types include but may not be limited to: QuickBird, WorldView 1, WorldView 2, WorldView 3 and GeoEye
 Tif files from the AOP_Strip_Processor were tested with this task to confirm functionality; however, the task may ingest additional raster image file types such as: ENVI .hdr,  
 
@@ -73,7 +87,7 @@ number_of_classes          |          2            | string                     
 iterations                 |          N/A          | string                          | The maximum iterations to perform.  If the change threshold percent is not met before the maximum number of iterations is reached, the classification completes
 task_meta_data             |          N/A          | string                          | Output location for task meta data such as execution log and output JSON
 output_raster_uri_filename |         output        | Folder name in S3 location      | Specify the file name
-	
+
 
 **Data Structure for Expected Outputs:**
 
