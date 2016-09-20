@@ -84,19 +84,30 @@ Include example(s) with complicated parameter settings and/or example(s) where t
 # First Initialize the Environment
 from gbdxtools import Interface
 gbdx = Interface()
-shptask = gbdx.Task("ENVI_ClassificationToShapefile")
-data = ' s3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/ENVI/classification/classification_name.hdr'
-shptask.inputs.input_raster = data
-shptask.inputs.file_types = "hdr"
-workflow = gbdx.Workflow([shptask])
-workflow.savedata(
-	       shptask.outputs.output_vector_uri,
-	          location='Auto-docs/ENVI/SHP'
-)
 
+isodata = gbdx.Task("ENVI_ISODATAClassification")
+isodata.inputs.input_raster = "s3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/Benchmark/WV2/054876618060_01/"
+isodata.inputs.file_types = "tif"
+
+shp = gbdx.Task("ENVI_ClassificationToShapefile")
+shp.inputs.input_raster = isodata.outputs.output_raster_uri.value
+shp.inputs.file_types = "hdr"
+shp.inputs.export_classes = "Vegetation, Grass, Soil, Asphalt, Metal"
+shp.inputs.output_vector_uri_filename = "WV2"
+
+workflow = gbdx.Workflow([isodata, shp])
+
+workflow.savedata(
+  isodata.outputs.output_raster_uri,
+    location="Benchmark/classification/isodata"
+    )
+
+workflow.savedata(
+  shp.outputs.output_vector_uri,
+    location="Benchmark/classification/shp"
+)
 workflow.execute()
-status = workflow.status["state"]
-wf_id = workflow.id
+
 # print wf_id
 # print status
 ```
