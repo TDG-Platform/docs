@@ -204,13 +204,12 @@ Script Example linking AComp to [protogenV2LULC](https://github.com/TDG-Platform
 The following table lists all applicable runtime outputs. 
 For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
 
-  Sensor Name  |  Average runtime  |  Total Area (k2)  |  Time(min)  |  Time/Area k2
+  Sensor Name  |  Total Pixels  |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
 --------|:----------:|-----------|----------------|---------------
-QB |  | 312.07 |  |  |
-WV01|  |351.72 | | |
-WV02||329.87| | |
-WV03||196.27| | |
-GE| |332.97| | |
+QB | 41,551,668 | 312.07 |  |  |
+WV02|35,872,942|329.87| | |
+WV03|35,371,971|196.27| | |
+GE| 57,498,000|332.97| | |
 
 
 
