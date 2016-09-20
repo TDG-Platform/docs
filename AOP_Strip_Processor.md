@@ -251,7 +251,7 @@ The included DRA algorithm has several inputs that affect the final 8-bit RGB re
 The following table lists all applicable runtime outputs. 
 For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
 
-  Sensor Name  |  Average runtime  |  Total Area (k2)  |  Time(min)  |  Time/Area k2
+  Sensor Name  |  Total Pixels  |  Total Area (k2)  |  Time(min)  |  Time/Area k2
 --------|:----------:|-----------|----------------|---------------
 QB | 41,551,668 | 312.07 | 460.603 | 1.48 |
 WV01| 1,028,100,320 |351.72 |475.276 | 1.35|
