@@ -54,12 +54,12 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 
   Name  |  Required  |  Default  |  Valid Values  |  Description  
 --------|:----------:|-----------|----------------|---------------
-file_types|False|None| |GBDX Option. Comma seperated list of permitted file type extensions. Use this to filter input files -- Value Type: STRING
+file_types|False|None| .hdr, .tif |GBDX Option. Comma seperated list of permitted file type extensions. Use this to filter input files -- Value Type: STRING
 input_raster|True|None| |Specify a classification raster from which to generate a shapefile. -- Value Type: ENVIRASTER
 export_class_clrs|False|None| |Set this property to export CLASS_CLRS (class colors) as a shapefile attribute for each polygon. The options are true (default) or false. -- Value Type: BOOL
-export_classes|False|None| |Specify a string array with class names to export to the shapefile. -- Value Type: STRING
+export_classes|False|None| Must be identical to the classification .hdr file class names|Specify a string array with class names to export to the shapefile. -- Value Type: STRING To edit names of the classes you may manually edit the names in the .hdr output, or use a software package to edit the attribute names.
 export_area|False|None| |Set this property to export AREA as a shapefile attribute for each polygon. The options are true (default) or false. -- Value Type: BOOL
-output_vector_uri_filename|False|None| |Outputor OUTPUT_VECTOR. -- Value Type: ENVIURI
+output_vector_uri_filename|False|None| string name e.g. "classificationShape"|OUTPUT_VECTOR. -- Value Type: ENVIURI
 
 ### Outputs
 The following table lists all taskname outputs.
@@ -68,7 +68,7 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
   Name  |  Required  |  Default  |  Valid Values  |  Description  
 --------|:----------:|-----------|----------------|---------------
 task_meta_data|False|None| |GBDX Option. Output location for task meta data such as execution log and output JSON
-output_vector_uri|True|None| |Outputor OUTPUT_VECTOR. -- Value Type: ENVIURI
+output_vector_uri|True|None| s3 location for data output |Outputor OUTPUT_VECTOR. -- Value Type: ENVIURI
 
 **Output structure**
 
@@ -85,26 +85,25 @@ Include example(s) with complicated parameter settings and/or example(s) where t
 from gbdxtools import Interface
 gbdx = Interface()
 
+QB = "s3://receiving-dgcs-tdgplatform-com/054876960040_01_003"
+
+aop = gbdx.Task('AOP_Strip_Processor', data=QB, bands='MS', enable_acomp=True, enable_pansharpen=False, enable_dra=False)
+
 isodata = gbdx.Task("ENVI_ISODATAClassification")
-isodata.inputs.input_raster = "s3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/Benchmark/WV2/054876618060_01/"
+isodata.inputs.input_raster = aop.outputs.data.value
 isodata.inputs.file_types = "tif"
 
 shp = gbdx.Task("ENVI_ClassificationToShapefile")
 shp.inputs.input_raster = isodata.outputs.output_raster_uri.value
 shp.inputs.file_types = "hdr"
-shp.inputs.export_classes = "Vegetation, Grass, Soil, Asphalt, Metal"
-shp.inputs.output_vector_uri_filename = "WV2"
+shp.inputs.output_vector_uri_filename = ""
 
-workflow = gbdx.Workflow([isodata, shp])
+workflow = gbdx.Workflow([aop, isodata, shp])
 
-workflow.savedata(
-  isodata.outputs.output_raster_uri,
-    location="Benchmark/classification/isodata"
-    )
 
 workflow.savedata(
   shp.outputs.output_vector_uri,
-    location="Benchmark/classification/shp"
+    location="Benchmark/classification/shp/endtoend"
 )
 workflow.execute()
 
