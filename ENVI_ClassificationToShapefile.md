@@ -111,7 +111,6 @@ workflow.execute()
 # print status
 ```
 
-
 ### Runtime
 
 The following table lists all applicable runtime outputs. (This section will be completed the Algorithm Curation team)
