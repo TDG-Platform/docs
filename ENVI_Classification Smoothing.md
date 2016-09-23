@@ -50,7 +50,7 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 ### Advanced
 Include example(s) with complicated parameter settings and/or example(s) where the task is used as part of a workflow involving other GBDX tasks. (INCLUDE AOP Processer IN SCRIPT)
 
-	# Advanced Task Script:  AOP=>ISODATA=>Classification Smoothing
+	# Advanced Task Script:  Advanced Image Preprocessor=>ISODATA=>Classification Smoothing
 	# This Task runs using IPython in the gbdxtools Interface
 	# Initialize the gbdxtools Interface
 	from gbdxtools import Interface
@@ -115,4 +115,4 @@ Your Processed classification file will be written to the specified S3 Customer 
 For background on the development and implementation of Classification Smoothing refer to the [ENVI Documentation](https://www.harrisgeospatial.com/docs/classificationtutorial.html)
 
 ###Contact Us
-Document Owner - Kathleen Johnson - kajohnso@digitalglobe.com
+Document Owner - [Kathleen Johnson](kajohnso@digitalglobe.com)
