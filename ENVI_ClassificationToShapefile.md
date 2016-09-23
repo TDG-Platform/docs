@@ -55,7 +55,7 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
   Name  |  Required  |  Default  |  Valid Values  |  Description  
 --------|:----------:|-----------|----------------|---------------
 file_types|False|None| .hdr, .tif |GBDX Option. Comma seperated list of permitted file type extensions. Use this to filter input files -- Value Type: STRING
-input_raster|True|None| |Specify a classification raster from which to generate a shapefile. -- Value Type: ENVIRASTER
+input_raster|True|None| ENVI raster dataset|Specify a classification raster from which to generate a shapefile. -- Value Type: ENVIRASTER
 export_class_clrs|False|None|see Description |Set this property to export CLASS_CLRS (class colors) as a shapefile attribute for each polygon. The options are true (default) or false. -- Value Type: BOOL
 export_classes|False|None| Must be identical to the classification .hdr file class names|Specify a string array with class names to export to the shapefile. -- Value Type: STRING To edit names of the classes you may manually edit the names in the .hdr output, or use a software package to edit the attribute names.
 export_area|False|None| see Description|Set this property to export AREA as a shapefile attribute for each polygon. The options are true (default) or false. -- Value Type: BOOL
@@ -72,8 +72,7 @@ output_vector_uri|True|None| s3 location for data output |Outputor OUTPUT_VECTOR
 
 **Output structure**
 
-THe output of this task is a shapfile (.shp) and the supporting file structure for a GIS program such as ArcGIS. The vectors include separate records for each polygon.
-
+The output of this task is a shapefile (.shp) and the supporting file structure for a GIS program such as ArcGIS. The vectors include separate records for each polygon for each class.
 
 ### Advanced
 Include example(s) with complicated parameter settings and/or example(s) where the task is used as part of a workflow involving other GBDX tasks.
@@ -113,7 +112,7 @@ workflow.execute()
 
 ### Runtime
 
-The following table lists all applicable runtime outputs. (This section will be completed the Algorithm Curation team)
+The following table lists runtime outputs for applicable sensors.
 For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
 
   Sensor Name  |  Total Pixels  |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
@@ -125,7 +124,7 @@ GE| 57,498,000|332.97|3,012.48| 9.05|
 
 
 ### Issues
-List known past/current issues with this task (e.g., version x does not ingest vrt files).
+NA
 
 
 ### Background
