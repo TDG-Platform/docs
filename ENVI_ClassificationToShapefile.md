@@ -26,7 +26,7 @@ from gbdxtools import Interface
 gbdx = Interface()
 
 isodata = gbdx.Task("ENVI_ISODATAClassification")
-isodata.inputs.input_raster = "s3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/Benchmark/WV2/054876618060_01/"
+isodata.inputs.input_raster = "s3://gbd-customer-data/PathToClassification"
 isodata.inputs.file_types = "tif"
 
 shp = gbdx.Task("ENVI_ClassificationToShapefile")
