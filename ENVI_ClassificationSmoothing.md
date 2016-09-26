@@ -11,7 +11,7 @@ This task removes speckling noise from a classification image. It uses majority 
 
 ### Quickstart
 
-This task requires that the image has been pre-processed using the Advanced Image Processor (ADD LINK), and that a classification has been run. In the example workflow below, the  [ISODATA Classification](https://github.com/TDG-Platform/docs/blob/master/ENVI_ISODATAClassification.md) Task was utilized to perform the classification step. 
+This task requires that the image has been pre-processed using the [Advanced Image Processor](https://github.com/TDG-Platform/docs/blob/master/AOP_Strip_Processor.md), and that a classification has been run on the output from preprocessing. In the example workflow below, the  [ISODATA Classification](https://github.com/TDG-Platform/docs/blob/master/ENVI_ISODATAClassification.md) Task was utilized to perform the classification step on preprocessed data. 
 
   
 	from gbdxtools import Interface
@@ -24,8 +24,8 @@ This task requires that the image has been pre-processed using the Advanced Imag
 	smooth.inputs.input_raster = isodata.outputs.output_raster_uri.value
 	smooth.inputs.file_types = "hdr"
 	workflow = gbdx.Workflow([ isodata, smooth ])
-		workflow.savedata(isodata.outputs.output_raster_uri, location="kathleen_ENVI_ClassSmoothing/WV03/isodata")
-		workflow.savedata(smooth.outputs.output_raster_uri, location="kathleen_ENVI_ClassSmoothing/WV03/smoothed")
+	workflow.savedata(isodata.outputs.output_raster_uri, location="kathleen_ENVI_ClassSmoothing/WV03/isodata")
+	workflow.savedata(smooth.outputs.output_raster_uri, location="kathleen_ENVI_ClassSmoothing/WV03/smoothed")
 	workflow.execute()
 	print workflow.id
 	print workflow.status
@@ -55,7 +55,8 @@ ignore_validate      |          N/A     |     1        |Set this property to a v
 kernel_size                |           3           |    any odd number >= 3          | Specify an odd number with the smoothing kernel size. The minimum value is 3 pixels, and the default value is 3 pixels.
 
 ### Advanced
-Include example(s) with complicated parameter settings and/or example(s) where the task is used as part of a workflow involving other GBDX tasks. (INCLUDE AOP Processer IN SCRIPT)
+
+Included below is a complete end-to-end workflow for Advanced Image Preprocessing => ISODATA Classification => Classification Smoothing:
 
 	# Advanced Task Script:  Advanced Image Preprocessor=>ISODATA=>Classification Smoothing
 	# This Task runs using IPython in the gbdxtools Interface
@@ -92,8 +93,7 @@ Include example(s) with complicated parameter settings and/or example(s) where t
 
 ### Runtime
 
-The following table lists all applicable runtime outputs. (This section will be completed the Algorithm Curation team)
-For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
+The following table lists all applicable runtime outputs for Classification Smoothing. An estimated Runtime for the Advanced Script example can be derived from adding  the result for the two pre-processing steps. For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
 
   Sensor Name  |  Total Pixels  |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
 --------|:----------:|-----------|----------------|---------------
@@ -104,15 +104,9 @@ GE01| 57,498,000 | 332.97 | 181.06 | 0.54 |
 
 
 
-
-#### Technical Notes
-
-
-
 **Data Structure for Expected Outputs:**
 
-Your Processed classification file will be written to the specified S3 Customer Location in the ENVI file format and tif format(e.g.  s3://gbd-customer-data/unique customer id/named directory/classification.hdr).  
-
+Your smoothed classification file will be written to the specified S3 Customer Location in the ENVI file format and tif format(e.g.  s3://gbd-customer-data/unique customer id/named directory/classification.hdr).  
 
 For background on the development and implementation of Classification Smoothing refer to the [ENVI Documentation](https://www.harrisgeospatial.com/docs/classificationtutorial.html)
 
