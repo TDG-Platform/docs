@@ -7,12 +7,11 @@ This task removes speckling noise from a classification image. It uses majority 
  * [Runtime](#runtime) - Detailed Description of Inputs
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and example contents.
- * [Known Issues](#known-issues)
  * [Contact Us](#contact-us)
 
 ### Quickstart
 
-This task requires that the image has been pre-processed using the Advanced Image Processor (ADD LINK), and that a classification has been run. In the example workflow below, the ISODATA Classification Task was utilized to perform the classification step.  [ISODATA Classification](https://github.com/TDG-Platform/docs/blob/master/ENVI_ISODATAClassification.md)
+This task requires that the image has been pre-processed using the Advanced Image Processor (ADD LINK), and that a classification has been run. In the example workflow below, the  [ISODATA Classification](https://github.com/TDG-Platform/docs/blob/master/ENVI_ISODATAClassification.md) Task was utilized to perform the classification step. 
 
   
 	from gbdxtools import Interface
