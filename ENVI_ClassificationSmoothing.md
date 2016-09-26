@@ -35,17 +35,17 @@ This task requires that the image has been pre-processed using the Advanced Imag
 The following table lists all taskname inputs.
 Mandatory (optional) settings are listed as Required = True (Required = False).
 
-  Name  |  Required  |  Valid Values  |  Description  
---------|:----------|:----------------|---------------
-input_raster | Yes | s3 URL, .hdr, .tiff | Specify a classification raster on which to perform aggregation.
+  Name       |  Required  |  Valid Values       |  Description  
+-------------|:-----------|:--------------------|---------------
+input_raster | True       | s3 URL, .hdr, .tiff | Specify a classification raster on which to perform aggregation.
 
 ### Outputs
 The following table lists all taskname outputs.
 Mandatory (optional) settings are listed as Required = True (Required = False).
 
-  Name  |  Required  |  Valid Values              | Description  
---------|:---------: |:------------------------------|:---------------
-output_raster_uri | Yes | s3 URL, .hdr, .tiff, .xml | Specify a string with the fully qualified filename and path of the output raster. If you do not specify this property, the output raster is only temporary. Once the raster has no remaining references, ENVI deletes the temporary file.
+  Name            |  Required  |  Valid Values                 | Description  
+------------------|:---------: |:------------------------------|:---------------
+output_raster_uri | True       | s3 URL, .hdr, .tiff, .xml     | Specify a string with the fully qualified filename and path of the output raster. If you do not specify this property, the output raster is only temporary. Once the raster has no remaining references, ENVI deletes the temporary file.
 
 
 **OPTIONAL SETTINGS AND DEFINITIONS:**
