@@ -36,22 +36,24 @@ The following table lists all taskname inputs.
 Mandatory (optional) settings are listed as Required = True (Required = False).
 
   Name       |  Required  |  Valid Values       |  Description  
--------------|:-----------|:--------------------|---------------
+-------------|:-----------:|:--------------------|---------------
 input_raster | True       | s3 URL, .hdr, .tiff | Specify a classification raster on which to perform aggregation.
 
 ### Outputs
 The following table lists all taskname outputs.
 Mandatory (optional) settings are listed as Required = True (Required = False).
 
-  Name            |  Required  |  Valid Values                 | Description  
-------------------|:---------: |:------------------------------|:---------------
-output_raster_uri | True       | s3 URL, .hdr, .tiff, .xml     | Specify a string with the fully qualified filename and path of the output raster. If you do not specify this property, the output raster is only temporary. Once the raster has no remaining references, ENVI deletes the temporary file.
+  Name            |  Required  |  Valid Values             | Description  
+------------------|:---------: |:------------------------- |:---------------
+output_raster_uri | True       | s3 URL, .hdr, .tiff, .xml | Specify a string with the fully qualified filename and path of the output raster. If you do not specify this property, the output raster is only temporary. Once the raster has no remaining references, ENVI deletes the temporary file.
 
 
 **OPTIONAL SETTINGS AND DEFINITIONS:**
 
-Name                       |       Default         |        Valid Values            |   Description
----------------------------|:---------------------:|---------------------------------|-----------------
+Name                 |       Default    | Valid Values |   Description
+---------------------|:----------------:|---------------------------------|-----------------
+ignore_validate      |          N/A     |     1        |Set this property to a value of 1 to run the task, even if validation of properties fails. This is an advanced option for users who want to first set all task properties before validating whether they meet the required criteria. This property is not set by default, which means that an exception will occur if any property does not meet the required criteria for successful execution of the task.
+kernel_size                |           3           |    any odd number >= 3          | Specify an odd number with the smoothing kernel size. The minimum value is 3 pixels, and the default value is 3 pixels.
 
 ### Advanced
 Include example(s) with complicated parameter settings and/or example(s) where the task is used as part of a workflow involving other GBDX tasks. (INCLUDE AOP Processer IN SCRIPT)
