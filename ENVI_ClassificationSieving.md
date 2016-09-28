@@ -52,7 +52,7 @@ input_raster             |          N/A          | S3 URL   ENVI .hdr only      
 
 ### Outputs
 
-The following table lists the Spectral Index task outputs.
+The following table lists the Sieving task outputs.
 
 Name                | Required |   Description
 --------------------|:--------:|-----------------
