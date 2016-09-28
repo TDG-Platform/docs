@@ -57,7 +57,7 @@ This task will function on a multi-spectral image located in the S3 location:
 Input imagery sensor types include but may not be limited to: QuickBird, WorldView 1, WorldView 2, WorldView 3 and GeoEye
 Tif files from the AOP_Strip_Processor were tested with this task to confirm functionality; however, the task may ingest additional raster image file types such as: ENVI .hdr,  
 
-The following table lists the ENVI_ISODATAClassification task:
+The following table lists the ENVI ISO DATA Classification task:
 
 All inputs are **required**
 
@@ -67,14 +67,14 @@ input_raster             |          N/A          | S3 URL   .TIF only           
 
 ### Outputs
 
-The following table lists the Spectral Index task outputs.
+The following table lists the ISO DATA Classification task outputs.
 
 Name                | Required |   Description
 --------------------|:--------:|-----------------
 output_raster_uri   |     Y    | This will explain the output file location and provide the output in .TIF format.
 
 
-This task will function on a Sieving classification image located in the S3 location.  The file type input of the classification is preferred in the .hdr format.  An example of ENVI ISO Data Classification and Sieving are provided in the sample script above to demonstrate a full workflow. Additional options include:
+This task will function on an image located in the S3 location.  The file type input is preferred in the .hdr format.   Additional options include:
 
 
 **OPTIONAL SETTINGS AND DEFINITIONS:**
