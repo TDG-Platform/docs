@@ -1,4 +1,4 @@
-# Unsupervised Landuse Landcover Classification (protogenV2LULC)
+# Automated Landuse Landcover Classification (protogenV2LULC)
 
 
 
