@@ -2,7 +2,7 @@
 
 This task runs the Advanced Advanced Image Preprocessor (AOP_Strip_Processor) algorithm to produce orthorectified imagery from raw (level 1B) imagery.  There are many additional processing options including atmospheric compensation (ACOMP) (which is always recommended), pansharpening and dynamic range adjustment (DRA).  
 
-AOP_Strip_Processor can be run with Python using   [gbdxtools](https://github.com/DigitalGlobe/gbdxtools) or through the [GBDX Web Application](https://gbdx.geobigdata.io/materials/).  
+The Advanced Image Preprocessor can be run with Python using   [gbdxtools](https://github.com/DigitalGlobe/gbdxtools) or through the [GBDX Web Application](https://gbdx.geobigdata.io/materials/).  
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
@@ -15,7 +15,7 @@ AOP_Strip_Processor can be run with Python using   [gbdxtools](https://github.co
 
 ### Quickstart
 
-This script uses AOP_Strip_Processor to produce orthorectified and atmospherically compensated multispectral and panchromatic images from a raw WorldView-3 (WV03) image over Naples, Italy.
+This script uses Aadvanced Image Preprocessor to produce orthorectified and atmospherically compensated multispectral and panchromatic images from a raw WorldView-3 (WV03) image over Naples, Italy.
 
 ```python
 # Quickstart Example producing an Orthorectified and AComp output for MS + PAN
@@ -72,7 +72,7 @@ The following table lists additional datasets over Naples, Italy, for various Di
 
 
 ### Inputs
-The following table lists the AOP_Strip_Processor inputs.
+The following table lists the Advanced Image preprocessor inputs.
 All inputs are **optional** with default values, with the exception of `data` which specifies the task's input data location. Click on the name for a more detailed description of the use case.
 
 Name                     |       Default         |        Valid Values             |   Description
@@ -98,7 +98,7 @@ data                     |          N/A          | S3 URL                       
 [tiling_zoom_level](tiling-zoom-level)        |          12           | Integer (see tiling scheme)     | Zoom level (i.e. size) of output tiles for `enable_tiling` == `true`.
 
 
-The AOP task inputs can be set in various combinations to generate several different types of output imagery:
+The Advance Image Preprocessor task inputs can be set in various combinations to generate several different types of output imagery:
 
  * Pansharpened and DRA 8-bit RGB image with atmospheric compensation
   * Default behavior, no need to change inputs
@@ -144,7 +144,7 @@ Please pay attention to the following **important** notes.
 
 ### Outputs
 
-The AOP_Strip_Processor outputs are the following.
+The Advanced Image Preprocessor outputs are the following.
 
 Name | Required |   Description
 -----|:--------:|-----------------
