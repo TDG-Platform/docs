@@ -1,6 +1,6 @@
 # AOP_Strip_Processor
 
-This task runs the Advanced Ortho Processing (AOP) algorithm to produce orthorectified imagery from raw (level 1B) imagery.  There are many additional processing options including atmospheric compensation (ACOMP) (which is always recommended), pansharpening and dynamic range adjustment (DRA).  
+This task runs the Advanced Advanced Image Preprocessor (AOP_Strip_Processor) algorithm to produce orthorectified imagery from raw (level 1B) imagery.  There are many additional processing options including atmospheric compensation (ACOMP) (which is always recommended), pansharpening and dynamic range adjustment (DRA).  
 
 AOP_Strip_Processor can be run with Python using   [gbdxtools](https://github.com/DigitalGlobe/gbdxtools) or through the [GBDX Web Application](https://gbdx.geobigdata.io/materials/).  
 
