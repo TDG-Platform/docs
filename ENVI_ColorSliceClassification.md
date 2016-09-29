@@ -125,11 +125,11 @@ For details on the methods of testing the runtimes of the task visit the followi
 
   Sensor Name  |  Average runtime  |  Total Area (k2)  |  Time(min)  |  Time/Area k2
 --------|:----------:|-----------|----------------|---------------
-QB | 41,551,668 | 312.07 |  |  |
-WV01| 1,028,100,320 |351.72 | | |
-WV02|35,872,942|329.87| | |
-WV03|35,371,971|196.27| | |
-GE| 57,498,000|332.97| | |
+QB | 41,551,668 | 312.07 |  171.94|0.55  |
+WV01| 1,028,100,320 |351.72 |Fill in |fill in |
+WV02|35,872,942|329.87| 194.22|0.59 |
+WV03|35,371,971|196.27| 203.28|1.04 |
+GE| 57,498,000|332.97| 192.33|0.58 |
 
 ### Issues
 Requires a single band raster as input.
