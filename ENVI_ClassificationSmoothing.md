@@ -7,6 +7,7 @@ This task removes speckling noise from a classification image. It uses majority 
  * [Runtime](#runtime) - Detailed Description of Inputs
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and example contents.
+ * [Advanced](#advanced) - Script performing multiple tasks in one workflow
  * [Contact Us](#contact-us)
 
 ### Quickstart
