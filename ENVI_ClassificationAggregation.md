@@ -1,7 +1,7 @@
 
 # ENVI Classification Aggregation (Editing in Progress)
 
-This task removes speckling noise from a classification image. It uses majority analysis to change spurious pixels within a large single class to that class.
+This task aggregates smaller class regions to a larger, adjacent region as part of the classification cleanup.
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
