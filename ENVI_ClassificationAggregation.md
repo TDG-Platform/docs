@@ -110,7 +110,7 @@ Included below is a complete end-to-end workflow for Advanced Image Preprocessin
 
 Your smoothed classification file will be written to the specified S3 Customer Location in the ENVI file format and tif format(e.g.  s3://gbd-customer-data/unique customer id/named directory/classification.hdr).  
 
-For background on the development and implementation of Classification Smoothing refer to the [ENVI Documentation](https://www.harrisgeospatial.com/docs/classificationtutorial.html)
+For background on the development and implementation of Classification Aggregation refer to the [ENVI Documentation](https://www.harrisgeospatial.com/docs/classificationtutorial.html)
 
 
 ###Contact Us
