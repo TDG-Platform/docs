@@ -21,12 +21,12 @@ This task requires that the image has been pre-processed using the [Advanced Ima
 	isodata = gbdx.Task("ENVI_ISODATAClassification")
 	isodata.inputs.input_raster = "s3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/kathleen_ENVI_ClassSmoothing/WV03/AOP_Output/055605759010_01/"
 	isodata.inputs.file_types = "tif"
-	envitask = gbdx.Task("ENVI_ClassificationAggregation")
-	envitask.inputs.input_raster = isodata.outputs.output_raster_uri.value
-	envitask.inputs.file_types = "hdr"
-	workflow = gbdx.Workflow([ isodata, envitask ])
+	aggreg = gbdx.Task("ENVI_ClassificationAggregation")
+	aggreg.inputs.input_raster = isodata.outputs.output_raster_uri.value
+	aggreg.inputs.file_types = "hdr"
+	workflow = gbdx.Workflow([ isodata, aggreg ])
 	workflow.savedata(isodata.outputs.output_raster_uri, location="s3-customer location")
-	workflow.savedata(smooth.outputs.output_raster_uri, location="s3-customer location")
+	workflow.savedata(aggreg.outputs.output_raster_uri, location="s3-customer location")
 	workflow.execute()
 	print workflow.id
 	print workflow.status
@@ -34,7 +34,7 @@ This task requires that the image has been pre-processed using the [Advanced Ima
 
 ### Runtime
 
-The following table lists all applicable runtime outputs for Classification Smoothing. An estimated Runtime for the Advanced Script example can be derived from adding the result for the two pre-processing steps. For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
+The following table lists all applicable runtime outputs for Classification Aggregation. An estimated Runtime for the Advanced Script example can be derived from adding the result for the two pre-processing steps. For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
 
   Sensor Name  |  Total Pixels  |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
 --------|:----------:|-----------|----------------|---------------
@@ -70,7 +70,7 @@ minimum_size               |          9           |    any odd number >= 9      
 
 ### Advanced
 
-Included below is a complete end-to-end workflow for Advanced Image Preprocessing => ISODATA Classification => Classification Smoothing:
+Included below is a complete end-to-end workflow for Advanced Image Preprocessing => ISODATA Classification => Classification Aggregation:
 
 	# Advanced Task Script:  Advanced Image Preprocessor=>ISODATA=>Classification Aggregation
 	# This Task runs using IPython in the gbdxtools Interface
@@ -115,4 +115,3 @@ For background on the development and implementation of Classification Smoothing
 ###Contact Us
 Document Owner - [Kathleen Johnson](kajohnso@digitalglobe.com)
 
-> Written with [StackEdit](https://stackedit.io/).
