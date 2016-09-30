@@ -8,6 +8,7 @@ This task aggregates smaller class regions to a larger, adjacent region as part 
  * [Runtime](#runtime) - Detailed Description of Inputs
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and example contents.
+ * [Advanced](#advanced) - Script performing multiple tasks in one workflow
  * [Contact Us](#contact-us)
 
 ### Quickstart
