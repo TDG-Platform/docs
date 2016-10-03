@@ -1,5 +1,5 @@
 
-# ENVI Classification Aggregation (Editing in Progress)
+# ENVI Classification Aggregation
 
 This task aggregates smaller class regions to a larger, adjacent region as part of the classification cleanup.
 
