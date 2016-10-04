@@ -22,11 +22,12 @@ Quick start example.
 
 from gbdxtools import Interface
 gbdx = Interface()
+
 raster = 's3://gbd-customer-data/PathToImage/image.tif'
-ENVI_ColorSliceClassification = gbdx.Task('ENVI_ColorSliceClassification', raster=raster)
+ENVI_ColorSliceClassification = gbdx.Task('ENVI_ColorSliceClassification', input_raster=raster)
 
 workflow = gbdx.Workflow([ENVI_ColorSliceClassification])  
-workflow.savedata(ENVI_ColorSliceClassification.outputs.data, location='ENVI_ColorSliceClassification')
+workflow.savedata(ENVI_ColorSliceClassification.outputs.output_raster_uri, location='Benchmark/ENVI_ColorSliceClassification/WV1')
 workflow.execute()
 
 print workflow.id
@@ -35,7 +36,7 @@ print workflow.status
 
 ### Inputs
 The following table lists all taskname inputs.
-Mandatory (optional) settings are listed as Required = True (Required = False).
+Mandatory settings are listed as Required = True (Required = False).
 
   Name  |  Required  |  Default  |  Valid Values  |  Description  
 --------|:----------:|-----------|----------------|---------------
@@ -53,7 +54,7 @@ output_raster_uri_filename|False|None|  |Output OUTPUT_RASTER. -- Value Type: EN
 
 ### Outputs
 The following table lists all taskname outputs.
-Mandatory (optional) settings are listed as Required = True (Required = False).
+Mandatory settings are listed as Required = True (Required = False).
 
   Name  |  Required  |  Default  |  Valid Values  |  Description  
 --------|:----------:|-----------|----------------|---------------
@@ -62,14 +63,13 @@ output_raster_uri|True|None| Folder name in S3 location|Outputor OUTPUT_RASTER. 
 
 **Output structure**
 
-Explain output structure via example.
-
+The output of the ENVI_ColorSliceClassification will be an ENVI format raster.
 
 ### Advanced
-Include example(s) with complicated parameter settings and/or example(s) where
-ENVI_ColorSliceClassification is used as part of a workflow involving other GBDX tasks.
+This task may be used to stratify and symbolize values within a single band raster.  The color slice raster output will highlight variation of values across a raster. Advanced parameter inputs such as number of classes, class colors, and range sizes may be set by the user.  In this advanced example the task is chained together with ENVI_SpectralIndex to demonstrate the use of the task on the Normalized Difference Vegetation Index (NDVI).  
 
 ```python
+
 #AOP strip processor has input values known to complete the Spectral Index task
 from gbdxtools import Interface
 gbdx = Interface()
@@ -126,7 +126,7 @@ For details on the methods of testing the runtimes of the task visit the followi
   Sensor Name  |  Average runtime  |  Total Area (k2)  |  Time(min)  |  Time/Area k2
 --------|:----------:|-----------|----------------|---------------
 QB | 41,551,668 | 312.07 |  171.94|0.55  |
-WV01| 1,028,100,320 |351.72 |Fill in |fill in |
+WV01| 1,028,100,320 |351.72 |288.61 |0.82|
 WV02|35,872,942|329.87| 194.22|0.59 |
 WV03|35,371,971|196.27| 203.28|1.04 |
 GE| 57,498,000|332.97| 192.33|0.58 |
