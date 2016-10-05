@@ -1,5 +1,7 @@
 # Image Pair Alignement processor (protogenV2CD_READY)
 
+The image pair alignment (IPA) processor computes the intersection AOI or **iAOI** between the two input images. If the latter do not overlap geographically the IPA returns an error and the workflow is terminated. If they overlap, the IPA generates two new images, each containing its original contents extracted from within the given iAOI. If the spatial resolutions of the two images differ, the one with the highest is resampled using bilinear interpolation to match the resolution/dimensions of the one with the lowest. The resulting images are referred to as CD ready images.
+
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
  * [Inputs](#inputs) - Required and optional task inputs.
