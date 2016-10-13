@@ -38,7 +38,9 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 
   Name       |  Required  |  Valid Values       |  Description  
 -------------|:-----------:|:--------------------|---------------
-input_raster | True       | s3 URL, .hdr, .tiff | Specify a  raster image on which to perform aggregation.
+input_raster | True       | s3 URL, .hdr, .tiff  | Specify the input raster to apply ROIs to generate a classification image.
+input_roi    | True       | ENVI format ROI file | Specify a single or an array of ROI to create the classification image from.
+name         | True     |  string              | This property contains the name of the task and must be used in the workflow.
 
 ### Outputs
 The following table lists all taskname outputs.
@@ -46,6 +48,7 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 
   Name            |  Required  |  Valid Values             | Description  
 ------------------|:---------: |:------------------------- |---------------
+output_raster     | False      | N/A                       |This is a reference to the output classification raster of filetype ENVI.  This is a temporary file that will be deleted once the process is complete.
 output_raster_uri | True       | s3 URL, .hdr, .tiff, .xml | Specify a string with the fully qualified filename and path of the output raster. If you do not specify this property, the output raster is only temporary. Once the raster has no remaining references, ENVI deletes the temporary file.
 
 
@@ -54,7 +57,6 @@ output_raster_uri | True       | s3 URL, .hdr, .tiff, .xml | Specify a string wi
 Name                 |       Default    | Valid Values |   Description
 ---------------------|:----------------:|---------------------------------|-----------------
 ignore_validate      |          N/A     |     1        |Set this property to a value of 1 to run the task, even if validation of properties fails. This is an advanced option for users who want to first set all task properties before validating whether they meet the required criteria. This property is not set by default, which means that an exception will occur if any property does not meet the required criteria for successful execution of the task.
-minimum_size               |          9           |    any odd number >= 9          | Specify the aggregate minimum size in pixels. Regions with a size of this value or smaller are aggregated to an adjacent, larger region. The default value is 9.
 
 ### Advanced
 
@@ -64,7 +66,7 @@ Included below is a complete end-to-end workflow for ???????
 
 **Data Structure for Expected Outputs:**
 
-Your smoothed classification file will be written to the specified S3 Customer Location in the ENVI file format and tif format(e.g.  s3://gbd-customer-data/unique customer id/named directory/classification.hdr).  
+Your classification file will be written to the specified S3 Customer Location in the ENVI file format and tif format(e.g.  s3://gbd-customer-data/unique customer id/named directory/classification.hdr).  
 
 For background on the development and implementation of ROI to Classification refer to the [ENVI Documentation](http://www.harrisgeospatial.com/docs/enviroitoclassificationtask.html).
 
