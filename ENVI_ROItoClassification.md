@@ -1,8 +1,7 @@
 
 # ENVI ROI to Classification (Editing in Progress)
 
-This task creates a classification image from regions of interest (ROIs).  You may use an existing ROI (region of interest) 
-file or create ROI's using the [ENVI_ImageThresholdToROI Task](http://www.harrisgeospatial.com/docs/enviimagethresholdtoroitask.html).
+This task creates a classification image from regions of interest (ROIs).  You may use an existing ROI file or create ROI's using the [ENVI_ImageThresholdToROI Task](http://www.harrisgeospatial.com/docs/enviimagethresholdtoroitask.html).
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
