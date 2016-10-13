@@ -39,7 +39,6 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 -------------|:-----------:|:--------------------|---------------
 input_raster | True       | s3 URL, .hdr, .tiff  | Specify the input raster to apply ROIs to generate a classification image.
 input_roi    | True       | ENVI format ROI file | Specify a single or an array of ROI to create the classification image from.
-name         | True     |  string              | This property contains the name of the task and must be used in the workflow.
 
 ### Outputs
 The following table lists all taskname outputs.
@@ -47,7 +46,6 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 
   Name            |  Required  |  Valid Values             | Description  
 ------------------|:---------: |:------------------------- |---------------
-output_raster     | False      | N/A                       |This is a reference to the output classification raster of filetype ENVI.  This is a temporary file that will be deleted once the process is complete.
 output_raster_uri | True       | s3 URL, .hdr, .tiff, .xml | Specify a string with the fully qualified filename and path of the output raster. If you do not specify this property, the output raster is only temporary. Once the raster has no remaining references, ENVI deletes the temporary file.
 
 
