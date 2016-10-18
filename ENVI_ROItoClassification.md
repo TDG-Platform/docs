@@ -1,7 +1,7 @@
 
 # ENVI ROI to Classification (Editing in Progress)
 
-This task creates a classification image from regions of interest (ROIs).  You may use an existing ROI file or create ROI's using the [ENVI_ImageThresholdToROI Task](http://www.harrisgeospatial.com/docs/enviimagethresholdtoroitask.html).
+This task creates a classification image from regions of interest (ROIs).  You may use an existing ROI file or create ROI's using the [ENVI_ImageThresholdToROI Task](https://github.com/TDG-Platform/docs/blob/master/ENVI_ImageThresholdtoROI.md).
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
@@ -38,7 +38,7 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
   Name       |  Required  |  Valid Values       |  Description  
 -------------|:-----------:|:--------------------|---------------
 input_raster | True       | s3 URL, .hdr, .tiff  | Specify the input raster to apply ROIs to generate a classification image.
-input_roi    | True       | ENVI format ROI file | Specify a single or an array of ROI to create the classification image from.
+input_roi    | True       | .xml ROI file | Specify a single or an array of ROI to create the classification image from.
 
 ### Outputs
 The following table lists all taskname outputs.
@@ -71,4 +71,3 @@ For background on the development and implementation of ROI to Classification re
 ###Contact Us
 Document Owner - [Kathleen Johnson](kajohnso@digitalglobe.com)
 
-> Written with [StackEdit](https://stackedit.io/).
