@@ -70,11 +70,11 @@ For details on the methods of testing the runtimes of the task visit the followi
 
   Sensor Name  | Total Pixels |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
 --------|:----------:|-----------|----------------|---------------
-QB | 41,551,668 | 312.07 |  |  |
-WV01| 1,028,100,320 |351.72 | | |
-WV02|35,872,942|329.87| | |
-WV03|35,371,971|196.27| | |
-GE| 57,498,000|332.97| | |
+QB | 41,551,668 | 312.07 |  |  
+WV01| 1,028,100,320 |351.72 | |
+WV02|35,872,942|329.87| |
+WV03|35,371,971|196.27| |
+GE| 57,498,000|332.97| | 
 
 ### Issues
 List known past/current issues with taskname (e.g., version x does not ingest vrt files).

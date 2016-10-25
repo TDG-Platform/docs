@@ -105,11 +105,12 @@ For details on the methods of testing the runtimes of the task visit the followi
 
   Sensor Name  |  Total Pixels  |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
 --------|:----------:|-----------|----------------|---------------
-QB | 41,551,668 | 312.07 | 158.26 | 0.51 |
-WV01| 1,028,100,320 |351.72 | NA|NA |
-WV02|35,872,942|329.87|176.04 | 0.53|
-WV03|35,371,971|196.27| 232.00|1.18 |
-GE| 57,498,000|332.97|241.53 | 0.73|
+QB | 41,551,668 | 312.07 | 162.25 | 	0.52
+WV01| 1,028,100,320 |351.72 | NA|NA
+WV02|35,872,942|329.87|162.63	 | 0.49
+WV03|35,371,971|196.27| 177.24	|0.90
+GE| 57,498,000|332.97|162.21| 0.49
+
 
 ### Issues
 Additional parsing of the output list of indices is necessary before using the list as input for the ENVI Spectral Indices task. An example of this workflow is in development.  

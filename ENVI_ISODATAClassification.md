@@ -4,9 +4,9 @@
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
- * [Runtime](#runtime) - Results of task benchmark tests.
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and example contents.
+ * [Runtime](#runtime) - Results of task benchmark tests.
  * [Contact Us](#contact-us) - Contact tech or document owner.
 
 **Example Script:** Run in IPython using the GBDXTools Interface
@@ -36,19 +36,6 @@
     print workflow.id
 	workflow.status
 ```
-
-### Runtime
-
-The following table lists all applicable runtime outputs. (This section will be completed the Algorithm Curation team)
-For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
-
-  Sensor Name  |  Total Pixels  |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
---------|:----------:|-----------|----------------|---------------
-QB | 41,551,668 | 312.07 | 308.27 | 0.99 |
-WV02|35,872,942|329.87|1,939.17 | 5.88|
-WV03|35,371,971|196.27| 858.28|4.37|
-GE| 57,498,000|332.97|490.32| 1.47|
-
 
 ### Inputs
 
@@ -95,6 +82,18 @@ Your Processed classification file will be written to the specified S3 Customer 
 
 
 For background on the development and implementation of ISO Classification refer to the [ENVI Documentation](https://www.harrisgeospatial.com/docs/classificationtutorial.html)
+
+### Runtime
+
+The following table lists all applicable runtime outputs. (This section will be completed the Algorithm Curation team)
+For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
+
+  Sensor Name  |  Total Pixels  |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
+--------|:----------:|-----------|----------------|---------------
+QB | 41,551,668 | 312.07 | 308.27 | 0.99 
+WV02|35,872,942|329.87|1,939.17 | 5.88
+WV03|35,371,971|196.27| 858.28|4.37
+GE| 57,498,000|332.97|490.32| 1.47
 
 ###Contact Us
 Document Owner - Carl Reeder - creeder@digitalglobe.com

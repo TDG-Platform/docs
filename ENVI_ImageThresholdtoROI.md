@@ -6,7 +6,8 @@
  * [Quickstart](#quickstart) - Get started!
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and example contents.
- * [Advanced](#advanced) - Full task workflow with optional parameters used as example 
+ * [Advanced](#advanced) - Full task workflow with optional parameters used as example
+ * [Runtime](#runtime) - Example estimate of task runtime.
  * [Contact Us](#contact-us) - Contact tech or document owner.
 
 **Example Script:** Run in IPython using the GBDXTools Interface
@@ -22,23 +23,23 @@
     task.inputs.roi_color = "[[0,255,0],[0,0,255]]"
     task.inputs.threshold = "[[138,221,0],[222,306,0]]"
     task.inputs.output_roi_uri_filename = "roi.xml"
-	
+
     workflow = gbdx.Workflow([task])
     workflow.savedata(
         task.outputs.output_roi_uri,
         location='ImgToROI'
     )
-	
+
     print workflow.execute()
-	
+
 ```
-### Inputs	
+### Inputs
 
 **Description of Input Parameters and Options for the "ENVI_ImageThresholdToROI":**
-This task will function on a multi-spectral image located in the S3 location: 
+This task will function on a multi-spectral image located in the S3 location:
 Input imagery sensor types include but may not be limited to: QuickBird, WorldView 1, WorldView 2, WorldView 3 and GeoEye
 Tif files from the AOP_Strip_Processor were tested with this task to confirm functionality; however, the task may ingest additional raster image file types such as: ENVI .hdr,  
-	
+
 **REQUIRED SETTINGS AND DEFINITIONS:**
 
 Name                     |       Default         |                 Valid Values                        |   Description
@@ -47,7 +48,7 @@ input_raster             |          N/A          | S3 URL   directory           
 roi_color                |          N/A          | 3,n byte array with RGB color (see example script)  | Define ROI color where n is the number of ROIs specified by ROI_NAME
 threshold                |          N/A          | [minimum, maximum, zero-based band number]          | specify an array that represents a threshold: [minimum, maximum, zero-based band number] You can have one or more thresholds to one or more ROIs
 roi_name                 |          N/A          | String  (see example script)                        | Specify a string or array of strings with the names of each ROI
-	
+
 
 ### Outputs
 
@@ -73,7 +74,7 @@ output_roi_uri_filename    |         true          | Folder name in S3 location 
     data = "s3://receiving-dgcs-tdgplatform-com/055026839010_01_003"
     aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False, bands='MS')
 
-    # Capture AOP task outputs 
+    # Capture AOP task outputs
     #orthoed_output = aoptask.get_output('data')
 
     task = gbdx.Task("ENVI_ImageThresholdToROI")
@@ -92,6 +93,17 @@ output_roi_uri_filename    |         true          | Folder name in S3 location 
 
     print workflow.execute()
 ```
+### Runtime
+
+The following table lists all applicable runtime outputs. (This section will be completed the Algorithm Curation team)
+For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
+
+  Sensor Name  | Total Pixels |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
+--------|:----------:|-----------|----------------|---------------
+QB | 41,551,668 | 312.07 |158.62 |0.51  
+WV02|35,872,942|329.87|167.47	|0.51
+WV03|35,371,971|175.47	|0.89 |
+GE| 57,498,000|162.43	|0.49 |
 
 **Data Structure for Expected Outputs:**
 

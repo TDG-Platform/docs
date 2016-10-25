@@ -8,22 +8,24 @@ Note:  The wavelength metadata is not available in the correct format from the A
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and example contents.
  * [Advanced](#advanced) - Additional information for advanced users.
+ * [Runtime](#runtime) - Example estimate of task runtime.
+ * [Background](#background) - Background information.
  * [Contact Us](#contact-us) - Contact tech or document owner.
 
 ### Quickstart
 
-This script gives the example of ENVI Spectral Index with a single tif file as input. 
+This script gives the example of ENVI Spectral Index with a single tif file as input.
 
 ```python
 # Quickstart **Example Script Run in Python using the gbdxTools InterfaceExample producing a single band vegetation mask from a tif file.
 # First Initialize the Environment
-	
+
     from gbdxtools import Interface
     gbdx = Interface()
-    
+
     aop2envi = gbdx.Task("AOP_ENVI_HDR")
     aop2envi.inputs.image = 's3://gbd-customer-data/Image_location'
-    
+
 	envi_ndvi = gbdx.Task("ENVI_SpectralIndex")
     envi_ndvi.inputs.input_raster = aop2envi.outputs.output_data.value
     envi_ndvi.inputs.file_types = "hdr"
@@ -41,10 +43,10 @@ This script gives the example of ENVI Spectral Index with a single tif file as i
 
     print workflow.execute()
 ```
-	
-### Inputs	
+
+### Inputs
 **Description of Input Parameters and Options for the "ENVI_SpectralIndex":**
-This task will work on Digital Globe images with a IMD file located in the S3 location: 
+This task will work on Digital Globe images with a IMD file located in the S3 location:
 Input imagery sensor types include: QuickBird, WorldView 1, WorldView 2, WorldView 3 and GeoEye
 The following table lists the Spectral Index task inputs.
 All inputs are **required**
@@ -74,17 +76,17 @@ task_meta_data               |          N/A          |     string of index name 
 
 
 **Description of Output and options for the "ENVI_SpectralIndex":**
-This task will provide a raster of the spectral index output in both an ENVI hdr format and tif format. 
+This task will provide a raster of the spectral index output in both an ENVI hdr format and tif format.
 
 **Data Structure for Expected Outputs:**
 
-The processed imagery will be written to the specified S3 Customer Location in a 1 band TIF format(e.g.  s3://gbd-customer-data/unique customer id/named directory/). 
+The processed imagery will be written to the specified S3 Customer Location in a 1 band TIF format(e.g.  s3://gbd-customer-data/unique customer id/named directory/).
 
 ### Advanced
 To link the workflow of 1 input image into AOP_Strip_Processor into a protogen task you must use the follow GBDX tools script in python
 
 ```python
-#First initialize the environment 
+#First initialize the environment
 #AOP strip processor has input values known to complete the Spectral Index task
 from gbdxtools import Interface
 gbdx = Interface()
@@ -92,7 +94,7 @@ gbdx = Interface()
 data = "s3://receiving-dgcs-tdgplatform-com/ImageLocation"
 aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False, bands='MS')
 
-# Capture AOP task outputs 
+# Capture AOP task outputs
 #orthoed_output = aoptask.get_output('data')
 
 aop2envi = gbdx.Task("AOP_ENVI_HDR")
@@ -121,6 +123,24 @@ workflow.savedata(
 print workflow.execute()
 
 ```
+
+### Runtime
+
+The following table lists all applicable runtime outputs. (This section will be completed the Algorithm Curation team)
+For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
+
+  Sensor Name  | Total Pixels |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
+--------|:----------:|-----------|----------------|---------------
+QB | 41,551,668 | 194.58 |0.62    
+WV01| 1,028,100,320 |216.12 |0.66
+WV02|35,872,942|1,265.14|6.45 
+WV03|35,371,971|196.27|
+GE| 57,498,000|185.33| 	0.56
+
+
+
+
+
 
 ###Known Issues
 1) To run the task in a single workflow with AOP the tif file must first be removed from the AOP folder with the additional python commands listed in Advanced

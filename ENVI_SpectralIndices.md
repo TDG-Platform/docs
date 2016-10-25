@@ -10,6 +10,7 @@ This task can be run with Python using [gbdxtools](https://github.com/DigitalGlo
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and output structure.
  * [Advanced](#advanced) - Additional information for advanced users.
+ * [Runtime](#runtime) - Example estimate of task runtime.
  * [Issues](#issues) - Current or past known issues.
  * [Background](#background) - Background information.
  * [Contact](#contact) - Contact information.
@@ -110,6 +111,19 @@ workflow.savedata(
 workflow.execute()
 workflow.status
 ```
+
+### Runtime
+
+The following table lists all applicable runtime outputs. (This section will be completed the Algorithm Curation team)
+For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
+
+  Sensor Name  | Total Pixels |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
+--------|:----------:|-----------|----------------|---------------
+QB | 41,551,668 | 312.07 |  |  
+WV01| 1,028,100,320 |351.72 | |
+WV02|35,872,942|329.87| |
+WV03|35,371,971|196.27| |
+GE| 57,498,000|332.97| |
 
 
 ### Issues
