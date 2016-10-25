@@ -83,7 +83,7 @@ This task will provide a raster of the spectral index output in both an ENVI hdr
 The processed imagery will be written to the specified S3 Customer Location in a 1 band TIF format(e.g.  s3://gbd-customer-data/unique customer id/named directory/).
 
 ### Advanced
-To link the workflow of 1 input image into AOP_Strip_Processor into a protogen task you must use the follow GBDX tools script in python
+To link the workflow of 1 input image into AOP_Strip_Processor and the Spectral Index task, use the following GBDX tools script in python.
 
 ```python
 #First initialize the environment
@@ -133,13 +133,9 @@ For details on the methods of testing the runtimes of the task visit the followi
 --------|:----------:|-----------|----------------|---------------
 QB | 41,551,668 | 194.58 |0.62    
 WV01| 1,028,100,320 |216.12 |0.66
-WV02|35,872,942|1,265.14|6.45 
+WV02|35,872,942|1,265.14|6.45
 WV03|35,371,971|196.27|
 GE| 57,498,000|185.33| 	0.56
-
-
-
-
 
 
 ###Known Issues

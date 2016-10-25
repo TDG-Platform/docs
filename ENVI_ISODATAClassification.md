@@ -50,7 +50,7 @@ All inputs are **required**
 
 Name                     |       Default         |        Valid Values             |   Description
 -------------------------|:---------------------:|---------------------------------|-----------------
-input_raster             |          N/A          | S3 URL   .TIF only              | S3 location of input data. Specify a sieving output raster on which to perform classification clumping
+input_raster             |          N/A          | S3 URL   .TIF only              | S3 location of input data. S raster on which to perform ISODATA classification 
 
 ### Outputs
 
@@ -90,7 +90,7 @@ For details on the methods of testing the runtimes of the task visit the followi
 
   Sensor Name  |  Total Pixels  |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
 --------|:----------:|-----------|----------------|---------------
-QB | 41,551,668 | 312.07 | 308.27 | 0.99 
+QB | 41,551,668 | 312.07 | 308.27 | 0.99
 WV02|35,872,942|329.87|1,939.17 | 5.88
 WV03|35,371,971|196.27| 858.28|4.37
 GE| 57,498,000|332.97|490.32| 1.47

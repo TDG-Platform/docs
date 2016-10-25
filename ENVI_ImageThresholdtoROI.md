@@ -68,6 +68,8 @@ output_roi_uri_filename    |         true          | Folder name in S3 location 
 
 ###Advanced
 
+To link the workflow of 1 input image into AOP_Strip_Processor and the Image Threshold to ROI task, use the following GBDX tools script in python.
+
 ```python
     from gbdxtools import Interface
     gbdx = Interface()
