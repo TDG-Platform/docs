@@ -1,7 +1,7 @@
 
 # ENVI ROI to Classification (Editing in Progress)
 
-This task creates a classification image from regions of interest (ROIs).  You may use an existing ROI file or create ROI's using the [ENVI_ImageThresholdToROI Task](https://github.com/TDG-Platform/docs/blob/master/ENVI_ImageThresholdtoROI.md).
+This task creates a classification image from regions of interest (ROIs).  You can use a pre-existing ROI file or create a new one using the [ENVI_ImageThresholdToROI Task](https://github.com/TDG-Platform/docs/blob/master/ENVI_ImageThresholdtoROI.md) as part of a larger workflow. Examples are included in the Advanced Options.
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
@@ -15,8 +15,25 @@ This task creates a classification image from regions of interest (ROIs).  You m
 
 This task requires that the image has been pre-processed using the [Advanced Image Preprocessor](https://github.com/TDG-Platform/docs/blob/master/AOP_Strip_Processor.md), and that a ROI file exists or has been created.
 
-  
-	ADD Quickstart Script here
+  	from gbdxtools import Interface
+	gbdx = Interface()
+
+	input_raster_data = "s3://gbd-customer-data/path to pre-processed raster image from customer's S3 location/"
+	input_roi_data = "s3://gbd-customer-data/path to ROI file in Customer's S3 location/"
+
+	classtask = gbdx.Task("ENVI_ROIToClassification")
+	classtask.inputs.input_raster = input_raster_data
+	classtask.inputs.input_roi = input_roi_data
+	classtask.outputs.output_roi_uri_filename = "classification output file"
+
+	workflow = gbdx.Workflow([ classtask ])
+
+	workflow.savedata(classtask.outputs.output_raster_uri, location='Customer's S3 location')
+
+	workflow.execute()
+	print workflow.id
+	print workflow.status
+	
 
 
 ### Runtime
