@@ -33,7 +33,7 @@ The AComp GBDX task can be run through a simple Python script using  [gbdxtools]
     # Run atmospheric compensation on Landsat-8 data
     from gbdxtools import Interface
     gbdx = Interface()
-    import json
+    
     acomp = gbdx.Task('AComp_1.0', data='s3://landsat-pds/L8/033/032/LC80330322015035LGN00')
     workflow = gbdx.Workflow([acomp])
     workflow.savedata(acomp.outputs.data, location='S3 gbd-customer-data location')
@@ -119,7 +119,6 @@ DG Sensors Level 2 and Level 3 |  .TIF, .TIL, .IMD       |  NO   (individual .ti
 First the VNIR and SWIR images must be staged to the same parent directory.  An example is given below as a reminder.
 
 	from gbdxtools import Interface 
-	import json
 	gbdx = Interface()
 
 	# Stage VNIR and SWIR in the same parent directory
@@ -138,7 +137,6 @@ Script Example running AComp on VNIR+SWIR:
 
 	# Runs AComp_1.0 on corresponding VNIR and SWIR images from WorldView-3
 	from gbdxtools import Interface 
-	import json
 	gbdx = Interface()
 
 	# Setup AComp Task
@@ -157,7 +155,6 @@ Script Example running AComp on VNIR+SWIR:
 	# Runs AComp_1.0 on Level 3D images
 	# Test Imagery is WV03 Jefferson County, CO - Elk Meadow Park
 	from gbdxtools import Interface 
-	import json
 	gbdx = Interface()
 
 	# Setup AComp Task; requires full path to input dataset
@@ -176,7 +173,6 @@ Script Example linking AComp to [protogenV2LULC](https://github.com/TDG-Platform
 
 	# Runs AComp_1.0, then sends that data to the protogenV2LULC process
 	from gbdxtools import Interface 
-	import json
 	gbdx = Interface()
 	
 	# Test Imagery for Tracy, CA: WV02
