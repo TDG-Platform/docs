@@ -76,7 +76,44 @@ ignore_validate      |          N/A     |     1        |Set this property to a v
 
 Included below is a complete end-to-end workflow for ???????
 
-	Add Advanced Task Script here......
+	# Advanced Task Script:  AOP=>ROI=>Classification
+	# This Task runs using IPython in the gbdxtools Interface
+	# Initialize the gbdxtools Interface
+	from gbdxtools import Interface
+	gbdx = Interface()
+	
+	# Import the Image from s3. Here we are using a GE01 image from the Benchmark Dataset.
+	data = "s3://receiving-dgcs-tdgplatform-com/054876618060_01_003"
+	aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, bands='MS', enable_pansharpen=False, enable_dra=False)
+	# Capture AOP task outputs
+	log = aoptask.get_output('log')
+	orthoed_output = aoptask.get_output('data')
+
+	# Run Threshold To Classification
+	threshold = gbdx.Task("ENVI_ImageThresholdToROI")
+	threshold.inputs.input_raster = aoptask.outputs.data.value
+	threshold.inputs.roi_name = "[\"Water\", \"Land\"]"
+	threshold.inputs.roi_color = "[[0,255,0],[0,0,255]]"
+	threshold.inputs.threshold = "[[138,221,0],[222,306,0]]"
+	threshold.inputs.output_roi_uri_filename = "roi.xml"
+
+	# Run ROI to Classification
+	roitoclass.inputs.input_raster = aoptask.outputs.data.value
+	roitoclass.inputs.input_roi_data = threshold.outputs.output_roi_uri.value
+	roitoclass = gbdx.Task("ENVI_ROIToClassification")
+	roitoclass.inputs.input_raster = input_raster_data
+	roitoclass.inputs.input_roi = input_roi_data
+	roitoclass.outputs.output_roi_uri_filename = "class1"
+
+	# Run Workflow and Send output to S3 Bucket
+	workflow = gbdx.Workflow([ aoptask, threshold, roitoclass ])
+	workflow.savedata(aoptask.outputs.data, location='kathleen_ENVI_RoiToClass/WV02_Data1/CLASS_ADVTest/AOP2/')
+	workflow.savedata(threshold.outputs.output_roi_uri, location='kathleen_ENVI_RoiToClass/WV02_Data1/CLASS_ADVTest/THRESH2/')
+	workflow.savedata(roitoclass.outputs.output_raster_uri, location='kathleen_ENVI_ROItoClass/WV02_Data1/CLASS_ADVTest/ROI2/')
+	workflow.execute()
+	print workflow.id
+	print workflow.status
+	
 
 **Data Structure for Expected Outputs:**
 
