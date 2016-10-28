@@ -98,8 +98,8 @@ Included below is a complete end-to-end workflow for ???????
 	threshold.inputs.output_roi_uri_filename = "roi.xml"
 
 	# Run ROI to Classification
-	input_raster_data = "s3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/kathleen_ENVI_RoiToClass/WV02_Data1/AOP3/" # requires full path to input raster data
-	input_roi_data = "s3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/kathleen_ENVI_RoiToClass/WV02_Data1/THRESH3/" #requires full path to input roi data
+	input_raster_data = aoptask.outputs.data.value
+	input_roi_data = threshold.outputs.output_roi_uri.value
 	roitoclass.inputs.input_roi_data = threshold.outputs.output_roi_uri.value
 	roitoclass = gbdx.Task("ENVI_ROIToClassification")
 	roitoclass.inputs.input_raster = input_raster_data
