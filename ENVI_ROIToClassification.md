@@ -1,7 +1,7 @@
 
 # ENVI ROI to Classification (Editing in Progress)
 
-This task creates a classification image from regions of interest (ROIs).  You can use a pre-existing ROI file or create a new one using the [ENVI_ImageThresholdToROI Task](https://github.com/TDG-Platform/docs/blob/master/ENVI_ImageThresholdtoROI.md) as part of a larger workflow. Examples are included in the Advanced Options.
+This task creates a classification image from regions of interest (ROIs).  The input ROI file must be created using the [ENVI_ImageThresholdToROI Task](https://github.com/TDG-Platform/docs/blob/master/ENVI_ImageThresholdtoROI.md).  You may use a pre-existing ROI dataset or  produce the final classification as part of a larger workflow. Examples are included in the Advanced Options.
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
