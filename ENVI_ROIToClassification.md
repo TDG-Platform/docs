@@ -95,7 +95,7 @@ Included below is a complete end-to-end workflow for ???????
 	threshold.inputs.roi_name = "[\"Water\", \"Land\"]"
 	threshold.inputs.roi_color = "[[0,255,0],[0,0,255]]"
 	threshold.inputs.threshold = "[[138,221,0],[222,306,0]]"
-	threshold.inputs.output_roi_uri_filename = "roi.xml"
+	threshold.inputs.output_roi_uri_filename = "roi"
 
 	# Run ROI to Classification
 	input_raster_data = aoptask.outputs.data.value
@@ -104,13 +104,14 @@ Included below is a complete end-to-end workflow for ???????
 	roitoclass = gbdx.Task("ENVI_ROIToClassification")
 	roitoclass.inputs.input_raster = input_raster_data
 	roitoclass.inputs.input_roi = input_roi_data
-	roitoclass.outputs.output_roi_uri_filename = "class1"
+	roitoclass.outputs.output_roi_uri_filename = "class1" # or some resonable classification output filename
 
 	# Run Workflow and Send output to S3 Bucket
 	workflow = gbdx.Workflow([ aoptask, threshold, roitoclass ])
-	workflow.savedata(aoptask.outputs.data, location='kathleen_ENVI_RoiToClass/WV02_Data1/CLASS_ADVTest/AOP2/')
-	workflow.savedata(threshold.outputs.output_roi_uri, location='kathleen_ENVI_RoiToClass/WV02_Data1/CLASS_ADVTest/THRESH2/')
-	workflow.savedata(roitoclass.outputs.output_raster_uri, location='kathleen_ENVI_ROItoClass/WV02_Data1/CLASS_ADVTest/ROI2/')
+	workflow.savedata(aoptask.outputs.data, location='Customer's S3 Output Directory')
+	workflow.savedata(threshold.outputs.output_roi_uri, location='Customer's S3 Output Directory')
+	workflow.savedata(roitoclass.outputs.output_raster_uri, location='Customer's S3 Output Directory')
+	
 	workflow.execute()
 	print workflow.id
 	print workflow.status
