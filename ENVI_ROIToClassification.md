@@ -83,7 +83,7 @@ Included below is a complete end-to-end workflow for ???????
 	gbdx = Interface()
 	
 	# Import the Image from s3. Here we are using a GE01 image from the Benchmark Dataset.
-	data = "s3://receiving-dgcs-tdgplatform-com/054876618060_01_003"
+	data = "s3://receiving-dgcs-tdgplatform-com/054876618060_01_003" # Example Data for a large strip in Northern CAlifornia
 	aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, bands='MS', enable_pansharpen=False, enable_dra=False)
 	# Capture AOP task outputs
 	log = aoptask.get_output('log')
