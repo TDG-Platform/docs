@@ -39,7 +39,7 @@ This task requires that the image has been pre-processed using the [Advanced Ima
 
 ### Runtime
 
-The following table lists all applicable runtime outputs for the ENVI ROI to Classification. An estimated Runtime for the Advanced Script example can be derived from adding the result for the two pre-processing steps. For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
+The following table lists all applicable runtime outputs for the ENVI ROI to Classification. An estimated Runtime for the Advanced Script example can be derived from adding the result for the two pre-processing steps. 
 
   Sensor Name  |  Total Pixels  |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
 --------|:----------:|-----------|----------------|---------------
@@ -75,7 +75,8 @@ ignore_validate      |          N/A     |     1        |Set this property to a v
 
 ### Advanced
 
-Included below is a complete end-to-end workflow for ???????
+To link the workflow of 1 input image into AOP_Strip_Processor into the ENVI ROI To CLassification task you must use the following GBDX tools script in python:
+
 ```python
 	# Advanced Task Script:  AOP=>ROI=>Classification
 	# This Task runs using IPython in the gbdxtools Interface
