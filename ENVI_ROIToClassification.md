@@ -15,6 +15,7 @@ This task creates a classification image from regions of interest (ROIs).  The i
 
 This task requires that the image has been pre-processed using the [Advanced Image Preprocessor](https://github.com/TDG-Platform/docs/blob/master/AOP_Strip_Processor.md), and that a ROI file exists or has been created.
 
+```python
   	from gbdxtools import Interface
 	gbdx = Interface()
 
@@ -33,7 +34,7 @@ This task requires that the image has been pre-processed using the [Advanced Ima
 	workflow.execute()
 	print workflow.id
 	print workflow.status
-	
+```
 
 
 ### Runtime
@@ -75,7 +76,7 @@ ignore_validate      |          N/A     |     1        |Set this property to a v
 ### Advanced
 
 Included below is a complete end-to-end workflow for ???????
-
+```python
 	# Advanced Task Script:  AOP=>ROI=>Classification
 	# This Task runs using IPython in the gbdxtools Interface
 	# Initialize the gbdxtools Interface
@@ -115,7 +116,7 @@ Included below is a complete end-to-end workflow for ???????
 	workflow.execute()
 	print workflow.id
 	print workflow.status
-	
+```	
 
 **Data Structure for Expected Outputs:**
 
