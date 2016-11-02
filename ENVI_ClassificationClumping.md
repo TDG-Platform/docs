@@ -101,10 +101,10 @@ For details on the methods of testing the runtimes of the task visit the followi
 
   Sensor Name  | Total Pixels |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
 --------|:----------:|-----------|----------------|---------------
-QB | 41,551,668 | 155.93	| 0.50 |  
-WV02|35,872,942|329.87| 171.72| 0.52
-WV03|35,371,971|196.27|173.03 |0.88
-GE| 57,498,000|173.03	|0.52 |
+QB |41,551,668|155.93|0.50 |  
+WV02|35,872,942|329.87|171.72|0.52
+WV03|35,371,971|196.27|173.03|0.88
+GE| 57,498,000|173.03|0.52 |
 
 
 For background on the development and implementation of Classification Clumping refer to the [ENVI Documentation](http://www.harrisgeospatial.com/docs/enviclassificationclumpingtask.html)
