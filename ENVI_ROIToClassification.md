@@ -122,7 +122,7 @@ To link the workflow of 1 input image into AOP_Strip_Processor into the ENVI ROI
 
 **Data Structure for Expected Outputs:**
 
-Your classification file will be written to the specified S3 Customer Location in the ENVI file format and tif format(e.g.  s3://gbd-customer-data/unique customer id/named directory/classification.hdr).  
+Your classification file will be written to the specified S3 Customer Location in the ENVI file format and tif format (e.g.  s3://gbd-customer-data/unique customer id/named directory/classification.hdr).  
 
 For background on the development and implementation of ROI to Classification refer to the [ENVI Documentation](http://www.harrisgeospatial.com/docs/enviroitoclassificationtask.html).
 
