@@ -141,6 +141,7 @@ Script Example running AComp on VNIR+SWIR:
 	gbdx = Interface()
 
 	# Setup AComp Task
+	# The data input and output lines must be edited to point to an authorized customer S3 location)
 	acompTask = gbdx.Task('AComp_1.0', data='S3 gbd-customer-data location/<customer account>/input directory')
 
 	# Run AComp Workflow
@@ -159,6 +160,7 @@ Script Example running AComp on VNIR+SWIR:
 	gbdx = Interface()
 
 	# Setup AComp Task; requires full path to input dataset
+	# The data input and output lines must be edited to point to an authorized customer S3 location)
 	acompTask = gbdx.Task('AComp_1.0', data='S3 gbd-customer-data location/<customer account>/input directory')
 
 	# Run Workflow
@@ -178,6 +180,7 @@ Script Example linking AComp to [protogenV2LULC](https://github.com/TDG-Platform
 	
 	# Test Imagery for Tracy, CA: WV02
 	# Setup AComp Task
+	# The data input and output lines must be edited to point to an authorized customer S3 location)
 	acompTask = gbdx.Task('AComp_1.0', exclude_bands='P', data='s3://receiving-dgcs-tdgplatform-com/<file directory>')
 
 	# Stage AComp output for the Protogen Task
