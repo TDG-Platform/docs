@@ -34,9 +34,10 @@ The AComp GBDX task can be run through a simple Python script using  [gbdxtools]
     from gbdxtools import Interface
     gbdx = Interface()
     
-    acomp = gbdx.Task('AComp_1.0', data='s3://landsat-pds/L8/033/032/LC80330322015035LGN00')
+    # The data input and lines must be edited to point to an authorized S3 location)
+    acomp = gbdx.Task('AComp_1.0', data='s3://landsat-pds/<Landsat8 Image ID>')
     workflow = gbdx.Workflow([acomp])
-    workflow.savedata(acomp.outputs.data, location='S3 gbd-customer-data location')
+    workflow.savedata(acomp.outputs.data, location='S3 gbd-customer-data location/<customer account>/output directory')
     workflow.execute()
            
     print workflow.id
@@ -47,9 +48,9 @@ The AComp GBDX task can be run through a simple Python script using  [gbdxtools]
     In [1]: from gbdxtools import Interface
     In [2]: gbdx = Interface()
     2016-06-06 10:53:09,026 - gbdxtools - INFO - Logger initialized
-    In [3]: acomp = gbdx.Task('AComp_1.0', data='s3://landsat-pds/L8/033/032/LC80330322015035LGN00')
+    In [3]: acomp = gbdx.Task('AComp_1.0', data='s3://landsat-pds/<Landsat8 Image ID>')
     In [4]: workflow = gbdx.Workflow([acomp])
-    In [5]: workflow.savedata(acomp.outputs.data, location='S3 gbd-customer-data location')
+    In [5]: workflow.savedata(acomp.outputs.data, location='S3 gbd-customer-data location/<customer account>/output directory')
     In [6]: workflow.execute()
     Out[6]: u'4349739083145886153'
     In [7]: print workflow.id
@@ -122,9 +123,9 @@ First the VNIR and SWIR images must be staged to the same parent directory.  An 
 	gbdx = Interface()
 
 	# Stage VNIR and SWIR in the same parent directory
-	destination = 's3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/'s3:// your designated parent directory'
-	s3task1 = gbdx.Task("StageDataToS3", data='s3://receiving-dgcs-tdgplatform-com/055427378010_01_003', destination=destination) # VNIR image
-	s3task2 = gbdx.Task("StageDataToS3", data='s3://receiving-dgcs-tdgplatform-com/055486759010_01_003', destination=destination) # SWIR image)
+	destination = 's3://gbd-customer-data/<customer account>/your designated parent directory'
+	s3task1 = gbdx.Task("StageDataToS3", data='s3://receiving-dgcs-tdgplatform-com/<file directory>', destination=destination) # VNIR image
+	s3task2 = gbdx.Task("StageDataToS3", data='s3://receiving-dgcs-tdgplatform-com/<file directory>', destination=destination) # SWIR image)
 	workflow = gbdx.Workflow([ s3task1, s3task2 ])
 	workflow.execute()
 
@@ -140,11 +141,11 @@ Script Example running AComp on VNIR+SWIR:
 	gbdx = Interface()
 
 	# Setup AComp Task
-	acompTask = gbdx.Task('AComp_1.0', data='s3://Customer location where data has been staged')
+	acompTask = gbdx.Task('AComp_1.0', data='S3 gbd-customer-data location/<customer account>/input directory')
 
 	# Run AComp Workflow
 	workflow = gbdx.Workflow([ acompTask ])
-	workflow.savedata(acompTask.outputs.data.value, location='S3 gbd-customer-data location--')
+	workflow.savedata(acompTask.outputs.data.value, location='S3 gbd-customer-data location/<customer account>/output dorectory')
 	workflow.execute()
 
 	print workflow.id
@@ -158,11 +159,11 @@ Script Example running AComp on VNIR+SWIR:
 	gbdx = Interface()
 
 	# Setup AComp Task; requires full path to input dataset
-	acompTask = gbdx.Task('AComp_1.0', data='S3 gbd-customer-data location-input')
+	acompTask = gbdx.Task('AComp_1.0', data='S3 gbd-customer-data location/<customer account>/input directory')
 
 	# Run Workflow
 	workflow = gbdx.Workflow([ acompTask ])
-	workflow.savedata(acompTask.outputs.data.value, location='S3 gbd-customer-data location-output')
+	workflow.savedata(acompTask.outputs.data.value, location='S3 gbd-customer-data location/<customer account>/output directory')
 	workflow.execute()
 
 	print workflow.id
@@ -177,7 +178,7 @@ Script Example linking AComp to [protogenV2LULC](https://github.com/TDG-Platform
 	
 	# Test Imagery for Tracy, CA: WV02
 	# Setup AComp Task
-	acompTask = gbdx.Task('AComp_1.0', exclude_bands='P', data='s3://receiving-dgcs-tdgplatform-com/055168976010_01_003')
+	acompTask = gbdx.Task('AComp_1.0', exclude_bands='P', data='s3://receiving-dgcs-tdgplatform-com/<file directory>')
 
 	# Stage AComp output for the Protogen Task
 	pp_task = gbdx.Task("ProtogenPrep",raster=acompTask.outputs.data.value)    
@@ -187,7 +188,7 @@ Script Example linking AComp to [protogenV2LULC](https://github.com/TDG-Platform
 
 	# Run Combined Workflow
 	workflow = gbdx.Workflow([ acompTask, pp_task, prot_lulc ])
-	workflow.savedata(prot_lulc.outputs.data.value, location='S3 gbd-customer-data location')
+	workflow.savedata(prot_lulc.outputs.data.value, location='S3 gbd-customer-data location/<customer account>/output directory')
 	workflow.execute()
 	
 	print workflow.id
