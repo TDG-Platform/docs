@@ -26,12 +26,12 @@ This script gives the example of LULC with a single tif file as input.
 from gbdxtools import Interface
 gbdx = Interface()
 
-# Input data
-raster = 's3://gbd-customer-data/PathToImage/image.tif'
+# The data input and output lines must be edited to point to an authorized customer S3 location
+raster = 's3://gbd-customer-data location/<customer account>/input directory/<image.tif>'
 prototask = gbdx.Task("protogenV2LULC", raster=raster)
 
 workflow = gbdx.Workflow([ prototask ])  
-workflow.savedata(prototask.outputs.data, location="LULC")
+workflow.savedata(prototask.outputs.data, location='S3 gbd-customer-data location/<customer account>/output directory')
 workflow.execute()
 
 print workflow.id
@@ -73,8 +73,8 @@ If you need to generate the 8-Band MS data required as input for this task, you 
 	gbdx = Interface()
 	import json
 
-	# Read the data
-	data = "s3://receiving-dgcs-tdgplatform-com/055382035010_01_003"
+	# The data input and output lines must be edited to point to an authorized customer S3 location
+	data = "s3://receiving-dgcs-tdgplatform-com/<file directory>"
 
 	# Run AOP to create acomp'd multispectral image
 	aoptask2 = gbdx.Task('AOP_Strip_Processor', data=data, bands='MS', enable_acomp=True, enable_pansharpen=False, enable_dra=False)     
@@ -88,7 +88,7 @@ If you need to generate the 8-Band MS data required as input for this task, you 
 	prototask.inputs.raster = gluetask.outputs.data.value
 
 	workflow = gbdx.Workflow([aoptask2, gluetask, prototask])
-	workflow.savedata(prototask.outputs.data, 'kathleen_Tracy_Protogen/WV03')
+	workflow.savedata(prototask.outputs.data, 'S3 gbd-customer-data location/<customer account>/output directory')
 
 	workflow.execute()
 	workflow.status
