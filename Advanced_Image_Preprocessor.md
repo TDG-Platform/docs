@@ -25,10 +25,11 @@ gbdx = Interface()
 
 # WV03 Image over Naples, Italy
 # Make sure both pan sharpening and DRA are disabled in order to get separate PAN and MS outputs.
-data = "s3://receiving-dgcs-tdgplatform-com/055249130010_01_003"
+# The data input and output lines must be edited to point to an authorized customer S3 location)
+data = "s3://receiving-dgcs-tdgplatform-com/<file directory>"
 aoptask = gbdx.Task('AOP_Strip_Processor', data=data, enable_pansharpen=False, enable_dra=False)
 workflow = gbdx.Workflow([ aoptask ])
-workflow.savedata(aoptask.outputs.data, location='Naples_WV03_QuickStart')
+workflow.savedata(aoptask.outputs.data, location='S3 gbd-customer-data location/<customer account>/output directory')
 
 workflow.execute()
 
@@ -50,10 +51,10 @@ In [4]: gbdx = Interface()
   2016-06-24 16:29:53,856 - gbdxtools - INFO - Logger initialized
 In [5]: # WV03 Image over Naples, Italy
 In [6]: # Make sure both pan sharpening and DRA are disabled in order to get separate PAN and MS outputs.
-In [7]: data = "s3://receiving-dgcs-tdgplatform-com/055249130010_01_003"
+In [7]: data = "S3 gbd-customer-data location/<customer account>/input directory"
 In [8]: aoptask = gbdx.Task('AOP_Strip_Processor', data=data, enable_pansharpen=False, enable_dra=False)
 In [9]: workflow = gbdx.Workflow([ aoptask ])  
-In [10]: workflow.savedata(aoptask.outputs.data, location='Naples_WV03_QuickStart')
+In [10]: workflow.savedata(aoptask.outputs.data, location='S3 gbd-customer-data location/<customer account>/output directory')
 In [11]: workflow.execute()
 Out[12]: u'4362772047134837472'
 In [13]: print workflow.id
