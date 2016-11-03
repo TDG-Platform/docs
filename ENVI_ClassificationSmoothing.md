@@ -14,23 +14,24 @@ This task removes speckling noise from a classification image. It uses majority 
 
 This task requires that the image has been pre-processed using the [Advanced Image Processor](https://github.com/TDG-Platform/docs/blob/master/AOP_Strip_Processor.md), and that a classification has been run on the output from preprocessing. In the example workflow below, the  [ISODATA Classification](https://github.com/TDG-Platform/docs/blob/master/ENVI_ISODATAClassification.md) Task was utilized to perform the classification step on preprocessed data. 
 
-  
+```python  
 	from gbdxtools import Interface
 	gbdx = Interface()
 	
 	isodata = gbdx.Task("ENVI_ISODATAClassification")
-	isodata.inputs.input_raster = "s3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/kathleen_ENVI_ClassSmoothing/WV03/AOP_Output/055605759010_01/"
+	# The data input and output lines must be edited to point to an authorized customer S3 location
+	isodata.inputs.input_raster = "S3 gbd-customer-data location/<customer account>/input directory"
 	isodata.inputs.file_types = "tif"
 	smooth = gbdx.Task("ENVI_ClassificationSmoothing")
 	smooth.inputs.input_raster = isodata.outputs.output_raster_uri.value
 	smooth.inputs.file_types = "hdr"
 	workflow = gbdx.Workflow([ isodata, smooth ])
-	workflow.savedata(isodata.outputs.output_raster_uri, location="kathleen_ENVI_ClassSmoothing/WV03/isodata")
-	workflow.savedata(smooth.outputs.output_raster_uri, location="kathleen_ENVI_ClassSmoothing/WV03/smoothed")
+	workflow.savedata(isodata.outputs.output_raster_uri, location="S3 gbd-customer-data location/<customer account>/output directory")
+	workflow.savedata(smooth.outputs.output_raster_uri, location="S3 gbd-customer-data location/<customer account>/output directory")
 	workflow.execute()
 	print workflow.id
 	print workflow.status
-
+```
 
 ### Runtime
 
@@ -72,6 +73,7 @@ kernel_size                |           3           |    any odd number >= 3     
 
 Included below is a complete end-to-end workflow for Advanced Image Preprocessing => ISODATA Classification => Classification Smoothing:
 
+```python
 	# Advanced Task Script:  Advanced Image Preprocessor=>ISODATA=>Classification Smoothing
 	# This Task runs using IPython in the gbdxtools Interface
 	# Initialize the gbdxtools Interface
@@ -79,7 +81,7 @@ Included below is a complete end-to-end workflow for Advanced Image Preprocessin
 	gbdx = Interface()
 	
 	# Import the Image from s3. Here we are using a WV03 image from the Benchmark Dataset.
-	data = "s3://receiving-dgcs-tdgplatform-com/054876618060_01_003" aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, bands='MS', enable_pansharpen=False, enable_dra=False)
+	data = "s3://receiving-dgcs-tdgplatform-com/<file directory>" aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, bands='MS', enable_pansharpen=False, enable_dra=False)
 	
 	# Capture AOP task outputs
 	log = aoptask.get_output('log')
@@ -97,12 +99,13 @@ Included below is a complete end-to-end workflow for Advanced Image Preprocessin
 	
 	# Run Workflow and Send output to  s3 Bucket
 	workflow = gbdx.Workflow([ aoptask, isodata, smooth ])
-	workflow.savedata(aoptask.outputs.data, location="kathleen_ENVI_ClassSmoothing/WV03/Advanced/aoptask1")
-	workflow.savedata(isodata.outputs.output_raster_uri, location="kathleen_ENVI_ClassSmoothing/WV03/Advanced/isodata1")
-	workflow.savedata(smooth.outputs.output_raster_uri, location="kathleen_ENVI_ClassSmoothing/WV03/Advanced/smoothed1")
+	workflow.savedata(aoptask.outputs.data, location="S3 gbd-customer-data location/<customer account>/output directory")
+	workflow.savedata(isodata.outputs.output_raster_uri, location="S3 gbd-customer-data location/<customer account>/output directory")
+	workflow.savedata(smooth.outputs.output_raster_uri, location="S3 gbd-customer-data location/<customer account>/output directory")
 	workflow.execute()
 	print workflow.id
 	print workflow.status
+```
 
 **Data Structure for Expected Outputs:**
 
