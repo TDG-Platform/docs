@@ -30,6 +30,7 @@ The AComp GBDX task can be run through a simple Python script using  [gbdxtools]
 
 **Example Script:** These basic settings will run AComp on a Landsat-8 image.  See also examples listed under the [Advanced Options](#advanced-options).
 
+```python
     # Run atmospheric compensation on Landsat-8 data
     from gbdxtools import Interface
     gbdx = Interface()
@@ -42,6 +43,7 @@ The AComp GBDX task can be run through a simple Python script using  [gbdxtools]
            
     print workflow.id
     print workflow.status
+```
      
 **Example Run in IPython:**
 
@@ -119,6 +121,7 @@ DG Sensors Level 2 and Level 3 |  .TIF, .TIL, .IMD       |  NO   (individual .ti
 
 First the VNIR and SWIR images must be staged to the same parent directory.  An example is given below as a reminder.
 
+```python
 	from gbdxtools import Interface 
 	gbdx = Interface()
 
@@ -131,11 +134,13 @@ First the VNIR and SWIR images must be staged to the same parent directory.  An 
 
 	print workflow.id
 	print workflow.status
+```
 
 These tasks can be combined, but it works best to stage the data first in a separate task to make sure the imagery has been completely copied before starting the AComp task.
 
 Script Example running AComp on VNIR+SWIR:
 
+```python
 	# Runs AComp_1.0 on corresponding VNIR and SWIR images from WorldView-3
 	from gbdxtools import Interface 
 	gbdx = Interface()
@@ -151,9 +156,11 @@ Script Example running AComp on VNIR+SWIR:
 
 	print workflow.id
 	print workflow.status
+```
 
 [Script Example running AComp on Level 3D Imagery:](#known-issues)
 
+```python
 	# Runs AComp_1.0 on Level 3D images
 	# Test Imagery is WV03 Jefferson County, CO - Elk Meadow Park
 	from gbdxtools import Interface 
@@ -170,10 +177,12 @@ Script Example running AComp on VNIR+SWIR:
 
 	print workflow.id
 	print workflow.status
+```
 
 
 Script Example linking AComp to [protogenV2LULC](https://github.com/TDG-Platform/docs/blob/master/protogenV2LULC.md):
 
+```python
 	# Runs AComp_1.0, then sends that data to the protogenV2LULC process
 	from gbdxtools import Interface 
 	gbdx = Interface()
@@ -196,7 +205,7 @@ Script Example linking AComp to [protogenV2LULC](https://github.com/TDG-Platform
 	
 	print workflow.id
 	print workflow.status
-
+```
 
 
 ### Runtime
