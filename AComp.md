@@ -34,7 +34,7 @@ The AComp GBDX task can be run through a simple Python script using  [gbdxtools]
     from gbdxtools import Interface
     gbdx = Interface()
     
-    # The data input and lines must be edited to point to an authorized S3 location)
+    # The data input and lines must be edited to point to an authorized customer S3 location)
     acomp = gbdx.Task('AComp_1.0', data='s3://landsat-pds/<Landsat8 Image ID>')
     workflow = gbdx.Workflow([acomp])
     workflow.savedata(acomp.outputs.data, location='S3 gbd-customer-data location/<customer account>/output directory')
