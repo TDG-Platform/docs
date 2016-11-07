@@ -14,9 +14,11 @@ This task performs Adaptive Coherence Estimator (ACE) target detection analysis.
 
 This task requires that the image has been pre-processed using the [Advanced Image Preprocessor](https://github.com/TDG-Platform/docs/blob/master/AOP_Strip_Processor.md), and that an ENVI header file (hdr) has been created using the [AOP_ENVI_HDR Task](https://github.com/TDG-Platform/docs/blob/master/AOP_ENVI_HDR.md)
 
+```python
 
     Add QuickStart Script HERE
-	
+    
+```	
 
 
 ### Runtime
@@ -60,12 +62,12 @@ covariance           |    N/A          |  number     | Specify an array that is 
 
 Included below is a complete end-to-end workflow for Advanced Image Preprocessing => AOP_ENVI_HDR => ACE:
 
-'''python
+```python
 
 
 ADD ADV Script Here
 
-'''
+```
 
 **Data Structure for Expected Outputs:**
 
