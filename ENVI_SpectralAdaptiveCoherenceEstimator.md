@@ -60,38 +60,12 @@ covariance           |    N/A          |  number     | Specify an array that is 
 
 Included below is a complete end-to-end workflow for Advanced Image Preprocessing => AOP_ENVI_HDR => ACE:
 
-	# Advanced Task Script:  Advanced Image Preprocessor=>AOP_ENVI_HDR=>ACE
-	# This Task runs using IPython in the gbdxtools Interface
-	# Initialize the gbdxtools Interface
-	from gbdxtools import Interface
-	gbdx = Interface()
-	
-	# Import the Image from s3. Here we are using a WV03 image from the Benchmark Dataset.
-	data = "s3://receiving-dgcs-tdgplatform-com/054876618060_01_003" 
-	aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, bands='MS', enable_pansharpen=False, enable_dra=False)
-	
-	# Capture AOP task outputs
-	log = aoptask.get_output('log')
-	orthoed_output = aoptask.get_output('data')
-	
-	# Run ISODATA
-	isodata = gbdx.Task("ENVI_ISODATAClassification")
-	isodata.inputs.input_raster = aoptask.outputs.data.value
-	isodata.inputs.file_types = "tif"
+'''python
 
-	# Run Smoothing
-	aggreg = gbdx.Task("ENVI_ClassificationSmoothing")
-	aggreg.inputs.input_raster = isodata.outputs.output_raster_uri.value
-	aggreg.inputs.file_types = "hdr"
-	
-	# Run Workflow and Send output to  s3 Bucket
-	workflow = gbdx.Workflow([ aoptask, isodata, aggreg ])
-	workflow.savedata(aoptask.outputs.data, location="s3 customer-location")
-	workflow.savedata(isodata.outputs.output_raster_uri, location="s3 customer-location")
-	workflow.savedata(aggreg.outputs.output_raster_uri, location="s3 customer-location")
-	workflow.execute()
-	print workflow.id
-	print workflow.status
+
+ADD ADV Script Here
+
+'''
 
 **Data Structure for Expected Outputs:**
 
