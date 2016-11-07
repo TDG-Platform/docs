@@ -23,8 +23,8 @@ Quick start example.
 from gbdxtools import Interface
 gbdx = Interface()
 #Insert correct path to image in S3 location
-NDVI1 = "s3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/Benchmark/ENVI_ImageIntersection/fromNDVI/TIFF/NDVI1/NDVI1.tif"
-NDVI2 = "s3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/Benchmark/ENVI_ImageIntersection/fromNDVI/TIFF/NDVI2/NDVI2.tif"
+NDVI1 = "s3://gbd-customer-data/cutomer_bucket/folder_name_with_image1"
+NDVI2 = "s3://gbd-customer-data/cutomer_bucket/folder_name_with_image2"
 envi_IBD = gbdx.Task("ENVI_ImageBandDifference")
 envi_IBD.inputs.file_types = "tif"
 envi_IBD.inputs.input_raster1 = NDVI1
@@ -84,8 +84,8 @@ This task will take two multispectral images, which share geo-spatial extent, as
 from gbdxtools import Interface
 gbdx = Interface()
 
-data1 = "s3://receiving-dgcs-tdgplatform-com/055438828010_01_003"
-data2 = "s3://receiving-dgcs-tdgplatform-com/055690224010_01_003"
+data1 = "s3://receiving-dgcs-tdgplatform-com/Image_location"
+data2 = "s3://receiving-dgcs-tdgplatform-com/Image_location"
 
 aoptask1 = gbdx.Task("AOP_Strip_Processor", data=data1, enable_acomp=True, enable_pansharpen=False, enable_dra=False, bands='MS')
 aoptask2 = gbdx.Task("AOP_Strip_Processor", data=data2, enable_acomp=True, enable_pansharpen=False, enable_dra=False, bands='MS')
