@@ -1,3 +1,5 @@
+# ENVI_ChangeThresholdClassification
+
 ### Description
 This task lets you manually set the threshold needed to classify change detection between two images.
 
@@ -25,23 +27,26 @@ gbdx = Interface()
 #Insert correct path to image in S3 location
 NDVI1 = "s3://gbd-customer-data/cutomer_bucket/folder_name_with_image1"
 NDVI2 = "s3://gbd-customer-data/cutomer_bucket/folder_name_with_image2"
+
 envi_IBD = gbdx.Task("ENVI_ImageBandDifference")
 envi_IBD.inputs.file_types = "tif"
 envi_IBD.inputs.input_raster1 = NDVI1
 envi_IBD.inputs.input_raster2 = NDVI2
+
 envi_CTC = gbdx.Task("ENVI_ChangeThresholdClassification")
 envi_CTC.inputs.increase_threshold = "0.1"
 envi_CTC.inputs.decrease_threshold = "0.5"
 envi_CTC.inputs.file_types = "hdr"
 envi_CTC.inputs.input_raster = envi_IBD.outputs.output_raster_uri.value
+
 workflow = gbdx.Workflow([envi_IBD, envi_CTC])
 workflow.savedata(
     envi_IBD.outputs.output_raster_uri,
-        location='Benchmark/ENVI_CTC/IBD'
+        location='ENVI_CTC/IBD'
 )
 workflow.savedata(
     envi_CTC.outputs.output_raster_uri,
-        location='Benchmark/ENVI_CTC/IDB/CTC'
+        location='ENVI_CTC/IDB/CTC'
 )
 workflow.execute()
 status = workflow.status["state"]
@@ -73,11 +78,11 @@ output_raster_uri|True|None|s3 Location for output raster |Outputor OUTPUT_RASTE
 
 **Output structure**
 
-The output of the Change Threshold Classification task is a single band raster in both .hdr and .tif format.  Based on the thresholds selected for change (increase/decrease) the image will show increases in pixel values in red, and decreases in blue****Verify this??????
+The output of the Change Threshold Classification task is a single band raster in both .hdr and .tif format.  Based on the thresholds selected for change (increase/decrease) the image will show increases in pixel values in blue, and decreases in red.
 
 
 ### Advanced
-This task will take two multispectral images, which share geo-spatial extent, as input.  This example workflow includes the following ENVI tasks to prepare the images for the Change Threshold Classification task: Spectral Index, Image Intersection, and Image Band Difference.  Input rasters for the Change Threshold Classification task may be any  set of 1 band rasters sharing the same extent, spatial reference and pixel value format (e.g. NDVI ratio)
+This task will take two multispectral images, which share geo-spatial extent, as input.  This example workflow includes the following ENVI tasks to prepare the images for the Change Threshold Classification task: Spectral Index, Image Intersection, and Image Band Difference.  Input rasters for the Change Threshold Classification task may be any  set of 1 band rasters sharing the same extent, spatial reference and pixel value format (e.g. Normalized Difference Vegetation Index)
 
 ```python
 
@@ -127,17 +132,17 @@ workflow = gbdx.Workflow([aoptask1, aoptask2, envi_ndvi1, envi_ndvi2, envi_II, e
 
 workflow.savedata(
     envi_II.outputs.output_raster1_uri,
-        location='Benchmark/ENVI_ImageIntersection/fromNDVI'
+        location='ENVI_ImageIntersection/fromNDVI'
 )
 
 workflow.savedata(
     envi_II.outputs.output_raster2_uri,
-        location='Benchmark/ENVI_ImageIntersection/fromNDVI'
+        location='ENVI_ImageIntersection/fromNDVI'
 )
 
 workflow.savedata(
     envi_CTC.outputs.output_raster_uri,
-        location='Benchmark/ENVI_CTC/NDVI_threshold'
+        location='ENVI_CTC/NDVI_threshold'
 )
 
 workflow.execute()
