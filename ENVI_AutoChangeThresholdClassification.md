@@ -66,7 +66,7 @@ file_types|False|None| .hdr,.tif|GBDX Option. Comma separated list of permitted 
 input_raster|True|None| requires two rasters to detect change, (input_raster1, input_raster2)|requires two rasters to detect change, (input_raster1, input_raster2)|Specify two rasters on which to threshold. -- Value Type: ENVIRASTER
 change_type|False|Both|"Increase", "Decrease", "Both" |The type of change to consider for change of interest -- Value Type: STRING
 threshold_method|False|Otsu|"Otsu", "Tsai", "Kapur", "Kittler" |Specify the thresholding method. -- Value Type: STRING
-output_raster_uri_filename|False|None|Name the output e.g. "AutoChangeThresholdClassification_Kapur" |Outputor OUTPUT_RASTER. -- Value Type: ENVIURI
+output_raster_uri_filename|False|None|Name e.g. "AutoChangeThresholdClassification_Kapur" |Outputor OUTPUT_RASTER. -- Value Type: ENVIURI
 
 ### Outputs
 The following table lists all taskname outputs.
