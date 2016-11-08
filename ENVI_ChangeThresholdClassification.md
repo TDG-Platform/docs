@@ -65,7 +65,7 @@ file_types|False|None| .hdr,.tif|GBDX Option. Comma separated list of permitted 
 input_raster|True|None| requires two rasters to detect change, (input_raster1, input_raster2)|Specify two rasters on which to threshold. -- Value Type: ENVIRASTER
 increase_threshold|False|None|Threshold must match values within the input rasters|Specify the increase threshold to show areas of increase. -- Value Type: DOUBLE
 decrease_threshold|False|None|Threshold must match values within the input rasters|Specify the decrease threshold to show areas of decrease. -- Value Type: DOUBLE
-output_raster_uri_filename|False|None|e.g. "ChangeThresholdClassification" |Outputor OUTPUT_RASTER. -- Value Type: ENVIURI
+output_raster_uri_filename|False|None|Name the output e.g. "ChangeThresholdClassification" |Outputor OUTPUT_RASTER. -- Value Type: ENVIURI
 
 ### Outputs
 The following table lists all taskname outputs.
@@ -78,7 +78,7 @@ output_raster_uri|True|None|s3 Location for output raster |Outputor OUTPUT_RASTE
 
 **Output structure**
 
-The output of the Change Threshold Classification task is a single band raster in both .hdr and .tif format.  Based on the thresholds selected for change (increase/decrease) the image will show increases in pixel values in blue, and decreases in red.
+The output of the Change Threshold Classification task is a single band raster in both .hdr and .tif format.  Based on the threshold method selected for change the image will show increases in pixel values in blue, and decreases in red.
 
 
 ### Advanced
