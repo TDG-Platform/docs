@@ -56,7 +56,8 @@ output_raster_uri | True       | s3 URL, .hdr, .tiff, .xml | Specify a string wi
 Name                 |       Default    | Valid Values |   Description
 ---------------------|:----------------:|---------------------------------|-----------------
 ignore_validate      |          N/A     |     1        |Set this property to a value of 1 to run the task, even if validation of properties fails. This is an advanced option for users who want to first set all task properties before validating whether they meet the required criteria. This property is not set by default, which means that an exception will occur if any property does not meet the required criteria for successful execution of the task.
-covariance           |    N/A          |  number     | Specify an array that is the covariance matrix of the input bands. The array size is [number of bands, number of bands].
+covariance           |    N/A          |  Array (# bands X # bands)     | Specify an array that is the covariance matrix of the input bands. The array size is [number of bands, number of bands].
+mean                 |    N/A         | Array (must match the number of bands) |Specify an array that is the mean of the input bands. The number of elements in the array must match the number of bands.
 
 ### Advanced
 
