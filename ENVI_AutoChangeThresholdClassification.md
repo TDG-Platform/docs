@@ -63,7 +63,7 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
   Name  |  Required  |  Default  |  Valid Values  |  Description  
 --------|:----------:|-----------|----------------|---------------
 file_types|False|None| .hdr,.tif|GBDX Option. Comma separated list of permitted file type extensions. Use this to filter input files -- Value Type: STRING
-input_raster|True|None| requires two rasters to detect change, (input_raster1, input_raster2)|requires two rasters to detect change, (input_raster1, input_raster2)|Specify two rasters on which to threshold. -- Value Type: ENVIRASTER
+input_raster1|True|None| requires two rasters to detect change, (input_raster1, input_raster2)|Specify two rasters on which to threshold. -- Value Type: ENVIRASTER
 change_type|False|Both|"Increase", "Decrease", "Both" |The type of change to consider for change of interest -- Value Type: STRING
 threshold_method|False|Otsu|"Otsu", "Tsai", "Kapur", "Kittler" |Specify the thresholding method. -- Value Type: STRING
 output_raster_uri_filename|False|None|Name e.g. "AutoChangeThresholdClassification_Kapur" |Outputor OUTPUT_RASTER. -- Value Type: ENVIURI
@@ -156,7 +156,7 @@ For details on the methods of testing the runtimes of the task visit the followi
 
   Sensor Name  | Total Pixels |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
 --------|:----------:|-----------|----------------|---------------
-WV02|73,005,420|292.02| 169.60| 0.58 
+WV02|73,005,420|292.02| 169.60| 0.58
 
 ### Issues
 Input rasters for the ENVI_AutoChangeThresholdClassification task will require pre-processing to fit specific input requirements.  Auto threshold may also require experimentation and iteration to find an acceptable threshold method (e.g. Kapur may not be the ideal method for a given raster dataset)
