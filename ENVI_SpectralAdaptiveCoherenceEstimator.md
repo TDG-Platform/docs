@@ -1,5 +1,6 @@
 
-# ENVI Spectral Adaptive Coherence Estimator (ACE)*(Editing in Progress)*
+# ENVI Spectral Adaptive Coherence Estimator (ACE)
+*(On Hold)*
 
 This task performs Adaptive Coherence Estimator (ACE) target detection analysis.
 
