@@ -149,6 +149,15 @@ status = workflow.status["state"]
 wf_id = workflow.id
 
 ```
+### Runtime
+
+The following table lists all applicable runtime outputs. For this task two images were used to produce the runtime results
+For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GitHUB page here)
+
+  Sensor Name  | Total Pixels |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
+--------|:----------:|-----------|----------------|---------------
+WV02|73,005,420|292.02| 169.60| 0.58 
+
 ### Issues
 Input rasters for the ENVI_AutoChangeThresholdClassification task will require pre-processing to fit specific input requirements.  Auto threshold may also require experimentation and iteration to find an acceptable threshold method (e.g. Kapur may not be the ideal method for a given raster dataset)
 
