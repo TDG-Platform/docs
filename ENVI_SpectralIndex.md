@@ -24,15 +24,17 @@ This script gives the example of ENVI Spectral Index with a single tif file as i
     gbdx = Interface()
 
     aop2envi = gbdx.Task("AOP_ENVI_HDR")
-    aop2envi.inputs.image = 's3://gbd-customer-data/Image_location'
+    #Edit the following path to reflect a specific path to an image
+    aop2envi.inputs.image = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
 
-	envi_ndvi = gbdx.Task("ENVI_SpectralIndex")
+    envi_ndvi = gbdx.Task("ENVI_SpectralIndex")
     envi_ndvi.inputs.input_raster = aop2envi.outputs.output_data.value
     envi_ndvi.inputs.file_types = "hdr"
     envi_ndvi.inputs.index = "Normalized Difference Vegetation Index"
 
     workflow = gbdx.Workflow([aop2envi, envi_ndvi])
     workflow.savedata(
+      #Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
        aop2envi.outputs.output_data,
        location='NDVI/output_data'
     )
@@ -91,7 +93,8 @@ To link the workflow of 1 input image into AOP_Strip_Processor and the Spectral 
 from gbdxtools import Interface
 gbdx = Interface()
 
-data = "s3://receiving-dgcs-tdgplatform-com/ImageLocation"
+#Edit the following path to reflect a specific path to an image
+data = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
 aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False, bands='MS')
 
 # Capture AOP task outputs
@@ -107,6 +110,7 @@ envi_ndvi.inputs.index = "Normalized Difference Vegetation Index"
 
 workflow = gbdx.Workflow([aoptask, aop2envi, envi_ndvi])
 
+#Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
 workflow.savedata(
   aoptask.outputs.data,
   location='NDVI/AOP'

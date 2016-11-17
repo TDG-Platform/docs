@@ -21,8 +21,10 @@ This task requires a classification has been run and in the example workflow bel
 from gbdxtools import Interface
 gbdx = Interface()
 
+
 isodata = gbdx.Task("ENVI_ISODATAClassification")
-isodata.inputs.input_raster = "s3://gbd-customer-data/PathToImageFolder"
+#Edit the following path to reflect a specific path to an image
+isodata.inputs.input_raster = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
 isodata.inputs.file_types = "tif"
 
 sieve = gbdx.Task("ENVI_ClassificationSieving")
@@ -35,6 +37,7 @@ clump.inputs.file_types = "hdr"
 
 workflow = gbdx.Workflow([isodata, sieve, clump])
 
+#Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
 workflow.savedata(
     isodata.outputs.output_raster_uri,
     location="classification/isodata"
@@ -110,4 +113,4 @@ GE| 57,498,000|332.97|173.03|0.52 |
 For background on the development and implementation of Classification Clumping refer to the [ENVI Documentation](http://www.harrisgeospatial.com/docs/enviclassificationclumpingtask.html)
 
 ###Contact Us
-Document Owner - Carl Reeder - creeder@digitalglobe.com
+Document Owner - [Carl Reeder](creeder@digitalglobe.com)

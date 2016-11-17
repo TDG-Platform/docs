@@ -12,27 +12,28 @@
 
 ### Quickstart
 
-This script gives the example of AOP_ENVI_HDR with a single output folder from AOP as input. 
+This script gives the example of AOP_ENVI_HDR with a single output folder from AOP as input.
 
 **Example Script:** Run in IPython using the GBDXTools Interface
 
-```python	
+```python
     from gbdxtools import Interface
     gbdx = Interface()
-    
+
     aop2envi = gbdx.Task("AOP_ENVI_HDR")
-    aop2envi.inputs.image = 's3://receiving-dgcs-tdgplatform-com/055249130010_01_003'
-    
+    aop2envi.inputs.image = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
+
     workflow = gbdx.Workflow([aop2envi])
+    #Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
     workflow.savedata(
        aop2envi.outputs.output_data,
        location='aop2envi/output_data'
     )
-    
-    print workflow.execute()
-```	
 
-### Inputs	
+    print workflow.execute()
+```
+
+### Inputs
 **Description of Input Parameters and Options for the**** "AOP_ENVI_HDR":**
 
 This task will function on Digital Globe images with an XML or IMD file located in the S3 location.  The input imagery may be either an AOP output folder or an order in 1B image format.
@@ -68,7 +69,7 @@ Your processed imagery will be written to the specified S3 Customer Location in 
     * Required = ‘True’
     * type = ‘directory’
     * name = ‘image’
-    
+
 * Define the Task:
     * Required = ‘True’
     * envitask = gbdx.Task("AOP_ENVI_HDR")
@@ -78,7 +79,7 @@ Your processed imagery will be written to the specified S3 Customer Location in 
     * type = ‘directory’
 	* description = The original AOP image data with the ENVI .hdr file
     * name = "output_data"
-	
+
 **OPTIONAL SETTINGS: Required = False**
 Currently additional options for this task are not available.  Updates to this task may provide options to add various metadata attributes to the .hdr file.  
 
@@ -87,15 +88,16 @@ Currently additional options for this task are not available.  Updates to this t
 To link the workflow of 1 input image into AOP_Strip_Processor into the ENVI Spectral Index task you must use the following GBDX tools script in python:
 
 ```python
-#First initialize the environment 
+#First initialize the environment
 #AOP strip processor has input values known to complete the Spectral Index task
 from gbdxtools import Interface
 gbdx = Interface()
 
-data = "s3://receiving-dgcs-tdgplatform-com/ImageLocation"
+#Edit the following path to reflect a specific path to an image
+data = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
 aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False, bands='MS')
 
-# Capture AOP task outputs 
+# Capture AOP task outputs
 #orthoed_output = aoptask.get_output('data')
 
 aop2envi = gbdx.Task("AOP_ENVI_HDR")
@@ -108,6 +110,7 @@ envi_ndvi.inputs.index = "Normalized Difference Vegetation Index"
 
 workflow = gbdx.Workflow([aoptask, aop2envi, envi_ndvi])
 
+#Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
 workflow.savedata(
   aoptask.outputs.data,
   location='NDVI/AOP'
@@ -124,19 +127,10 @@ workflow.savedata(
 print workflow.execute()
 
 ```
-  
-###Postman status @ 16:22 6/14/16
-completed_time": null,
-  "state": {
-    "state": "complete",
-    "event": "succeeded"
-  },
-  "submitted_time": "2016-06-15T17:09:34.572641+00:00",
- 
 
 ###Known Issues
-1)To run an extended workflow including the image preprocessing step with AOP_Strip_Processor use the advanced script. 
- 
+1)To run an extended workflow including the image preprocessing step with AOP_Strip_Processor use the advanced script.
+
 For background on the development and implementation of geoIO and this task, please refer to the GitHub documentation [ Digital Globe geoIO Documentation](https://github.com/digitalglobe/geoio)
 
 ###Contact Us

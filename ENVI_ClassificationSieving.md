@@ -13,30 +13,31 @@
 **Example Script:** Run in IPython using the GBDXTools Interface
 
 ```python
-    from gbdxtools import Interface
-    gbdx = Interface()
+from gbdxtools import Interface
+gbdx = Interface()
 
-    isodata = gbdx.Task("ENVI_ISODATAClassification")
-    isodata.inputs.input_raster = "s3://gbd-customer-data/PathToImageFolder"
-    isodata.inputs.file_types = "tif"
+isodata = gbdx.Task("ENVI_ISODATAClassification")
+#Edit the following path to reflect a specific path to an image
+isodata.inputs.input_raster = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
+isodata.inputs.file_types = "tif"
 
-    sieve = gbdx.Task("ENVI_ClassificationSieving")
-    sieve.inputs.input_raster = isodata.outputs.output_raster_uri.value
-    sieve.inputs.file_types = "hdr"
+sieve = gbdx.Task("ENVI_ClassificationSieving")
+sieve.inputs.input_raster = isodata.outputs.output_raster_uri.value
+sieve.inputs.file_types = "hdr"
 
-    workflow = gbdx.Workflow([isodata, sieve])
+workflow = gbdx.Workflow([isodata, sieve])
+#Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
+workflow.savedata(
+    isodata.outputs.output_raster_uri,
+          location="classification/isodata"
+)
 
-    workflow.savedata(
-        isodata.outputs.output_raster_uri,
-        location="classification/isodata"
-    )
+workflow.savedata(
+    sieve.outputs.output_raster_uri,
+      location="classification/sieve"
+)
 
-    workflow.savedata(
-        sieve.outputs.output_raster_uri,
-        location="classification/sieve"
-    )
-
-    print workflow.execute()
+print workflow.execute()
 ```
 
 

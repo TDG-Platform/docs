@@ -22,8 +22,10 @@ This task can be run with Python using [gbdxtools](https://github.com/DigitalGlo
 from gbdxtools import Interface
 gbdx = Interface()
 
-NDVI1 = "s3://gbd-customer-data/cutomer_bucket/folder_name_with_image1"
-NDVI2 = "s3://gbd-customer-data/cutomer_bucket/folder_name_with_image2"
+ #Edit the following path to reflect a specific path to an image
+
+NDVI1 = 's3://gbd-customer-data/CustomerAccount#/PathToImage1/'
+NDVI2 = 's3://gbd-customer-data/CustomerAccount#/PathToImage2/'
 
 envi_IBD = gbdx.Task("ENVI_ImageBandDifference")
 envi_IBD.inputs.file_types = "tif"
@@ -89,8 +91,9 @@ This task will take two multispectral images, which share geo-spatial extent, as
 from gbdxtools import Interface
 gbdx = Interface()
 
-data1 = "s3://receiving-dgcs-tdgplatform-com/Image_location"
-data2 = "s3://receiving-dgcs-tdgplatform-com/Image_location"
+#Edit the following path to reflect a specific path to an image
+data1 = 's3://gbd-customer-data/CustomerAccount#/PathToImage1/'
+data2 = 's3://gbd-customer-data/CustomerAccount#/PathToImage2/'
 
 
 aoptask1 = gbdx.Task("AOP_Strip_Processor", data=data1, enable_acomp=True, enable_pansharpen=False, enable_dra=False, bands='MS')
@@ -128,6 +131,7 @@ envi_ACTC.inputs.input_raster = envi_IBD.outputs.output_raster_uri.value
 
 workflow = gbdx.Workflow([aoptask1, aoptask2, envi_ndvi1, envi_ndvi2, envi_II, envi_IBD, envi_ACTC])
 
+#Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
 workflow.savedata(
     envi_II.outputs.output_raster1_uri,
         location='ENVI_ImageIntersection/fromNDVI'

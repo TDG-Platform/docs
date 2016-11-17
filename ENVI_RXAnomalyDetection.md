@@ -18,24 +18,25 @@ This task uses the Reed-Xiaoli Detector (RXD) algorithm to identify the spectral
 ```python
 # Quickstart Example Script Run in Python using the gbdxTools Interface.  The script will produce a single band tif file showing areas of anomaly.
 # First Initialize the Environment
-    from gbdxtools import Interface
-    gbdx = Interface()
+from gbdxtools import Interface
+gbdx = Interface()
 
-    # launch workflow ENVI_RXAnomalyDetection -> S3
-    #example data WV02 image of Denver previously processed with AOP strip processor
-	data = "s3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/ENVI/Denver/055026839010_01/055026839010_01_assembly.tif"
+# launch workflow ENVI_RXAnomalyDetection -> S3
+#Edit the following path to reflect a specific path to an image
+data = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
 
-	envitask = gbdx.Task("ENVI_RXAnomalyDetection")
-	envitask.inputs.task_name='RXAnomalyDetection'
-	envitask.inputs.file_types='til'
-	envitask.inputs.kernel_size='3'
-    envitask.inputs.input_raster=data
+envitask = gbdx.Task("ENVI_RXAnomalyDetection")
+envitask.inputs.task_name='RXAnomalyDetection'
+envitask.inputs.file_types='til'
+envitask.inputs.kernel_size='3'
+envitask.inputs.input_raster=data
 
-	workflow = gbdx.Workflow([ envitask ] )
-	workflow.savedata(envitask.outputs.task_meta_data, location='envi_task_output')
-	workflow.savedata(envitask.outputs.output_raster_uri, location='envi_task_output')
+workflow = gbdx.Workflow([ envitask ])
+#Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
+workflow.savedata(envitask.outputs.task_meta_data, location='RXAnomaly/metatdata/envi_task_output')
+workflow.savedata(envitask.outputs.output_raster_uri, location='RXAnomaly/envi_task_output')
 
-	print workflow.execute()
+print workflow.execute()
 ```
 
 ### Inputs

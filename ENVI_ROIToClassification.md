@@ -19,18 +19,18 @@ This task requires that the image has been pre-processed using the [Advanced Ima
   	from gbdxtools import Interface
 	gbdx = Interface()
 
-	# The data input and output lines must be edited to point to an authorized customer S3 location
-	input_raster_data = "s3://gbd-customer-data/<customer account>/input directory/"
-	input_roi_data = "s3://gbd-customer-data/<customer account>/input directory/"
+  #Edit the following path to reflect a specific path to an image
+	input_raster_data = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
+	input_roi_data = 's3://gbd-customer-data/CustomerAccount#/PathToROIFile/'
 
 	classtask = gbdx.Task("ENVI_ROIToClassification")
 	classtask.inputs.input_raster = input_raster_data
 	classtask.inputs.input_roi = input_roi_data
-	classtask.outputs.output_roi_uri_filename = "<classification output file>"
+	classtask.outputs.output_roi_uri_filename = "<ClassificationOutputName>"
 
 	workflow = gbdx.Workflow([ classtask ])
-
-	workflow.savedata(classtask.outputs.output_raster_uri, location='S3 gbd-customer-data location<customer account>/output directory')
+  #Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
+	workflow.savedata(classtask.outputs.output_raster_uri, location='ROIToClassification/outputfile')
 
 	workflow.execute()
 	print workflow.id
@@ -40,7 +40,7 @@ This task requires that the image has been pre-processed using the [Advanced Ima
 
 ### Runtime
 
-The following table lists all applicable runtime outputs for the ENVI ROI to Classification. An estimated Runtime for the Advanced Script example can be derived from adding the result for the two pre-processing steps. 
+The following table lists all applicable runtime outputs for the ENVI ROI to Classification. An estimated Runtime for the Advanced Script example can be derived from adding the result for the two pre-processing steps.
 
   Sensor Name  |  Total Pixels  |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
 --------|:----------:|-----------|----------------|---------------
@@ -84,9 +84,9 @@ To link the workflow of 1 input image into AOP_Strip_Processor into the ENVI ROI
 	# Initialize the gbdxtools Interface
 	from gbdxtools import Interface
 	gbdx = Interface()
-	
-	# Import the Image from s3. Here we are using a GE01 image from the Benchmark Dataset.
-	data = "s3://receiving-dgcs-tdgplatform-com/<file directory>"
+
+  #Edit the following path to reflect a specific path to an image
+	data = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
 	aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, bands='MS', enable_pansharpen=False, enable_dra=False)
 	# Capture AOP task outputs
 	log = aoptask.get_output('log')
@@ -111,14 +111,15 @@ To link the workflow of 1 input image into AOP_Strip_Processor into the ENVI ROI
 
 	# Run Workflow and Send output to S3 Bucket
 	workflow = gbdx.Workflow([ aoptask, threshold, roitoclass ])
-	workflow.savedata(aoptask.outputs.data, location='S3 gbd-customer-data location/<customer account>/output directory')
-	workflow.savedata(threshold.outputs.output_roi_uri, location='S3 gbd-customer-data location/<customer account>/output directory')
-	workflow.savedata(roitoclass.outputs.output_raster_uri, location='S3 gbd-customer-data location/<customer account>/output directory')
-	
+  #Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
+	workflow.savedata(aoptask.outputs.data, location='Classification/AOP/output_raster')
+	workflow.savedata(threshold.outputs.output_roi_uri, location='Classification/Threshold/OutputROI')
+	workflow.savedata(roitoclass.outputs.output_raster_uri, location='Classification/ROIToClassification/output_raster')
+
 	workflow.execute()
 	print workflow.id
 	print workflow.status
-```	
+```
 
 **Data Structure for Expected Outputs:**
 
@@ -129,4 +130,3 @@ For background on the development and implementation of ROI to Classification re
 
 ###Contact Us
 Document Owner - [Kathleen Johnson](kajohnso@digitalglobe.com)
-

@@ -23,7 +23,8 @@ Quick start example.
 from gbdxtools import Interface
 gbdx = Interface()
 
-raster = 's3://gbd-customer-data/PathToImage/image.tif'
+#Edit the following path to reflect a specific path to an image
+raster = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
 ENVI_ColorSliceClassification = gbdx.Task('ENVI_ColorSliceClassification', input_raster=raster)
 
 workflow = gbdx.Workflow([ENVI_ColorSliceClassification])  
@@ -74,8 +75,8 @@ This task may be used to stratify and symbolize values within a single band rast
 from gbdxtools import Interface
 gbdx = Interface()
 
-
-data = 's3://receiving-dgcs-tdgplatform-com/054876618060_01_003'
+#Edit the following path to reflect a specific path to an image
+data = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
 
 aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False, bands='MS')
 
@@ -100,7 +101,9 @@ envi_color.file_types = 'hdr'
 
 workflow = gbdx.Workflow([aoptask, aop2envi, envi_ndvi, envi_color])
 
+
 workflow.savedata(
+#Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
   envi_ndvi.outputs.output_raster_uri,
   location='Benchmark/color_slice/NDVI'
 )

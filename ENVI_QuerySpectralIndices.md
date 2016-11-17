@@ -25,7 +25,8 @@ from gbdxtools import Interface
 gbdx = Interface()
 
 aop2envi = gbdx.Task("AOP_ENVI_HDR")
-aop2envi.inputs.image = 's3://gbd-customer-data/path_to_image'
+#Edit the following path to reflect a specific path to an image
+aop2envi.inputs.image = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
 
 envi_query = gbdx.Task("ENVI_QuerySpectralIndices")
 envi_query.inputs.input_raster = aop2envi.outputs.output_data.value
@@ -34,6 +35,7 @@ envi_query.inputs.file_types = "hdr"
 workflow = gbdx.Workflow([aop2envi, envi_query])
 
 workflow.savedata(
+  #Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
   envi_query.outputs.task_meta_data,
     location='ENVI_QuerySpectralIndices'
 )
@@ -72,7 +74,8 @@ The output of this task is a Json file listing the available indices, based on t
 from gbdxtools import Interface
 gbdx = Interface()
 
-data = "s3://receiving-dgcs-tdgplatform-com/pathto_1B_image"
+#Edit the following path to reflect a specific path to an image
+data = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
 aoptask = gbdx.Task('AOP_Strip_Processor', data=data, bands='MS', enable_acomp=True, enable_pansharpen=False, enable_dra=False)    
 # creates acomp'd multispectral image
 
@@ -88,6 +91,7 @@ envi_query.inputs.file_types = "hdr"
 workflow = gbdx.Workflow([aoptask, aop2envi, envi_query])
 
 workflow.savedata(
+  #Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
   envi_query.outputs.task_meta_data,
     location='Auto-docs/ENVI/Query'
 )

@@ -24,9 +24,10 @@ Quick start example.
 # First Initialize the Environment
 from gbdxtools import Interface
 gbdx = Interface()
-#Insert correct path to image in S3 location
-NDVI1 = "s3://gbd-customer-data/cutomer_bucket/folder_name_with_image1"
-NDVI2 = "s3://gbd-customer-data/cutomer_bucket/folder_name_with_image2"
+
+#Edit the following path to reflect a specific path to an image
+NDVI1 = 's3://gbd-customer-data/CustomerAccount#/PathToImage1/'
+NDVI2 = 's3://gbd-customer-data/CustomerAccount#/PathToImage2/'
 
 envi_IBD = gbdx.Task("ENVI_ImageBandDifference")
 envi_IBD.inputs.file_types = "tif"
@@ -89,8 +90,9 @@ This task will take two multispectral images, which share geo-spatial extent, as
 from gbdxtools import Interface
 gbdx = Interface()
 
-data1 = "s3://receiving-dgcs-tdgplatform-com/Image_location"
-data2 = "s3://receiving-dgcs-tdgplatform-com/Image_location"
+#Edit the following path to reflect a specific path to an image
+data1 = 's3://gbd-customer-data/CustomerAccount#/PathToImage1/'
+data2 = 's3://gbd-customer-data/CustomerAccount#/PathToImage2/'
 
 aoptask1 = gbdx.Task("AOP_Strip_Processor", data=data1, enable_acomp=True, enable_pansharpen=False, enable_dra=False, bands='MS')
 aoptask2 = gbdx.Task("AOP_Strip_Processor", data=data2, enable_acomp=True, enable_pansharpen=False, enable_dra=False, bands='MS')

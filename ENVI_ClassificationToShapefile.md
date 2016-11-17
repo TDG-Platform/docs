@@ -26,7 +26,9 @@ from gbdxtools import Interface
 gbdx = Interface()
 
 isodata = gbdx.Task("ENVI_ISODATAClassification")
-isodata.inputs.input_raster = "s3://gbd-customer-data/PathToClassification"
+
+#Edit the following path to reflect a specific path to an image
+isodata.inputs.input_raster = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
 isodata.inputs.file_types = "tif"
 
 shp = gbdx.Task("ENVI_ClassificationToShapefile")
@@ -35,6 +37,7 @@ shp.inputs.file_types = "hdr"
 
 workflow = gbdx.Workflow([isodata, shp])
 
+#Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
 workflow.savedata(
   isodata.outputs.output_raster_uri,
     location="Benchmark/classification/isodata"
@@ -84,7 +87,8 @@ Include example(s) with complicated parameter settings and/or example(s) where t
 from gbdxtools import Interface
 gbdx = Interface()
 
-QB = "s3://receiving-dgcs-tdgplatform-com/PathToImage"
+#Edit the following path to reflect a specific path to an image
+QB = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
 
 aop = gbdx.Task('AOP_Strip_Processor', data=data, bands='MS', enable_acomp=True, enable_pansharpen=False, enable_dra=False)
 
@@ -99,7 +103,7 @@ shp.inputs.output_vector_uri_filename = "ShapefileName"
 
 workflow = gbdx.Workflow([aop, isodata, shp])
 
-
+#Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
 workflow.savedata(
   shp.outputs.output_vector_uri,
     location="PathToSHP"

@@ -22,14 +22,16 @@
 
     envitask = gbdx.Task("ENVI_ISODATAClassification")
     envitask.inputs.file_types = 'tif'
-    envitask.inputs.input_raster = "s3://gbd-customer-data/pathToImage/output_raster_uri/outputfile.tif"
+    #Edit the following path to reflect a specific path to an image
+    envitask.inputs.input_raster = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
     envitask.outputs.output_raster = "ENVI"
 
     workflow = gbdx.Workflow([ envitask ])
 
     workflow.savedata(
+        #Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
         envitask.outputs.output_raster_uri,
-        location="output_raster_uri"
+        location="ISODATA/output_raster_uri"
     )
     workflow.execute()
 
@@ -50,7 +52,7 @@ All inputs are **required**
 
 Name                     |       Default         |        Valid Values             |   Description
 -------------------------|:---------------------:|---------------------------------|-----------------
-input_raster             |          N/A          | S3 URL   .TIF only              | S3 location of input data. S raster on which to perform ISODATA classification 
+input_raster             |          N/A          | S3 URL   .TIF only              | S3 location of input data. S raster on which to perform ISODATA classification
 
 ### Outputs
 

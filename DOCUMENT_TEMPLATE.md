@@ -23,10 +23,13 @@ Quick start example.
 
 from gbdxtools import Interface
 gbdx = Interface()
-raster = 's3://gbd-customer-data/PathToImage/image.tif'
+
+#Edit the following line to reflect a specific path to an image
+raster = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
 taskname = gbdx.Task('taskname', raster=raster)
 
 workflow = gbdx.Workflow([taskname])  
+#Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
 workflow.savedata(taskname.outputs.data, location='taskname')
 workflow.execute()
 
@@ -74,7 +77,7 @@ QB | 41,551,668 | 312.07 |  |
 WV01| 1,028,100,320 |351.72 | |
 WV02|35,872,942|329.87| |
 WV03|35,371,971|196.27| |
-GE| 57,498,000|332.97| | 
+GE| 57,498,000|332.97| |
 
 ### Issues
 List known past/current issues with taskname (e.g., version x does not ingest vrt files).

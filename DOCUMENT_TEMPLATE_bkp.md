@@ -13,25 +13,27 @@ Complete description of task function:
 
 ### Quickstart
 
-This script gives the example of (task name). 
+This script gives the example of (task name).
 
 ```python
 # Quickstart is a basic example using default parameters and input values for (task name).  
 # First Initialize the Environment
-	
-	from gbdxtools import Interface 
+
+	from gbdxtools import Interface
     gbdx = Interface()
+#Edit the following path to reflect a specific path to an image
     raster = 's3://gbd-customer-data/PathToImage/image.tif'
     taskname = gbdx.Task("TaskNameInGBDX", raster=raster)
 
     workflow = gbdx.Workflow([ taskname ])  
+#Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
     workflow.savedata(taskname.outputs.data, location="taskname")
     workflow.execute()
 
     print workflow.id
     print workflow.status
 ```
-	
+
 ### Inputs
 
 List input requirements, limitations and supported file formats such as: .TIF, .TIL, .VRT, .HDR.
@@ -68,4 +70,3 @@ Explain the output format of the task (e.g. .TIF image type UINT8x1 and placed i
 List issues current or past with the task (e.g. Version x does not ingest vrt files)
 
 For background on the development and implementation of (task name) see [here](Insert link here).
-

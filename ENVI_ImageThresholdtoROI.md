@@ -17,7 +17,8 @@
     gbdx = Interface()
 
     task = gbdx.Task("ENVI_ImageThresholdToROI")
-    task.inputs.input_raster = "s3://gbd-customer-data/Imagepath/"
+    #Edit the following path to reflect a specific path to an image
+    task.inputs.input_raster = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
     task.inputs.file_types = "tif"
     task.inputs.roi_name = "[\"Water\", \"Land\"]"
     task.inputs.roi_color = "[[0,255,0],[0,0,255]]"
@@ -73,7 +74,8 @@ To link the workflow of 1 input image into AOP_Strip_Processor and the Image Thr
 ```python
     from gbdxtools import Interface
     gbdx = Interface()
-    data = "s3://receiving-dgcs-tdgplatform-com/055026839010_01_003"
+    #Edit the following path to reflect a specific path to an image
+    data = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
     aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False, bands='MS')
 
     # Capture AOP task outputs
@@ -89,6 +91,7 @@ To link the workflow of 1 input image into AOP_Strip_Processor and the Image Thr
 
     workflow = gbdx.Workflow([ aoptask, task ])
     workflow.savedata(
+        #Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
         task.outputs.output_roi_uri,
         location='ENVI/ImgToROI'
     )
