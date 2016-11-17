@@ -13,15 +13,15 @@ This task aggregates smaller class regions to a larger, adjacent region as part 
 
 ### Quickstart
 
-This task requires that the image has been pre-processed using the [Advanced Image Preprocessor](https://github.com/TDG-Platform/docs/blob/master/AOP_Strip_Processor.md), and that a classification has been run on the output from preprocessing. In the example workflow below, the  [ISODATA Classification](https://github.com/TDG-Platform/docs/blob/master/ENVI_ISODATAClassification.md) Task was utilized to perform the classification step on preprocessed data. 
+This task requires that the image has been pre-processed using the [Advanced Image Preprocessor](https://github.com/TDG-Platform/docs/blob/master/AOP_Strip_Processor.md), and that a classification has been run on the output from preprocessing. In the example workflow below, the  [ISODATA Classification](https://github.com/TDG-Platform/docs/blob/master/ENVI_ISODATAClassification.md) Task was utilized to perform the classification step on preprocessed data.
 
- ```python 
+ ```python
 	from gbdxtools import Interface
 	gbdx = Interface()
-	
+
 	isodata = gbdx.Task("ENVI_ISODATAClassification")
 	# The data input and output lines must be edited to point to an authorized customer S3 location)
-	isodata.inputs.input_raster = "S3 gbd-customer-data location/<customer account>/input directory"
+	isodata.inputs.input_raster = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
 	isodata.inputs.file_types = "tif"
 	aggreg = gbdx.Task("ENVI_ClassificationAggregation")
 	aggreg.inputs.input_raster = isodata.outputs.output_raster_uri.value
@@ -80,16 +80,16 @@ Included below is a complete end-to-end workflow for Advanced Image Preprocessin
 	# Initialize the gbdxtools Interface
 	from gbdxtools import Interface
 	gbdx = Interface()
-	
-	# Import the Image from s3. 
-	# The data input and output lines must be edited to point to an authorized customer S3 location
-	data = "S3 gbd-customer-data location/<customer account>/input directory" 
+
+	# Import the Image from s3.
+	#Edit the following path to reflect a specific path to an image
+	data = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
 	aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, bands='MS', enable_pansharpen=False, enable_dra=False)
-	
+
 	# Capture AOP task outputs
 	log = aoptask.get_output('log')
 	orthoed_output = aoptask.get_output('data')
-	
+
 	# Run ISODATA
 	isodata = gbdx.Task("ENVI_ISODATAClassification")
 	isodata.inputs.input_raster = aoptask.outputs.data.value
@@ -99,16 +99,17 @@ Included below is a complete end-to-end workflow for Advanced Image Preprocessin
 	aggreg = gbdx.Task("ENVI_ClassificationSmoothing")
 	aggreg.inputs.input_raster = isodata.outputs.output_raster_uri.value
 	aggreg.inputs.file_types = "hdr"
-	
+
 	# Run Workflow and Send output to  s3 Bucket
 	workflow = gbdx.Workflow([ aoptask, isodata, aggreg ])
-	workflow.savedata(aoptask.outputs.data, location="S3 gbd-customer-data location/<customer account>/output directory")
-	workflow.savedata(isodata.outputs.output_raster_uri, location="S3 gbd-customer-data location/<customer account>/output directory")
-	workflow.savedata(aggreg.outputs.output_raster_uri, location="S3 gbd-customer-data location/<customer account>/output directory")
+  #Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
+	workflow.savedata(aoptask.outputs.data, location="ClassificationAggrigation/AOP/")
+	workflow.savedata(isodata.outputs.output_raster_uri, location="ClassificationAggregation/ISODATA/")
+	workflow.savedata(aggreg.outputs.output_raster_uri, location="ClassificationAggrigation/Aggregation/")
 	workflow.execute()
 	print workflow.id
 	print workflow.status
-```	
+```
 
 
 **Data Structure for Expected Outputs:**
@@ -120,4 +121,3 @@ For background on the development and implementation of Classification Aggregati
 
 ###Contact Us
 Document Owner - [Kathleen Johnson](kajohnso@digitalglobe.com)
-
