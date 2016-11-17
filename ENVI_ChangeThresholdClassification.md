@@ -132,6 +132,7 @@ envi_CTC.inputs.input_raster = envi_IBD.outputs.output_raster_uri.value
 
 workflow = gbdx.Workflow([aoptask1, aoptask2, envi_ndvi1, envi_ndvi2, envi_II, envi_IBD, envi_CTC])
 
+#Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
 workflow.savedata(
     envi_II.outputs.output_raster1_uri,
         location='ENVI_ImageIntersection/fromNDVI'
