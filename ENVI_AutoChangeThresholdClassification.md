@@ -39,7 +39,7 @@ envi_ACTC.inputs.input_raster = envi_IBD.outputs.output_raster_uri.value
 
 
 workflow = gbdx.Workflow([envi_IBD, envi_ACTC])
-
+#Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
 workflow.savedata(
     envi_IBD.outputs.output_raster_uri,
         location='ENVI_ACTC/IBD'
