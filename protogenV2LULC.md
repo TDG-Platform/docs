@@ -17,7 +17,7 @@
 
 
 ### QuickStart
-This script gives the example of LULC with a single tif file as input.
+This script gives the example of Land Use Land Cover with a single 8-band tif file as input.
 
 ```python
 # Quickstart Example producing an unsupervised Landuse Landcover Classification from a tif file.
@@ -26,12 +26,13 @@ This script gives the example of LULC with a single tif file as input.
 from gbdxtools import Interface
 gbdx = Interface()
 
-# The data input and output lines must be edited to point to an authorized customer S3 location
-raster = 's3://gbd-customer-data location/<customer account>/input directory/<image.tif>'
+#Edit the following path to reflect a specific path to an image
+raster = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
 prototask = gbdx.Task("protogenV2LULC", raster=raster)
 
-workflow = gbdx.Workflow([ prototask ])  
-workflow.savedata(prototask.outputs.data, location='S3 gbd-customer-data location/<customer account>/output directory')
+workflow = gbdx.Workflow([ prototask ])
+#Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)  
+workflow.savedata(prototask.outputs.data, location='LULC')
 workflow.execute()
 
 print workflow.id
@@ -74,7 +75,7 @@ If you need to generate the 8-Band MS data required as input for this task, you 
 	import json
 
 	# The data input and output lines must be edited to point to an authorized customer S3 location
-	data = "s3://receiving-dgcs-tdgplatform-com/<file directory>"
+	data = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
 
 	# Run AOP to create acomp'd multispectral image
 	aoptask2 = gbdx.Task('AOP_Strip_Processor', data=data, bands='MS', enable_acomp=True, enable_pansharpen=False, enable_dra=False)     
@@ -88,7 +89,8 @@ If you need to generate the 8-Band MS data required as input for this task, you 
 	prototask.inputs.raster = gluetask.outputs.data.value
 
 	workflow = gbdx.Workflow([aoptask2, gluetask, prototask])
-	workflow.savedata(prototask.outputs.data, 'S3 gbd-customer-data location/<customer account>/output directory')
+  #Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
+	workflow.savedata(prototask.outputs.data, location='LULC')
 
 	workflow.execute()
 	workflow.status

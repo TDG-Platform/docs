@@ -18,9 +18,11 @@ This script gives the example of RAW with a single tif file as input.
 
 from gbdxtools import Interface
 gbdx = Interface()
-raster = 's3://gbd-customer-data/PathToImage/image_post.tif'
-slave  = 's3://gbd-customer-data/PathToImage/image_pre.tif'
-mask   = 's3://gbd-customer-data/PathToImage/image_mask.tif'
+
+#Edit the following line(s) to reflect specific folder(s) for the input files (examples provided)
+raster = 's3://gbd-customer-data/CustomerAccount#/PathToImage/image_post.tif'
+slave  = 's3://gbd-customer-data/CustomerAccount#/PathToImage/image_pre.tif'
+mask   = 's3://gbd-customer-data/CustomerAccount#/PathToImage/image_mask.tif'
 prototask = gbdx.Task("protogenV2CD_BIN", raster=raster, slave = slave, mask = mask)
 
 workflow = gbdx.Workflow([ prototask ])  
@@ -70,7 +72,8 @@ To link the workflow of 1 input image into AOP_Strip_Processor into a protogen t
 from gbdxtools import Interface
 gbdx = Interface()
 
-data = "s3://receiving-dgcs-tdgplatform-com/055026839010_01_003"
+#Edit the following path to reflect a specific path to an image
+data = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
 
 aoptask2 = gbdx.Task('AOP_Strip_Processor', data=data, bands='MS', enable_acomp=True, enable_pansharpen=False, enable_dra=False)     # creates acomp'd multispectral image
 
@@ -84,7 +87,9 @@ prototask.inputs.raster = gluetask.outputs.data.value
 
 
 workflow = gbdx.Workflow([aoptask2, gluetask, prototask])
-workflow.savedata(prototask.outputs.data, 'RAW')
+
+#Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
+workflow.savedata(prototask.outputs.data, location='RAW')
 
 workflow.execute()
 

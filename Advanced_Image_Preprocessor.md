@@ -26,10 +26,11 @@ gbdx = Interface()
 # WV03 Image over Naples, Italy
 # Make sure both pan sharpening and DRA are disabled in order to get separate PAN and MS outputs.
 # The data input and output lines must be edited to point to an authorized customer S3 location)
-data = "s3://receiving-dgcs-tdgplatform-com/<file directory>"
+data = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
 aoptask = gbdx.Task('AOP_Strip_Processor', data=data, enable_pansharpen=False, enable_dra=False)
 workflow = gbdx.Workflow([ aoptask ])
-workflow.savedata(aoptask.outputs.data, location='S3 gbd-customer-data location/<customer account>/output directory')
+#Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
+workflow.savedata(aoptask.outputs.data, location='AOPOutput')
 
 workflow.execute()
 
@@ -196,10 +197,10 @@ The `log` output port contains the location where a trace of log messages genera
 
 
 
-### Advanced Options 
+### Advanced Options
 
 #### Run DG AComp
-  * The 'enable_acomp' option runs the DG Atmospheric Compensation Process.  The default setting is on (True).  This will remove haze and provide the best surface reflectance output for spectral analysis of imagery. 
+  * The 'enable_acomp' option runs the DG Atmospheric Compensation Process.  The default setting is on (True).  This will remove haze and provide the best surface reflectance output for spectral analysis of imagery.
 
 #### Pansharpening
   * The 'enable_pansharpen' output is a high-resolution RGB image.  The process merges the lower resolution multispectral image with the higher resolution panchromatic image to produce a high resolution multispectral image (RGB). The default is to run pansharpening.  It must be set to 'False' if you want preserve the full 8-band or 4-band image from the input image.
@@ -214,14 +215,14 @@ The `log` output port contains the location where a trace of log messages genera
   * 'bands' allows you to select the bands to be processes for further applications.  The default is 'Auto', which will process all of the bands (including panchromatic) that are in the S3 input data location.  Other options are PAN+MS, PAN, MS. Use when the next application of algorithm in your workflow requires specific band inputs.
 
 #### Specifying Strip Parts
-  * The `parts` input can be used to limit processing to a subset of an input strip. This requires advance knowledge of the layout of a strip order. One way to get this information is by looking in the input strip's `GIS_FILES` directory at the *_PRODUCT_SHAPE.shp vectors. That particular file shows the boundaries of each part (scene) of a strip. Once those numeric values are known, set `parts` to a comma-separated list, e.g. `2, 3, 4`.
+  * The `parts` input can be used to limit processing to a subset of an input strip. This requires advance knowledge of the layout of a strip order. One way to get this information is by looking in the input strip's `GIS_FILES` directory at the PRODUCT_SHAPE.shp vectors. That particular file shows the boundaries of each part (scene) of a strip. Once those numeric values are known, set `parts` to a comma-separated list, e.g. `2, 3, 4`.
 
 #### Change Projection
   * The 'ortho_epsg' The default is EPSG:4326 which is WGS84 geographic coordinates.  For some cases, such as for change detection, square pixel are required so you must reproject the image to a UTM grid.  You can specify the EPSG code if you know it, or set ortho_epsg='UTM' and the AOP processor will select the appropriate UTM zone.
-  
+
 #### Set Pixel Size
-  * The output image pixel size can be specified in meters. The default setting is the same as the input pixel size ('Auto'). 
-  
+  * The output image pixel size can be specified in meters. The default setting is the same as the input pixel size ('Auto').
+
 #### Set Tiling Scheme
   * A custom tiling scheme can be specified that overrides 'ortho_epsg' and 'ortho_pixel_size'
 
@@ -249,7 +250,7 @@ The included DRA algorithm has several inputs that affect the final 8-bit RGB re
 
 ### Runtime
 
-The following table lists all applicable runtime outputs. 
+The following table lists all applicable runtime outputs.
 For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
 
   Sensor Name  |  Total Pixels  |  Total Area (k2)  |  Time(min)  |  Time/Area k2
@@ -263,4 +264,3 @@ GE| 57,498,000|332.97|560.836 | 1.68|
 
 #### Contact Us   
 If your customer is having a specific problem. Tech Owner: [Tim Harris](Tim.Harris@digitalglobe.com) & Editor: [Kathleen Johnson](kajohnso@digitalglobe.com)
-

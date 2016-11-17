@@ -26,13 +26,15 @@ from gbdxtools import Interface
 gbdx = Interface()
 
 aop2envi = gbdx.Task("AOP_ENVI_HDR")
-aop2envi.inputs.image = 's3://gbd-customer-data/PathToDeliveredImage'
+#Edit the following path to reflect a specific path to an image
+aop2envi.inputs.image = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
 envi_ndvi = gbdx.Task("ENVI_SpectralIndices")
 envi_ndvi.inputs.input_raster = aop2envi.outputs.output_data.value
 envi_ndvi.inputs.file_types = "hdr"
 # Specify a string/list of indicies to run on the input_raster variable.  The order of indicies wi
 envi_ndvi.inputs.index = '["Normalized Difference Vegetation Index", "WorldView Soil Index"]'
 
+#Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
 workflow = gbdx.Workflow([aop2envi, envi_ndvi])
 workflow.savedata(
 	       aop2envi.outputs.output_data,
@@ -40,7 +42,7 @@ workflow.savedata(
 )
 workflow.savedata(
 	       envi_ndvi.outputs.output_raster_uri,
-	          location='/ENVI/spectralindices'
+	          location='ENVI/spectralindices'
 )
 workflow.execute()
 status = workflow.status["state"]
@@ -85,7 +87,8 @@ Example of workflow with Spectral Indices including preprocessing steps in gbdxt
 from gbdxtools import Interface
 gbdx = Interface()
 
-data = "s3://receiving-dgcs-tdgplatform-com/055026839010_01_003"
+#Edit the following path to reflect a specific path to an image
+data = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
 aoptask = gbdx.Task('AOP_Strip_Processor', data=data, bands='MS', enable_acomp=True, enable_pansharpen=False, enable_dra=False)     # creates acomp'd multispectral image
 
 aop2envi = gbdx.Task("AOP_ENVI_HDR")
@@ -98,14 +101,15 @@ envi_ndvi.inputs.file_types = "hdr"
 envi_ndvi.inputs.index = '["Normalized Difference Vegetation Index", "WorldView Built-Up Index", "WorldView Non-Homogeneous Feature Difference", "WorldView Water Index", "WorldView Soil Index"]'
 
 workflow = gbdx.Workflow([aoptask, aop2envi, envi_ndvi])
+#Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
 workflow.savedata(
    aop2envi.outputs.output_data,
-      location='Auto-docs/ENVI/SIS'
+      location='ENVI/SpectralIndices/AOP'
 )
 
 workflow.savedata(
    envi_ndvi.outputs.output_raster_uri,
-      location='Auto-docs/ENVI/SIS'
+      location='ENVI/SpectralIndices'
 )
 
 workflow.execute()
@@ -119,11 +123,11 @@ For details on the methods of testing the runtimes of the task visit the followi
 
   Sensor Name  | Total Pixels |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
 --------|:----------:|-----------|----------------|---------------
-QB | 41,551,668 | 312.07 |  |  
-WV01| 1,028,100,320 |351.72 | |
-WV02|35,872,942|329.87| |
-WV03|35,371,971|196.27| |
-GE| 57,498,000|332.97| |
+QB | 41,551,668 | 312.07 | 184.23 | 0.59
+WV01| 1,028,100,320 |351.72 | NA| NA
+WV02|35,872,942|329.87| 215.81|0.65
+WV03|35,371,971|196.27| 247.30|1.26
+GE| 57,498,000|332.97|216.80 |0.65
 
 
 ### Issues

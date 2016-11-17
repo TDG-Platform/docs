@@ -12,22 +12,24 @@ This task removes speckling noise from a classification image. It uses majority 
 
 ### Quickstart
 
-This task requires that the image has been pre-processed using the [Advanced Image Processor](https://github.com/TDG-Platform/docs/blob/master/AOP_Strip_Processor.md), and that a classification has been run on the output from preprocessing. In the example workflow below, the  [ISODATA Classification](https://github.com/TDG-Platform/docs/blob/master/ENVI_ISODATAClassification.md) Task was utilized to perform the classification step on preprocessed data. 
+This task requires that the image has been pre-processed using the [Advanced Image Processor](https://github.com/TDG-Platform/docs/blob/master/AOP_Strip_Processor.md), and that a classification has been run on the output from preprocessing. In the example workflow below, the  [ISODATA Classification](https://github.com/TDG-Platform/docs/blob/master/ENVI_ISODATAClassification.md) Task was utilized to perform the classification step on preprocessed data.
 
 ```python  
 	from gbdxtools import Interface
 	gbdx = Interface()
-	
+
+
 	isodata = gbdx.Task("ENVI_ISODATAClassification")
-	# The data input and output lines must be edited to point to an authorized customer S3 location
-	isodata.inputs.input_raster = "S3 gbd-customer-data location/<customer account>/input directory"
+  #Edit the following path to reflect a specific path to an image
+	isodata.inputs.input_raster = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
 	isodata.inputs.file_types = "tif"
 	smooth = gbdx.Task("ENVI_ClassificationSmoothing")
 	smooth.inputs.input_raster = isodata.outputs.output_raster_uri.value
 	smooth.inputs.file_types = "hdr"
 	workflow = gbdx.Workflow([ isodata, smooth ])
-	workflow.savedata(isodata.outputs.output_raster_uri, location="S3 gbd-customer-data location/<customer account>/output directory")
-	workflow.savedata(smooth.outputs.output_raster_uri, location="S3 gbd-customer-data location/<customer account>/output directory")
+  #Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
+	workflow.savedata(isodata.outputs.output_raster_uri, location="ISODATAClassification")
+	workflow.savedata(smooth.outputs.output_raster_uri, location="ISODATAClassification/Smoothing")
 	workflow.execute()
 	print workflow.id
 	print workflow.status
@@ -79,14 +81,15 @@ Included below is a complete end-to-end workflow for Advanced Image Preprocessin
 	# Initialize the gbdxtools Interface
 	from gbdxtools import Interface
 	gbdx = Interface()
-	
-	# Import the Image from s3. Here we are using a WV03 image from the Benchmark Dataset.
-	data = "s3://receiving-dgcs-tdgplatform-com/<file directory>" aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, bands='MS', enable_pansharpen=False, enable_dra=False)
-	
+
+  #Edit the following path to reflect a specific path to an image
+	data = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
+  aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, bands='MS', enable_pansharpen=False, enable_dra=False)
+
 	# Capture AOP task outputs
 	log = aoptask.get_output('log')
 	orthoed_output = aoptask.get_output('data')
-	
+
 	# Run ISODATA
 	isodata = gbdx.Task("ENVI_ISODATAClassification")
 	isodata.inputs.input_raster = aoptask.outputs.data.value
@@ -96,12 +99,13 @@ Included below is a complete end-to-end workflow for Advanced Image Preprocessin
 	smooth = gbdx.Task("ENVI_ClassificationSmoothing")
 	smooth.inputs.input_raster = isodata.outputs.output_raster_uri.value
 	smooth.inputs.file_types = "hdr"
-	
+
 	# Run Workflow and Send output to  s3 Bucket
 	workflow = gbdx.Workflow([ aoptask, isodata, smooth ])
-	workflow.savedata(aoptask.outputs.data, location="S3 gbd-customer-data location/<customer account>/output directory")
-	workflow.savedata(isodata.outputs.output_raster_uri, location="S3 gbd-customer-data location/<customer account>/output directory")
-	workflow.savedata(smooth.outputs.output_raster_uri, location="S3 gbd-customer-data location/<customer account>/output directory")
+  #Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
+	workflow.savedata(aoptask.outputs.data, location="Classification/AOP)
+	workflow.savedata(isodata.outputs.output_raster_uri, location="Classification/ISODATA")
+	workflow.savedata(smooth.outputs.output_raster_uri, location="Classification/Smoothing")
 	workflow.execute()
 	print workflow.id
 	print workflow.status

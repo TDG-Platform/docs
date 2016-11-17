@@ -20,11 +20,14 @@ This script gives the example of CD_READY with a single tif file as input.
 
 from gbdxtools import Interface
 gbdx = Interface()
-post = 's3://gbd-customer-data/PathToImage/image1.tif'
-pre  = 's3://gbd-customer-data/PathToImage/image2.tif'
+
+#Edit the following line(s) to reflect specific folder(s) for the input files (examples provided)
+post = 's3://gbd-customer-data/CustomerAccount#/PathToImage/image1.tif'
+pre  = 's3://gbd-customer-data/CustomerAccount#/PathToImage/image2.tif'
 prototask = gbdx.Task("protogenV2CD_READY", raster=post, slave=pre)
 
 workflow = gbdx.Workflow([ prototask ])  
+#Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
 workflow.savedata(prototask.outputs.data, location="cdready/post")
 workflow.savedata(prototask.outputs.slave,location="cdready/pre")
 workflow.execute()
@@ -73,8 +76,9 @@ To link the workflow of 1 input image into AOP_Strip_Processor into a protogen t
 from gbdxtools import Interface
 gbdx = Interface()
 
-post = "s3://receiving-dgcs-tdgplatform-com/055644448010_01_003"
-pre  = "s3://receiving-dgcs-tdgplatform-com/055644447010_01_003"
+#Edit the following line(s) to reflect specific folder(s) for the input files (examples provided)
+post = 's3://gbd-customer-data/CustomerAccount#/PathToImage_PreImage/'
+pre  = 's3://gbd-customer-data/CustomerAccount#/PathToImage_PostImage/'
 
 aoptask1 = gbdx.Task('AOP_Strip_Processor', data=post, bands='MS', enable_acomp=True, enable_pansharpen=False, enable_dra=False)     # creates acomp'd multispectral image
 
@@ -97,6 +101,7 @@ prototask.inputs.raster = gluetask1.outputs.data.value
 prototask.inputs.slave  = gluetask2.outputs.data.value
 
 workflow = gbdx.Workflow([aoptask1,aoptask2,gluetask1,gluetask2,prototask])
+#Edit the following line(s) to reflect specific folder(s) for the output files (example location provided)
 workflow.savedata(prototask.outputs.data,  'cdready/post')
 workflow.savedata(prototask.outputs.slave, 'cdready/pre' )
 workflow.execute()
@@ -121,5 +126,5 @@ None
 For background on the development and implementation of  Protogen  [Documentation under development](Insert link here)
 
 ###Contact Us
-Tech Owner - Georgios Ouzounis - georgios.ouzounis@digitalglobe.com
-Document Owner - Georgios Ouzounis - georgios.ouzounis@digitalglobe.com
+Tech Owner - [Georgios Ouzounis](georgios.ouzounis@digitalglobe.com)
+Document Owner - [Georgios Ouzounis](georgios.ouzounis@digitalglobe.com)

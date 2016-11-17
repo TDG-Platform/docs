@@ -22,11 +22,14 @@ This script gives the example of Pantex with a single tif file as input.
 ```python
     from gbdxtools import Interface
     gbdx = Interface()
-    raster = 's3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/PathToImage/image.tif'
+
+    #Edit the following path to reflect a specific path to an image
+    raster = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
     prototask = gbdx.Task("protogenV2PANTEX10", raster=raster)
 
     workflow = gbdx.Workflow([ prototask ])  
-    workflow.savedata(prototask.outputs.data, location="protogen/BUE")
+    #Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
+    workflow.savedata(prototask.outputs.data, location="protogen/BuiltUpExtent")
     workflow.execute()
 
     print workflow.id
@@ -76,8 +79,8 @@ Your Processed Imagery will be written as Binary .TIF image type UINT8x1 and pla
 **Limitations:** Ceramic roofs are not considered.  
 
 
-For background on the development and implementation of  Protogen  [Documentation under development](Insert link here)
+For background on the development and implementation of Protogen  [Documentation under development](Insert link here)
 
 ###Contact Us
-Tech Owner - Georgios Ouzounis - gouzouni@digitalglobe.com
-Document Owner - Carl Reeder - creeder@digitalglobe.com
+Tech Owner - [Georgios Ouzounis](gouzouni@digitalglobe.com)
+Document Owner - [Carl Reeder](creeder@digitalglobe.com)
