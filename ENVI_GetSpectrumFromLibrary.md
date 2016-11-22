@@ -1,5 +1,5 @@
 
-# ENVI Get Spectrum From Library*(Editing in Progress)*
+# ENVI Get Spectrum From Library
 
 This task retrieves the details of a specified material from a spectral library. The QuickStart example uses the ENVI  *"veg_1dry.sli"* spectral index file and the *CDE054: Pinyon Pine (SAP)* spectrum.
 
