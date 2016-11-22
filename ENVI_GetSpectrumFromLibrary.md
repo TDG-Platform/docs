@@ -24,7 +24,7 @@ This task requires that you first retrieve the list of available spectral librar
 	getspectrum = gbdx.Task("ENVI_GetSpectrumFromLibrary")
 	
 	# Edit the following path to reflect a specific path to the Spectral Index File
-	getspectrum.inputs.input_spectral_library = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
+	getspectrum.inputs.input_spectral_library = 's3://gbd-customer-data/CustomerAccount#/PathToSpectralLibrary/'
 	getspectrum.inputs.spectrum_name = "CDE054: Pinyon Pine (SAP)" # example from Spectral Index veg_1dry.sli
 
 	# Run Workflow & save the output
