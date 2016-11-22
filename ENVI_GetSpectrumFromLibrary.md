@@ -7,7 +7,7 @@ This task retrieves the details of a specified material from a spectral library.
  * [Quickstart](#quickstart) - Get started!
  * [Runtime](#runtime) - Not Applicable
  * [Inputs](#inputs) - Required and optional task inputs.
- * [Outputs](#outputs) - Task outputs and example contents.
+ * [Outputs](#outputs) - Task outputs
  * [Advanced](#advanced) Not Applicable
  * [Contact Us](#contact-us)
 
