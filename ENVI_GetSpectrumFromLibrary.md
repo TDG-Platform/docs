@@ -78,4 +78,4 @@ For background on the development and implementation of XXXXXXXXXX refer to the 
 ###Contact Us
 Document Owner - [Kathleen Johnson](kajohnso@digitalglobe.com)
 
-> Written with [StackEdit](https://stackedit.io/).
+
