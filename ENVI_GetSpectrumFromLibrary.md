@@ -15,7 +15,21 @@ This task retrieves the details of a specified material from a spectral library.
 
 This task requires that you first retrieve the list of available spectral libraries by using the ENVI_QuerySpectralIndices Task (ADD LINK).  An example script for this Task is included in the Advanced Options.
 
-    Add QuickStart Script HERE
+    from gbdxtools import Interface
+	gbdx = Interface()
+
+	# Retrieve the Spectrum Data from the Library
+	getspectrum = gbdx.Task("ENVI_GetSpectrumFromLibrary")
+	getspectrum.inputs.input_spectral_library = "s3://gbd-customer-data/"
+	getspectrum.inputs.spectrum_name = "CDE054: Pinyon Pine (SAP)" # example from Spectral Index veg_1dry.sli
+
+	# Run Workflow & save the output
+	workflow = gbdx.Workflow([ getspectrum ])
+	workflow.savedata(getspectrum.outputs.task_meta_data, location='customer output directory')
+
+	workflow.execute()
+	print workflow.id
+	print workflow.status
 	
 
 
