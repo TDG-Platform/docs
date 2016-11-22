@@ -16,7 +16,8 @@ This task retrieves the details of a specified material from a spectral library.
 This task requires that you first retrieve the list of available spectral libraries by using the [ENVI_QuerySpectralIndices Task](https://github.com/TDG-Platform/docs/blob/master/ENVI_QuerySpectralIndices.md).  An example script for this Task is included in the Advanced Options.
 
 ```python
-    	from gbdxtools import Interface
+    	
+	from gbdxtools import Interface
 	gbdx = Interface()
 
 	# Retrieve the Spectrum Data from the Library
