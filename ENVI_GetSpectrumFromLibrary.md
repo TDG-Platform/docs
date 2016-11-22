@@ -19,17 +19,6 @@ This task requires that you first retrieve the list of available spectral librar
 	
 
 
-### Runtime
-
-The following table lists all applicable runtime outputs for Classification Smoothing. An estimated Runtime for the Advanced Script example can be derived from adding the result for the two pre-processing steps. For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
-
-  Sensor Name  |  Total Pixels  |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
---------|:----------:|-----------|----------------|---------------
-QB02 | 41,551,668 | 312.07 |  |  |
-WV02|35,872,942 | 329.87 |  |  |
-WV03|35,371,971 | 196.27 |  |  |
-GE01| 57,498,000 | 332.97 |  |  |
-
 
 ### Inputs
 The following table lists all taskname inputs.
