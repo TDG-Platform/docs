@@ -73,11 +73,11 @@ The output is a .json file **'task_meta_data'**, which contains the following sp
 
 Output Parameters   | Description       |Example Output 
 --------------------|-------------------|-------------------
-wavelengths      |  string       |   0.4000000059604645, 0.4009999930858612,......., 2.496000051498413, 2.5
-wavelength_units   | string   |  "micrometers"
-y_range      |     string           | [0.0,1.0] 
-spectrum     |    string    |     0.03869999945163727, 0.03869999945163727,..........,0.0608999989926815, 0.06119999662041664
-refelctance_scale_factor  | number    |   1.0
+wavelengths      |A double-precision array representing the wavelength values of the spectrum. |   0.4000000059604645, 0.4009999930858612,......., 2.496000051498413, 2.5
+wavelength_units   | A string representing the wavelength units of the spectrum. |  "micrometers"
+y_range      | The range of spectrum values.  | [0.0,1.0] 
+spectrum     |A double-precision array representing the spectrum that matches the input spectrum name.|     0.03869999945163727, 0.03869999945163727,..........,0.0608999989926815, 0.06119999662041664
+refelctance_scale_factor  | The scale factor to use for translating the spectrum to reflectance.    |   default = 1.0
 
 For background on the development and implementation of XXXXXXXXXX refer to the [ENVI Documentation](https://www.harrisgeospatial.com/docs/classificationtutorial.html)
 
