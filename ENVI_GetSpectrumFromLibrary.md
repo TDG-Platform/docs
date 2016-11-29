@@ -54,7 +54,19 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 
   Name            |  Required  |  Valid Values             | Description  
 ------------------|:---------: |:------------------------- |---------------
-[task_meta_data](#data-structure-for-expected-outputs) | True       |.json | file contains the following spectral information: *wavelength, wavelength_units, reflectance_scale_factor, and y_range*
+[task_meta_data](#data-structure-for-expected-outputs:) | True       |.json | file contains the following spectral information: *wavelength, wavelength_units, reflectance_scale_factor, and y_range*
+
+**Data Structure for Expected Outputs:**
+
+The output is a .json file **'task_meta_data'**, which contains the following spectral information.  The eXample below uses data from ENVI Spectral Library:  *veg_1dry.sli*, spectrum_name = *CDE054: Pinyon Pine (SAP)*
+
+Output Parameters   | Description       |Example Output 
+--------------------|-------------------|-------------------
+wavelengths      |A double-precision array representing the wavelength values of the spectrum. |   0.4000000059604645, 0.4009999930858612,......., 2.496000051498413, 2.5
+wavelength_units   | A string representing the wavelength units of the spectrum. |  "micrometers"
+y_range      | The range of spectrum values.  | [0.0,1.0] 
+spectrum     |A double-precision array representing the spectrum that matches the input spectrum name.|     0.03869999945163727, 0.03869999945163727,..........,0.0608999989926815, 0.06119999662041664
+reflectance_scale_factor  | The scale factor to use for translating the spectrum to reflectance.    |   default = 1.0
 
 
 **OPTIONAL SETTINGS AND DEFINITIONS:**
@@ -65,7 +77,7 @@ ignore_validate      |          N/A     |     1        |Set this property to a v
 
 ### Advanced
 
-This task will normally be included in the Advanced Script for the ENVI Ace Processor or other ENVI tasks that require spectral data. Therefore no Advanced Script is included here.
+This task will normally be included in the Advanced Script for the ENVI ACE Processor or other ENVI tasks that require spectral data. Therefore no Advanced Script is included here.
 
 **Data Structure for Expected Outputs:**
 
