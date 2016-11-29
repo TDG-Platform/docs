@@ -104,7 +104,7 @@ GE| 350,236,670|577.8|697.86| 1.21|
 
 
 ### Issues
-NA
+Currently the advanced options for the task and the task in the gbdx webapp are not available because of the requirement of multiple input parameters.
 
 
 ### Background
