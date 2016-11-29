@@ -54,7 +54,7 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 
   Name            |  Required  |  Valid Values             | Description  
 ------------------|:---------: |:------------------------- |---------------
-[task_meta_data[(#data-structure-for-expected-outputs) | True       |.json | file contains the following spectral information: *wavelength, wavelength_units, reflectance_scale_factor, and y_range*
+[task_meta_data](#data-structure-for-expected-outputs) | True       |.json | file contains the following spectral information: *wavelength, wavelength_units, reflectance_scale_factor, and y_range*
 
 
 **OPTIONAL SETTINGS AND DEFINITIONS:**
@@ -69,7 +69,15 @@ This task will normally be included in the Advanced Script for the ENVI Ace Proc
 
 **Data Structure for Expected Outputs:**
 
-The output is a .json file **'task_meta_data'**, which contains the following spectral information: *wavelength, wavelength_units, reflectance_scale_factor, and y_range*
+The output is a .json file **'task_meta_data'**, which contains the following spectral information.  The eXample below uses data from ENVI Spectral Library:  *veg_1dry.sli*, spectrum_name = *CDE054: Pinyon Pine (SAP)*
+
+Output Parameters   | Description       |Example Output 
+--------------------|-------------------|-------------------
+wavelengths      |  string       |   0.4000000059604645, 0.4009999930858612,......., 2.496000051498413, 2.5
+wavelength_units   | string   |  "micrometers"
+y_range      |     string           | [0.0,1.0] 
+spectrum     |    string    |     0.03869999945163727, 0.03869999945163727,..........,0.0608999989926815, 0.06119999662041664
+refelctance_scale_factor  | number    |   1.0
 
 For background on the development and implementation of XXXXXXXXXX refer to the [ENVI Documentation](https://www.harrisgeospatial.com/docs/classificationtutorial.html)
 
