@@ -54,11 +54,11 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 
   Name            |  Required  |  Valid Values             | Description  
 ------------------|:---------: |:------------------------- |---------------
-[task_meta_data](#data-structure-for-expected-outputs:) | True       |.json | file contains the following spectral information: *wavelength, wavelength_units, reflectance_scale_factor, and y_range*
+task_meta_data | True       |.json | file contains the following spectral information: *wavelength, wavelength_units, reflectance_scale_factor, and y_range*
 
 **Data Structure for Expected Outputs:**
 
-The output is a .json file **'task_meta_data'**, which contains the following spectral information.  The eXample below uses data from ENVI Spectral Library:  *veg_1dry.sli*, spectrum_name = *CDE054: Pinyon Pine (SAP)*
+The output is a .json file **'task_meta_data'**, which contains the following spectral information.  The example below uses data from ENVI Spectral Library:  *veg_1dry.sli*, spectrum_name = *CDE054: Pinyon Pine (SAP)*
 
 Output Parameters   | Description       |Example Output 
 --------------------|-------------------|-------------------
