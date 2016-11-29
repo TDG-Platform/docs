@@ -54,7 +54,7 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 
   Name            |  Required  |  Valid Values             | Description  
 ------------------|:---------: |:------------------------- |---------------
-task_meta_data | True       |.json | file contains the following spectral information: *wavelength, wavelength_units, reflectance_scale_factor, and y_range*
+[task_meta_data[(#data-structure-for-expected-outputs) | True       |.json | file contains the following spectral information: *wavelength, wavelength_units, reflectance_scale_factor, and y_range*
 
 
 **OPTIONAL SETTINGS AND DEFINITIONS:**
