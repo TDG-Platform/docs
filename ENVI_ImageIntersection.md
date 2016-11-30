@@ -81,8 +81,7 @@ output_raster1_uri|True|None| |Outputor OUTPUT_RASTER1. -- Value Type: ENVIURI
 
 **Output structure**
 
-Explain output structure via example.
-
+The output of this task will be two rasters (input_raster1 and input_raster2) rezised to the shared extent or overlap of the rasters.
 
 ### Advanced
 
