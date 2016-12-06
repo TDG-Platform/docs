@@ -41,12 +41,15 @@ For IKONOS, Landsat-8, Sentinel and similar sensors that have ortho-ready level 
 	pansharpTask.inputs.input_raster_metadata = '{"sensor type": "IKONOS"}'
 
 	# Input High- and Low-Resolution data
-	pansharpTask.inputs.input_low_resolution_raster =  "s3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/kathleen_AComp_IKONOS_Data/po_1344103_0000000/po_1344103_bgrn_0000000.tif"
-	pansharpTask.inputs.input_high_resolution_raster ="s3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/kathleen_AComp_IKONOS_Data/po_1344103_0000000/po_1344103_pan_0000000.tif"
+	# Edit the following path to reflect a specific path to the imagery input files
+	pansharpTask.inputs.input_low_resolution_raster = "s3://gbd-customer-data/account-full path to tiff file"
+	pansharpTask.inputs.input_high_resolution_raster = "s3://gbd-customer-data/account-full path to tiff file"
 
 	# Run Workflow
 	workflow = gbdx.Workflow([ pansharpTask ])
-	workflow.savedata(pansharpTask.outputs.output_raster_uri, location='kathleen_ENVI_NND_PanSharpen/IKONOS_Data')
+	
+	# Edit the following line to reflect specific folder(s) for the output file
+	workflow.savedata(pansharpTask.outputs.output_raster_uri, location='Customer's Output S3 Location')
 	workflow.execute()
 	print workflow.id
 	print workflow.status
@@ -88,8 +91,11 @@ This task requires that WorldView-2, Worldview-3, GeoEYE-1 and Quickbird imagery
 
 	from gbdxtools import Interface
 	gbdx = Interface()
-
+	
+	# Edit the following path(s) to reflect a specific path to the input imagery files; an example is given
 	data = "s3://receiving-dgcs-tdgplatform-com/055442993010_01_003" # Example from Tracy, California
+	
+	# Process the MS and Pan Files Seperately
 	aoptask1 = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False, bands="MS")
 	aoptask2 = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False, bands="PAN")
 
@@ -102,7 +108,9 @@ This task requires that WorldView-2, Worldview-3, GeoEYE-1 and Quickbird imagery
 
 	# Run Workflow
 	workflow = gbdx.Workflow([ aoptask1, aoptask2, pansharpTask ])
-	workflow.savedata(pansharpTask.outputs.output_raster_uri, location='kathleen_ENVI_NND_PanSharpen/WV03_Data')
+	
+	# Edit the following line to reflect specific folder(s) for the output file
+	workflow.savedata(pansharpTask.outputs.output_raster_uri, location='Customer's Output S3 Location')
 	workflow.execute()
 	print workflow.id
 	print workflow.status
