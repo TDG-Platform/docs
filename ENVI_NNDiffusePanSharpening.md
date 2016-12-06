@@ -32,6 +32,7 @@ The following are input raster requirements for running the NNDiffuse pan sharpe
 
 This task requires that WorldView-2, Worldview-3, GeoEYE-1 and Quickbird imagery has been pre-processed using the Advanced Image Processor for proper orthorectification (ADD LINK).  For IKONOS, Landsat-8, Sentinel and similar sensors that have ortho-ready level 2A (OR2A) imagery, the ENVI NND Pansharpening task can be run directly on the data as shownin the QuickStart Script below:
 
+```python
 	from gbdxtools import Interface
 	gbdx = Interface()
 
@@ -49,6 +50,9 @@ This task requires that WorldView-2, Worldview-3, GeoEYE-1 and Quickbird imagery
 	workflow.execute()
 	print workflow.id
 	print workflow.status
+
+
+```
 
 
 Examples of different sensor data sets  | Script
@@ -77,7 +81,33 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 ### Advanced
 Include example(s) with complicated parameter settings and/or example(s) where the task is used as part of a workflow involving other GBDX tasks. (INCLUDE AOP Processer IN SCRIPT)
 
-	# Advanced Task Script:  AOP=>NND Pansharpening 
+
+```python
+
+	# Runs AOP to ENVI NND PanSharpen
+
+	from gbdxtools import Interface
+	gbdx = Interface()
+
+	data = "s3://receiving-dgcs-tdgplatform-com/055442993010_01_003" # Example from Tracy, California
+	aoptask1 = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False, bands="MS")
+	aoptask2 = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False, bands="PAN")
+
+	# Define Task and Data Types
+	pansharpTask = gbdx.Task("ENVI_NNDiffusePanSharpening")
+
+	# Input High- and Low-Resolution data
+	pansharpTask.inputs.input_low_resolution_raster = aoptask1.outputs.data.value
+	pansharpTask.inputs.input_high_resolution_raster = aoptask2.outputs.data.value
+
+	# Run Workflow
+	workflow = gbdx.Workflow([ aoptask1, aoptask2, pansharpTask ])
+	workflow.savedata(pansharpTask.outputs.output_raster_uri, location='kathleen_ENVI_NND_PanSharpen/WV03_Data')
+	workflow.execute()
+	print workflow.id
+	print workflow.status
+
+```
 
 
 ### Runtime
