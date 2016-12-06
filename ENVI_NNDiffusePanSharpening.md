@@ -30,7 +30,7 @@ The following are input raster requirements for running the NNDiffuse pan sharpe
 
 ### Quickstart
 
-This task requires that WorldView-2, Worldview-3, GeoEYE-1 and Quickbird imagery has been pre-processed using the Advanced Image Processor for proper orthorectification (ADD LINK).  For IKONOS, Landsat-8, Sentinel and similar sensors that have ortho-ready level 2A (OR2A) imagery, the ENVI NND Pansharpening task can be run directly on the data as shownin the QuickStart Script below:
+For IKONOS, Landsat-8, Sentinel and similar sensors that have ortho-ready level 2A (OR2A) imagery, the ENVI NND Pansharpening task can be run directly on the data as shown in the QuickStart Script below:
 
 ```python
 	from gbdxtools import Interface
@@ -79,7 +79,7 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 
 
 ### Advanced
-Include example(s) with complicated parameter settings and/or example(s) where the task is used as part of a workflow involving other GBDX tasks. (INCLUDE AOP Processer IN SCRIPT)
+This task requires that WorldView-2, Worldview-3, GeoEYE-1 and Quickbird imagery has been pre-processed using the Advanced Image Processor for proper orthorectification (ADD LINK).  The example below uses a WorldView-3 Image from Tracy California.
 
 
 ```python
