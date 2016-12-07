@@ -71,6 +71,7 @@ GE01| 57,498,000|332.97|| |
 IKONOS |      |       |    |
 
      
+### Inputs
 
 Examples of different sensor data sets  | Script
 ----------------- | -------------------------------------------------------
@@ -79,16 +80,15 @@ Landsat-8   |     task.inputs.input_raster_metadata = '{"sensor type": "Landsat 
 Sentinel     |     task.inputs.input_raster_metadata = '{"sensor type": "SENTINEL-2"}'
 
 
-### Inputs
-The following table lists all taskname inputs.
-Mandatory (optional) settings are listed as Required = True (Required = False).
+The following table lists all taskname inputs.  Mandatory (optional) settings are listed as Required = True (Required = False).
 
   Name  |  Required  |  Valid Values  |  Description  
 --------|:----------:|----------------|---------------
-input_low_resolution_raster |  True  | raster  |Specify a low-resolution raster.
-input_high_resolution_raster  |  True  |  code  | Describes sensor input type as shown above in examples.  Use these lines of code for the appropriate sensor. Required for these sensors.
+input_low_resolution_raster |  True  | raster  | Specify a low-resolution raster.
+input_high_resolution_raster  |  True  | raster  |  Specify a high-resolution panchromatic raster.
+input_raster_metadata |  True  |  code  | Describes sensor input type as shown above in examples.  Use these lines of code for the appropriate sensor. Required for these sensors.
 intensity_smoothness  | False  |  positive number  | A positive number that defines the intensity smoothness factor (σ) of the NNDiffuse pan sharpening algorithm. A smaller INTENSITY_SMOOTHNESS value will restrict diffusion and produce sharper images, but will have more noise. For example, a smaller value is good for pan sharpened images that will be used for visualization. A larger INTENSITY_SMOOTHNESS value will produce smoother results with less noise, which is suggested for images that will be used for classification and segmentation purposes. A larger value is also suggested for panchromatic scenes with high contrast (they require less diffusion sensitivity), and with complex scenes (to reduce the possibility of noise). The default is to dynamically adjust to local similarity, as shown in the equation in the ENVI Document. You can enter a value to override the default, for example, a value in the range 10 x √2 to 20.
-ignore_validate  | False  | 1  |  Set this property to a value of 1 to run the task, even if validation of properties fails. This is an advanced option for users who want to first set all task properties before validating whether they meet the required criteria. This property is not set by default, which means that an exception will occur if any property does not meet the required criteria for successful execution of the task.
+ignore_validate  | False  | number |  Set this property to a value of 1 to run the task, even if validation of properties fails. This is an advanced option for users who want to first set all task properties before validating whether they meet the required criteria. This property is not set by default, which means that an exception will occur if any property does not meet the required criteria for successful execution of the task.
 
 ### Outputs
 The following table lists all taskname outputs.
