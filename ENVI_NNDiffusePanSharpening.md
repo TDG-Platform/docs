@@ -73,7 +73,7 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 --------|:----------:|----------------|---------------
 input_low_resolution_raster |  YES  | raster  |Specify a low-resolution raster.
 input_high_resolution_raster  |  YES  | raster | Specify a high-resolution panchromatic raster.
-input_raster_metadata  |  YES  | text  | Describes sensor input type
+input_raster_metadata  |  YES  | code  | Describes sensor input type as shown above in examples.  Use these lines of code for the appropriate sensor. Required for these sensors.
 
 ### Outputs
 The following table lists all taskname outputs.
@@ -81,6 +81,9 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 
   Name  |  Required  |  Default  |  Valid Values  |  Description  
 --------|:----------:|-----------|----------------|---------------
+output_raster_uri   |  YES  | None  | Specify a string with the fully qualified filename and path of the output raster. If you do not specify this property, the output raster is only temporary. Once the raster has no remaining references, ENVI deletes the temporary file.
+pixel_size_ratio  |  No  |  4  | meters  | A scalar number that defines the pixel size ratio of the low-resolution raster and the high-resolution raster. The NNDiffuse pan-sharpening algorithm requires that the pixel size ratio be an integer. If this property is not set, the value is determined from the metadata of the input rasters. For example, the pixel size of Ikonos low-resolution MSI data is 4 meters, and the pixel size of Ikonos high-resolution Pan data is 1 meter. The ratio is 4/1, so the value is 4.
+spatial_smoothness  |  No  | PIXEL_SIZE_RATIO x 0.62 |  positive number | A positive number that defines the spatial smoothness factor (σs) of the NNDiffuse pan sharpening algorithm. SPATIAL_SMOOTHNESS should be set to a value that will resemble a bicubic interpolation kernel. The default value is PIXEL_SIZE_RATIO x 0.62.
 
 
 ### Advanced
