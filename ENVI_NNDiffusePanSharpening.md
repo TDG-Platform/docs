@@ -69,9 +69,11 @@ Sentinel     |     task.inputs.input_raster_metadata = '{"sensor type": "SENTINE
 The following table lists all taskname inputs.
 Mandatory (optional) settings are listed as Required = True (Required = False).
 
-  Name  |  Required  |  Default  |  Valid Values  |  Description  
---------|:----------:|-----------|----------------|---------------
-
+  Name  |  Required  |  Valid Values  |  Description  
+--------|:----------:|----------------|---------------
+input_low_resolution_raster |  YES  | raster  |Specify a low-resolution raster.
+input_high_resolution_raster  |  YES  | raster | Specify a high-resolution panchromatic raster.
+input_raster_metadata  |  YES  | text  | Describes sensor input type
 
 ### Outputs
 The following table lists all taskname outputs.
