@@ -102,7 +102,7 @@ spatial_smoothness  |  False  | PIXEL_SIZE_RATIO x 0.62 |  positive number | A p
 
 
 ### Advanced
-This task requires that WorldView-2, Worldview-3, GeoEYE-1 and Quickbird imagery has been pre-processed using the Advanced Image Processor for proper orthorectification (ADD LINK).  The example below uses a WorldView-3 Image from Tracy California.
+This task requires that WorldView-2, Worldview-3, GeoEYE-1 and Quickbird imagery has been pre-processed using the [Advanced Image Processor](#https://github.com/TDG-Platform/docs/blob/master/Advanced_Image_Preprocessor.md) for proper orthorectification.  The example below uses a WorldView-3 Image from Tracy California.
 
 
 ```python
