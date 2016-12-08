@@ -22,9 +22,9 @@ The following are input raster requirements for running the NNDiffuse pan sharpe
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
- * [Runtime](#runtime) - Detailed Description of Inputs
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and example contents.
+ * [Runtime](#runtime) - Detailed Description of Inputs
  * [Known Issues](#known-issues)
  * [Contact Us](#contact-us)
 
