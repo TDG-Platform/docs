@@ -62,9 +62,9 @@ For IKONOS, Landsat-8, Sentinel and similar sensors that have ortho-ready level 
 
 Examples of different sensor data sets  | Script
 ----------------- | -------------------------------------------------------
-IKONOS   |   task.inputs.input_raster_metadata = '{"sensor type": "IKONOS"}'
-Landsat-8   |     task.inputs.input_raster_metadata = '{"sensor type": "Landsat OLI"}'
-Sentinel     |     task.inputs.input_raster_metadata = '{"sensor type": "SENTINEL-2"}'
+IKONOS   |   task.input_raster_metadata = '{"sensor type": "IKONOS"}'
+Landsat-8   |     task.input_raster_metadata = '{"sensor type": "Landsat OLI"}'
+Sentinel     |     task.input_raster_metadata = '{"sensor type": "SENTINEL-2"}'
 
 
 The following table lists all taskname inputs.  Mandatory (optional) settings are listed as Required = True (Required = False).
