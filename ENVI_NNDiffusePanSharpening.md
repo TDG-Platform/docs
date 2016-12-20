@@ -158,7 +158,7 @@ Sun, W., B. Chen, and D.W. Messinger. "Nearest Neighbor Diffusion Based Pan Shar
 
 ###Known Issues
 
-There are no known issues.
+Sentinel and Landsat-8 data have not yet been tested, but should work like IKONOS.
 
 ###Contact Us
 Document Owner - Kathleen Johnson - kajohnso@digitalglobe.com
