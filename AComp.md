@@ -8,7 +8,7 @@ of converting image Digital Number (DN) counts to surface reflectance. This remo
 * Variation due to different viewing geometries
 * Atmospheric effects
 
-The AComp GBDX task operates on imagery from all DG Sensors and Landsat-8.  Input imagery must at least contain the VNIR multispectral bands, and optionally may also include panchromatic data.
+The AComp GBDX task operates on imagery from all DG Sensors and Landsat-8.  Input imagery must at least contain the VNIR multispectral bands, and optionally may also include panchromatic data and/or SWIR data.
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
