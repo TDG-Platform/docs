@@ -1,4 +1,4 @@
-# ENVI NNDiffuse PanSharpening  (Editing In Progress)
+# ENVI NNDiffuse PanSharpening
 
 This task performs Nearest Neighbor Diffuse (NND) Pansharpening using a low-resolution raster and a high-resolution panchromatic raster.
 
