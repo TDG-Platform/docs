@@ -1,12 +1,11 @@
 # ENVI NNDiffuse PanSharpening  (Editing In Progress)
 
-This task performs NNDiffuse pan sharpening using a low-resolution raster and a high-resolution panchromatic raster.
+This task performs Nearest Neighbor Diffuse (NND) Pansharpening using a low-resolution raster and a high-resolution panchromatic raster.
 
-NNDiffuse pan sharpening works best when the spectral response function of each multispectral band has minimal overlap with one another, and the combination of all multispectral bands covers the spectral range of the panchromatic raster.
-The following are input raster requirements for running the NNDiffuse pan sharpening algorithm:
+NND Pansharpening works best when the spectral response function of each multispectral band has minimal overlap with one another, and the combination of all multispectral bands covers the spectral range of the panchromatic raster.
+The following are input raster requirements for running the NND Pansharpening algorithm:
 
- - The pixel size of the low-resolution raster must be an integral multiple of the pixel size of the high-resolution raster. If it is
-   not, then pre-process (resample) the rasters.
+ - The pixel size of the low-resolution raster must be an integral multiple of the pixel size of the high-resolution raster. If it is not, then pre-process (resample) the rasters.
  - When the rasters have projection information, it must be in the same
    projection. If it is not the same, then reproject the rasters.
  - The rasters must be aligned. If the rasters have misalignment, then
@@ -122,6 +121,8 @@ This task requires that WorldView-2, Worldview-3, GeoEYE-1 and Quickbird imagery
 	
 	# Edit the following line to reflect specific folder(s) for the output file
 	workflow.savedata(pansharpTask.outputs.output_raster_uri, location='Customer's Output S3 Location')
+	workflow.savedata(aoptask1.outputs.data, location ='Customer's Output S3 Location') # saving this data is optional
+	workflow.savedata(aoptask2.outputs.data, location ='Customer's Output S3 Location') # saving this data is optional
 	workflow.execute()
 	print workflow.id
 	print workflow.status
@@ -146,16 +147,18 @@ IKONOS | 29,976,302     | 273.34   | 367.958  | 1.35   |
 #### Technical Notes
 
 
-
 **Data Structure for Expected Outputs:**
 
-Your Processed classification file will be written to the specified S3 Customer Location in the ENVI file format and tif format(e.g.  s3://gbd-customer-data/unique customer id/named directory/classification.hdr).  
+Your Processed classification file will be written to the specified S3 Customer Location in the ENVI .hdr file and tiff format(e.g.  s3://gbd-customer-data/unique customer id/named directory/classification.hdr).  
 
-
-For background on the development and implementation of Classification Smoothing refer to the [ENVI Documentation](https://www.harrisgeospatial.com/docs/classificationtutorial.html)
+For background on the development and implementation of NND PanSharpening refer to the [ENVI Documentation](https://www.harrisgeospatial.com/docs/classificationtutorial.html)
 
 Additional References:
 Sun, W., B. Chen, and D.W. Messinger. "Nearest Neighbor Diffusion Based Pan Sharpening Algorithm for Spectral Images." Optical Engineering 53, no. 1 (2014).
+
+###Known Issues
+
+There are no known issues.
 
 ###Contact Us
 Document Owner - Kathleen Johnson - kajohnso@digitalglobe.com
