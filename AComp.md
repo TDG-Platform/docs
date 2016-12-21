@@ -24,12 +24,12 @@ The AComp GBDX task can be run through a simple Python script using  [gbdxtools]
 **Example Script:** These basic settings will run AComp on a Landsat-8 image.  See also examples listed under the [Advanced Options](#advanced-options).
 
 ```python
-    # Run atmospheric compensation on Landsat-8 data
+    # Run Atmospheric Compensation (AComp) on Landsat-8 data
     from gbdxtools import Interface
     gbdx = Interface()
 
     # The data input and lines must be edited to point to an authorized customer S3 location)
-    acomp = gbdx.Task('AComp_1.0', data='s3://gbd-customer-data/CustomerAccount#/PathToImage/')
+    acomp = gbdx.Task('AComp', data='s3://gbd-customer-data/CustomerAccount#/PathToImage/')
     workflow = gbdx.Workflow([acomp])
     #Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
     workflow.savedata(acomp.outputs.data, location='Acomp/')
@@ -44,7 +44,7 @@ The AComp GBDX task can be run through a simple Python script using  [gbdxtools]
     In [1]: from gbdxtools import Interface
     In [2]: gbdx = Interface()
     2016-06-06 10:53:09,026 - gbdxtools - INFO - Logger initialized
-    In [3]: acomp = gbdx.Task('AComp_1.0', data='s3://landsat-pds/<Landsat8 Image ID>')
+    In [3]: acomp = gbdx.Task('AComp', data='s3://landsat-pds/<Landsat8 Image ID>')
     In [4]: workflow = gbdx.Workflow([acomp])
     In [5]: workflow.savedata(acomp.outputs.data, location='S3 gbd-customer-data location/<customer account>/output directory')
     In [6]: workflow.execute()
@@ -87,11 +87,11 @@ bit_depth      |   16    |  11, 16 or 32                         | Bit depth ref
 
 **Script Example specifying exclusion of panchromatic bands**
 
-	acomp = gbdx.Task('AComp_1.0', exclude_bands='P')
+	acomp = gbdx.Task('AComp', exclude_bands='P')
 
 **Script Example specifying alternate bit depth**
 
-	acomp = gbdx.Task('AComp_1.0', data=data, bit_depth=32 )
+	acomp = gbdx.Task('AComp', data=data, bit_depth=32 )
 
 ### Outputs
 
@@ -134,13 +134,13 @@ These tasks can be combined, but it works best to stage the data first in a sepa
 Script Example running AComp on VNIR+SWIR:
 
 ```python
-	# Runs AComp_1.0 on corresponding VNIR and SWIR images from WorldView-3
+	# Runs AComp on corresponding VNIR and SWIR images from WorldView-3
 	from gbdxtools import Interface
 	gbdx = Interface()
 
 	# Setup AComp Task
 	# The data input and output lines must be edited to point to an authorized customer S3 location)
-	acompTask = gbdx.Task('AComp_1.0', data='s3://gbd-customer-data/CustomerAccount#/PathToImage/')
+	acompTask = gbdx.Task('AComp', data='s3://gbd-customer-data/CustomerAccount#/PathToImage/')
 
 	# Run AComp Workflow
 	workflow = gbdx.Workflow([ acompTask ])
@@ -155,14 +155,14 @@ Script Example running AComp on VNIR+SWIR:
 [Script Example running AComp on Level 3D Imagery:](#known-issues)
 
 ```python
-	# Runs AComp_1.0 on Level 3D images
+	# Runs AComp on Level 3D images
 	# Test Imagery is WV03 Jefferson County, CO - Elk Meadow Park
 	from gbdxtools import Interface
 	gbdx = Interface()
 
 	# Setup AComp Task; requires full path to input dataset
 	# The data input and output lines must be edited to point to an authorized customer S3 location)
-	acompTask = gbdx.Task('AComp_1.0', data='S3 gbd-customer-data location/<customer account>/input directory')
+	acompTask = gbdx.Task('AComp', data='S3 gbd-customer-data location/<customer account>/input directory')
 
 	# Run Workflow
 	workflow = gbdx.Workflow([ acompTask ])
@@ -177,14 +177,14 @@ Script Example running AComp on VNIR+SWIR:
 Script Example linking AComp to [protogenV2LULC](https://github.com/TDG-Platform/docs/blob/master/protogenV2LULC.md):
 
 ```python
-	# Runs AComp_1.0, then sends that data to the protogenV2LULC process
+	# Runs AComp, then sends that data to the protogenV2LULC process
 	from gbdxtools import Interface
 	gbdx = Interface()
 
 	# Test Imagery for Tracy, CA: WV02
 	# Setup AComp Task
 	# The data input and output lines must be edited to point to an authorized customer S3 location)
-	acompTask = gbdx.Task('AComp_1.0', exclude_bands='P', data='s3://gbd-customer-data/CustomerAccount#/PathToImage/')
+	acompTask = gbdx.Task('AComp', exclude_bands='P', data='s3://gbd-customer-data/CustomerAccount#/PathToImage/')
 
 	# Stage AComp output for the Protogen Task
 	pp_task = gbdx.Task("ProtogenPrep",raster=acompTask.outputs.data.value)    
@@ -194,7 +194,7 @@ Script Example linking AComp to [protogenV2LULC](https://github.com/TDG-Platform
 
 	# Run Combined Workflow
 	workflow = gbdx.Workflow([ acompTask, pp_task, prot_lulc ])
-  #Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
+ 	#Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
 	workflow.savedata(prot_lulc.outputs.data.value, location='ProtogenLULC/')
 	workflow.execute()
 
