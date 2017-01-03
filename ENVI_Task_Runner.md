@@ -10,9 +10,9 @@ In general the ENVI task runner is an interface to the ENVI task engine. Part of
 | :--------------------------: | :-------: |
 |           ENVIURI            | Directory |
 |          ENVIRaster          | Directory |
-|          ENVIGCPSet          | Directory |
-|           ENVIROI            | Directory |
 |     ENVISpectralLibrary      | Directory |
+|           ENVIROI            | Directory |
+|          ENVIGCPSet          | Directory |
 |       ENVITiePointSet        | Directory |
 |          ENVIVector          | Directory |
 |         ENVICoordSys         |  String   |
@@ -73,13 +73,15 @@ As can be seen from the above, the ENVI type for `task.inputs.input_raster` is `
 
 Here are descriptions for the various GBDX supported ENVI data types and their varying usage examples. ENVI data types can be complex, which means some require multiple GBDX input ports to be adequately configure in the task_runner. These will be described below.
 
+
+
 ## ENVIURI
 
 ### Input Ports
 
 | Example Input Ports       | GBDX Type | Required | Description of Use Case                  |
 | ------------------------- | --------- | -------- | ---------------------------------------- |
-| *input_raster_uri*        | Directory | True     | Directory containing the files required for the task. |
+| *input_raster_uri*        | Directory | See Task | Directory containing the files required for the task. |
 | *input_raster_uri_filter* | String    | False    | A single string or list of strings used to filter the input directory. Supports Python glob2 syntax. See below for more details. |
 
 
@@ -98,12 +100,14 @@ task = gbdx.Task("ENVI_BuildRasterSeries")
 task.inputs.input_raster_uri = "s3://<bucket>/<folder>/"
 task.inputs.input_raster_uri_filter = "*.dat"
 
-# rest of script omitted ...
+...
 ```
 
 
 
-The `*_filter` port needs to be a single string, or a string list of comma seperated filter strings.  Each filter string must be a Python  [globe2](https://docs.python.org/2/library/glob.html) style syntax. For example, a single string like `"**/*_MTL.txt"`, or a list of extensions (`'["*.dat", "**/_MTL.txt"]'`).  
+The `*_filter` port needs to be a single string, or a string list of comma seperated filter strings.  Each filter string must be a Python [globe2](https://docs.python.org/2/library/glob.html) style syntax. For example, a single string like `"**/*_MTL.txt"`, or a list of extensions (`'["*.dat", "**/_MTL.txt"]'`).  
+
+
 
 ## ENVIRaster
 
@@ -111,10 +115,12 @@ The `*_filter` port needs to be a single string, or a string list of comma seper
 
 | Example Input Ports          | GBDX Type | Required | Description                              |
 | ---------------------------- | --------- | -------- | ---------------------------------------- |
-| *input_raster*               | Directory | True     | Directory containing the files required for the task. |
+| *input_raster*               | Directory | See Task | Directory containing the files required for the task. |
 | *input_raster_metadata*      | String    | False    | A string dictionary for overridding the raster metadata. |
 | *input_raster_filename*      | String    | False    | A string with the filename of the raster for ENVI to open. This overrides any file discovery. |
 | *input_raster_band_grouping* | String    | False    | A string name indentify which band grouping to use for the task. |
+
+
 
 ### Description
 
@@ -124,32 +130,42 @@ ENVI can open many different datasets from different sensors, the full list can 
 
 ```python
 # Default Usage
+...
 task = gbdx.Task('ENVI_QuerySpectralIndices')
 task.inputs.input_raster = 's3://<bucket>/<folder>/'
+...
 
 # Specify the sensor type
+...
 task = gbdx.Task('ENVI_QuerySpectralIndices')
 task.inputs.input_raster = 's3://<bucket>/<folder>/'
 task.inputs.input_raster_metadata = '{"sensor type": "IKONOS"}'
+...
 
 # Specify the filename for overriding
+...
 task = gbdx.Task('ENVI_QuerySpectralIndices')
 task.inputs.input_raster = 's3://<bucket>/<folder>/'
 task.inputs.input_raster_filename = 'landsat8_MTL.txt'
+...
 ```
 
 
 
-ENVI has different procedures for opening different data sets. When the rasters are opened, the bands are grouped into different sets. For example, Ikonos datasets have two groupings *multispectral* and *panchromatic*. Where a dataset from Sentinel-2 would have band grouping *10m*, *20m*, and *60m*. The following are examples of using `*_band_grouping` continured from above:
+ENVI has different procedures for opening different data sets. When the rasters are opened, the bands are grouped into different sets. For example, Ikonos datasets have two groupings *multispectral* and *panchromatic*. Where a dataset from Sentinel-2 would have band grouping *10m*, *20m*, and *60m*. The following are examples of using `*_band_grouping` continued from above:
 
 
 
 ```python
 # For Ikonos
+...
 task.inputs.input_raster_band_grouping = 'multispectral'
+...
 
 # For Sentinel-2
+...
 task.inputs.input_raster_band_grouping = '10m'
+...
 ```
 
 
@@ -169,10 +185,70 @@ See the below table for the support datasets and their band grouping names.
 | IKONOS, QuickBird, GeoEye-1, Worldview-2, Worldview-4 |       multispectral, panchromatic        |
 |          Worldview, Worldview-1          |               panchromatic               |
 |               WORLDVIEW-3                |    multispectral, panchromatic, swir     |
-|               Landset OLI                | multispectral, panchromatic, cirrus, thermal, quality |
-|                SENTINEL-2                |                                          |
+|               Landsat OLI                | multispectral, panchromatic, cirrus, thermal, quality |
+|                SENTINEL-2                |              10m, 20m, 60m               |
 
 
+
+## ENVISpectralLibrary
+
+### Input Ports
+
+| Example Input Ports               | GBDX Type | Required | Description                              |
+| --------------------------------- | --------- | -------- | ---------------------------------------- |
+| *input_spectral_library*          | Directory | False    | Directory containing the files required for the task. |
+| *input_spectral_library_filename* | String    | False    | String name of the ENVI spectral library file. |
+
+> Note: Both ports above are shown as not required, however one of the two is required. The task runner will return an error if none of them are provided.
+
+
+
+### Description
+
+This data type has two different use cases, providing the task runner with a spectral library file, or using one of the spectral library files that is bundled with ENVI. When providing a spectral library file, the task runner will search the input directory for a file with the `*.sli` extension. The following example show this use case:
+
+```python
+...
+task = gbdx.Task('ENVI_GetSpectrumFromLibrary')
+task.inputs.input_spectral_library = 's3://<bucket>/<folder>/'
+task.inputs.spectrum_name = '<spectrum_name>'
+...
+```
+
+> Note: when providing a *.sli file, an ENVI header (*.hdr) is also required. The creation of this file is left to the user.
+
+
+
+To use one of the spectral library files bundled with the ENVI software, only the file name is required. The following example show this use case:
+
+```python
+...
+task = gbdx.Task('ENVI_GetSpectrumFromLibrary')
+task.inputs.input_spectral_library_filename = 'veg_2grn.sli'
+task.inputs.spectrum_name = 'Dry Grass'
+...
+```
+
+
+
+## ENVIROI
+
+### Input Ports
+
+| Example Input Ports | GBDX Type | Required | Description                              |
+| ------------------- | --------- | -------- | ---------------------------------------- |
+| *input_roi*         | Directory | See Task | Directory containing the files required for the task. |
+
+### Description
+
+This data type allows a user to provide an S3 location for the region of interest input files. The task runner will search the input directory for a `*.xml` file. The following is an example:
+
+```python
+...
+task = gbdx.Task("ENVI_ROIToClassification")
+task.inputs.input_roi = 's3://<bucket>/<folder>/'
+...
+```
 
 
 
@@ -180,49 +256,87 @@ See the below table for the support datasets and their band grouping names.
 
 ## ENVIGCPSet
 
+### Input Ports
 
+| Example Input Ports | GBDX Type | Required | Description                              |
+| ------------------- | --------- | -------- | ---------------------------------------- |
+| *input_gcp*         | Directory | See Task | Directory containing the files required for the task. |
 
-> To come
+### Description
 
+This data type allows a user to provide an S3 location for the ground control point input files. The task runner will search the input directory for a `*.pts` file. The following is an example:
 
-
-## ENVIROI
-
-
-
-> To come
-
-
-
-## ENVISpectralLibrary
-
-
-
-> To come
+```python
+...
+task = gbdx.Task("ENVI_RPCOrthorectification")
+task.inputs.input_gcp = 's3://<bucket>/<folder>/'
+...
+```
 
 
 
 ## ENVITiePointSet
 
+### Input Ports
 
+| Example Input Ports | GBDX Type | Required | Description                              |
+| ------------------- | --------- | -------- | ---------------------------------------- |
+| *input_tiepoints*   | Directory | See Task | Directory containing the files required for the task. |
 
-> To come
+### Description
+
+This data type allows a user to provide an S3 location for the tie points input files. The task runner will search the input directory for a `*.pts` file. The following is an example:
+
+```python
+...
+task = gbdx.Task("ENVI_GenerateGCPsFromTiePoints")
+task.inputs.input_tiepoints = 's3://<bucket>/<folder>/'
+...
+```
 
 
 
 ## ENVIVector
 
+### Input Ports
 
+| Example Input Ports | GBDX Type | Required | Description                              |
+| ------------------- | --------- | -------- | ---------------------------------------- |
+| *input_vector*      | Directory | See Task | Directory containing the files required for the task. |
 
-> To come
+### Description
+
+This data type allows a user to provide an S3 location for the vector input files. The task runner will search the input directory for a `*.shp` file. The following is an example:
+
+```python
+...
+task = gbdx.Task("ENVI_VectorAttributeToROIs")
+task.inputs.input_vector = 's3://<bucket>/<folder>/'
+...
+```
 
 
 
 ## ENVICoordSys
 
+### Input Attributes
+
+| Attribute Name | Required | Description |
+| -------------- | -------- | ----------- |
+| **             |          |             |
+
+### Description
+
+This data type and it's attributes desribes an input . The following is an example:
+
+```python
+...
+task = gbdx.Task("ENVI_")
+task.inputs.input_ = '{"": ""}'
+...
+```
 
 
-> To come
 
 
 
