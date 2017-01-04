@@ -145,7 +145,7 @@ Script Example running AComp on VNIR+SWIR:
 	# Run AComp Workflow
 	workflow = gbdx.Workflow([ acompTask ])
   #Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
-	workflow.savedata(acompTask.outputs.data.value, location='Acomp/')
+	workflow.savedata(acompTask.outputs.data, location='Acomp/')
 	workflow.execute()
 
 	print workflow.id
@@ -166,7 +166,7 @@ Script Example running AComp on VNIR+SWIR:
 
 	# Run Workflow
 	workflow = gbdx.Workflow([ acompTask ])
-	workflow.savedata(acompTask.outputs.data.value, location='S3 gbd-customer-data location/<customer account>/output directory')
+	workflow.savedata(acompTask.outputs.data, location='S3 gbd-customer-data location/<customer account>/output directory')
 	workflow.execute()
 
 	print workflow.id
@@ -181,7 +181,6 @@ Script Example linking AComp to [protogenV2LULC](https://github.com/TDG-Platform
 	from gbdxtools import Interface
 	gbdx = Interface()
 
-	# Test Imagery for Tracy, CA: WV02
 	# Setup AComp Task
 	# The data input and output lines must be edited to point to an authorized customer S3 location)
 	acompTask = gbdx.Task('AComp', exclude_bands='P', data='s3://gbd-customer-data/CustomerAccount#/PathToImage/')
@@ -195,7 +194,7 @@ Script Example linking AComp to [protogenV2LULC](https://github.com/TDG-Platform
 	# Run Combined Workflow
 	workflow = gbdx.Workflow([ acompTask, pp_task, prot_lulc ])
  	#Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
-	workflow.savedata(prot_lulc.outputs.data.value, location='ProtogenLULC/')
+	workflow.savedata(prot_lulc.outputs.data, location='ProtogenLULC/')
 	workflow.execute()
 
 	print workflow.id
