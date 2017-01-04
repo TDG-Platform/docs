@@ -25,7 +25,7 @@ In general the ENVI task runner is an interface to the ENVI task engine. Part of
 
 
 
-# Find GBDX Task Port Type
+# Find ENVI Port Type
 
 
 
@@ -73,7 +73,7 @@ As can be seen from the above, the ENVI type for `task.inputs.input_raster` is `
 
 # ENVI Data Types
 
-Here are descriptions for the various GBDX supported ENVI data types and their varying usage examples. ENVI data types can be complex, which means some require multiple GBDX input ports to be adequately configure in the task_runner. These will be described below.
+Here are descriptions for the various GBDX supported ENVI data types and their varying usage examples. ENVI data types can be complex, which means some require multiple GBDX input ports to be adequately configured in the task_runner. These ports are described below.
 
 
 
@@ -90,7 +90,7 @@ Here are descriptions for the various GBDX supported ENVI data types and their v
 
 ### Description
 
-This data type is a generic file input for ENVI. It has no specific data types. The ENVI task engine will only accept a single file name. By default, the task runner will search the input directory for any [supported file type](https://www.harrisgeospatial.com/docs/supportedformats.html). Which can result in multiple files being found by the task runner, which will cause an error. So, inorder to use a port of this type, the task runner must be told which files to search for. This is done using the `*_filter` input port, which is prefixed with the name of the ENVIURI port. A usage example of this type of port is a follows:
+This input port is a generic file input for the ENVI task runner. The data type has no specific file type(s). The However, the ENVI task engine will only accept a single file name. By default, the task runner will search the input directory for any [supported file type](https://www.harrisgeospatial.com/docs/supportedformats.html). Which can result in multiple files being found by the task runner, which will cause an error. So, in order to use a port of this type, the task runner must be told which files to search for. This is done using the `*_filter` input port, which is prefixed with the name of the ENVIURI port. A usage example of this type of port is a follows:
 
 
 
@@ -101,7 +101,6 @@ gbdx = Interface()
 task = gbdx.Task("ENVI_BuildRasterSeries")
 task.inputs.input_raster_uri = "s3://<bucket>/<folder>/"
 task.inputs.input_raster_uri_filter = "*.dat"
-
 ...
 ```
 
@@ -126,7 +125,7 @@ The `*_filter` port needs to be a single string, or a string list of comma seper
 
 ### Description
 
-ENVI can open many different datasets from different sensors, the full list can be seen [here](https://www.harrisgeospatial.com/docs/supportedformats.html). However, the ENVI task engine requires a JSON object which includes a single file name for the raster dataset. As can be seen from the list of supported sensors, this file is different for each sensor. So the task runner has built in file discovery for datasets supported by GBDX. The default file discovery is suitable for all DigitalGlobe's  Worldview sensors, as it discovers `*.til` first, then `*.tif`. To configure the task runner to switch the file discovery logic, use the `*_metadata` input port to specify the `sensor type`, or all file discovery in the task runner can be overridden using the `*_filename` input port. Examples of are as follows:
+ENVI can open many different datasets from different sensors, the full list can be seen [here](https://www.harrisgeospatial.com/docs/supportedformats.html). However, the ENVI task engine requires a JSON object which includes a single file name for the raster dataset. As can be seen from the list of supported sensors, this file is different for each sensor. So the task runner has built in file discovery for datasets supported by GBDX. The default file discovery is suitable for all DigitalGlobe's  Worldview sensors, as it discovers `*.til` first, then `*.tif`. To configure the task runner to switch the file discovery logic, use the `*_metadata` input port to specify the `sensor type`, or all file discovery in the task runner can be overridden using the `*_filename` input port. Examples are as follows:
 
 
 
@@ -207,7 +206,7 @@ See the below table for the support datasets and their band grouping names.
 
 ### Description
 
-This data type has two different use cases, providing the task runner with a spectral library file, or using one of the spectral library files that is bundled with ENVI. When providing a spectral library file, the task runner will search the input directory for a file with the `*.sli` extension. The following example show this use case:
+This data type has two ports for two different use cases: providing the task runner with a spectral library file (S3 location), or using one of the spectral library files that is bundled with ENVI. When providing a spectral library file, the task runner will search the input directory for a file with the `*.sli` extension. The following example show this use case:
 
 ```python
 ...
@@ -245,7 +244,7 @@ task.inputs.spectrum_name = 'Dry Grass'
 
 ### Description
 
-This data type allows a user to provide an S3 location for the region of interest input files. The task runner will search the input directory for a `*.xml` file. The following is an example:
+This input port allows a user to provide an S3 location for the region of interest input files. The task runner will search the input directory for a `*.xml` file. The following is an example:
 
 ```python
 ...
@@ -270,7 +269,7 @@ task.inputs.input_roi = 's3://<bucket>/<folder>/'
 
 ### Description
 
-This data type allows a user to provide an S3 location for the ground control point input files. The task runner will search the input directory for a `*.pts` file. The following is an example:
+This input port allows a user to provide an S3 location for the ground control point input files. The task runner will search the input directory for a `*.pts` file. The following is an example:
 
 ```python
 ...
@@ -293,7 +292,7 @@ task.inputs.input_gcp = 's3://<bucket>/<folder>/'
 
 ### Description
 
-This data type allows a user to provide an S3 location for the tie points input files. The task runner will search the input directory for a `*.pts` file. The following is an example:
+This input port allows a user to provide an S3 location for the tie points input files. The task runner will search the input directory for a `*.pts` file. The following is an example:
 
 ```python
 ...
@@ -316,7 +315,7 @@ task.inputs.input_tiepoints = 's3://<bucket>/<folder>/'
 
 ### Description
 
-This data type allows a user to provide an S3 location for the vector input files. The task runner will search the input directory for a `*.shp` file. The following is an example:
+This input port allows a user to provide an S3 location for the vector input files. The task runner will search the input directory for a `*.shp` file. The following is an example:
 
 ```python
 ...
@@ -345,7 +344,7 @@ Harris documentation Reference: https://www.harrisgeospatial.com/docs/envicoords
 
 ### Description
 
-This data type and it's attributes desribes a coordinate system. The following is an example:
+This input port uses a string json object and it's attributes to describe a coordinate system. The following is an example:
 
 ```python
 ...
@@ -372,7 +371,7 @@ Harris documentation Reference: http://www.harrisgeospatial.com/docs/ENVIGridDef
 
 ### Description
 
-This data type and it's attributes desribes a grid definition. The following is an example:
+This input port uses a string json object and it's attributes to describe a grid definition. The following is an example:
 
 ```python
 ...
@@ -420,7 +419,7 @@ Harris Documentation Reference: http://www.harrisgeospatial.com/docs/envipseudor
 
 ### Description
 
-This data type and it's attributes desribes a pseudo taster spatial reference . The following is an example :
+This input port uses a string json object and it's attributes to describe a pseudo taster spatial reference . The following is an example :
 
 ```python
 ...
@@ -458,7 +457,7 @@ Harris Documentation Reference: http://www.harrisgeospatial.com/docs/envistandar
 
 ### Description
 
-This data type and it's attributes desribes a standard raster spatial reference. The following is an example:
+This input port uses a string json object and it's attributes to describe a standard raster spatial reference. The following is an example:
 
 ```python
 ...
@@ -494,7 +493,7 @@ Harris Documentation Reference: http://www.harrisgeospatial.com/docs/envirpcrast
 
 ### Description
 
-This data type and it's attributes desribes a RPC raster spatial reference. The following is an example:
+This input port uses a string json object and it's attributes to describe a RPC raster spatial reference. The following is an example:
 
 ```python
 ...
@@ -518,7 +517,7 @@ Harris ENVIGeoJSONToROITask Documentation Reference: https://harrisgeospatial.co
 
 ### Description
 
-This data type supports valid GeoJson. The GBDX input port will accept the GeoJson as a string. A detailed example can be seen on the Above reference Harris documentation for `ENVIGeoJSONToROITask`. There are some constraints on the GeoJson contents:
+This input port supports valid GeoJson, and will accept the GeoJson as a string. A detailed example can be seen on the Above referenced Harris documentation for `ENVIGeoJSONToROITask`. There are some constraints on the contents of the GeoJson:
 
 - ENVI currently supports GeometryCollection type objects. These objects can only contain one or more MultiPolygon type geometries.
 - The crs tag is not required. If the code contains this tag, ENVI converts it to a string. Otherwise, it uses a default value of wgs84.
@@ -539,3 +538,10 @@ task.inputs.input_geojson = ''' {
 ...
 ```
 
+
+
+# Questions or Clarifications
+
+
+
+Please direct any questions or clarifications to the Digital Globe algorithm curation team.
