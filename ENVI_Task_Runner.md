@@ -2,7 +2,7 @@
 
 
 
-In general the ENVI task runner is an interface to the ENVI task engine. Part of this interface is to provide support for the various ENVI data types, which are far more complex then the GBDX types (string, directory). This document will cover the more complicated use case of specific ENVI data types, that cannot be covered by the various documents for each ENVI task. The following are the currently supported ENVI data types and their GBDX type:
+In general the ENVI task runner is an interface to the ENVI task engine. Part of this interface is to provide support for the various [ENVI data types](https://www.harrisgeospatial.com/docs/supporteddatatypes.html), which are far more complex then the GBDX types (string, directory). This document will cover the more complicated use case of specific ENVI data types, that cannot be covered by the various documents for each ENVI task. The following are the currently supported ENVI data types and their GBDX type:
 
 
 
@@ -17,8 +17,10 @@ In general the ENVI task runner is an interface to the ENVI task engine. Part of
 |          ENVIVector          | Directory |
 |         ENVICoordSys         |  String   |
 |      ENVIGridDefinition      |  String   |
+|        ENVISpatialRef        |   None    |
 |  ENVIPseudoRasterSpatialRef  |  String   |
 | ENVIStandardRasterSpatialRef |  String   |
+|   ENVIRPCRasterSpatialRef    |  String   |
 |         ENVIGeoJson          |  String   |
 
 
@@ -239,6 +241,8 @@ task.inputs.spectrum_name = 'Dry Grass'
 | ------------------- | --------- | -------- | ---------------------------------------- |
 | *input_roi*         | Directory | See Task | Directory containing the files required for the task. |
 
+
+
 ### Description
 
 This data type allows a user to provide an S3 location for the region of interest input files. The task runner will search the input directory for a `*.xml` file. The following is an example:
@@ -262,6 +266,8 @@ task.inputs.input_roi = 's3://<bucket>/<folder>/'
 | ------------------- | --------- | -------- | ---------------------------------------- |
 | *input_gcp*         | Directory | See Task | Directory containing the files required for the task. |
 
+
+
 ### Description
 
 This data type allows a user to provide an S3 location for the ground control point input files. The task runner will search the input directory for a `*.pts` file. The following is an example:
@@ -282,6 +288,8 @@ task.inputs.input_gcp = 's3://<bucket>/<folder>/'
 | Example Input Ports | GBDX Type | Required | Description                              |
 | ------------------- | --------- | -------- | ---------------------------------------- |
 | *input_tiepoints*   | Directory | See Task | Directory containing the files required for the task. |
+
+
 
 ### Description
 
@@ -304,6 +312,8 @@ task.inputs.input_tiepoints = 's3://<bucket>/<folder>/'
 | ------------------- | --------- | -------- | ---------------------------------------- |
 | *input_vector*      | Directory | See Task | Directory containing the files required for the task. |
 
+
+
 ### Description
 
 This data type allows a user to provide an S3 location for the vector input files. The task runner will search the input directory for a `*.shp` file. The following is an example:
@@ -319,53 +329,213 @@ task.inputs.input_vector = 's3://<bucket>/<folder>/'
 
 ## ENVICoordSys
 
+Harris documentation Reference: https://www.harrisgeospatial.com/docs/envicoordsys.html 
+
 ### Input Attributes
 
-| Attribute Name | Required | Description |
-| -------------- | -------- | ----------- |
-| **             |          |             |
+| Attribute Name   | Required | Description                              |
+| ---------------- | -------- | ---------------------------------------- |
+| *factory*        | True     | Sting value of ` CoordSys`               |
+| *coord_sys_code* | False    | An integer indicating the geographic or projected coordinate system code to use. |
+| *coord_sys_str*  | False    | A string indicating the geographic or projected coordinate system string. |
+
+> Note: The coord_sys_code and coord_sys_string keys are mutually exclusive.
+
+
 
 ### Description
 
-This data type and it's attributes desribes an input . The following is an example:
+This data type and it's attributes desribes a coordinate system. The following is an example:
 
 ```python
 ...
-task = gbdx.Task("ENVI_")
-task.inputs.input_ = '{"": ""}'
+task = gbdx.Task("ENVI_ReprojectRaster")
+task.inputs.coord_sys = '{"factory": "CoordSys", "coord_sys_code": 00000}'
 ...
 ```
 
 
 
-
-
 ## ENVIGridDefinition
 
+Harris documentation Reference: http://www.harrisgeospatial.com/docs/ENVIGridDefinition.html
+
+### Input Attributes
+
+| Attribute Name | Required | Description                              |
+| -------------- | -------- | ---------------------------------------- |
+| *factory*      | True     | Sting value of ` GridDefinition`         |
+| *coord_sys*    | True     | An `ENVICoordSys` object that indicates the coordinate system of the grid definition |
+| *extents*      | True     | The geographic extent of the grid.       |
+| *nrows*        | True     | Number of rows in the grid.              |
+| *ncolumns*     | True     | Number of columns in the grid            |
+
+### Description
+
+This data type and it's attributes desribes a grid definition. The following is an example:
+
+```python
+...
+task = gbdx.Task("ENVI_RegridRaster")
+task.inputs.grid_definition = '''{
+  "factory": "GridDefinition",
+  "coord_sys": {"factory": "CoordSys", "coord_sys_code": 00000},
+  "extents": [0.0, 0.0, 0.0, 0.0],
+  "nrows": 0,
+  "ncolumns": 0
+}
+'''
+...
+```
 
 
-> To come
+
+## ENVISpatialRef
+
+This type may be identified as `_ENVISPATIALREF` in the GBDX task definitions, and is a wrapper (abstract type) for similar ENVI spatial reference objects. The sub types are as follows:
+
+- [ENVIPseudoRasterSpatialRef](#ENVIPseudoRasterSpatialRef)
+- [ENVIStandardRasterSpatialRef](#ENVIStandardRasterSpatialRef)
+- [ENVIRPCRasterSpatialRef](#ENVIRPCRasterSpatialRef)
+
+This means any of these sub types can be used for the parent type `_ENVISPATIALREF`. See the below sections for descriptions of each.
 
 
 
 ## ENVIPseudoRasterSpatialRef
 
+Harris Documentation Reference: http://www.harrisgeospatial.com/docs/envipseudorasterspatialref.html
+
+### Input Attributes
+
+| Attribute Name       | Required | Description                              |
+| -------------------- | -------- | ---------------------------------------- |
+| *factory*            | True     | Sting value of `PseudoRasterSpatialRef`  |
+| *pseudo_geo_point_1* | True     | A four-element array [*X Pixel*, *Y Pixel*, *Longitude*, *Latitude*] specifying a geographic corner for a non-georeferenced file. |
+| *pseudo_geo_point_2* | True     | A four-element array [*X Pixel*, *Y Pixel*, *Longitude*, *Latitude*] specifying a geographic corner for a non-georeferenced file. |
+| *pseudo_geo_point_3* | True     | A four-element array [*X Pixel*, *Y Pixel*, *Longitude*, *Latitude*] specifying a geographic corner for a non-georeferenced file. |
+| *pseudo_geo_point_4* | True     | A four-element array [*X Pixel*, *Y Pixel*, *Longitude*, *Latitude*] specifying a geographic corner for a non-georeferenced file. |
 
 
-> To come
+
+### Description
+
+This data type and it's attributes desribes a pseudo taster spatial reference . The following is an example :
+
+```python
+...
+task.inputs.spatial_reference = '''{
+  "factory": "PseudoRasterSpatialRef",
+  "pseudo_geo_point_1": [1.0, 1.0, -117.07201, 32.893801],
+  "pseudo_geo_point_2": [1000.0, 1.0, -116.95856, 32.873647],
+  "pseudo_geo_point_3": [1.0, 1000.0, -117.09961 32.806283],
+  "pseudo_geo_point_4": [1000.0, 1000.0, -116.98626, 32.786154],
+}'''
+...
+```
 
 
 
 ## ENVIStandardRasterSpatialRef
 
+Harris Documentation Reference: http://www.harrisgeospatial.com/docs/envistandardrasterspatialref.html
+
+### Input Attributes
+
+| Attribute Name   | Required | Description                              |
+| ---------------- | -------- | ---------------------------------------- |
+| *factory*        | True     | Sting value of `StandardRasterSpatialRef` |
+| *coord_sys_code* | False    | An integer indicating the geographic or projected coordinate system code to use. |
+| *coord_sys_str*  | False    | A string indicating the geographic or projected coordinate system string. |
+| pixel_size       | True     | A two-element double-precision array with the [x,y] pixel size in the same units as the associated coordinate system. |
+| rotation         | False    | A double-precision floating-point value indicating the rotation of the image, degrees clockwise from North. |
+| tie_point_pixel  | False    | A two-element double-precision array with the pixel coordinates of the tie point. If you do not set this key. DEFAULT: [0,0] |
+| tie_point_map    | True     | A two-element double-precision array with the map coordinates of the tie_point_pixel location. Must be in the same units as the coordinate system. |
+
+>  Note: The coord_sys_code and coord_sys_string keys are mutually exclusive.
 
 
-> To come
+
+### Description
+
+This data type and it's attributes desribes a standard raster spatial reference. The following is an example:
+
+```python
+...
+task.inputs.input_ = '''{
+  "factory": "StandardRasterSpatialRef",
+  "coord_sys_code": [1.0, 1.0, -117.07201, 32.893801],
+  "pixel_size": [9.186, 9.186],
+  "tie_point_pixel": [0.0, 0.0],
+  "tie_point_map": [3075299.7946,1246937.9905],
+}'''
+...
+```
+
+
+
+## ENVIRPCRasterSpatialRef
+
+Harris Documentation Reference: http://www.harrisgeospatial.com/docs/envirpcrasterspatialref.html
+
+### Input Attributes
+
+| Attribute Name       | Required | Description                              |
+| -------------------- | -------- | ---------------------------------------- |
+| *factory*            | True     | Sting value of `RPCRasterSpatialRef`     |
+| *rpc_offsets*        | True     | A five-element, double-precision array that specifies the *Line_Offset*, *Sample_Offset*, *Latitude_Offset*, *Longitude_Offset*, and *Height_Offset* values |
+| *rpc_scales*         | True     | A five-element, double-precision array that specifies the *Line_Scale*, *Sample_Scale*, *Latitude_Scale*, *Longitude_Scale*, and *Height_Scale* values. |
+| *rpc_line_num_coeff* | True     | A 20-element, double-precision array of RPC line numerator coefficients. |
+| *rpc_line_den_coeff* | True     | A 20-element, double-precision array of RPC line denominator coefficients. |
+| *rpc_samp_num_coeff* | True     | A 20-element, double-precision array of RPC sample numerator coefficients. |
+| *rpc_samp_den_coeff* | True     | A 20-element, double-precision array of RPC sample denominator coefficients. |
+
+
+
+### Description
+
+This data type and it's attributes desribes a RPC raster spatial reference. The following is an example:
+
+```python
+...
+task.inputs.input_ = '''{
+  "factory": "StandardRasterSpatialRef",
+  "coord_sys_code": [1.0, 1.0, -117.07201, 32.893801],
+  "pixel_size": [9.186, 9.186],
+  "tie_point_pixel": [0.0, 0.0],
+  "tie_point_map": [3075299.7946,1246937.9905],
+}'''
+...
+```
 
 
 
 ## ENVIGeoJson
 
+Harris Documentation Reference: https://harrisgeospatial.com/docs/envigeojson.html
 
+Harris ENVIGeoJSONToROITask Documentation Reference: https://harrisgeospatial.com/docs/envigeojsontoroitask.html
 
-> To come
+### Description
+
+This data type supports valid GeoJson. The GBDX input port will accept the GeoJson as a string. A detailed example can be seen on the Above reference Harris documentation for `ENVIGeoJSONToROITask`. There are some constraints on the GeoJson contents:
+
+- ENVI currently supports GeometryCollection type objects. These objects can only contain one or more MultiPolygon type geometries.
+- The crs tag is not required. If the code contains this tag, ENVI converts it to a string. Otherwise, it uses a default value of wgs84.
+- You can add name and color properties to each MultiPolygon object.
+
+For example:
+
+```python
+...
+task = gbdx.Task("ENVI_GeoJSONToROI")
+task.inputs.input_geojson = ''' {
+  "type": "GeometryCollection",
+  "geometries": [
+    {"type": "MultiPolygon",
+  ...
+} # See the Harris code example for more details.
+'''
+...
+```
+
