@@ -25,7 +25,7 @@ This task requires that the image has been pre-processed using the [Advanced Ima
 	isodata.inputs.file_types = "tif"
 	aggreg = gbdx.Task("ENVI_ClassificationAggregation")
 	aggreg.inputs.input_raster = isodata.outputs.output_raster_uri.value
-	aggreg.inputs.file_types = "hdr"
+	aggreg.inputs_uri_file_types = "hdr"
 	workflow = gbdx.Workflow([ isodata, aggreg ])
 	workflow.savedata(isodata.outputs.output_raster_uri, location="S3 gbd-customer-data location/<customer account>/output directory")
 	workflow.savedata(aggreg.outputs.output_raster_uri, location="S3 gbd-customer-data location/<customer account>/output directory")
@@ -98,14 +98,13 @@ Included below is a complete end-to-end workflow for Advanced Image Preprocessin
 	# Run Smoothing
 	aggreg = gbdx.Task("ENVI_ClassificationSmoothing")
 	aggreg.inputs.input_raster = isodata.outputs.output_raster_uri.value
-	aggreg.inputs.file_types = "hdr"
 
 	# Run Workflow and Send output to  s3 Bucket
 	workflow = gbdx.Workflow([ aoptask, isodata, aggreg ])
-  #Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
-	workflow.savedata(aoptask.outputs.data, location="ClassificationAggrigation/AOP/")
-	workflow.savedata(isodata.outputs.output_raster_uri, location="ClassificationAggregation/ISODATA/")
-	workflow.savedata(aggreg.outputs.output_raster_uri, location="ClassificationAggrigation/Aggregation/")
+   	# The data input and output lines must be edited to point to an authorized customer S3 location)
+	workflow.savedata(aoptask.outputs.data,location="S3 gbd-customer-data location/<customer account>/output directory")
+	workflow.savedata(isodata.outputs.output_raster_uri,location="S3 gbd-customer-data location/<customer account>/output directory")
+	workflow.savedata(aggreg.outputs.output_raster_uri,location="S3 gbd-customer-data location/<customer account>/output directory")
 	workflow.execute()
 	print workflow.id
 	print workflow.status
