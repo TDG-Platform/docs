@@ -23,14 +23,13 @@ This script uses Aadvanced Image Preprocessor to produce orthorectified and atmo
 from gbdxtools import Interface
 gbdx = Interface()
 
-# WV03 Image over Naples, Italy
 # Make sure both pan sharpening and DRA are disabled in order to get separate PAN and MS outputs.
 # The data input and output lines must be edited to point to an authorized customer S3 location)
 data = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
 aoptask = gbdx.Task('AOP_Strip_Processor', data=data, enable_pansharpen=False, enable_dra=False)
 workflow = gbdx.Workflow([ aoptask ])
 #Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
-workflow.savedata(aoptask.outputs.data, location='AOPOutput')
+workflow.savedata(aoptask.outputs.data, location='S3 gbd-customer-data location/<customer account>/output directory')
 
 workflow.execute()
 
@@ -50,15 +49,14 @@ In [2]: # First Initialize the Environment
 In [3]: from gbdxtools import Interface
 In [4]: gbdx = Interface()
   2016-06-24 16:29:53,856 - gbdxtools - INFO - Logger initialized
-In [5]: # WV03 Image over Naples, Italy
-In [6]: # Make sure both pan sharpening and DRA are disabled in order to get separate PAN and MS outputs.
-In [7]: data = "S3 gbd-customer-data location/<customer account>/input directory"
-In [8]: aoptask = gbdx.Task('AOP_Strip_Processor', data=data, enable_pansharpen=False, enable_dra=False)
-In [9]: workflow = gbdx.Workflow([ aoptask ])  
-In [10]: workflow.savedata(aoptask.outputs.data, location='S3 gbd-customer-data location/<customer account>/output directory')
-In [11]: workflow.execute()
-Out[12]: u'4362772047134837472'
-In [13]: print workflow.id
+In [5]: # Make sure both pan sharpening and DRA are disabled in order to get separate PAN and MS outputs.
+In [6]: data = "S3 gbd-customer-data location/<customer account>/input directory"
+In [7]: aoptask = gbdx.Task('AOP_Strip_Processor', data=data, enable_pansharpen=False, enable_dra=False)
+In [8]: workflow = gbdx.Workflow([ aoptask ])  
+In [9]: workflow.savedata(aoptask.outputs.data, location='S3 gbd-customer-data location/<customer account>/output directory')
+In [10]: workflow.execute()
+Out[11]: u'4362772047134837472'
+In [12]: print workflow.id
   4362772047134837472
 ```
 

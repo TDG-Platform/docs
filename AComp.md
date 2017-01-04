@@ -32,7 +32,7 @@ The AComp GBDX task can be run through a simple Python script using  [gbdxtools]
     acomp = gbdx.Task('AComp', data='s3://gbd-customer-data/CustomerAccount#/PathToImage/')
     workflow = gbdx.Workflow([acomp])
     #Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
-    workflow.savedata(acomp.outputs.data, location='Acomp/')
+    workflow.savedata(acomp.outputs.data, location='S3 gbd-customer-data location/<customer account>/output directory')
     workflow.execute()
 
     print workflow.id
@@ -120,7 +120,7 @@ First the VNIR and SWIR images must be staged to the same parent directory.  An 
 
 	# Stage VNIR and SWIR in the same parent directory
 	destination = 's3://gbd-customer-data/<customer account>/your designated parent directory'
-	s3task1 = gbdx.Task("StageDataToS3", data='s3://receiving-dgcs-tdgplatform-com/<file directory>', destination=destination) # VNIR image
+	s3task2 = gbdx.Task("StageDataToS3", data='s3://receiving-dgcs-tdgplatform-com/<file directory>', destination=destination) # VNIR image
 	s3task2 = gbdx.Task("StageDataToS3", data='s3://receiving-dgcs-tdgplatform-com/<file directory>', destination=destination) # SWIR image)
 	workflow = gbdx.Workflow([ s3task1, s3task2 ])
 	workflow.execute()
@@ -145,7 +145,7 @@ Script Example running AComp on VNIR+SWIR:
 	# Run AComp Workflow
 	workflow = gbdx.Workflow([ acompTask ])
   #Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
-	workflow.savedata(acompTask.outputs.data.value, location='Acomp/')
+	workflow.savedata(acompTask.outputs.data, location='Acomp/')
 	workflow.execute()
 
 	print workflow.id
@@ -166,7 +166,7 @@ Script Example running AComp on VNIR+SWIR:
 
 	# Run Workflow
 	workflow = gbdx.Workflow([ acompTask ])
-	workflow.savedata(acompTask.outputs.data.value, location='S3 gbd-customer-data location/<customer account>/output directory')
+	workflow.savedata(acompTask.outputs.data, location='S3 gbd-customer-data location/<customer account>/output directory')
 	workflow.execute()
 
 	print workflow.id
@@ -181,7 +181,6 @@ Script Example linking AComp to [protogenV2LULC](https://github.com/TDG-Platform
 	from gbdxtools import Interface
 	gbdx = Interface()
 
-	# Test Imagery for Tracy, CA: WV02
 	# Setup AComp Task
 	# The data input and output lines must be edited to point to an authorized customer S3 location)
 	acompTask = gbdx.Task('AComp', exclude_bands='P', data='s3://gbd-customer-data/CustomerAccount#/PathToImage/')
@@ -195,7 +194,7 @@ Script Example linking AComp to [protogenV2LULC](https://github.com/TDG-Platform
 	# Run Combined Workflow
 	workflow = gbdx.Workflow([ acompTask, pp_task, prot_lulc ])
  	#Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
-	workflow.savedata(prot_lulc.outputs.data.value, location='ProtogenLULC/')
+	workflow.savedata(prot_lulc.outputs.data, location='ProtogenLULC/')
 	workflow.execute()
 
 	print workflow.id
@@ -222,7 +221,7 @@ QB02 | 41,551,668 | 312.07 | 395.610  | 1.27  |
 
 Processing Level 2 or Level 3 imagery will require you to order the imagery outside the platform and upload it to your S3-customer location.
 
-AComp currently does not run end-to-end with ENVI Tasks.  A "glueTask" to link these processes is under development.
+AComp currently does not run end-to-end with ENVI Tasks.
 
 ### Contact Us
 Tech Owners: [Fabio Pacifici](#fpacific@digitalglobe.com), [Alex Comer](#acomer@digitalglobe.com) & Editor:  [Kathleen Johnson](#kathleen.johnsons@digitalglobe.com)
