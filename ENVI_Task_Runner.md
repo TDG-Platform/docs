@@ -25,7 +25,7 @@ In general the ENVI task runner is an interface to the ENVI task engine. Part of
 
 
 
-# Find ENVI Port Type
+# Find GBDX Task Port Type
 
 
 
