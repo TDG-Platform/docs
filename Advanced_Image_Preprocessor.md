@@ -105,20 +105,20 @@ The Advance Image Preprocessor task inputs can be set in various combinations to
   ```python
   aoptask = gbdx.Task('AOP_Strip_Processor', data=data)
   ```
- * Multispectral image only (4-band or 8-band, depending on sensor) with ACOMP
+ * Multispectral image only (4-band or 8-band, depending on sensor) with AComp
   * `bands` = `MS`
   * `enable_pansharpen` = `false`
   * `enable_dra` = `false`
   ```python
   aoptask = gbdx.Task('AOP_Strip_Processor', data=data, bands='MS', enable_pansharpen=False, enable_dra=False)
   ```
- * Multispectral and panchromatic images (separate) with ACOMP
+ * Multispectral and panchromatic images (separate) with AComp
   * `enable_pansharpen` = `false`
   * `enable_dra` = `false`
   ```python
   aoptask = gbdx.Task('AOP_Strip_Processor', data=data, enable_pansharpen=False, enable_dra=False)
   ```
- * Panchromatic image only (ACOMP not available)
+ * Panchromatic image only (AComp not available)
   * `bands` = `PAN`
   * `enable_acomp` = `false`
   * `enable_pansharpen` = `false`
@@ -253,11 +253,11 @@ For details on the methods of testing the runtimes of the task visit the followi
 
   Sensor Name  |  Total Pixels  |  Total Area (k2)  |  Time(min)  |  Time/Area k2
 --------|:----------:|-----------|----------------|---------------
-QB | 41,551,668 | 312.07 | 460.603 | 1.48 |
+QB02 | 41,551,668 | 312.07 | 460.603 | 1.48 |
 WV01| 1,028,100,320 |351.72 |475.276 | 1.35|
 WV02|35,872,942|329.87|651.095 | 1.97|
 WV03|35,371,971|196.27|655.671 | 3.34|
-GE| 57,498,000|332.97|560.836 | 1.68|
+GE01| 57,498,000|332.97|560.836 | 1.68|
 
 
 #### Contact Us   
