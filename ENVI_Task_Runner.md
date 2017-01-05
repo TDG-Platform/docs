@@ -6,22 +6,22 @@ In general the ENVI task runner is an interface to the ENVI task engine. Part of
 
 
 
-|        ENVI Data Type        | GBDX Type |
-| :--------------------------: | :-------: |
-|           ENVIURI            | Directory |
-|          ENVIRaster          | Directory |
-|     ENVISpectralLibrary      | Directory |
-|           ENVIROI            | Directory |
-|          ENVIGCPSet          | Directory |
-|       ENVITiePointSet        | Directory |
-|          ENVIVector          | Directory |
-|         ENVICoordSys         |  String   |
-|      ENVIGridDefinition      |  String   |
-|        ENVISpatialRef        |   None    |
-|  ENVIPseudoRasterSpatialRef  |  String   |
-| ENVIStandardRasterSpatialRef |  String   |
-|   ENVIRPCRasterSpatialRef    |  String   |
-|         ENVIGeoJson          |  String   |
+|              ENVI Data Type              | GBDX Type |
+| :--------------------------------------: | :-------: |
+|           [ENVIURI](#ENVIURI)            | Directory |
+|        [ENVIRaster](#ENVIRaster)         | Directory |
+| [ENVISpectralLibrary](#ENVISpectralLibrary) | Directory |
+|           [ENVIROI](#ENVIROI)            | Directory |
+|        [ENVIGCPSet](#ENVIGCPSet)         | Directory |
+|   [ENVITiePointSet](#ENVITiePointSet)    | Directory |
+|        [ENVIVector](#ENVIVector)         | Directory |
+|      [ENVICoordSys](#ENVICoordSys)       |  String   |
+| [ENVIGridDefinition](#ENVIGridDefinition) |  String   |
+|    [ENVISpatialRef](#ENVISpatialRef)     |   None    |
+| [ENVIPseudoRasterSpatialRef](#ENVIPseudoRasterSpatialRef) |  String   |
+| [ENVIStandardRasterSpatialRef](#ENVIStandardRasterSpatialRef) |  String   |
+| [ENVIRPCRasterSpatialRef](#ENVIRPCRasterSpatialRef) |  String   |
+|       [ENVIGeoJson](#ENVIGeoJson)        |  String   |
 
 
 
@@ -153,6 +153,8 @@ task.inputs.input_raster_filename = 'landsat8_MTL.txt'
 
 
 
+#### Band Grouping Selection
+
 ENVI has different procedures for opening different data sets. When the rasters are opened, the bands are grouped into different sets. For example, Ikonos datasets have two groupings *multispectral* and *panchromatic*. Where a dataset from Sentinel-2 would have band grouping *10m*, *20m*, and *60m*. The following are examples of using `*_band_grouping` continued from above:
 
 
@@ -175,11 +177,11 @@ task.inputs.input_raster_band_grouping = '10m'
 
 
 
-See the below table for the support datasets and their band grouping names.
+See the below table for support datasets and the specific band grouping names.
 
 
 
-### Supported Datasets
+##### Supported Datasets
 
 |               Dataset Name               |           Band Grouping Names            |
 | :--------------------------------------: | :--------------------------------------: |
@@ -188,6 +190,51 @@ See the below table for the support datasets and their band grouping names.
 |               WORLDVIEW-3                |    multispectral, panchromatic, swir     |
 |               Landsat OLI                | multispectral, panchromatic, cirrus, thermal, quality |
 |                SENTINEL-2                |              10m, 20m, 60m               |
+
+
+
+#### ENVI DEM Files
+
+
+
+There are tasks in the ENVI catalogue that require DEM rasters as inputs. The ENVI task engine requires the name of the DEM raster to be used for those tasks. Therefore the ENVI task runner defaults to expecting the user to provide the the DEM file via S3. An example of this is similar to a typical ENVIRaster, as follows:
+
+
+
+```python
+...
+task = gbdx.Task('ENVI_RPCOrthorectification')
+task.inputs.input_raster = 's3://<bucket>/<folder>/<raster>'
+task.inputs.dem_raster = 's3://<bucket>/<folder>/<dem>'
+...
+```
+
+
+
+However, ENVI comes with the GMTED2010 DEM raster which is at 30 arc-seconds. And the Docker image for the ENVI task runner includes a 7.5 arc-second version of [GMTED2010](http://www.harrisgeospatial.com/Company/PressRoom/Blogs/ImagerySpeaksDetail/TabId/901/ArtMID/2927/ArticleID/14401/Upgrading-the-GMTED2010-global-elevation-data-included-with-ENVI.aspx). These two rasters can be sumarized as follows:
+
+
+
+| Filename            | Resolution     | Notes                          |
+| ------------------- | -------------- | ------------------------------ |
+| GMTED2010.jp2       | 7.5 arc-second | Excludes Greenland & Antarctic |
+| GMTED2010_polar.jp2 | 30 arc-second  | Global Coverage                |
+
+
+
+To use these files, there is a metadata attribute called `dem file` which can be used to specify the which file to use as the DEM file for the task. The following is an example:
+
+```python
+# Use the 30 arc-second DEM
+...
+task = gbdx.Task('ENVI_RPCOrthorectification')
+task.inputs.input_raster = 's3://<bucket>/<folder>/<raster>'
+task.inputs.dem_raster_metadata = '{"dem file": "GMTED2010_polar.jp2"}'
+...
+
+```
+
+> Note: The dem_raster port is optional, and if it is missing, the task runner will use the GMTED2010.jp2.
 
 
 
