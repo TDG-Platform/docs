@@ -144,7 +144,7 @@ Script Example running AComp on VNIR+SWIR:
 
 	# Run AComp Workflow
 	workflow = gbdx.Workflow([ acompTask ])
-  #Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
+  	#Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
 	workflow.savedata(acompTask.outputs.data, location='Acomp/')
 	workflow.execute()
 
