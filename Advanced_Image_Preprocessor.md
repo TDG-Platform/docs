@@ -40,7 +40,7 @@ print workflow.status
 The `data` variable specifies the S3 URL of the raw image.
 The `gbdx.Task()` call creates the `aoptask` instance and specifies its desired input values.
 The `workflow.savedata()` call specifies that the task output will be saved in
-[gbd-customer-data/prefix/Naples_WV03_Quickstart](http://gbdxdocs.digitalglobe.com/docs/s3-storage-service-course).
+[gbd-customer-data/customer directory](http://gbdxdocs.digitalglobe.com/docs/s3-storage-service-course).
 
 Running the script in an IPython session produces these results:
 ```
