@@ -2,14 +2,14 @@
 
 
 
-In general the ENVI task runner is an interface to the ENVI task engine. Part of this interface is to provide support for the various [ENVI data types](https://www.harrisgeospatial.com/docs/supporteddatatypes.html), which are far more complex then the GBDX types (string, directory). This document will cover the more complicated use case of specific ENVI data types, that cannot be covered by the various documents for each ENVI task. The following are the currently supported ENVI data types and their GBDX type:
+In general the ENVI task runner is an interface to the ENVI task engine. Part of this interface is to provide support for the various [ENVI data types](https://www.harrisgeospatial.com/docs/supporteddatatypes.html). This document will cover the more complicated use case of specific ENVI data types, that cannot be covered by the various documents for each ENVI task. The following are the currently supported ENVI data types and their GBDX type:
 
 
 
 |              ENVI Data Type              | GBDX Type |
 | :--------------------------------------: | :-------: |
-|           [ENVIURI](#ENVIURI)            | Directory |
 |        [ENVIRaster](#ENVIRaster)         | Directory |
+|           [ENVIURI](#ENVIURI)            | Directory |
 | [ENVISpectralLibrary](#ENVISpectralLibrary) | Directory |
 |           [ENVIROI](#ENVIROI)            | Directory |
 |        [ENVIGCPSet](#ENVIGCPSet)         | Directory |
@@ -77,39 +77,6 @@ Here are descriptions for the various GBDX supported ENVI data types and their v
 
 
 
-## ENVIURI
-
-### Input Ports
-
-| Example Input Ports       | GBDX Type | Required | Description of Use Case                  |
-| ------------------------- | --------- | -------- | ---------------------------------------- |
-| *input_raster_uri*        | Directory | See Task | Directory containing the files required for the task. |
-| *input_raster_uri_filter* | String    | False    | A single string or list of strings used to filter the input directory. Supports Python glob2 syntax. See below for more details. |
-
-
-
-### Description
-
-This input port is a generic file input for the ENVI task runner. The data type has no specific file type(s). The However, the ENVI task engine will only accept a single file name. By default, the task runner will search the input directory for any [supported file type](https://www.harrisgeospatial.com/docs/supportedformats.html). Which can result in multiple files being found by the task runner, which will cause an error. So, in order to use a port of this type, the task runner must be told which files to search for. This is done using the `*_filter` input port, which is prefixed with the name of the ENVIURI port. A usage example of this type of port is a follows:
-
-
-
-```python
-from gbdxtools import Interface
-gbdx = Interface()
-
-task = gbdx.Task("ENVI_BuildRasterSeries")
-task.inputs.input_raster_uri = "s3://<bucket>/<folder>/"
-task.inputs.input_raster_uri_filter = "*.dat"
-...
-```
-
-
-
-The `*_filter` port needs to be a single string, or a string list of comma seperated filter strings.  Each filter string must be a Python [globe2](https://docs.python.org/2/library/glob.html) style syntax. For example, a single string like `"**/*_MTL.txt"`, or a list of extensions (`'["*.dat", "**/_MTL.txt"]'`).  
-
-
-
 ## ENVIRaster
 
 ### Input Ports
@@ -120,29 +87,43 @@ The `*_filter` port needs to be a single string, or a string list of comma seper
 | *input_raster_metadata*      | String    | False    | A string dictionary for overridding the raster metadata. |
 | *input_raster_filename*      | String    | False    | A string with the filename of the raster for ENVI to open. This overrides any file discovery. |
 | *input_raster_band_grouping* | String    | False    | A string name indentify which band grouping to use for the task. |
+| *dem_raster*                 | Directory | False    | Special case of ENVI Raster. Supports using ENVI built in DEM files. |
+| *dem_raster_metadata*        | String    | False    | Special case of ENVIRaster metadata. Supports the `dem file` attribute as described below. |
 
 
 
 ### Description
 
-ENVI can open many different datasets from different sensors, the full list can be seen [here](https://www.harrisgeospatial.com/docs/supportedformats.html). However, the ENVI task engine requires a JSON object which includes a single file name for the raster dataset. As can be seen from the list of supported sensors, this file is different for each sensor. So the task runner has built in file discovery for datasets supported by GBDX. The default file discovery is suitable for all DigitalGlobe's  Worldview sensors, as it discovers `*.til` first, then `*.tif`. To configure the task runner to switch the file discovery logic, use the `*_metadata` input port to specify the `sensor type`, or all file discovery in the task runner can be overridden using the `*_filename` input port. Examples are as follows:
+ENVI can open many different datasets from different sensors, the full list can be seen [here](https://www.harrisgeospatial.com/docs/supportedformats.html). However, the ENVI task engine requires a JSON object which includes a single file name for the raster dataset. As can be seen from the list of supported sensors, this file is different for each sensor. So the task runner has built in file discovery for datasets supported by GBDX. The default file discovery is suitable for all DigitalGlobe's  Worldview sensors, as it discovers `*.til` first, then `*.tif`, for example:
 
 
 
 ```python
-# Default Usage
+
 ...
 task = gbdx.Task('ENVI_QuerySpectralIndices')
 task.inputs.input_raster = 's3://<bucket>/<folder>/'
 ...
+```
 
+
+
+To configure the task runner to switch the file discovery logic, use the `*_metadata` input port to specify the `sensor type` attribute. Currently the task runner supports `IKONOS`, `Landsat OLI`, `Sentinel-2`. The following is an example:
+
+```python
 # Specify the sensor type
 ...
 task = gbdx.Task('ENVI_QuerySpectralIndices')
 task.inputs.input_raster = 's3://<bucket>/<folder>/'
 task.inputs.input_raster_metadata = '{"sensor type": "IKONOS"}'
 ...
+```
 
+
+
+Alternately a user can overide all file discovery logic by using the `*_filename` input port. This passes the relative file name directly to the ENVI task engine. An example is as follows:
+
+```python
 # Specify the filename for overriding
 ...
 task = gbdx.Task('ENVI_QuerySpectralIndices')
@@ -153,14 +134,14 @@ task.inputs.input_raster_filename = 'landsat8_MTL.txt'
 
 
 
-#### Band Grouping Selection
+#### Raster Band Grouping Selection
 
-ENVI has different procedures for opening different data sets. When the rasters are opened, the bands are grouped into different sets. For example, Ikonos datasets have two groupings *multispectral* and *panchromatic*. Where a dataset from Sentinel-2 would have band grouping *10m*, *20m*, and *60m*. The following are examples of using `*_band_grouping` continued from above:
+When ENVI opens standardized raster data products distributed by various geospatial data providers ENVI has built-in intelligence to open with special metadata assignment and groups certain imagery bands together as individual raster datasets. For example, a typical IKONOS dataset is opened as two raster band groupings, *multispectral* and *panchromatic*. See the table below for datasets currently supported by the GBDX ENVI task runner and the specific band grouping names that can be specified. The following are examples of using `*_band_grouping` continued from above:
 
 
 
 ```python
-# For Ikonos
+# For IKONOS
 ...
 task.inputs.input_raster_band_grouping = 'multispectral'
 ...
@@ -186,7 +167,7 @@ See the below table for support datasets and the specific band grouping names.
 |               Dataset Name               |           Band Grouping Names            |
 | :--------------------------------------: | :--------------------------------------: |
 | IKONOS, QuickBird, GeoEye-1, Worldview-2, Worldview-4 |       multispectral, panchromatic        |
-|          Worldview, Worldview-1          |               panchromatic               |
+|               Worldview-1                |               panchromatic               |
 |               WORLDVIEW-3                |    multispectral, panchromatic, swir     |
 |               Landsat OLI                | multispectral, panchromatic, cirrus, thermal, quality |
 |                SENTINEL-2                |              10m, 20m, 60m               |
@@ -235,6 +216,39 @@ task.inputs.dem_raster_metadata = '{"dem file": "GMTED2010_polar.jp2"}'
 ```
 
 > Note: The dem_raster port is optional, and if it is missing, the task runner will use the GMTED2010.jp2.
+
+
+
+## ENVIURI
+
+### Input Ports
+
+| Example Input Ports       | GBDX Type | Required | Description of Use Case                  |
+| ------------------------- | --------- | -------- | ---------------------------------------- |
+| *input_raster_uri*        | Directory | See Task | Directory containing the files required for the task. |
+| *input_raster_uri_filter* | String    | False    | A single string or list of strings used to filter the input directory. Supports Python glob2 syntax. See below for more details. |
+
+
+
+### Description
+
+This input port is a generic file input for the ENVI task runner. The data type has no specific file type(s). The However, the ENVI task engine will only accept a single file name. By default, the task runner will search the input directory for any [supported file type](https://www.harrisgeospatial.com/docs/supportedformats.html). Which can result in multiple files being found by the task runner, which will cause an error. So, in order to use a port of this type, the task runner must be told which files to search for. This is done using the `*_filter` input port, which is prefixed with the name of the ENVIURI port. A usage example of this type of port is a follows:
+
+
+
+```python
+from gbdxtools import Interface
+gbdx = Interface()
+
+task = gbdx.Task("ENVI_BuildRasterSeries")
+task.inputs.input_raster_uri = "s3://<bucket>/<folder>/"
+task.inputs.input_raster_uri_filter = "*.dat"
+...
+```
+
+
+
+The `*_filter` port needs to be a single string, or a string list of comma seperated filter strings.  Each filter string must be a Python [globe2](https://docs.python.org/2/library/glob.html) style syntax. For example, a single string like `"**/*_MTL.txt"`, or a list of extensions (`'["*.dat", "**/_MTL.txt"]'`).  
 
 
 
@@ -585,10 +599,3 @@ task.inputs.input_geojson = ''' {
 ...
 ```
 
-
-
-# Questions or Clarifications
-
-
-
-Please direct any questions or clarifications to the Digital Globe algorithm curation team.
