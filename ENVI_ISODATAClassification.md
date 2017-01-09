@@ -8,7 +8,6 @@
  * [Outputs](#outputs) - Task outputs and example contents.
  * [Advanced Options](#advanced-options)
  * [Runtime](#runtime) - Results of task benchmark tests.
-
  * [Contact Us](#contact-us) - Contact tech or document owner.
 
 **Example Script:** Run in IPython using the GBDXTools Interface
