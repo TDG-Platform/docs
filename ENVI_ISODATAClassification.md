@@ -21,10 +21,8 @@
     gbdx = Interface()
 
     envitask = gbdx.Task("ENVI_ISODATAClassification")
-    envitask.inputs.file_types = 'tif'
     #Edit the following path to reflect a specific path to an image
     envitask.inputs.input_raster = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
-    envitask.outputs.output_raster = "ENVI"
 
     workflow = gbdx.Workflow([ envitask ])
 
