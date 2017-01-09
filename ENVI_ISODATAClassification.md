@@ -58,7 +58,7 @@ The following table lists the ISO DATA Classification task outputs.
 
 Name                | Required |   Description
 --------------------|:--------:|-----------------
-output_raster_uri   |     Y    | This will explain the output file location and provide the output in .TIF format.
+output_raster_uri   |     Y    | This will explain the output file location and provide the output in .TIF format with an ENVI .HDR file.
 
 
 This task will function on an image located in the S3 location.  The file type input is preferred in the .hdr format.   Additional options include:
