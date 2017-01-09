@@ -6,6 +6,7 @@
  * [Quickstart](#quickstart) - Get started!
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and example contents.
+ * [Advanced Options](#advanced-options)
  * [Runtime](#runtime) - Results of task benchmark tests.
  * [Contact Us](#contact-us) - Contact tech or document owner.
 
@@ -16,15 +17,11 @@
 # First Initialize the Environment
 
     from gbdxtools import Interface
-    import json
-
     gbdx = Interface()
 
     envitask = gbdx.Task("ENVI_ISODATAClassification")
-    envitask.inputs.file_types = 'tif'
     #Edit the following path to reflect a specific path to an image
     envitask.inputs.input_raster = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
-    envitask.outputs.output_raster = "ENVI"
 
     workflow = gbdx.Workflow([ envitask ])
 
@@ -33,6 +30,7 @@
         envitask.outputs.output_raster_uri,
         location="ISODATA/output_raster_uri"
     )
+    
     workflow.execute()
 
     print workflow.id
@@ -60,7 +58,7 @@ The following table lists the ISO DATA Classification task outputs.
 
 Name                | Required |   Description
 --------------------|:--------:|-----------------
-output_raster_uri   |     Y    | This will explain the output file location and provide the output in .TIF format.
+output_raster_uri   |     Y    | This will explain the output file location and provide the output in .TIF format with an ENVI .HDR file.
 
 
 This task will function on an image located in the S3 location.  The file type input is preferred in the .hdr format.   Additional options include:
@@ -85,9 +83,39 @@ Your Processed classification file will be written to the specified S3 Customer 
 
 For background on the development and implementation of ISO Classification refer to the [ENVI Documentation](https://www.harrisgeospatial.com/docs/classificationtutorial.html)
 
+### Advanced Options
+
+This script links the [Advanced Image Preprocessor](https://github.com/TDG-Platform/docs/blob/master/Advanced_Image_Preprocessor.md) to the ENVI ISODATA Classification task.
+
+```python
+# This Advanced Script links the output of the Advanced Image Preprocessor (AOP) to the ENVI ISODATA Classification	
+	from gbdxtools import Interface
+	gbdx = Interface()
+
+	# Import the Image from s3. Edit the following path to reflect a specific path to an image
+	data = "s3://gbd-customer-data/CustomerAccount#/PathToImage/"
+	
+	aoptask = gbdx.Task(
+		"AOP_Strip_Processor", data=data, enable_acomp=True, bands='MS', 
+		enable_pansharpen=False, enable_dra=False
+	)
+
+	isodata = gbdx.Task("ENVI_ISODATAClassification")
+	# Import the AOP output to the ENVI Task and run the task.
+	isodata.inputs.input_raster = aoptask.outputs.data.value
+	workflow = gbdx.Workflow([ aoptask, isodata ])
+	
+	# Edit the following line(s) to reflect specific folder(s) for the output file.
+	workflow.savedata(isodata.outputs.output_raster_uri, location='customer output directory')
+
+	workflow.execute()
+	print workflow.id
+	print workflow.status
+```
+
 ### Runtime
 
-The following table lists all applicable runtime outputs. (This section will be completed the Algorithm Curation team)
+The following table lists all applicable runtime outputs for the QuickStart Script. (This section will be completed the Algorithm Curation team)
 For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
 
   Sensor Name  |  Total Pixels  |  Total Area (k2)  |  Time(secs)  |  Time/Area k2

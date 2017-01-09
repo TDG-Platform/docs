@@ -8,7 +8,7 @@ of converting image Digital Number (DN) counts to surface reflectance. This remo
 * Variation due to different viewing geometries
 * Atmospheric effects
 
-The AComp GBDX task operates on imagery from all DG Sensors and Landsat-8.  Input imagery must at least contain the VNIR multispectral bands, and optionally may also include panchromatic data and/or SWIR data.
+The AComp GBDX task operates on imagery from Landsat-8 and all DG Sensors (except WorldView-1).  Input imagery must at least contain the VNIR multispectral bands, and optionally may also include panchromatic data and/or SWIR data.
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
@@ -144,7 +144,7 @@ Script Example running AComp on VNIR+SWIR:
 
 	# Run AComp Workflow
 	workflow = gbdx.Workflow([ acompTask ])
-  #Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
+  	#Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
 	workflow.savedata(acompTask.outputs.data, location='Acomp/')
 	workflow.execute()
 

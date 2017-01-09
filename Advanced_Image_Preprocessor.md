@@ -1,6 +1,6 @@
 # Advanced Image Preprocessor (AOP_Strip_Processor)
 
-This task runs the Advanced Advanced Image Preprocessor (AOP_Strip_Processor) algorithm to produce orthorectified imagery from raw (level 1B) imagery.  There are many additional processing options including atmospheric compensation (ACOMP) (which is always recommended), pansharpening and dynamic range adjustment (DRA).  
+This task runs the Advanced Advanced Image Preprocessor (AOP_Strip_Processor) algorithm to produce orthorectified imagery from raw (level 1B) imagery.  There are many additional processing options including atmospheric compensation (AComp, which is always recommended), pansharpening and dynamic range adjustment (DRA).  
 
 The Advanced Image Preprocessor can be run with Python using   [gbdxtools](https://github.com/DigitalGlobe/gbdxtools) or through the [GBDX Web Application](https://gbdx.geobigdata.io/materials/).  
 
@@ -40,7 +40,7 @@ print workflow.status
 The `data` variable specifies the S3 URL of the raw image.
 The `gbdx.Task()` call creates the `aoptask` instance and specifies its desired input values.
 The `workflow.savedata()` call specifies that the task output will be saved in
-[gbd-customer-data/prefix/Naples_WV03_Quickstart](http://gbdxdocs.digitalglobe.com/docs/s3-storage-service-course).
+[gbd-customer-data/customer directory](http://gbdxdocs.digitalglobe.com/docs/s3-storage-service-course).
 
 Running the script in an IPython session produces these results:
 ```
@@ -105,20 +105,20 @@ The Advance Image Preprocessor task inputs can be set in various combinations to
   ```python
   aoptask = gbdx.Task('AOP_Strip_Processor', data=data)
   ```
- * Multispectral image only (4-band or 8-band, depending on sensor) with ACOMP
+ * Multispectral image only (4-band or 8-band, depending on sensor) with AComp
   * `bands` = `MS`
   * `enable_pansharpen` = `false`
   * `enable_dra` = `false`
   ```python
   aoptask = gbdx.Task('AOP_Strip_Processor', data=data, bands='MS', enable_pansharpen=False, enable_dra=False)
   ```
- * Multispectral and panchromatic images (separate) with ACOMP
+ * Multispectral and panchromatic images (separate) with AComp
   * `enable_pansharpen` = `false`
   * `enable_dra` = `false`
   ```python
   aoptask = gbdx.Task('AOP_Strip_Processor', data=data, enable_pansharpen=False, enable_dra=False)
   ```
- * Panchromatic image only (ACOMP not available)
+ * Panchromatic image only (AComp not available)
   * `bands` = `PAN`
   * `enable_acomp` = `false`
   * `enable_pansharpen` = `false`
@@ -253,11 +253,11 @@ For details on the methods of testing the runtimes of the task visit the followi
 
   Sensor Name  |  Total Pixels  |  Total Area (k2)  |  Time(min)  |  Time/Area k2
 --------|:----------:|-----------|----------------|---------------
-QB | 41,551,668 | 312.07 | 460.603 | 1.48 |
+QB02 | 41,551,668 | 312.07 | 460.603 | 1.48 |
 WV01| 1,028,100,320 |351.72 |475.276 | 1.35|
 WV02|35,872,942|329.87|651.095 | 1.97|
 WV03|35,371,971|196.27|655.671 | 3.34|
-GE| 57,498,000|332.97|560.836 | 1.68|
+GE01| 57,498,000|332.97|560.836 | 1.68|
 
 
 #### Contact Us   

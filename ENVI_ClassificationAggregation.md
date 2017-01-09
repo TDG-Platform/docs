@@ -22,10 +22,8 @@ This task requires that the image has been pre-processed using the [Advanced Ima
 	isodata = gbdx.Task("ENVI_ISODATAClassification")
 	# The data input and output lines must be edited to point to an authorized customer S3 location)
 	isodata.inputs.input_raster = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
-	isodata.inputs.file_types = "tif"
 	aggreg = gbdx.Task("ENVI_ClassificationAggregation")
 	aggreg.inputs.input_raster = isodata.outputs.output_raster_uri.value
-	aggreg.inputs_uri_file_types = "hdr"
 	workflow = gbdx.Workflow([ isodata, aggreg ])
 	workflow.savedata(isodata.outputs.output_raster_uri, location="S3 gbd-customer-data location/<customer account>/output directory")
 	workflow.savedata(aggreg.outputs.output_raster_uri, location="S3 gbd-customer-data location/<customer account>/output directory")
@@ -93,7 +91,6 @@ Included below is a complete end-to-end workflow for Advanced Image Preprocessin
 	# Run ISODATA
 	isodata = gbdx.Task("ENVI_ISODATAClassification")
 	isodata.inputs.input_raster = aoptask.outputs.data.value
-	isodata.inputs.file_types = "tif"
 
 	# Run Smoothing
 	aggreg = gbdx.Task("ENVI_ClassificationSmoothing")
