@@ -104,7 +104,7 @@ This script links the [Advanced Image Preprocessor](https://github.com/TDG-Platf
 	isodata.inputs.input_raster = aoptask.outputs.data.value
 	workflow = gbdx.Workflow([ aoptask, isodata ])
 	
-	# Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
+	# Edit the following line(s) to reflect specific folder(s) for the output file.
 	workflow.savedata(isodata.outputs.output_raster_uri, location='customer output directory')
 
 	workflow.execute()
