@@ -6,8 +6,9 @@
  * [Quickstart](#quickstart) - Get started!
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and example contents.
- * [Runtime](#runtime) - Results of task benchmark tests.
  * [Advanced Options](#advanced-options)
+ * [Runtime](#runtime) - Results of task benchmark tests.
+
  * [Contact Us](#contact-us) - Contact tech or document owner.
 
 **Example Script:** Run in IPython using the GBDXTools Interface
@@ -17,8 +18,6 @@
 # First Initialize the Environment
 
     from gbdxtools import Interface
-    import json
-
     gbdx = Interface()
 
     envitask = gbdx.Task("ENVI_ISODATAClassification")
@@ -32,6 +31,7 @@
         envitask.outputs.output_raster_uri,
         location="ISODATA/output_raster_uri"
     )
+    
     workflow.execute()
 
     print workflow.id
@@ -83,6 +83,33 @@ Your Processed classification file will be written to the specified S3 Customer 
 
 
 For background on the development and implementation of ISO Classification refer to the [ENVI Documentation](https://www.harrisgeospatial.com/docs/classificationtutorial.html)
+
+### Advanced Options
+
+This script links the [Advanced Image Preprocessor](https://github.com/TDG-Platform/docs/blob/master/Advanced_Image_Preprocessor.md) to the ENVI ISODATA Classification task.
+
+```python
+# This Advanced Script links the output of the Advanced Image Preprocessor to the ENVI ISODATA Classification	
+	from gbdxtools import Interface
+	gbdx = Interface()
+
+	# Import the Image from s3. Edit the following path to reflect a specific path to an image
+	data = "s3://gbd-customer-data/CustomerAccount#/PathToImage/"
+	
+	aoptask = gbdx.Task(
+		"AOP_Strip_Processor", data=data, enable_acomp=True, bands='MS', enable_pansharpen=False, enable_dra=False
+	)
+
+	isodata = gbdx.Task("ENVI_ISODATAClassification")
+workflow = gbdx.Workflow([ aoptask, isodata ])
+isodata.inputs.input_raster = aoptask.outputs.data.value
+workflow.savedata(isodata.outputs.output_raster_uri, location='kathleen_ENVI_Updates/ISODATA/WV02')
+workflow.execute()
+print workflow.id
+print workflow.status
+
+
+```
 
 ### Runtime
 
