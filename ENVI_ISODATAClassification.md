@@ -96,7 +96,8 @@ This script links the [Advanced Image Preprocessor](https://github.com/TDG-Platf
 	data = "s3://gbd-customer-data/CustomerAccount#/PathToImage/"
 	
 	aoptask = gbdx.Task(
-		"AOP_Strip_Processor", data=data, enable_acomp=True, bands='MS', enable_pansharpen=False, enable_dra=False
+		"AOP_Strip_Processor", data=data, enable_acomp=True, bands='MS', 
+		enable_pansharpen=False, enable_dra=False
 	)
 
 	isodata = gbdx.Task("ENVI_ISODATAClassification")
