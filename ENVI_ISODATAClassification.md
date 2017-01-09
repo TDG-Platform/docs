@@ -7,6 +7,7 @@
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and example contents.
  * [Runtime](#runtime) - Results of task benchmark tests.
+ * [Advanced Options](#advanced-options)
  * [Contact Us](#contact-us) - Contact tech or document owner.
 
 **Example Script:** Run in IPython using the GBDXTools Interface
