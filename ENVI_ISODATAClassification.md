@@ -115,7 +115,7 @@ This script links the [Advanced Image Preprocessor](https://github.com/TDG-Platf
 
 ### Runtime
 
-The following table lists all applicable runtime outputs. (This section will be completed the Algorithm Curation team)
+The following table lists all applicable runtime outputs for the QuickStart Script. (This section will be completed the Algorithm Curation team)
 For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
 
   Sensor Name  |  Total Pixels  |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
