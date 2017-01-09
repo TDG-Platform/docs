@@ -89,7 +89,7 @@ For background on the development and implementation of ISO Classification refer
 This script links the [Advanced Image Preprocessor](https://github.com/TDG-Platform/docs/blob/master/Advanced_Image_Preprocessor.md) to the ENVI ISODATA Classification task.
 
 ```python
-# This Advanced Script links the output of the Advanced Image Preprocessor to the ENVI ISODATA Classification	
+# This Advanced Script links the output of the Advanced Image Preprocessor (AOP) to the ENVI ISODATA Classification	
 	from gbdxtools import Interface
 	gbdx = Interface()
 
@@ -101,14 +101,16 @@ This script links the [Advanced Image Preprocessor](https://github.com/TDG-Platf
 	)
 
 	isodata = gbdx.Task("ENVI_ISODATAClassification")
-workflow = gbdx.Workflow([ aoptask, isodata ])
-isodata.inputs.input_raster = aoptask.outputs.data.value
-workflow.savedata(isodata.outputs.output_raster_uri, location='kathleen_ENVI_Updates/ISODATA/WV02')
-workflow.execute()
-print workflow.id
-print workflow.status
+	# Import the AOP output to the ENVI Task and run the task.
+	isodata.inputs.input_raster = aoptask.outputs.data.value
+	workflow = gbdx.Workflow([ aoptask, isodata ])
+	
+	# Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
+	workflow.savedata(isodata.outputs.output_raster_uri, location='customer output directory')
 
-
+	workflow.execute()
+	print workflow.id
+	print workflow.status
 ```
 
 ### Runtime
