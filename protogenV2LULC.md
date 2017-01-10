@@ -72,7 +72,7 @@ gbdx = Interface()
 
 # Setup AComp Task excluding the panchromatic bands
 # Edit the following path to reflect a specific path to an image
-acomp = gbdx.Task('AComp_1.0', exclude_bands='P', data='S3 gbd-customer-data location/<customer account>/input directory')
+acomp = gbdx.Task('AComp_1.0', exclude_bands='P', data= 's3://gbd-customer-data/CustomerAccount#/PathToImage/')
 
 # Stage AComp output for the Protogen Task
 pp_task = gbdx.Task("ProtogenPrep",raster=acomp.outputs.data.value)    
