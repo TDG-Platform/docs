@@ -63,7 +63,7 @@ RGB .TIF image of type UINT8x3. The data will be displayed using the following c
 
 
 ### Advanced Options
-If you need to generate the 8-Band MS data required as input for this task, you can use  and the following example script to preprocess your data. This example runs Fast-Ortho+AComp and Protogen LULC from end to end.  Click on this link for details regarding the the [Advanced Ortho Product Pre-Processing](https://github.com/TDG-Platform/docs/blob/master/AOP_Strip_Processor.md).
+If you need to generate the 8-Band MS data required as input for this task, you can use  and the following example script to preprocess your data. This example runs Fast-Ortho+AComp and Protogen LULC from end to end.  Click on this link for details regarding the the [Advanced Ortho Product Preprocessor](https://github.com/TDG-Platform/docs/blob/master/AOP_Strip_Processor.md).
 
 ```python
 	# This Script runs the AOP Processor; moves the output to a file that is accessible
