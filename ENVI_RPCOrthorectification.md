@@ -8,7 +8,6 @@ This task can be run with Python using [gbdxtools](https://github.com/DigitalGlo
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and output structure.
  * [Advanced](#advanced) - Additional information for advanced users.
- * [Runtime](#runtime) - Example estimate of task runtime.
  * [Issues](#issues) - Current or past known issues.
  * [Background](#background) - Background information.
  * [Contact](#contact) - Contact information.
