@@ -2,6 +2,7 @@
 # ENVI Classification Aggregation
 
 This task aggregates smaller class regions to a larger, adjacent region as part of the classification cleanup.
+For details regarding the operation of ENVI Tasks on the Platform refer to [ENVI Task Runner]() documentation.
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
@@ -46,7 +47,7 @@ GE01| 57,498,000 | 332.97 | 419.17 | 1.26 |
 
 ### Inputs
 The following table lists all taskname inputs.
-Mandatory (optional) settings are listed as Required = True (Required = False).  For details regarding the use of input ports refer to the [ENVI Task Runner](https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner.md) documentation.
+Mandatory (optional) settings are listed as Required = True (Required = False).  
 
   Name       |  Required  |  Valid Values       |  Description  
 -------------|:-----------:|:--------------------|---------------
