@@ -63,37 +63,35 @@ RGB .TIF image of type UINT8x3. The data will be displayed using the following c
 
 
 ### Advanced Options
-If you need to generate the 8-Band MS data required as input for this task, you can use  and the following example script to preprocess your data. This example runs Fast-Ortho+AComp and Protogen LULC from end to end.  Click on this link for details regarding the the [Advanced Image Preprocessor](https://github.com/TDG-Platform/docs/blob/master/AOP_Strip_Processor.md).
+The Automated Landuse Landcover Processor can be run directly from the output of [DG AComp](http://gbdxdocs.digitalglobe.com/docs/acomp).  As noted in the example below, you must exclude the panchromatic bands.
 
 ```python
-	# This Script runs the AOP Processor; moves the output to a file that is accessible
-	# to the Protogen task, and runs the protogenV2LULC Task.
-	# First initalize the environment
+# Run atmospheric compensation and then run Protogen LULC
+from gbdxtools import Interface
+gbdx = Interface()
 
-	from gbdxtools import Interface
-	gbdx = Interface()
-	import json
+# Setup AComp Task excluding the panchromatic bands
+# Edit the following path to reflect a specific path to an image
+acomp = gbdx.Task('AComp_1.0', exclude_bands='P', data='S3 gbd-customer-data location/<customer account>/input directory')
 
-	# The data input and output lines must be edited to point to an authorized customer S3 location
-	data = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
+# Stage AComp output for the Protogen Task
+pp_task = gbdx.Task("ProtogenPrep",raster=acomp.outputs.data.value)    
 
-	# Run AOP to create acomp'd multispectral image
-	aoptask2 = gbdx.Task('AOP_Strip_Processor', data=data, bands='MS', enable_acomp=True, enable_pansharpen=False, enable_dra=False)     
+# Setup ProtogenV2LULC Task
+prot_lulc = gbdx.Task("protogenV2LULC",raster=pp_task.outputs.data.value)
+		
+# Run Combined Workflow
+workflow = gbdx.Workflow([ acomp, pp_task, prot_lulc ])
 
-	# Move aoptask output to root where prototask can find it
-	gluetask = gbdx.Task('gdal-cli')                                 
-	gluetask.inputs.data = aoptask2.outputs.data.value
-	gluetask.inputs.execution_strategy = 'runonce'
-	gluetask.inputs.command = """mv $indir/*/*.tif $outdir/"""
-	prototask = gbdx.Task('protogenV2LULC')
-	prototask.inputs.raster = gluetask.outputs.data.value
-
-	workflow = gbdx.Workflow([aoptask2, gluetask, prototask])
-  #Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
-	workflow.savedata(prototask.outputs.data, location='LULC')
-
-	workflow.execute()
-	workflow.status
+# Send output to s3 Bucket; Edit the following path to reflect a specific path to customer's output directory.
+# You may want to save the output from the intermediate processing steps as shown below.
+workflow.savedata(acomp.outputs.data,location='S3 gbd-customer-data location/<customer account>/output directory')
+workflow.savedata(pp_task.outputs.data,location='S3 gbd-customer-data location/<customer account>/output directory')	
+workflow.savedata(prot_lulc.outputs.data, location='S3 gbd-customer-data location/<customer account>/output directory')
+	
+workflow.execute()
+print workflow.id
+print workflow.status	
 
 ```
 ### Runtime
