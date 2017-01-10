@@ -94,15 +94,14 @@ Included below is a complete end-to-end workflow for Advanced Image Preprocessin
 	# Run ISODATA
 	isodata = gbdx.Task("ENVI_ISODATAClassification")
 	isodata.inputs.input_raster = aoptask.outputs.data.value
-	isodata.inputs.file_types = "tif"
 
 	# Run Smoothing
 	smooth = gbdx.Task("ENVI_ClassificationSmoothing")
 	smooth.inputs.input_raster = isodata.outputs.output_raster_uri.value
-	smooth.inputs.file_types = "hdr"
 
 	# Run Workflow and Send output to  s3 Bucket
 	workflow = gbdx.Workflow([ aoptask, isodata, smooth ])
+	
   	# Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
 	workflow.savedata(aoptask.outputs.data, location="Classification/AOP)
 	workflow.savedata(isodata.outputs.output_raster_uri, location="Classification/ISODATA")
