@@ -108,7 +108,7 @@ wf_id = workflow.id
 ```
 
 ### Issues
-User specified DEM values must match the name of the image e.g.
+User specified DEM values must match the name of the image.
 
 
 ### Background
