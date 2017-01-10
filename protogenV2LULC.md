@@ -2,7 +2,7 @@
 
 
 
-**Task Description:**		LULC is an un-supervised protocol for computing a coarse class LULC layer from 8 band (optical + VNIR) image data-sets. The LULC layer is an RGB image in which unique colors are assigned to unique classes (See Outputs for descrition).   you can use [gbdxtools](http://gbdxtools.readthedocs.io/en/latest/user_guide.html) and the following examples script to generate the landuse landcover classification output. If you need to generate the 8-Band MS data required as input for this task see [Advanced Options](#advanced-options).
+**Task Description:**		LULC is an un-supervised protocol for computing a coarse class LULC layer from 8 band (optical + VNIR) image data-sets. The LULC layer is an RGB image in which unique colors are assigned to unique classes (See Outputs for description).   you can use [gbdxtools](http://gbdxtools.readthedocs.io/en/latest/user_guide.html) and the following examples script to generate the landuse landcover classification output. If you need to generate the 8-Band MS data required as input for this task see [Advanced Options](#advanced-options).
 
 
 
