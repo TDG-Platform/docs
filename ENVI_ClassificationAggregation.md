@@ -46,7 +46,7 @@ GE01| 57,498,000 | 332.97 | 419.17 | 1.26 |
 
 ### Inputs
 The following table lists all taskname inputs.
-Mandatory (optional) settings are listed as Required = True (Required = False).  For details regarding the use of input ports refer to the [ENVI Task Runner](#https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner.md) documentation.
+Mandatory (optional) settings are listed as Required = True (Required = False).  For details regarding the use of input ports refer to the [ENVI Task Runner](https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner.md) documentation.
 
   Name       |  Required  |  Valid Values       |  Description  
 -------------|:-----------:|:--------------------|---------------
