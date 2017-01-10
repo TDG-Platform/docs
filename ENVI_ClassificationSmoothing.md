@@ -21,12 +21,11 @@ This task requires that the image has been pre-processed using the [Advanced Ima
 	isodata = gbdx.Task("ENVI_ISODATAClassification")
   	# Edit the following path to reflect a specific path to an image
 	isodata.inputs.input_raster = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
-	isodata.inputs.file_types = "tif"
 	smooth = gbdx.Task("ENVI_ClassificationSmoothing")
 	smooth.inputs.input_raster = isodata.outputs.output_raster_uri.value
-	smooth.inputs.file_types = "hdr"
 	workflow = gbdx.Workflow([ isodata, smooth ])
-  #Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
+	
+ 	# Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
 	workflow.savedata(isodata.outputs.output_raster_uri, location="ISODATAClassification")
 	workflow.savedata(smooth.outputs.output_raster_uri, location="ISODATAClassification/Smoothing")
 	workflow.execute()
