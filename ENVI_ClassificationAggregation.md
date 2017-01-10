@@ -20,7 +20,7 @@ This task requires that the image has been pre-processed using the [Advanced Ima
 	gbdx = Interface()
 
 	isodata = gbdx.Task("ENVI_ISODATAClassification")
-	# The data input and output lines must be edited to point to an authorized customer S3 location)
+	# The data input and output lines must be edited to point to an authorized customer S3 location of the preprocessed data)
 	isodata.inputs.input_raster = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
 	aggreg = gbdx.Task("ENVI_ClassificationAggregation")
 	aggreg.inputs.input_raster = isodata.outputs.output_raster_uri.value
