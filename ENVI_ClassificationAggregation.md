@@ -51,7 +51,7 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 
   Name       |  Required  |  Valid Values       |  Description  
 -------------|:-----------:|:--------------------|---------------
-input_raster | True       | s3 URL, .hdr, .tiff | Specify a classification raster on which to perform aggregation.
+input_raster | True       | .hdr, .tif | Specify a classification raster on which to perform aggregation.
 
 ### Outputs
 The following table lists all taskname outputs.
@@ -59,7 +59,7 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 
   Name            |  Required  |  Valid Values             | Description  
 ------------------|:---------: |:------------------------- |---------------
-output_raster_uri | True       | s3 URL, .hdr, .tiff, .xml | Specify a string with the fully qualified filename and path of the output raster. If you do not specify this property, the output raster is only temporary. Once the raster has no remaining references, ENVI deletes the temporary file.
+output_raster_uri | True       | .hdr, .tif | Specify a string with the fully qualified filename and path of the output raster. If you do not specify this property, the output raster is only temporary. Once the raster has no remaining references, ENVI deletes the temporary file.
 
 
 **OPTIONAL SETTINGS AND DEFINITIONS:**
