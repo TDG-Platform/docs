@@ -1,6 +1,6 @@
 # ENVI_ISODATAClassification
 
-**ENVI_ISODATAClassification** The ISODATA method for unsupervised classification starts by calculating class means evenly distributed in the data space, then iteratively clusters the remaining pixels using minimum distance techniques. Each iteration recalculates means and reclassifies pixels with respect to the new means. This process continues until the percentage of pixels that change classes during an iteration is less than the change threshold or the maximum number of iterations is reached
+**ENVI_ISODATAClassification** The ISODATA method for unsupervised classification starts by calculating class means evenly distributed in the data space, then iteratively clusters the remaining pixels using minimum distance techniques. Each iteration recalculates means and reclassifies pixels with respect to the new means. This process continues until the percentage of pixels that change classes during an iteration is less than the change threshold or the maximum number of iterations is reached.   For details regarding the operation of ENVI Tasks on the Platform refer to [ENVI Task Runner]() documentation.
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
