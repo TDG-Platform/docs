@@ -51,7 +51,7 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 
   Name       |  Required  |  Valid Values       |  Description  
 -------------|:-----------:|:--------------------|---------------
-input_raster | True       | .hdr, .tiff | Specify a classification raster on which to perform aggregation.
+input_raster | True       | .hdr, .tif | Specify a classification raster on which to perform aggregation.
 
 ### Outputs
 The following table lists all taskname outputs.
