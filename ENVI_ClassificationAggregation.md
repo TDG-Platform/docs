@@ -92,8 +92,8 @@ Included below is a complete end-to-end workflow for Advanced Image Preprocessin
 	isodata = gbdx.Task("ENVI_ISODATAClassification")
 	isodata.inputs.input_raster = aoptask.outputs.data.value
 
-	# Run Smoothing
-	aggreg = gbdx.Task("ENVI_ClassificationSmoothing")
+	# Run Classification Aggregation
+	aggreg = gbdx.Task("ENVI_ClassificationAggregation")
 	aggreg.inputs.input_raster = isodata.outputs.output_raster_uri.value
 
 	# Run Workflow and Send output to  s3 Bucket
