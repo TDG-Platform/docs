@@ -20,30 +20,26 @@ This script gives the example of ENVI Spectral Index with a single tif file as i
 # Quickstart **Example Script Run in Python using the gbdxTools InterfaceExample producing a single band vegetation mask from a tif file.
 # First Initialize the Environment
 
-    from gbdxtools import Interface
-    gbdx = Interface()
+from gbdxtools import Interface
+gbdx = Interface()
 
-    aop2envi = gbdx.Task("AOP_ENVI_HDR")
-    #Edit the following path to reflect a specific path to an image
-    aop2envi.inputs.image = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
+#Edit the following path to reflect a specific path to an image
+image = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
 
-    envi_ndvi = gbdx.Task("ENVI_SpectralIndex")
-    envi_ndvi.inputs.input_raster = aop2envi.outputs.output_data.value
-    envi_ndvi.inputs.file_types = "hdr"
-    envi_ndvi.inputs.index = "Normalized Difference Vegetation Index"
+envi_ndvi = gbdx.Task("ENVI_SpectralIndex")
+envi_ndvi.inputs.input_raster = image
+envi_ndvi.inputs.file_types = "hdr"
+envi_ndvi.inputs.index = "Normalized Difference Vegetation Index"
 
-    workflow = gbdx.Workflow([aop2envi, envi_ndvi])
-    workflow.savedata(
-      #Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
-       aop2envi.outputs.output_data,
-       location='NDVI/output_data'
-    )
-    workflow.savedata(
-       envi_ndvi.outputs.output_raster_uri,
-       location='NDVI/output_raster_uri'
-    )
+workflow = gbdx.Workflow([envi_ndvi])
+#Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
 
-    print workflow.execute()
+workflow.savedata(
+   envi_ndvi.outputs.output_raster_uri,
+      location='NDVI/output_raster_uri'
+)
+
+print workflow.execute()
 ```
 
 ### Inputs
@@ -85,11 +81,12 @@ This task will provide a raster of the spectral index output in both an ENVI hdr
 The processed imagery will be written to the specified S3 Customer Location in a 1 band TIF format(e.g.  s3://gbd-customer-data/unique customer id/named directory/).
 
 ### Advanced
-To link the workflow of 1 input image into AOP_Strip_Processor and the Spectral Index task, use the following GBDX tools script in python.
+To link the workflow of 1 input image into AOP_Strip_Processor and the Spectral Index task, use the following GBDX tools script in python. Updates to the ENVI task runner
 
 ```python
 #First initialize the environment
 #AOP strip processor has input values known to complete the Spectral Index task
+
 from gbdxtools import Interface
 gbdx = Interface()
 
@@ -100,25 +97,16 @@ aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_
 # Capture AOP task outputs
 #orthoed_output = aoptask.get_output('data')
 
-aop2envi = gbdx.Task("AOP_ENVI_HDR")
-aop2envi.inputs.image = aoptask.outputs.data.value
+aop_image = aoptask.outputs.data.value
 
 envi_ndvi = gbdx.Task("ENVI_SpectralIndex")
-envi_ndvi.inputs.input_raster = aop2envi.outputs.output_data.value
-envi_ndvi.inputs.file_types = "hdr"
+envi_ndvi.inputs.input_raster = aop_image
 envi_ndvi.inputs.index = "Normalized Difference Vegetation Index"
 
-workflow = gbdx.Workflow([aoptask, aop2envi, envi_ndvi])
+workflow = gbdx.Workflow([aoptask, envi_ndvi])
 
 #Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
-workflow.savedata(
-  aoptask.outputs.data,
-  location='NDVI/AOP'
-)
-workflow.savedata(
-  aop2envi.outputs.output_data,
-  location='NDVI/hdr'
-)
+
 workflow.savedata(
   envi_ndvi.outputs.output_raster_uri,
   location='NDVI/SI/output_raster_uri'

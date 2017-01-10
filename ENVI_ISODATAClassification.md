@@ -1,6 +1,6 @@
 # ENVI_ISODATAClassification
 
-**ENVI_ISODATAClassification** The ISODATA method for unsupervised classification starts by calculating class means evenly distributed in the data space, then iteratively clusters the remaining pixels using minimum distance techniques. Each iteration recalculates means and reclassifies pixels with respect to the new means. This process continues until the percentage of pixels that change classes during an iteration is less than the change threshold or the maximum number of iterations is reached
+**ENVI_ISODATAClassification** The ISODATA method for unsupervised classification starts by calculating class means evenly distributed in the data space, then iteratively clusters the remaining pixels using minimum distance techniques. Each iteration recalculates means and reclassifies pixels with respect to the new means. This process continues until the percentage of pixels that change classes during an iteration is less than the change threshold or the maximum number of iterations is reached.   For details regarding the operation of ENVI Tasks on the Platform refer to [ENVI Task Runner]() documentation.
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
@@ -68,11 +68,11 @@ This task will function on an image located in the S3 location.  The file type i
 
 Name                       |       Default         |        Valid Values             |   Description
 ---------------------------|:---------------------:|---------------------------------|-----------------
-file_types                 |          N/A          | string                          | Comma separated list of permitted file type extensions. Use this to filter input files
 change_threshold_percent   |         3 X 3         | string                          | The change threshold percentage that determines when to complete the classification.  When the percentage of pixels that change classes during an iteration is less than the threshold value, the classification completes
 number_of_classes          |          2            | string                          | The requested number of classes to generate
 iterations                 |          N/A          | string                          | The maximum iterations to perform.  If the change threshold percent is not met before the maximum number of iterations is reached, the classification completes
 task_meta_data             |          N/A          | string                          | Output location for task meta data such as execution log and output JSON
+input_raster_metadata  |  N/A  |  string  |  A string dictionary for overridding the raster metadata.
 output_raster_uri_filename |         output        | Folder name in S3 location      | Specify the file name
 
 

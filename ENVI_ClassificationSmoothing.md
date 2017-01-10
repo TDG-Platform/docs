@@ -1,6 +1,6 @@
 # ENVI Classification Smoothing
 
-This task removes speckling noise from a classification image. It uses majority analysis to change spurious pixels within a large single class to that class.
+This task removes speckling noise from a classification image. It uses majority analysis to change spurious pixels within a large single class to that class.  For details regarding the operation of ENVI Tasks on the Platform refer to [ENVI Task Runner]() documentation.
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
@@ -18,16 +18,14 @@ This task requires that the image has been pre-processed using the [Advanced Ima
 	from gbdxtools import Interface
 	gbdx = Interface()
 
-
 	isodata = gbdx.Task("ENVI_ISODATAClassification")
-  #Edit the following path to reflect a specific path to an image
+  	# Edit the following path to reflect a specific path to an image
 	isodata.inputs.input_raster = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
-	isodata.inputs.file_types = "tif"
 	smooth = gbdx.Task("ENVI_ClassificationSmoothing")
 	smooth.inputs.input_raster = isodata.outputs.output_raster_uri.value
-	smooth.inputs.file_types = "hdr"
 	workflow = gbdx.Workflow([ isodata, smooth ])
-  #Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
+	
+ 	# Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
 	workflow.savedata(isodata.outputs.output_raster_uri, location="ISODATAClassification")
 	workflow.savedata(smooth.outputs.output_raster_uri, location="ISODATAClassification/Smoothing")
 	workflow.execute()
@@ -53,7 +51,7 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 
   Name       |  Required  |  Valid Values       |  Description  
 -------------|:-----------:|:--------------------|---------------
-input_raster | True       | s3 URL, .hdr, .tiff | Specify a classification raster on which to perform aggregation.
+input_raster | True       | .hdr, .tif | Specify a classification raster on which to perform aggregation.
 
 ### Outputs
 The following table lists all taskname outputs.
@@ -61,7 +59,8 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 
   Name            |  Required  |  Valid Values             | Description  
 ------------------|:---------: |:------------------------- |---------------
-output_raster_uri | True       | s3 URL, .hdr, .tiff, .xml | Specify a string with the fully qualified filename and path of the output raster. If you do not specify this property, the output raster is only temporary. Once the raster has no remaining references, ENVI deletes the temporary file.
+output_raster_uri | True       | .hdr, .tif | Specify a string with the fully qualified filename and path of the output raster. If you do not specify this property, the output raster is only temporary. Once the raster has no remaining references, ENVI deletes the temporary file.
+
 
 
 **OPTIONAL SETTINGS AND DEFINITIONS:**
@@ -70,6 +69,9 @@ Name                 |       Default    | Valid Values |   Description
 ---------------------|:----------------:|---------------------------------|-----------------
 ignore_validate      |          N/A     |     1        |Set this property to a value of 1 to run the task, even if validation of properties fails. This is an advanced option for users who want to first set all task properties before validating whether they meet the required criteria. This property is not set by default, which means that an exception will occur if any property does not meet the required criteria for successful execution of the task.
 kernel_size                |           3           |    any odd number >= 3          | Specify an odd number with the smoothing kernel size. The minimum value is 3 pixels, and the default value is 3 pixels.
+input_raster_band_grouping  |  N/A | string  | A string name indentify which band grouping to use for the task.
+input_raster_metadata  | N/A  |  string  |  A string dictionary for overridding the raster metadata.
+output_raster_uri_filename  |  False  |   string  | A string with the filename of the output raster specified.
 
 ### Advanced
 
@@ -82,9 +84,9 @@ Included below is a complete end-to-end workflow for Advanced Image Preprocessin
 	from gbdxtools import Interface
 	gbdx = Interface()
 
-  #Edit the following path to reflect a specific path to an image
+  	# Edit the following path to reflect a specific path to an image
 	data = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
-  aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, bands='MS', enable_pansharpen=False, enable_dra=False)
+  	aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, bands='MS', enable_pansharpen=False, enable_dra=False)
 
 	# Capture AOP task outputs
 	log = aoptask.get_output('log')
@@ -93,16 +95,15 @@ Included below is a complete end-to-end workflow for Advanced Image Preprocessin
 	# Run ISODATA
 	isodata = gbdx.Task("ENVI_ISODATAClassification")
 	isodata.inputs.input_raster = aoptask.outputs.data.value
-	isodata.inputs.file_types = "tif"
 
 	# Run Smoothing
 	smooth = gbdx.Task("ENVI_ClassificationSmoothing")
 	smooth.inputs.input_raster = isodata.outputs.output_raster_uri.value
-	smooth.inputs.file_types = "hdr"
 
 	# Run Workflow and Send output to  s3 Bucket
 	workflow = gbdx.Workflow([ aoptask, isodata, smooth ])
-  #Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
+	
+  	# Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
 	workflow.savedata(aoptask.outputs.data, location="Classification/AOP)
 	workflow.savedata(isodata.outputs.output_raster_uri, location="Classification/ISODATA")
 	workflow.savedata(smooth.outputs.output_raster_uri, location="Classification/Smoothing")

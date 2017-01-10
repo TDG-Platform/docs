@@ -1,5 +1,5 @@
 ### Description
-This task orthorectifies an image georeferenced with RPCs using a DEM and optional GCPs.
+This task orthorectifies an image georeferenced with RPCs using a DEM and optional GCPs. For more information on RPCOrthorectification see [Background on RPC Orthorectification](http://www.harrisgeospatial.com/docs/rpcbackground.html)
 
 This task can be run with Python using [gbdxtools](https://github.com/DigitalGlobe/gbdxtools) or through the [GBDX Web Application](https://gbdx.geobigdata.io/materials/)
 
@@ -8,7 +8,6 @@ This task can be run with Python using [gbdxtools](https://github.com/DigitalGlo
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and output structure.
  * [Advanced](#advanced) - Additional information for advanced users.
- * [Runtime](#runtime) - Example estimate of task runtime.
  * [Issues](#issues) - Current or past known issues.
  * [Background](#background) - Background information.
  * [Contact](#contact) - Contact information.
@@ -108,7 +107,7 @@ wf_id = workflow.id
 ```
 
 ### Issues
-User specified DEM values must match the name of the image e.g.
+User specified DEM values must match the name of the image.
 
 
 ### Background
