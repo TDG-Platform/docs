@@ -1,6 +1,6 @@
 # ENVI Classification Smoothing
 
-This task removes speckling noise from a classification image. It uses majority analysis to change spurious pixels within a large single class to that class.
+This task removes speckling noise from a classification image. It uses majority analysis to change spurious pixels within a large single class to that class.  For details regarding the operation of ENVI Tasks on the Platform refer to [ENVI Task Runner]() documentation.
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
@@ -18,9 +18,8 @@ This task requires that the image has been pre-processed using the [Advanced Ima
 	from gbdxtools import Interface
 	gbdx = Interface()
 
-
 	isodata = gbdx.Task("ENVI_ISODATAClassification")
-  #Edit the following path to reflect a specific path to an image
+  	# Edit the following path to reflect a specific path to an image
 	isodata.inputs.input_raster = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
 	isodata.inputs.file_types = "tif"
 	smooth = gbdx.Task("ENVI_ClassificationSmoothing")
