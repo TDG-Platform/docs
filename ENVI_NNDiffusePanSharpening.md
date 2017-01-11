@@ -104,8 +104,8 @@ This task requires that WorldView-2, Worldview-3, GeoEYE-1 and Quickbird imagery
 	from gbdxtools import Interface
 	gbdx = Interface()
 	
-	# Edit the following path(s) to reflect a specific path to the input imagery files; an example is given
-	data = "s3://receiving-dgcs-tdgplatform-com/055442993010_01_003" # Example from Tracy, California
+	# Edit the following path(s) to reflect a specific path to the input imagery files; an example is given:
+	data = "s3://receiving-dgcs-tdgplatform-com/055442993010_01_003"
 	
 	# Process the MS and Pan Files Seperately
 	aoptask1 = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False, bands="MS")
