@@ -57,10 +57,10 @@ Mandatory (optional) settings are listed as Required = True (Required = False). 
 
   Name  |  Required  |  Default  |  Valid Values  |  Description  
 --------|:----------:|-----------|----------------|---------------
-input_raster             |          N/A          | S3 URL   .TIF and .hdr only     | S3 location of input .tif file processed through AOP_Strip_Processor.
-index                    |          N/A          |     string of index name        | Specify a string, or array of strings, representing the pre-defined spectral indices to apply to the input raster.
-input_raster_band_grouping| N/A                  | Sensor Specific [See input port documentation](https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner.md#ENVIRPCRasterSpatialRef) | Specify band group e.g. "multispectral".  input_raster_band_grouping "panchromatic" will not function in the Spectral Index task.
-output_raster_uri_filename | N/A | string name for output e.g. "NDVI" | output raster file name 
+input_raster    |  True |       N/A          | S3 URL   .TIF and .hdr only     | S3 location of input .tif file processed through AOP_Strip_Processor.
+index     |    True |     N/A          |     string of index name        | Specify a string, or array of strings, representing the pre-defined spectral indices to apply to the input raster.
+input_raster_band_grouping| False |N/A                  | Sensor Specific [See input port documentation](https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner.md#ENVIRPCRasterSpatialRef) | Specify band group e.g. "multispectral".  input_raster_band_grouping "panchromatic" will not function in the Spectral Index task.
+output_raster_uri_filename | N/A | string name for output e.g. "NDVI" | output raster file name
 ### Outputs
 The following table lists all taskname outputs.
 Mandatory (optional) settings are listed as Required = True (Required = False).
