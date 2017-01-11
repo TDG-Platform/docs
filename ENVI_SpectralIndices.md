@@ -53,15 +53,14 @@ wf_id = workflow.id
 
 ### Inputs
 The following table lists all taskname inputs.
-Mandatory (optional) settings are listed as Required = True (Required = False).
+Mandatory (optional) settings are listed as Required = True (Required = False). For details regarding the use of input ports refer to the [ENVI Task Runner](https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner.md) documentation.
 
   Name  |  Required  |  Default  |  Valid Values  |  Description  
 --------|:----------:|-----------|----------------|---------------
-file_types|False|None|.TIF .HDR |GBDX Option. Comma seperated list of permitted file type extensions. Use this to filter input files -- Value Type: STRING[*]
-index|True|None| see link in 'Advanced' section |Specify a string, or array of strings, representing the pre-defined spectral indices to apply to the input raster. -- Value Type: STRING[*]
-input_raster|True|None|.TIF .HDR |Specify a raster from which to generate a spectral index raster. -- Value Type: ENVIRASTER
-output_raster_uri_filename|False|None| string |Outputor OUTPUT_RASTER. -- Value Type: ENVIURI
-
+input_raster             |          N/A          | S3 URL   .TIF and .hdr only     | S3 location of input .tif file processed through AOP_Strip_Processor.
+index                    |          N/A          |     string of index name        | Specify a string, or array of strings, representing the pre-defined spectral indices to apply to the input raster.
+input_raster_band_grouping| N/A                  | Sensor Specific [See input port documentation](https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner.md#ENVIRPCRasterSpatialRef) | Specify band group e.g. "multispectral".  input_raster_band_grouping "panchromatic" will not function in the Spectral Index task.
+output_raster_uri_filename | N/A | string name for output e.g. "NDVI" | output raster file name 
 ### Outputs
 The following table lists all taskname outputs.
 Mandatory (optional) settings are listed as Required = True (Required = False).
