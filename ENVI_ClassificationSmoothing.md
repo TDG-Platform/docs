@@ -70,7 +70,7 @@ Name                 |       Default    | Valid Values |   Description
 ignore_validate      |          N/A     |     1        |Set this property to a value of 1 to run the task, even if validation of properties fails. This is an advanced option for users who want to first set all task properties before validating whether they meet the required criteria. This property is not set by default, which means that an exception will occur if any property does not meet the required criteria for successful execution of the task.
 kernel_size                |           3           |    any odd number >= 3          | Specify an odd number with the smoothing kernel size. The minimum value is 3 pixels, and the default value is 3 pixels.
 input_raster_band_grouping  |  N/A | string  | A string name indentify which band grouping to use for the task.
-input_raster_metadata  | N/A  |  string  |  A string dictionary for overridding the raster metadata.
+input_raster_format  | N/A  |  string  |  A string dictionary for overridding the raster metadata.
 output_raster_uri_filename  |  False  |   string  | A string with the filename of the output raster specified.
 
 ### Advanced
