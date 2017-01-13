@@ -1,6 +1,6 @@
 # ENVI NNDiffuse PanSharpening
 
-This task performs Nearest Neighbor Diffuse (NND) Pansharpening using a low-resolution raster and a high-resolution panchromatic raster.
+This task performs Nearest Neighbor Diffuse (NND) Pansharpening using a low-resolution raster and a high-resolution panchromatic raster.  For details regarding the operation of ENVI Tasks on the Platform refer to [ENVI Task Runner]() documentation.
 
 NND Pansharpening works best when the spectral response function of each multispectral band has minimal overlap with one another, and the combination of all multispectral bands covers the spectral range of the panchromatic raster.
 The following are input raster requirements for running the NND Pansharpening algorithm:
