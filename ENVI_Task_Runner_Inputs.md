@@ -1,4 +1,4 @@
-# ENVI Task Runner
+# ENVI Task Runner Inputs
 
 
 
@@ -99,7 +99,6 @@ ENVI can open many different datasets from different sensors, the full list can 
 
 
 ```python
-
 ...
 task = gbdx.Task('ENVI_QuerySpectralIndices')
 task.inputs.input_raster = 's3://<bucket>/<folder>/'
@@ -108,23 +107,23 @@ task.inputs.input_raster = 's3://<bucket>/<folder>/'
 
 
 
-To configure the task runner to switch the file discovery logic, use the `*_metadata` input port to specify the `sensor type` attribute. Currently the task runner supports `IKONOS`, `Landsat OLI`, `Sentinel-2`. The following is an example:
+To configure the task runner to switch the file discovery logic, use the `*_format` input port to specify the a supported input raster format. Currently the task runner supports all standard DigitalGlobe formats plus`IKONOS`, `Landsat 8`, `Sentinel-2`. The following is an example:
 
 ```python
-# Specify the sensor type
 ...
 task = gbdx.Task('ENVI_QuerySpectralIndices')
 task.inputs.input_raster = 's3://<bucket>/<folder>/'
-task.inputs.input_raster_metadata = '{"sensor type": "IKONOS"}'
+task.inputs.input_raster_format = 'landsat-8'
 ...
 ```
+
+> See the Supported Datasets table below for the acceptable format names.
 
 
 
 Alternately a user can overide all file discovery logic by using the `*_filename` input port. This passes the relative file name directly to the ENVI task engine. An example is as follows:
 
 ```python
-# Specify the filename for overriding
 ...
 task = gbdx.Task('ENVI_QuerySpectralIndices')
 task.inputs.input_raster = 's3://<bucket>/<folder>/'
@@ -166,11 +165,11 @@ See the below table for support datasets and the specific band grouping names.
 
 |               Dataset Name               |           Band Grouping Names            |
 | :--------------------------------------: | :--------------------------------------: |
-| IKONOS, QuickBird, GeoEye-1, Worldview-2, Worldview-4 |       multispectral, panchromatic        |
-|               Worldview-1                |               panchromatic               |
-|               WORLDVIEW-3                |    multispectral, panchromatic, swir     |
-|               Landsat OLI                | multispectral, panchromatic, cirrus, thermal, quality |
-|                SENTINEL-2                |              10m, 20m, 60m               |
+|               WorldView-1                |               panchromatic               |
+|              WorldView-2/3               | multispectral, panchromatic, swir (wv-3 only) |
+| IKONOS, QuickBird, GeoEye-1, WorldView-4 |       multispectral, panchromatic        |
+|                Landsat 8                 | multispectral, panchromatic, cirrus, thermal, quality |
+|                Sentinel-2                |              10m, 20m, 60m               |
 
 
 
@@ -203,19 +202,18 @@ However, ENVI comes with the GMTED2010 DEM raster which is at 30 arc-seconds. An
 
 
 
-To use these files, there is a metadata attribute called `dem file` which can be used to specify the which file to use as the DEM file for the task. The following is an example:
+To use these files, the port `*_filename` can be used to specify the which of the above files to use as the DEM file for the task. The following is an example:
 
 ```python
 # Use the 30 arc-second DEM
 ...
 task = gbdx.Task('ENVI_RPCOrthorectification')
 task.inputs.input_raster = 's3://<bucket>/<folder>/<raster>'
-task.inputs.dem_raster_metadata = '{"dem file": "GMTED2010_polar.jp2"}'
+task.inputs.dem_raster_filename = 'GMTED2010_polar.jp2'
 ...
-
 ```
 
-> Note: The dem_raster port is optional, and if it is missing, the task runner will use the GMTED2010.jp2.
+> Note: The dem_raster port is optional, and if it is missing, the task runner will use the GMTED2010.jp2 DEM file.
 
 
 
