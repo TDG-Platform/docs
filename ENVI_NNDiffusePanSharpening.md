@@ -1,6 +1,6 @@
 # ENVI NNDiffuse PanSharpening
 
-This task performs Nearest Neighbor Diffuse (NND) Pansharpening using a low-resolution raster and a high-resolution panchromatic raster.
+This task performs Nearest Neighbor Diffuse (NND) Pansharpening using a low-resolution raster and a high-resolution panchromatic raster.  For details regarding the operation of ENVI Tasks on the Platform refer to [ENVI Task Runner]() documentation.
 
 NND Pansharpening works best when the spectral response function of each multispectral band has minimal overlap with one another, and the combination of all multispectral bands covers the spectral range of the panchromatic raster.
 The following are input raster requirements for running the NND Pansharpening algorithm:
@@ -94,7 +94,7 @@ spatial_smoothness  |  False  | PIXEL_SIZE_RATIO x 0.62 |  positive number | A p
 
 
 ### Advanced
-This task requires that WorldView-2, Worldview-3, GeoEYE-1 and Quickbird imagery has been pre-processed using the [Advanced Image Preprocessor](#https://github.com/TDG-Platform/docs/blob/master/Advanced_Image_Preprocessor.md) for proper orthorectification.  The example below uses a WorldView-3 Image from Tracy California.
+This task requires that WorldView-2, Worldview-3, GeoEYE-1 and Quickbird imagery has been pre-processed using the [Advanced Image Preprocessor](#https://github.com/TDG-Platform/docs/blob/master/Advanced_Image_Preprocessor.md) for proper orthorectification of both the panchromatic and multispectral images. Use NNDiffuse Pansharpening on imagery from these sensors when you need full multipsectral band (4-band or 8-band) pansharpening.
 
 
 ```python
@@ -104,27 +104,19 @@ This task requires that WorldView-2, Worldview-3, GeoEYE-1 and Quickbird imagery
 	from gbdxtools import Interface
 	gbdx = Interface()
 	
-	# Edit the following path(s) to reflect a specific path to the input imagery files; an example is given
-	data = "s3://receiving-dgcs-tdgplatform-com/055442993010_01_003" # Example from Tracy, California
-	
-	# Process the MS and Pan Files Seperately
-	aoptask1 = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False, bands="MS")
-	aoptask2 = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_pansharpen=False, enable_dra=False, bands="PAN")
-
 	# Define Task and Data Types
 	pansharpTask = gbdx.Task("ENVI_NNDiffusePanSharpening")
 
 	# Input High- and Low-Resolution data
-	pansharpTask.inputs.input_low_resolution_raster = aoptask1.outputs.data.value
-	pansharpTask.inputs.input_high_resolution_raster = aoptask2.outputs.data.value
+	# Edit the following path(s) to reflect a specific path to the input imagery files; an example is given:
+	pansharpTask.inputs.input_low_resolution_raster = "s3://path to orthorectified multispectral image"
+	pansharpTask.inputs.input_high_resolution_raster = "s3://path to orthorectified panchromatic image"
 
 	# Run Workflow
-	workflow = gbdx.Workflow([ aoptask1, aoptask2, pansharpTask ])
+	workflow = gbdx.Workflow([ pansharpTask ])
 	
 	# Edit the following line to reflect specific folder(s) for the output file
 	workflow.savedata(pansharpTask.outputs.output_raster_uri, location='Customer's Output S3 Location')
-	workflow.savedata(aoptask1.outputs.data, location ='Customer's Output S3 Location') # saving this data is optional
-	workflow.savedata(aoptask2.outputs.data, location ='Customer's Output S3 Location') # saving this data is optional
 	workflow.execute()
 	print workflow.id
 	print workflow.status

@@ -28,7 +28,6 @@ image = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
 
 envi_ndvi = gbdx.Task("ENVI_SpectralIndex")
 envi_ndvi.inputs.input_raster = image
-envi_ndvi.inputs.file_types = "hdr"
 envi_ndvi.inputs.index = "Normalized Difference Vegetation Index"
 
 workflow = gbdx.Workflow([envi_ndvi])
@@ -43,6 +42,10 @@ print workflow.execute()
 ```
 
 ### Inputs
+The following table lists all taskname inputs.
+Mandatory (optional) settings are listed as Required = True (Required = False).
+For details regarding the use of input ports refer to the [ENVI Task Runner](https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner.md) documentation.
+
 **Description of Input Parameters and Options for the "ENVI_SpectralIndex":**
 This task will work on Digital Globe images with a IMD file located in the S3 location:
 Input imagery sensor types include: QuickBird, WorldView 1, WorldView 2, WorldView 3 and GeoEye
@@ -53,6 +56,8 @@ Name                     |       Default         |        Valid Values          
 -------------------------|:---------------------:|---------------------------------|-----------------
 input_raster             |          N/A          | S3 URL   .TIF and .hdr only     | S3 location of input .tif file processed through AOP_Strip_Processor.
 index                    |          N/A          |     string of index name        | Specify a string, or array of strings, representing the pre-defined spectral indices to apply to the input raster.
+input_raster_band_grouping| N/A                  | Sensor Specific [See input port documentation](https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner.md#ENVIRPCRasterSpatialRef) | Specify band group e.g. "multispectral".  input_raster_band_grouping "panchromatic" will not function in the Spectral Index task.
+output_raster_uri_filename | N/A | string name for output e.g. "NDVI" | output raster file name
 
 ### Outputs
 
@@ -61,7 +66,7 @@ The following table lists the Spectral Index task outputs.
 Name                  |       Default         |        Valid Values             |   Description
 ----------------------|:---------------------:|---------------------------------|-----------------
 output_raster_uri     |          N/A          |  S3 URL   .TIF and .hdr only    | S3 location of input .tif file processed through AOP_Strip_Processor.
-
+task_meta_data|N/A| GBDX Option. Output location for task meta data such as execution log and output JSON
 
 **OPTIONAL SETTINGS: Required = False**
 
@@ -97,11 +102,10 @@ aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, enable_
 # Capture AOP task outputs
 #orthoed_output = aoptask.get_output('data')
 
-aop_image = aoptask.outputs.data.value
-
 envi_ndvi = gbdx.Task("ENVI_SpectralIndex")
-envi_ndvi.inputs.input_raster = aop_image
+envi_ndvi.inputs.input_raster = aoptask.outputs.data.value
 envi_ndvi.inputs.index = "Normalized Difference Vegetation Index"
+envi_ndvi.inputs.input_raster_metadata = '{"sensor type": "WORLDVIEW-3"}'
 
 workflow = gbdx.Workflow([aoptask, envi_ndvi])
 
