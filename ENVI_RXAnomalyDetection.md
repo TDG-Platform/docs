@@ -26,14 +26,12 @@ gbdx = Interface()
 data = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
 
 envitask = gbdx.Task("ENVI_RXAnomalyDetection")
-envitask.inputs.task_name='RXAnomalyDetection'
-envitask.inputs.file_types='til'
 envitask.inputs.kernel_size='3'
 envitask.inputs.input_raster=data
 
 workflow = gbdx.Workflow([ envitask ])
 #Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
-workflow.savedata(envitask.outputs.task_meta_data, location='RXAnomaly/metatdata/envi_task_output')
+#workflow.savedata(envitask.outputs.task_meta_data, location='RXAnomaly/metatdata/envi_task_output')
 workflow.savedata(envitask.outputs.output_raster_uri, location='RXAnomaly/envi_task_output')
 
 print workflow.execute()
