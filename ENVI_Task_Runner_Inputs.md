@@ -117,7 +117,7 @@ task.inputs.input_raster_format = 'landsat-8'
 ...
 ```
 
-> See the Supported Datasets table below for the acceptable format names.
+> Note: See the ***Supported Datasets*** table below for the acceptable *input_raster_format* names.
 
 
 
@@ -163,13 +163,16 @@ See the below table for support datasets and the specific band grouping names.
 
 ##### Supported Datasets
 
-|               Dataset Name               |           Band Grouping Names            |
-| :--------------------------------------: | :--------------------------------------: |
-|               WorldView-1                |               panchromatic               |
-|              WorldView-2/3               | multispectral, panchromatic, swir (wv-3 only) |
-| IKONOS, QuickBird, GeoEye-1, WorldView-4 |       multispectral, panchromatic        |
-|                Landsat 8                 | multispectral, panchromatic, cirrus, thermal, quality |
-|                Sentinel-2                |              10m, 20m, 60m               |
+| Dataset Name |           Band Grouping Names            | Format Input String |
+| :----------: | :--------------------------------------: | :-----------------: |
+| WorldView-1  |               panchromatic               |    worldview-1*     |
+| WorldView-2  |       multispectral, panchromatic        |    worldview-2*     |
+| WorldView-3  |    multispectral, panchromatic, swir     |    worldview-3*     |
+|    IKONOS    |       multispectral, panchromatic        |       ikonos        |
+|  QuickBird   |       multispectral, panchromatic        |      quickbird      |
+|   GeoEye-1   |       multispectral, panchromatic        |      geoeye-1       |
+|  Landsat 8   | multispectral, panchromatic, cirrus, thermal, quality |      landsat-8      |
+|  Sentinel-2  |              10m, 20m, 60m               |     sentinel-2      |
 
 
 
