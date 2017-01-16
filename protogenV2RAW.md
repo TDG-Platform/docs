@@ -76,14 +76,14 @@ data = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
 
 aoptask2 = gbdx.Task('AOP_Strip_Processor', data=data, bands='MS', enable_acomp=True, enable_pansharpen=False, enable_dra=False)     # creates acomp'd multispectral image
 
-gluetask = gbdx.Task('gdal-cli')      
+gluetask = gbdx.Task('gdal-cli')                                 
 # move aoptask output to root where prototask can find it
 gluetask.inputs.data = aoptask2.outputs.data.value
 gluetask.inputs.execution_strategy = 'runonce'
 gluetask.inputs.command = """mv $indir/*/*.tif $outdir/"""
+
 prototask = gbdx.Task('protogenV2RAW')
 prototask.inputs.raster = gluetask.outputs.data.value
-
 
 workflow = gbdx.Workflow([aoptask2, gluetask, prototask])
 #Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
