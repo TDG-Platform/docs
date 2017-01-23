@@ -74,7 +74,7 @@ output_raster_uri|True|None| |Outputor OUTPUT_RASTER. -- Value Type: ENVIURI
 
 **Output structure**
 
-This task creates both a tif and hdr file of the input image following the ortho-rectification process.
+This task creates both a tif and hdr file of the input image following the orthorectification process.
 
 
 ### Advanced
