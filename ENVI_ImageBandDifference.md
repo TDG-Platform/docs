@@ -19,18 +19,28 @@ Quick start example.
 
 ```python
 # Quickstart example for ENVI_ImageBandDifference:0.0.2.  
-
 from gbdxtools import Interface
 gbdx = Interface()
-raster = 's3://gbd-customer-data/PathToImage/image.tif'
-ENVI_ImageBandDifference:0.0.2 = gbdx.Task('ENVI_ImageBandDifference:0.0.2', raster=raster)
 
-workflow = gbdx.Workflow([ENVI_ImageBandDifference:0.0.2])  
-workflow.savedata(ENVI_ImageBandDifference:0.0.2.outputs.data, location='ENVI_ImageBandDifference:0.0.2')
+#Insert correct path to image in S3 location
+NDVI1 = 's3://gbd-customer-data/CustomerAccount#/PathToImage1/'
+NDVI2 = 's3://gbd-customer-data/CustomerAccount#/PathToImage2/'
+
+envi_IBD = gbdx.Task("ENVI_ImageBandDifference")
+envi_IBD.inputs.input_raster1 = NDVI1
+envi_IBD.inputs.input_raster2 = NDVI2
+
+workflow = gbdx.Workflow([envi_IBD])
+
+workflow.savedata(
+    envi_IBD.outputs.output_raster_uri,
+        location='Benchmark/IBD'
+)
+
 workflow.execute()
 
-print workflow.id
-print workflow.status
+status = workflow.status["state"]
+wf_id = workflow.id
 ```
 
 ### Inputs
@@ -67,27 +77,80 @@ Explain output structure via example.
 ### Advanced
 Include example(s) with complicated parameter settings and/or example(s) where
 ENVI_ImageBandDifference:0.0.2 is used as part of a workflow involving other GBDX tasks.
+```Python
+from gbdxtools import Interface
+gbdx = Interface()
+
+#Insert correct path to image in S3 location
+data1 = 's3://gbd-customer-data/CustomerAccount#/PathToImage1/'
+data2 = 's3://gbd-customer-data/CustomerAccount#/PathToImage2/'
+
+aoptask1 = gbdx.Task("AOP_Strip_Processor", data=data1, enable_acomp=True, enable_pansharpen=False, enable_dra=False, bands='MS')
+aoptask2 = gbdx.Task("AOP_Strip_Processor", data=data2, enable_acomp=True, enable_pansharpen=False, enable_dra=False, bands='MS')
+
+# Capture AOP task outputs
+#orthoed_output = aoptask.get_output('data')
+
+envi_ndvi1 = gbdx.Task("ENVI_SpectralIndex")
+envi_ndvi1.inputs.input_raster = aoptask1.outputs.data.value
+envi_ndvi1.inputs.index = "Normalized Difference Vegetation Index"
+
+envi_ndvi2 = gbdx.Task("ENVI_SpectralIndex")
+envi_ndvi2.inputs.input_raster = aoptask2.outputs.data.value
+envi_ndvi2.inputs.index = "Normalized Difference Vegetation Index"
+
+envi_II = gbdx.Task("ENVI_ImageIntersection")
+envi_II.inputs.input_raster1 = envi_ndvi1.outputs.output_raster_uri.value
+envi_II.inputs.input_raster2 = envi_ndvi2.outputs.output_raster_uri.value
+envi_II.inputs.output_raster1_uri_filename = "NDVI1"
+envi_II.inputs.output_raster2_uri_filename = "NDVI2"
+#envi_II.outputs.output_raster1_uri = "s3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/Benchmark/ENVI_ImageIntersection/fromNDVI1"
+#envi_II.outputs.output_raster2_uri = "s3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/Benchmark/ENVI_ImageIntersection/fromNDVI2"
+
+envi_IBD = gbdx.Task("ENVI_ImageBandDifference")
+envi_IBD.inputs.input_raster1 = envi_II.outputs.output_raster1_uri.value
+envi_IBD.inputs.input_raster2 = envi_II.outputs.output_raster2_uri.value
+
+
+workflow = gbdx.Workflow([aoptask1, aoptask2, envi_ndvi1, envi_ndvi2, envi_II, envi_IBD])
+
+workflow.savedata(
+    envi_II.outputs.output_raster1_uri,
+        location='Benchmark/ENVI_ImageIntersection/fromNDVI'
+)
+
+workflow.savedata(
+    envi_II.outputs.output_raster2_uri,
+        location='Benchmark/ENVI_ImageIntersection/fromNDVI'
+)
+
+workflow.savedata(
+    envi_IBD.outputs.output_raster_uri,
+        location='Benchmark/ENVI_IBD/new'
+)
+
+workflow.execute()
+
+status = workflow.status["state"]
+wf_id = workflow.id
+```
+
 
 ### Runtime
 
 The following table lists all applicable runtime outputs. (This section will be completed the Algorithm Curation team)
 For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
 
-  Sensor Name  |  Average runtime  |  Total Area (k2)  |  Time(min)  |  Time/Area k2
+  Sensor Name  |  Total Area (k2)  |  Time(min)  |  Time/Area k2
 --------|:----------:|-----------|----------------|---------------
-QB | 41,551,668 | 312.07 |  |  |
-WV01| 1,028,100,320 |351.72 | | |
-WV02|35,872,942|329.87| | |
-WV03|35,371,971|196.27| | |
-GE| 57,498,000|332.97| | |
+WV02|73,005,420|292.02| 169.60| 0.74
 
 ### Issues
-List known past/current issues with ENVI_ImageBandDifference:0.0.2 (e.g., version x does not ingest vrt files).
-
+Processing of the images before running the task ENVI_ImageBandDifference may be required. Examples of image processing steps which may be useful prior to running this task are found in the advanced options.  
 
 ### Background
-For background on the development and implementation of ENVI_ImageBandDifference:0.0.2 see [here](Insert link here).
+For background on the development and implementation of ENVI_ImageBandDifference:0.0.2 see [here](https://www.harrisgeospatial.com/docs/ImageChangeTutorial.html).
 
 
 ### Contact
-List contact information for technical support.
+Document Owner - Carl Reeder - creeder@digitalglobe.com
