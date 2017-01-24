@@ -51,12 +51,12 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 --------|:----------:|-----------|----------------|---------------
 file_types|False|None| |GBDX Option. Comma separated list of permitted file type extensions. Use this to filter input files -- Value Type: STRING
 input_raster1|True|None| |Specify a single-band raster on which to perform an image difference of input band. -- Value Type: ENVIRASTER
-input_raster1_metadata|False|None| |Provide a dictionary of attributes for overriding the raster metadata. -- Value Type: DICTIONARY
-input_raster1_band_grouping|False|None| |Provide the name of the band grouping to be used in the task, ie - panchromatic. -- Value Type: STRING
+input_raster1_metadata|False|None| [More on ENVI input port](insert links here)|Provide a dictionary of attributes for overriding the raster metadata. -- Value Type: DICTIONARY
+input_raster1_band_grouping|False|None| [More on ENVI input port](insert links here)|Provide the name of the band grouping to be used in the task, ie - panchromatic. -- Value Type: STRING
 input_raster1_filename|False|None| |Provide the explicit relative raster filename that ENVI will open. This overrides any file lookup in the task runner. -- Value Type: STRING
 input_raster2|True|None| |Specify a second single-band raster on which to perform an image difference of input band. -- Value Type: ENVIRASTER
-input_raster2_metadata|False|None| |Provide a dictionary of attributes for overriding the raster metadata. -- Value Type: DICTIONARY
-input_raster2_band_grouping|False|None| |Provide the name of the band grouping to be used in the task, ie - panchromatic. -- Value Type: STRING
+input_raster2_metadata|False|None| [More on ENVI input port](insert links here)|Provide a dictionary of attributes for overriding the raster metadata. -- Value Type: DICTIONARY
+input_raster2_band_grouping|False|None| [More on ENVI input port](insert links here)|Provide the name of the band grouping to be used in the task, ie - panchromatic. -- Value Type: STRING
 input_raster2_filename|False|None| |Provide the explicit relative raster filename that ENVI will open. This overrides any file lookup in the task runner. -- Value Type: STRING
 output_raster_uri_filename|False|None| |Specify a string with the fully-qualified path and filename for OUTPUT_RASTER. -- Value Type: STRING
 
@@ -71,7 +71,7 @@ output_raster_uri|True|None| |Output for OUTPUT_RASTER. -- Value Type: ENVIURI
 
 **Output structure**
 
-Explain output structure via example.
+The output of this task is a single band raster in .tif format of the difference between the two input raster datasets.
 
 
 ### Advanced
@@ -139,7 +139,7 @@ wf_id = workflow.id
 The following table lists all applicable runtime outputs. (This section will be completed the Algorithm Curation team)
 For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
 
-  Sensor Name  |  Total Area (k2)  |  Time(min)  |  Time/Area k2
+  Sensor Name  | Total Pixels| Total Area (k2)  |  Time(min)  |  Time/Area k2
 --------|:----------:|-----------|----------------|---------------
 WV02|73,005,420|292.02| 169.60| 0.74
 
