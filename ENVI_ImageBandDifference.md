@@ -49,7 +49,7 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 
   Name  |  Required  |  Default  |  Valid Values  |  Description  
 --------|:----------:|-----------|----------------|---------------
-file_types|False|None| |GBDX Option. Comma seperated list of permitted file type extensions. Use this to filter input files -- Value Type: STRING
+file_types|False|None| |GBDX Option. Comma separated list of permitted file type extensions. Use this to filter input files -- Value Type: STRING
 input_raster1|True|None| |Specify a single-band raster on which to perform an image difference of input band. -- Value Type: ENVIRASTER
 input_raster1_metadata|False|None| |Provide a dictionary of attributes for overriding the raster metadata. -- Value Type: DICTIONARY
 input_raster1_band_grouping|False|None| |Provide the name of the band grouping to be used in the task, ie - panchromatic. -- Value Type: STRING
@@ -75,8 +75,6 @@ Explain output structure via example.
 
 
 ### Advanced
-Include example(s) with complicated parameter settings and/or example(s) where
-ENVI_ImageBandDifference:0.0.2 is used as part of a workflow involving other GBDX tasks.
 ```Python
 from gbdxtools import Interface
 gbdx = Interface()
@@ -149,7 +147,7 @@ WV02|73,005,420|292.02| 169.60| 0.74
 Processing of the images before running the task ENVI_ImageBandDifference may be required. Examples of image processing steps which may be useful prior to running this task are found in the advanced options.  
 
 ### Background
-For background on the development and implementation of ENVI_ImageBandDifference:0.0.2 see [here](https://www.harrisgeospatial.com/docs/ImageChangeTutorial.html).
+For background on the development and implementation of ENVI_ImageBandDifference:0.0.2 see [here](http://www.harrisgeospatial.com/docs/ImageChange.html#ICSettings).
 
 
 ### Contact
