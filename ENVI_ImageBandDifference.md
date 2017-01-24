@@ -73,7 +73,6 @@ output_raster_uri|True|None| |Output for OUTPUT_RASTER. -- Value Type: ENVIURI
 
 The output of this task is a single band raster in .tif format of the difference between the two input raster datasets.
 
-
 ### Advanced
 ```Python
 from gbdxtools import Interface
