@@ -1,7 +1,7 @@
 
 # ENVI Get Spectrum From Library
 
-This task retrieves the details of a specified material from a spectral library. The QuickStart example uses the ENVI  *"veg_1dry.sli"* spectral index file and the *CDE054: Pinyon Pine (SAP)* spectrum. Refer to the [ENVI Task Runner](#https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner_Inputs.md)
+This task retrieves the details of a specified material from a spectral library. The QuickStart  Refer to the [ENVI Task Runner](https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner_Inputs.md) for details of input and output files.
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
@@ -77,7 +77,7 @@ ignore_validate      |          N/A     |     1        |Set this property to a v
 
 ### Advanced
 
-The advanced script for this task demonstrates loading your own spectrum data to run the task.
+The advanced script for this task demonstrates loading your own spectrum data to run the task. The Advanced Script example uses the ENVI  *"veg_1dry.sli"* spectral index file and the *CDE054: Pinyon Pine (SAP)* spectrum.
 
 ```python
     	
