@@ -137,4 +137,4 @@ See issues for CloudPuncher
 ### Contact Us
 Tech Owners: [Jeff Collins](#jcollins@digitalglobe.com), [Carsten Tusk](#ctusk@digitalglobe.com)
 
-Document Owner: TBD
+Document Owner: [Kathleen Johnson](#kajohnso@digitalglobe.com)
