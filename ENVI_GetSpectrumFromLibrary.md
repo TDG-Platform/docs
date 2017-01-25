@@ -8,7 +8,7 @@ This task retrieves the details of a specified material from a spectral library.
  * [Runtime](#runtime) - Not Applicable
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs
- * [Advanced](#advanced) Not Applicable
+ * [Advanced](#advanced) - Upload your own spectral files
  * [Contact Us](#contact-us)
 
 ### Quickstart
@@ -104,7 +104,7 @@ The advanced script for this task demonstrates loading your own spectrum data to
 	
 ```
 
-For background on the development and implementation of XXXXXXXXXX refer to the [ENVI Documentation](https://www.harrisgeospatial.com/docs/classificationtutorial.html)
+For background on the development and implementation of this task refer to the [ENVI Documentation](https://www.harrisgeospatial.com/docs/classificationtutorial.html)
 
 
 
