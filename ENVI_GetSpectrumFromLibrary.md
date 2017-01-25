@@ -77,8 +77,32 @@ ignore_validate      |          N/A     |     1        |Set this property to a v
 
 ### Advanced
 
-This task will normally be included in the Advanced Script for the ENVI ACE Processor or other ENVI tasks that require spectral data. Therefore no Advanced Script is included here.
+The advanced script for this task demonstrates loading your own spectrum data to run the task.
 
+```python
+    	
+	from gbdxtools import Interface
+	gbdx = Interface()
+
+	# Retrieve the Spectrum Data from the Library
+	getspectrum = gbdx.Task("ENVI_GetSpectrumFromLibrary")
+	
+	# Edit the following path to reflect a specific path to the Spectral Index File
+	getspectrum.input_spectral_library_filename = "veg_1dry.sli"
+	getspectrum.inputs.file_types = "HDR"
+	getspectrum.inputs.input_spectral_library = 's3://gbd-customer-data/CustomerAccount#/PathToSpectralLibrary/'
+	getspectrum.inputs.spectrum_name = "CDE054: Pinyon Pine (SAP)" # example from Spectral Index veg_1dry.sli
+
+	# Run Workflow & save the output
+	workflow = gbdx.Workflow([ getspectrum ])
+	# Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
+	workflow.savedata(getspectrum.outputs.task_meta_data, location='customer_output_directory')
+
+	workflow.execute()
+	print workflow.id
+	print workflow.status
+	
+```
 
 For background on the development and implementation of XXXXXXXXXX refer to the [ENVI Documentation](https://www.harrisgeospatial.com/docs/classificationtutorial.html)
 
