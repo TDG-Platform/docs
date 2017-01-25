@@ -1,7 +1,7 @@
 
 # ENVI Get Spectrum From Library
 
-This task retrieves the details of a specified material from a spectral library. Refer to the [ENVI Task Runner](https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner_Inputs.md) for details of input and output files.
+This task retrieves the details of a specified material from a spectral library. For details regarding the operation of ENVI Tasks on the Platform refer to [ENVI Task Runner](https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner_Inputs.md).
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
