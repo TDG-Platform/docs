@@ -18,11 +18,12 @@ This task can be run with Python using [gbdxtools](https://github.com/DigitalGlo
 Quick start example.
 
 ```python
-# Quickstart example for ENVI_ImageBandDifference:0.0.2.  
+# Quickstart example for ENVI_ImageBandDifference  
 from gbdxtools import Interface
 gbdx = Interface()
 
-#Insert correct path to image in S3 location
+# Insert correct path to image in S3 location.
+# Images must have an intersection, otherwise the task will fail.
 NDVI1 = 's3://gbd-customer-data/CustomerAccount#/PathToImage1/'
 NDVI2 = 's3://gbd-customer-data/CustomerAccount#/PathToImage2/'
 
@@ -34,13 +35,14 @@ workflow = gbdx.Workflow([envi_IBD])
 
 workflow.savedata(
     envi_IBD.outputs.output_raster_uri,
-        location='Benchmark/IBD'
+    location='Benchmark/IBD'
 )
 
 workflow.execute()
 
-status = workflow.status["state"]
-wf_id = workflow.id
+# To monitor workflow, use the following command while 
+#  the Python interpreter is still open.
+workflow.status
 ```
 
 ### Inputs
@@ -50,43 +52,43 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
   Name  |  Required  |  Default  |  Valid Values  |  Description  
 --------|:----------:|-----------|----------------|---------------
 file_types|False|None| .hdr,.tif|GBDX Option. Comma separated list of permitted file type extensions. Use this to filter input files -- Value Type: STRING
-input_raster1|True|None| Requires two rasters to detect change, (input_raster1, input_raster2)|Specify a single-band raster on which to perform an image difference of input band. -- Value Type: ENVIRASTER
-input_raster1_metadata|False|None| [More on ENVI input port](insert links here)|Provide a dictionary of attributes for overriding the raster metadata. -- Value Type: DICTIONARY
-input_raster1_band_grouping|False|None| [More on ENVI input port](insert links here)|Provide the name of the band grouping to be used in the task, ie - panchromatic. -- Value Type: STRING
-input_raster1_filename|False|None| Requires two rasters to detect change, (input_raster1, input_raster2)|Provide the explicit relative raster filename that ENVI will open. This overrides any file lookup in the task runner. -- Value Type: STRING
-input_raster2|True|None| |Specify a second single-band raster on which to perform an image difference of input band. -- Value Type: ENVIRASTER
-input_raster2_metadata|False|None| [More on ENVI input port](insert links here)|Provide a dictionary of attributes for overriding the raster metadata. -- Value Type: DICTIONARY
-input_raster2_band_grouping|False|None| [More on ENVI input port](insert links here)|Provide the name of the band grouping to be used in the task, ie - panchromatic. -- Value Type: STRING
-input_raster2_filename|False|None| |Provide the explicit relative raster filename that ENVI will open. This overrides any file lookup in the task runner. -- Value Type: STRING
+input_raster1|True|None| A valid S3 folder containing image files. |Specify a single-band raster on which to perform an image difference of input band. -- Value Type: ENVIRASTER
+input_raster1_format|False|None| [More on ENVIRASTER input port](https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner_Inputs.md#enviraster)|Provide the format of the image, for example: landsat-8. -- Value Type: STRING
+input_raster1_band_grouping|False|None| [More on ENVIRASTER input port](https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner_Inputs.md#enviraster)|Provide the name of the band grouping to be used in the task, ie - panchromatic. -- Value Type: STRING
+input_raster1_filename|False|None| [More on ENVIRASTER input port](https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner_Inputs.md#enviraster) |Provide the explicit relative raster filename that ENVI will open. This overrides any file lookup in the task runner. -- Value Type: STRING
+input_raster2|True|None|  A valid S3 folder containing image files.  |Specify a second single-band raster on which to perform an image difference of input band. -- Value Type: ENVIRASTER
+input_raster2_format|False|None| [More on ENVIRASTER input port](https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner_Inputs.md#enviraster)|Provide the format of the image, for example: landsat-8. -- Value Type: DICTIONARY
+input_raster2_band_grouping|False|None| [More on ENVIRASTER input port](https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner_Inputs.md#enviraster)|Provide the name of the band grouping to be used in the task, ie - panchromatic. -- Value Type: STRING
+input_raster2_filename|False|None| [More on ENVIRASTER input port](https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner_Inputs.md#enviraster) |Provide the explicit relative raster filename that ENVI will open. This overrides any file lookup in the task runner. -- Value Type: STRING
 output_raster_uri_filename|False|None| |Specify a string with the fully-qualified path and filename for OUTPUT_RASTER. -- Value Type: STRING
 
 ### Outputs
 The following table lists all taskname outputs.
 Mandatory (optional) settings are listed as Required = True (Required = False).
 
-  Name  |  Required  |  Default  |  Valid Values  |  Description  
---------|:----------:|-----------|----------------|---------------
-task_meta_data|False|None| |GBDX Option. Output location for task meta data such as execution log and output JSON
-output_raster_uri|True|None| |Output for OUTPUT_RASTER. -- Value Type: ENVIURI
+  Name  |  Required  |  Default  |  Description  
+--------|:----------:|-----------|---------------
+task_meta_data|False|None| GBDX Option. Output location for task meta data such as execution log and output JSON
+output_raster_uri|True|None| Output for OUTPUT_RASTER. -- Value Type: ENVIURI
 
 **Output structure**
 
-The output of this task is a single band raster in .tif format of the difference between the two input raster datasets.
+The output of this task is a single band raster of the difference between the two input raster datasets, in both ENVI standard format (including header file) and .tif format.
 
 ### Advanced
 ```Python
 from gbdxtools import Interface
 gbdx = Interface()
 
-#Insert correct path to image in S3 location
+# Insert correct path to image in S3 location.
+# Images must have an intersection, otherwise the task will fail.
 data1 = 's3://gbd-customer-data/CustomerAccount#/PathToImage1/'
 data2 = 's3://gbd-customer-data/CustomerAccount#/PathToImage2/'
 
-aoptask1 = gbdx.Task("AOP_Strip_Processor", data=data1, enable_acomp=True, enable_pansharpen=False, enable_dra=False, bands='MS')
-aoptask2 = gbdx.Task("AOP_Strip_Processor", data=data2, enable_acomp=True, enable_pansharpen=False, enable_dra=False, bands='MS')
-
-# Capture AOP task outputs
-#orthoed_output = aoptask.get_output('data')
+aoptask1 = gbdx.Task("AOP_Strip_Processor", 
+    data=data1, enable_acomp=True, enable_pansharpen=False, enable_dra=False, bands='MS')
+aoptask2 = gbdx.Task("AOP_Strip_Processor", 
+    data=data2, enable_acomp=True, enable_pansharpen=False, enable_dra=False, bands='MS')
 
 envi_ndvi1 = gbdx.Task("ENVI_SpectralIndex")
 envi_ndvi1.inputs.input_raster = aoptask1.outputs.data.value
@@ -106,28 +108,29 @@ envi_IBD = gbdx.Task("ENVI_ImageBandDifference")
 envi_IBD.inputs.input_raster1 = envi_II.outputs.output_raster1_uri.value
 envi_IBD.inputs.input_raster2 = envi_II.outputs.output_raster2_uri.value
 
-
 workflow = gbdx.Workflow([aoptask1, aoptask2, envi_ndvi1, envi_ndvi2, envi_II, envi_IBD])
 
 workflow.savedata(
     envi_II.outputs.output_raster1_uri,
-        location='Benchmark/ENVI_ImageIntersection/fromNDVI'
+    location='Benchmark/ENVI_ImageIntersection/fromNDVI'
 )
 
 workflow.savedata(
     envi_II.outputs.output_raster2_uri,
-        location='Benchmark/ENVI_ImageIntersection/fromNDVI'
+    location='Benchmark/ENVI_ImageIntersection/fromNDVI'
 )
 
 workflow.savedata(
     envi_IBD.outputs.output_raster_uri,
-        location='Benchmark/ENVI_IBD/new'
+    location='Benchmark/ENVI_IBD/new'
 )
 
 workflow.execute()
 
-status = workflow.status["state"]
-wf_id = workflow.id
+
+# To monitor workflow, use the following command while 
+#  the Python interpreter is still open.
+workflow.status
 ```
 
 
