@@ -42,7 +42,7 @@ workflow.execute()
 
 # To monitor workflow, use the following command while 
 #  the Python interpreter is still open.
-status = workflow.status
+workflow.status
 ```
 
 ### Inputs
@@ -130,7 +130,7 @@ workflow.execute()
 
 # To monitor workflow, use the following command while 
 #  the Python interpreter is still open.
-status = workflow.status
+workflow.status
 ```
 
 
