@@ -1,7 +1,6 @@
 # ENVI_SpectralIndex
 
 ENVI_SpectralIndex. This task creates a spectral index raster from one pre-defined spectral index. Spectral indices are combinations of surface reflectance at two or more wavelengths that indicate relative abundance of features of interest. This task is used to compute a single index on a combination of multi spectral bands within an image. This task can be used to compute indices such as the Normalized Difference Vegetation Index (NDVI). An index such as NDVI will be passed into the task and a single band raster with the results of the index will be returned as output.
-Note:  The wavelength metadata is not available in the correct format from the AOP task. Therefore this task is dependent on the "AOP_ENVI_HDR" task  
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
@@ -135,8 +134,6 @@ GE| 57,498,000|332.97|185.33|0.56
 
 
 ###Known Issues
-1) To run the task in a single workflow with AOP the tif file must first be removed from the AOP folder with the additional python commands listed in Advanced
-
 
 For background on the development and implementation of Spectral Index refer to the [ENVI Documentation](https://www.harrisgeospatial.com/docs/spectralindices.html)
 

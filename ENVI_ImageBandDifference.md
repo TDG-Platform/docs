@@ -49,11 +49,11 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 
   Name  |  Required  |  Default  |  Valid Values  |  Description  
 --------|:----------:|-----------|----------------|---------------
-file_types|False|None| |GBDX Option. Comma separated list of permitted file type extensions. Use this to filter input files -- Value Type: STRING
-input_raster1|True|None| |Specify a single-band raster on which to perform an image difference of input band. -- Value Type: ENVIRASTER
+file_types|False|None| .hdr,.tif|GBDX Option. Comma separated list of permitted file type extensions. Use this to filter input files -- Value Type: STRING
+input_raster1|True|None| Requires two rasters to detect change, (input_raster1, input_raster2)|Specify a single-band raster on which to perform an image difference of input band. -- Value Type: ENVIRASTER
 input_raster1_metadata|False|None| [More on ENVI input port](insert links here)|Provide a dictionary of attributes for overriding the raster metadata. -- Value Type: DICTIONARY
 input_raster1_band_grouping|False|None| [More on ENVI input port](insert links here)|Provide the name of the band grouping to be used in the task, ie - panchromatic. -- Value Type: STRING
-input_raster1_filename|False|None| |Provide the explicit relative raster filename that ENVI will open. This overrides any file lookup in the task runner. -- Value Type: STRING
+input_raster1_filename|False|None| Requires two rasters to detect change, (input_raster1, input_raster2)|Provide the explicit relative raster filename that ENVI will open. This overrides any file lookup in the task runner. -- Value Type: STRING
 input_raster2|True|None| |Specify a second single-band raster on which to perform an image difference of input band. -- Value Type: ENVIRASTER
 input_raster2_metadata|False|None| [More on ENVI input port](insert links here)|Provide a dictionary of attributes for overriding the raster metadata. -- Value Type: DICTIONARY
 input_raster2_band_grouping|False|None| [More on ENVI input port](insert links here)|Provide the name of the band grouping to be used in the task, ie - panchromatic. -- Value Type: STRING
@@ -101,8 +101,6 @@ envi_II.inputs.input_raster1 = envi_ndvi1.outputs.output_raster_uri.value
 envi_II.inputs.input_raster2 = envi_ndvi2.outputs.output_raster_uri.value
 envi_II.inputs.output_raster1_uri_filename = "NDVI1"
 envi_II.inputs.output_raster2_uri_filename = "NDVI2"
-#envi_II.outputs.output_raster1_uri = "s3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/Benchmark/ENVI_ImageIntersection/fromNDVI1"
-#envi_II.outputs.output_raster2_uri = "s3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/Benchmark/ENVI_ImageIntersection/fromNDVI2"
 
 envi_IBD = gbdx.Task("ENVI_ImageBandDifference")
 envi_IBD.inputs.input_raster1 = envi_II.outputs.output_raster1_uri.value
@@ -146,7 +144,7 @@ WV02|73,005,420|292.02| 169.60| 0.74
 Processing of the images before running the task ENVI_ImageBandDifference may be required. Examples of image processing steps which may be useful prior to running this task are found in the advanced options.  
 
 ### Background
-For background on the development and implementation of ENVI_ImageBandDifference:0.0.2 see [here](http://www.harrisgeospatial.com/docs/ImageChange.html#ICSettings).
+For background on the development and implementation of ENVI_ImageBandDifference see [here](http://www.harrisgeospatial.com/docs/ImageChange.html#ICSettings).
 
 
 ### Contact
