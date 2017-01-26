@@ -135,7 +135,7 @@ task.inputs.input_raster_filename = 'landsat8_MTL.txt'
 
 #### Raster Band Grouping Selection
 
-When ENVI opens standardized raster data products distributed by various geospatial data providers ENVI has built-in intelligence to open with special metadata assignment and groups certain imagery bands together as individual raster datasets. For example, a typical IKONOS dataset is opened as two raster band groupings, *multispectral* and *panchromatic*. See the table below for datasets currently supported by the GBDX ENVI task runner and the specific band grouping names that can be specified. The following are examples of using `*_band_grouping` continued from above:
+When ENVI opens standardized raster data products distributed by various geospatial data providers, ENVI has built-in intelligence to open rasters with special metadata assignment and groups certain imagery bands together as individual raster datasets. For example, a typical IKONOS dataset is opened as two raster band groupings, *multispectral* and *panchromatic*. See the table below for datasets currently supported by the GBDX ENVI task runner and the specific band grouping names that can be specified. Even though the band grouping names for DigitalGlobe products (WorldView-\*, QuickBird, GeoEye-1) are provided in the table below, they are not required as the format has seperate images for each grouping. The following are examples of using `*_band_grouping` continued from above:
 
 
 
@@ -143,11 +143,6 @@ When ENVI opens standardized raster data products distributed by various geospat
 # For IKONOS
 ...
 task.inputs.input_raster_band_grouping = 'multispectral'
-...
-
-# For Sentinel-2
-...
-task.inputs.input_raster_band_grouping = '10m'
 ...
 ```
 
@@ -163,16 +158,17 @@ See the below table for support datasets and the specific band grouping names.
 
 ##### Supported Datasets
 
-| Dataset Name |           Band Grouping Names            | Format Input String |
-| :----------: | :--------------------------------------: | :-----------------: |
-| WorldView-1  |               panchromatic               |    worldview-1*     |
-| WorldView-2  |       multispectral, panchromatic        |    worldview-2*     |
-| WorldView-3  |    multispectral, panchromatic, swir     |    worldview-3*     |
-|    IKONOS    |       multispectral, panchromatic        |       ikonos        |
-|  QuickBird   |       multispectral, panchromatic        |      quickbird      |
-|   GeoEye-1   |       multispectral, panchromatic        |      geoeye-1       |
-|  Landsat 8   | multispectral, panchromatic, cirrus, thermal, quality |      landsat-8      |
-|  Sentinel-2  |              10m, 20m, 60m               |     sentinel-2      |
+|      Dataset Name      |           Band Grouping Names            | Format Input String |
+| :--------------------: | :--------------------------------------: | :-----------------: |
+| WorldView-1 (see note) |               panchromatic               |     worldview-1     |
+| WorldView-2 (see note) |       multispectral, panchromatic        |     worldview-2     |
+| WorldView-3 (see note) |    multispectral, panchromatic, swir     |     worldview-3     |
+|  GeoEye-1 (see note)   |       multispectral, panchromatic        |      geoeye-1       |
+|  QuickBird (see note)  |       multispectral, panchromatic        |      quickbird      |
+|         IKONOS         |       multispectral, panchromatic        |       ikonos        |
+|       Landsat 8        | multispectral, panchromatic, cirrus, thermal, quality |      landsat-8      |
+
+> Note: Band grouping names do not apply for standard format DG products where the a typical input_raster would have to point to a folder with a multispectral or panchromatic in it. Having both would cause an error with the task runner.
 
 
 
