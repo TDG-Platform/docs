@@ -1,14 +1,13 @@
-# cd_prep (Change Detection Preparation)
+# Change Detection Preparation (cd_prep)
 
-The cd_prep GBDX task performs a series of operations on a pair of input images to prepare them for the application
-of downstream change detection algorithms.  It accomplishes this via the following operations:
+The Change Detection Preparation task performs a series of operations on a pair of input images to prepare them for the application of downstream change detection algorithms.  It accomplishes this via the following operations:
 
     1. Initial crop of the input images to their region of overlap  
     2. Image-to-image registration
     3. Alignment of the images to a common grid, cloud removal and final cropping
 
 This task takes as input two orthorectified, atmospherically compensated images in geotiff format and
-has been tested with output from AOP_Strip_Processor.
+has been tested with output from Advanced Image Preprocessor.
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
@@ -19,16 +18,15 @@ has been tested with output from AOP_Strip_Processor.
 
 ### Quickstart
 
-The cd_prep GBDX task can be run through a simple Python script using  [gbdxtools](https://github.com/DigitalGlobe/gbdxtools/blob/master/docs/user_guide.rst), 
+The Change Detection Preparation GBDX task can be run through a simple Python script using  [gbdxtools](https://github.com/DigitalGlobe/gbdxtools/blob/master/docs/user_guide.rst), 
 which requires some initial setup, or through the [GBDX Web Application](https://gbdx.geobigdata.io/materials/).
 Tasks and workflows can be added (described here in [gbdxtools](https://github.com/DigitalGlobe/gbdxtools/blob/master/docs/running_workflows.rst)) 
 or run separately after the cd_prep process is completed.
 
-**Example Script:** These basic settings will run cd_prep from a pair of input orthorectified, AComped images (through AOP_Strip_Processor).
-See also examples listed under the [Advanced Options](#advanced-options).
+**Example Script:** These basic settings will run CDPrep from a pair of input orthorectified, AComped image output from the Advanced Image Preprocessor. See also examples listed under the [Advanced Options](#advanced-options).
 
 ```python
-    # Run cd_prep on a pair of images
+    # Run The Change Detection Preparation Task on a pair of images
     from gbdxtools import Interface
     gbdx = Interface()
 
@@ -68,12 +66,12 @@ See also examples listed under the [Advanced Options](#advanced-options).
 This task takes as input two orthorectified, atmospherically compensated images in geotiff format.
 It is intended to work as a following task to the AOP_Strip_Processor, with only the AComp option specified.
 
-Example overlapping 1B images that can be processed by AOP_Strip_Processor prior to cd_prep are:
+Example overlapping 1B images that can be processed by Advanced Image Preprocessor prior to CDP are:
 
     pre-image in India: 1040010004D5AD00
     post-image in India:  105041001259EA00
 
-**Description of Basic Input Parameters for the cd_prep GBDX task**
+**Description of Basic Input Parameters for the Change Detection Preparation GBDX task**
 
 The following table lists the cd_prep GBDX inputs.
 All inputs are optional with default values, with the exception of
