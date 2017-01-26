@@ -63,36 +63,41 @@ RGB .TIF image of type UINT8x3. The data will be displayed using the following c
 
 
 ### Advanced Options
-The Automated Landuse Landcover Processor can be run directly from the output of [DG AComp](http://gbdxdocs.digitalglobe.com/docs/acomp).  As noted in the example below, you must exclude the panchromatic bands.
+The Automated Landuse Landcover Processor can be run directly from the output of [the Advanced Image Preprocessor](https://github.com/TDG-Platform/docs/blob/master/Advanced_Image_Preprocessor.md).  As noted in the example below, you must exclude the panchromatic bands.
 
 ```python
-# Run atmospheric compensation and then run Protogen LULC
-from gbdxtools import Interface
-gbdx = Interface()
+ # Initialize the gbdxtools Interface
+ gbdx = Interface()
 
-# Setup AComp Task excluding the panchromatic bands
-# Edit the following path to reflect a specific path to an image
-acomp = gbdx.Task('AComp_1.0', exclude_bands='P', data= 's3://gbd-customer-data/CustomerAccount#/PathToImage/')
+ # Make sure DRA is disabled if you are processing both the PAN+MS files
+ aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, bands="MS", enable_pansharpen=False, enable_dra=False)
 
-# Stage AComp output for the Protogen Task
-pp_task = gbdx.Task("ProtogenPrep",raster=acomp.outputs.data.value)    
+# Capture AOP task outputs
+log = task.get_output('log')
+orthoed_output = task.get_output('data')
+
+# Stage AOP output for the Protogen Task using the Protogen Prep Task
+pp_task = gbdx.Task("ProtogenPrep",raster=aoptask.outputs.data.value)    
 
 # Setup ProtogenV2LULC Task
 prot_lulc = gbdx.Task("protogenV2LULC",raster=pp_task.outputs.data.value)
 		
 # Run Combined Workflow
-workflow = gbdx.Workflow([ acomp, pp_task, prot_lulc ])
+workflow = gbdx.Workflow([ aoptask, pp_task, prot_lulc ])
 
-# Send output to s3 Bucket; Edit the following path to reflect a specific path to customer's output directory.
-# You may want to save the output from the intermediate processing steps as shown below.
-workflow.savedata(acomp.outputs.data,location='S3 gbd-customer-data location/<customer account>/output directory')
-workflow.savedata(pp_task.outputs.data,location='S3 gbd-customer-data location/<customer account>/output directory')	
-workflow.savedata(prot_lulc.outputs.data, location='S3 gbd-customer-data location/<customer account>/output directory')
+# Send output to  s3 Bucket
+start_time = datetime.datetime.now().isoformat()
+workflow.savedata(aoptask.outputs.data,location='kathleen_AOP_Test/Protogen_LULC/' + start_time)
+        
+start_time = datetime.datetime.now().isoformat() #time stamp for output file
+workflow.savedata(pp_task.outputs.data,location='kathleen_AOP_Test/Protogen_LULC/ProtoPrep/' + start_time)
 	
+start_time = datetime.datetime.now().isoformat() #time stamp for output file
+workflow.savedata(prot_lulc.outputs.data,location='kathleen_AOP_Test/Protogen_LULC/LULC/' + start_time)
 workflow.execute()
-print workflow.id
-print workflow.status	
 
+print(workflow.id)
+print(workflow.status)
 ```
 ### Runtime
 

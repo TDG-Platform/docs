@@ -1,6 +1,6 @@
 # ENVI Classification Smoothing
 
-This task removes speckling noise from a classification image. It uses majority analysis to change spurious pixels within a large single class to that class.  For details regarding the operation of ENVI Tasks on the Platform refer to [ENVI Task Runner]() documentation.
+This task removes speckling noise from a classification image. It uses majority analysis to change spurious pixels within a large single class to that class.  For details regarding the operation of ENVI Tasks on the Platform refer to [ENVI Task Runner](https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner_Inputs.md) documentation.
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!

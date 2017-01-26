@@ -1,19 +1,19 @@
 
 # ENVI Get Spectrum From Library
 
-This task retrieves the details of a specified material from a spectral library. The QuickStart example uses the ENVI  *"veg_1dry.sli"* spectral index file and the *CDE054: Pinyon Pine (SAP)* spectrum.
+This task retrieves the details of a specified material from a spectral library. For details regarding the operation of ENVI Tasks on the Platform refer to [ENVI Task Runner](https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner_Inputs.md).
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
  * [Runtime](#runtime) - Not Applicable
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs
- * [Advanced](#advanced) Not Applicable
+ * [Advanced](#advanced) - Upload your own spectral files
  * [Contact Us](#contact-us)
 
 ### Quickstart
 
-This task requires that you first retrieve the list of available spectral libraries by using the [ENVI_QuerySpectralIndices Task](https://github.com/TDG-Platform/docs/blob/master/ENVI_QuerySpectralIndices.md).  An example script for this Task is included in the Advanced Options.
+This task requires that you first retrieve the list of available spectral libraries by using the [ENVI_QuerySpectralIndices Task](https://github.com/TDG-Platform/docs/blob/master/ENVI_QuerySpectralIndices.md).  
 
 ```python
     	
@@ -22,20 +22,19 @@ This task requires that you first retrieve the list of available spectral librar
 
 	# Retrieve the Spectrum Data from the Library
 	getspectrum = gbdx.Task("ENVI_GetSpectrumFromLibrary")
-	
+
 	# Edit the following path to reflect a specific path to the Spectral Index File
-	getspectrum.inputs.input_spectral_library = 's3://gbd-customer-data/CustomerAccount#/PathToSpectralLibrary/'
-	getspectrum.inputs.spectrum_name = "CDE054: Pinyon Pine (SAP)" # example from Spectral Index veg_1dry.sli
+	getspectrum.inputs.input_spectral_library_filename = 'veg_2grn.sli'
+	getspectrum.inputs.spectrum_name = 'Dry Grass' # example from Spectral Index veg_2grn.sli
 
 	# Run Workflow & save the output
 	workflow = gbdx.Workflow([ getspectrum ])
-	# Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
-	workflow.savedata(getspectrum.outputs.task_meta_data, location='customer_output_directory')
+	# Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)			workflow.savedata(getspectrum.outputs.task_meta_data, location=location='customer_output_directory/getspectrum/')
 
 	workflow.execute()
 	print workflow.id
 	print workflow.status
-	
+
 ```
 
 
@@ -77,10 +76,34 @@ ignore_validate      |          N/A     |     1        |Set this property to a v
 
 ### Advanced
 
-This task will normally be included in the Advanced Script for the ENVI ACE Processor or other ENVI tasks that require spectral data. Therefore no Advanced Script is included here.
+The advanced script for this task demonstrates loading your own spectrum data to run the task. The Advanced Script example uses the ENVI  *"veg_1dry.sli"* spectral index file and the *CDE054: Pinyon Pine (SAP)* spectrum. If you use your own spectral data, and it is a .sli file, you must create an "HDR" file.
 
+```python
+    	
+	from gbdxtools import Interface
+	gbdx = Interface()
 
-For background on the development and implementation of XXXXXXXXXX refer to the [ENVI Documentation](https://www.harrisgeospatial.com/docs/classificationtutorial.html)
+	# Retrieve the Spectrum Data from the Library
+	getspectrum = gbdx.Task("ENVI_GetSpectrumFromLibrary")
+	
+	# Edit the following path to reflect a specific path to the Spectral Index File
+	getspectrum.input_spectral_library_filename = "veg_1dry.sli"
+	getspectrum.inputs.file_types = "HDR"
+	getspectrum.inputs.input_spectral_library = 's3://gbd-customer-data/CustomerAccount#/PathToSpectralLibrary/'
+	getspectrum.inputs.spectrum_name = "CDE054: Pinyon Pine (SAP)" # example from Spectral Index veg_1dry.sli
+
+	# Run Workflow & save the output
+	workflow = gbdx.Workflow([ getspectrum ])
+	# Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
+	workflow.savedata(getspectrum.outputs.task_meta_data, location='customer_output_directory/getspectrum/')
+
+	workflow.execute()
+	print workflow.id
+	print workflow.status
+	
+```
+
+For background on the development and implementation of this task refer to the [ENVI Documentation](https://www.harrisgeospatial.com/docs/classificationtutorial.html)
 
 
 
