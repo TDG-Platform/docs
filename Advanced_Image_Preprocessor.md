@@ -87,7 +87,6 @@ data                     |          N/A          | S3 URL                       
 [ortho_epsg](#change-projection) |       EPSG:4326      | EPSG codes, UTM                 | EPSG code of projection for orthorectification. `UTM` automatically determines EPSG code from strip coordinates.
 [ortho_pixel_size](#set-pixel-size) |         Auto          | Pixel size in meters, Auto      | Pixel size of orthorectified output. `Auto` inspects input data for collected pixel size.
 [ortho_tiling_scheme](#set-ortho-tiling-scheme)      |          N/A          | Ex: DGHalfMeter:18              | Tiling scheme and zoom level for orthorectification. Overrides `ortho_epsg` and `ortho_pixel_size`.
-[ortho_dem_specifier](#specify-dem)      |        SRTM90         | NED, SRTM30, SRTM90             | DEM identifier for orthorectification.
 [ortho_interpolation_type](#specify-interpolation-method) |         Cubic         | Nearest, Bilinear, Cubic        | Pixel interpolation type for orthorectification.
 [dra_mode](#using-dynamic-range-adjustment)                 |    IntensityAdjust    | IntensityAdjust, BaseLayerMatch | Dynamic range adjustment type. `BaseLayerMatch` only supported for geographic projection (EPSG:4326).
 [dra_low_cutoff](#using-dynamic-range-adjustment)           |          0.5          | 0.0 - 100.0                     | Low cutoff percentage for `dra_mode` == `IntensityAdjust`.
@@ -224,9 +223,6 @@ The `log` output port contains the location where a trace of log messages genera
 #### Set Tiling Scheme
   * A custom tiling scheme can be specified that overrides 'ortho_epsg' and 'ortho_pixel_size'
 
-#### Specify DEM
-  * The default DEM (digital elevation model) used in the orthorectification process is SRTM90 (Shuttle Radar Topography Mission).  Other options include [SRTM30](#http://www2.jpl.nasa.gov/srtm/) and [NED](#http://nationalmap.gov/elevation.html).
-
 #### Specify Interpolation Method
   * This sets the resampling method applied during the AOP process. The default setting is ortho_interpolation_type='Cubic'. Other options are Bilinear and Nearest Neighbor.  However, for spectral analysis Bilinear is preferred because it affects the spectral DN the least.
 
@@ -259,6 +255,9 @@ WV02|35,872,942|329.87|651.095 | 1.97|
 WV03|35,371,971|196.27|655.671 | 3.34|
 GE01| 57,498,000|332.97|560.836 | 1.68|
 
+#### Known Issues:
+##Specify DEM
+  * The default DEM (digital elevation model) used in the orthorectification process is SRTM90 (Shuttle Radar Topography Mission). No other options are available at this time.
 
 #### Contact Us   
 If your customer is having a specific problem. Tech Owner: [Tim Harris](Tim.Harris@digitalglobe.com) & Editor: [Kathleen Johnson](kajohnso@digitalglobe.com)
