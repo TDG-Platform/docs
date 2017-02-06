@@ -85,6 +85,7 @@ data                     |          N/A          | S3 URL                       
 [bands](#select-bands-to-process)   |         Auto          | PAN+MS, PAN, MS, Auto           | Bands to process. `Auto` inspects input data for band info.
 [parts](#specifying-strip-parts)                    |       All Parts       | Comma-separated part numbers    | List of strip parts to include in processing.
 [ortho_epsg](#change-projection) |       EPSG:4326      | EPSG codes, UTM                 | EPSG code of projection for orthorectification. `UTM` automatically determines EPSG code from strip coordinates.
+[ortho_dem_specifier](#select DEM | SRTM90  | run in Default mode or specify 
 [ortho_pixel_size](#set-pixel-size) |         Auto          | Pixel size in meters, Auto      | Pixel size of orthorectified output. `Auto` inspects input data for collected pixel size.
 [ortho_tiling_scheme](#set-ortho-tiling-scheme)      |          N/A          | Ex: DGHalfMeter:18              | Tiling scheme and zoom level for orthorectification. Overrides `ortho_epsg` and `ortho_pixel_size`.
 [ortho_interpolation_type](#specify-interpolation-method) |         Cubic         | Nearest, Bilinear, Cubic        | Pixel interpolation type for orthorectification.
@@ -135,6 +136,7 @@ Please pay attention to the following **important** notes.
   * `bands` must be set to either `PAN+MS` or `Auto`.
  * `enable_tiling` can only be `true` when `ortho_tiling_scheme` is set.
  * `ortho_epsg` can be set to `UTM` which automatically determines the correct EPSG code for the UTM zone at the center of the input data.
+ * 'ortho_dem_specifier' Custom DEM data must be pre-processed to fit the DG Tiling scheme using gdal_tiler; and uploaded to the customer's S3 bucket.  You must specify the full path to the Custome DEM.  No option needs to be executed to run in default mode (SRTM90). 
  * When set, `ortho_tiling_scheme` overrides `ortho_epsg` and `ortho_pixel_size`.
  * `ortho_dem_specifier` currently doesn't include any DEMs that cover the globe north of +60 degrees latitude. Additional non-standard DEMs may be available upon request.
  * When `dra_mode` is set to `BaseLayerMatch`, a geographic projection must be used. Either `ortho_epsg` must be set to `EPSG:4326`, or `ortho_tiling_scheme` must be set to use DGHalfMeter at some zoom level.
