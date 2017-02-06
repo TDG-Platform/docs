@@ -151,16 +151,14 @@ Name | Required |   Description
 data |     Y    | S3 location where output is stored
 log  |     N    | S3 location where logs are stored
 
-The following table delineates some of the properties of the processing result output image in a variety of common task execution scenarios with multispectral data input. When multiple processing options are executed the order of operations is always Orthorectification -> AComp -> Pan-Sharpen -> DRA. Please note that not all processing combinations are captured in this table, for more information on advanced execution scenarios please refer to the Advanced Options & Use Cases section of this documentation.
+The following table delineates some of the properties of the processing result output image in a variety of common task execution scenarios with multispectral data input. When multiple processing options are executed the order of operations is always Orthorectification -> AComp -> Pan-Sharpen -> DRA. Please note that not all processing combinations are captured in this table, for more information on advanced execution scenarios please refer to the Advanced Options section of this document.
 
-Name                     |     Coordinate System     |      Band Grouping       |   Data Type
--------------------------|:---------------------:|------------------------------|-----------------
-ortho_epsg=EPSG:4326 enable_acomp=true enable_pansharpen=true enable_dra=true dra_mode=BaseLayerMatch   |       Geographic WGS84    | 3-Band (R,G,B)         | 8-Bit Unsigned Byte
+Name               |     Coordinate System     |      Band Grouping       |   Data Type | Use Cases
+:-----------------:|:---------------------:|:------------------------:|-----------------|-------------
+ortho_epsg=EPSG:4326 enable_acomp=true enable_pansharpen=true enable_dra=true dra_mode=BaseLayerMatch |       Geographic WGS84    | 3-Band (R,G,B)         | 8-Bit Unsigned Byte
 ortho_epsg=EPSG:4326 enable_acomp=false enable_pansharpen=true enable_dra=false    |      Geographic WGS84   |4-Band (B,G,R,N)   |16-Bit Unsigned Integer
 ortho_epsg=UTM enable_acomp=false enable_pansharpen=true enable_dra=false|         UTM WGS84         |    4-Band (B,G,R,N)    | 16-Bit Unsigned Integer
  |         true          | true, false                     | Apply dynamic range adjustment.
- |         false         | true, false                     | Tile output images according to the `ortho_tiling_scheme` input.
- |         Auto          | PAN+MS, PAN, MS, Auto           | Bands to process. `Auto` inspects input data for band info.
 
 
 ##### `data`
