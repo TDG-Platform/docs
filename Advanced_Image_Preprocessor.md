@@ -156,9 +156,10 @@ The following table delineates some of the properties of the processing result o
 Name             |     Coordinate System     |      Band Grouping       |   Data Type | Example Use Case
 -----------------|---------------------|:------------------------:|-----------------|-------------
 ortho_epsg=EPSG:4326 enable_acomp=true enable_pansharpen=true enable_dra=true dra_mode=BaseLayerMatch |    Geographic WGS84    | 3-Band (R,G,B)  | 8-Bit Unsigned Byte | Output may be used in larger mosaic as highest resolution RGB image available
-ortho_epsg=EPSG:4326 enable_acomp=false enable_pansharpen=true enable_dra=false    | Geographic WGS84   |4-Band (B,G,R,N)   |16-Bit Unsigned Integer | Output may be used to in detection algorithms, however spectral integrity is compromised while resampling data from native resolution to panchromatic resolution
-ortho_epsg=UTM enable_acomp=false enable_pansharpen=true enable_dra=false|         UTM WGS84         |   4-Band (B,G,R,N)    | 16-Bit Unsigned Integer |
- |         true          | true, false                     | Apply dynamic range adjustment.
+ortho_epsg=EPSG:4326 enable_acomp=false enable_pansharpen=true enable_dra=false    | Geographic WGS84   |4-Band (B,G,R,N)   |16-Bit Unsigned Integer | This 4-band output may be used in detection algorithms, however spectral integrity is compromised while resampling data from native resolution to panchromatic resolution. Further, 8-band pansharpening is not currently available and only the 'MS1' bands will be processed by this task
+ortho_epsg=UTM enable_acomp=false enable_pansharpen=true enable_dra=false| UTM WGS84  | 4-Band (B,G,R,N)  | 16-Bit Unsigned Integer |This task is identical to the previous example, save for the additional projection of the data into Universal Transverse Mercator (UTM )with the WGS84 datum and corresponding UTM zone
+ortho_epsg=EPSG:4326 enable_acomp=true enable_pansharpen=false enable_dra=false |    Geographic WGS84    | Output will match input e.g. "PAN+MS" will output Pan and MS bands included as input | 8-Bit Unsigned Byte | A multispectral image processed through Orthorectification and Atmospheric Compensation will be suitable for a landcover analysis
+ortho_epsg=EPSG:4326 enable_acomp=false|    Geographic WGS84    | Output will match input e.g. "PAN+MS" will output Pan and MS bands included as input | 8-Bit Unsigned Byte | A multispectral image processed through Orthorectification and Atmospheric Compensation will be suitable for ?????
 
 
 ##### `data`
