@@ -261,7 +261,7 @@ GE01| 57,498,000|332.97|560.836 | 1.68|
 
 #### Known Issues:
 #####Specify DEM
-  * The default DEM (digital elevation model) used in the orthorectification process is SRTM90 (Shuttle Radar Topography Mission). No other options are available at this time.
+  * The default DEM (digital elevation model) used in the orthorectification process is SRTM90 (Shuttle Radar Topography Mission). Custom DEM's can be used, but require some preprocessing.  Please contact us for details.
 
 #### Contact Us   
 If your customer is having a specific problem. Tech Owner: [Tim Harris](Tim.Harris@digitalglobe.com) & Editor: [Kathleen Johnson](kajohnso@digitalglobe.com)
