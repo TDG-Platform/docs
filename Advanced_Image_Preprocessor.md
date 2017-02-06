@@ -85,7 +85,7 @@ data                     |          N/A          | S3 URL                       
 [bands](#select-bands-to-process)   |         Auto          | PAN+MS, PAN, MS, Auto           | Bands to process. `Auto` inspects input data for band info.
 [parts](#specifying-strip-parts)                    |       All Parts       | Comma-separated part numbers    | List of strip parts to include in processing.
 [ortho_epsg](#change-projection) |       EPSG:4326      | EPSG codes, UTM                 | EPSG code of projection for orthorectification. `UTM` automatically determines EPSG code from strip coordinates.
-[ortho_dem_specifier](#custom-DEM) | SRTM90  | run in Default mode or specify 
+[ortho_dem_specifier](#add-custom-DEM) | SRTM90  | run in Default mode or specify 
 [ortho_pixel_size](#set-pixel-size) |         Auto          | Pixel size in meters, Auto      | Pixel size of orthorectified output. `Auto` inspects input data for collected pixel size.
 [ortho_tiling_scheme](#set-ortho-tiling-scheme)      |          N/A          | Ex: DGHalfMeter:18              | Tiling scheme and zoom level for orthorectification. Overrides `ortho_epsg` and `ortho_pixel_size`.
 [ortho_interpolation_type](#specify-interpolation-method) |         Cubic         | Nearest, Bilinear, Cubic        | Pixel interpolation type for orthorectification.
@@ -137,7 +137,7 @@ Please pay attention to the following **important** notes.
  * `enable_tiling` can only be `true` when `ortho_tiling_scheme` is set.
  * `ortho_epsg` can be set to `UTM` which automatically determines the correct EPSG code for the UTM zone at the center of the input data.
  * When set, `ortho_tiling_scheme` overrides `ortho_epsg` and `ortho_pixel_size`.
- * `ortho_dem_specifier` Custom DEM data must be pre-processed to fit the DG Tiling scheme using gdal_tiler; and uploaded to the customer's S3 bucket.  You must specify the full path to the Custom DEM.  No option needs to be executed to run in default mode (SRTM90). The Default DEM currently doesn't include any DEMs that cover the globe north of +60 degrees latitude. Additional non-standard DEMs may be available upon request.
+ * `ortho_dem_specifier` The Default DEM (SRTM90) currently doesn't include any DEMs that cover the globe north of +60 degrees latitude. Additional non-standard DEMs may be available upon request.  See [Advanced Options](#add-custom-DEM) to add your own DEM.
  * When `dra_mode` is set to `BaseLayerMatch`, a geographic projection must be used. Either `ortho_epsg` must be set to `EPSG:4326`, or `ortho_tiling_scheme` must be set to use DGHalfMeter at some zoom level.
  * For WorldView-1, `enable_acomp`, `enable_pansharpen`, and `enable_dra` must all be set to `false` since that sensor only produces panchromatic data.
 
@@ -202,6 +202,9 @@ The `log` output port contains the location where a trace of log messages genera
 
 #### Pansharpening
   * The 'enable_pansharpen' output is a high-resolution RGB image.  The process merges the lower resolution multispectral image with the higher resolution panchromatic image to produce a high resolution multispectral image (RGB). The default is to run pansharpening.  It must be set to 'False' if you want preserve the full 8-band or 4-band image from the input image.
+
+#### Add Custom DEM
+  * Using the Custome DEM Option for 'ortho_dem_specifier'. Custom DEM data must be pre-processed to fit the DG Tiling scheme using gdal_tiler; and uploaded to the customer's S3 bucket.  You must specify the full path to the Custom DEM.  No option needs to be executed to run in default mode (SRTM90). 
 
 #### Dynamic Range Adjustment
   * The default for 'enable_dra' is on (True) and it must be set to 'False' to produce a 4-band or 8-band image (+/- panchromatic band).  If Pansharpening has been set to False, then DRA must also be manually set to False. For all other Dynamic Range Adjustment Settings:  [see below](#using-dynammic-range-adjustment)
