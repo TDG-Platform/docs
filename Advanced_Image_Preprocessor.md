@@ -151,6 +151,22 @@ Name | Required |   Description
 data |     Y    | S3 location where output is stored
 log  |     N    | S3 location where logs are stored
 
+The following table delineates some of the properties of the processing result output image in a variety of common task execution scenarios with multispectral data input. When multiple processing options are executed the order of operations is always Orthorectification -> AComp -> Pan-Sharpen -> DRA. Please note that not all processing combinations are captured in this table, for more information on advanced execution scenarios please refer to the Advanced Options & Use Cases section of this documentation.
+
+Name                     |       Coordinate System       |        Band Grouping         |   Data Type
+-------------------------|:---------------------:|---------------------------------|-----------------
+ortho_epsg=EPSG:4326
+enable_acomp=true
+enable_pansharpen=true
+enable_dra=true
+dra_mode=BaseLayerMatch              |          Geographic WGS84    | 3-Band (R,G,B)            | 8-Bit Unsigned Byte
+    |         true          | true, false                     | 16-Bit Unsigned Integer
+   |         true          | true, false                     | Pan sharpen multispectral data.
+ |         true          | true, false                     | Apply dynamic range adjustment.
+ |         false         | true, false                     | Tile output images according to the `ortho_tiling_scheme` input.
+ |         Auto          | PAN+MS, PAN, MS, Auto           | Bands to process. `Auto` inspects input data for band info.
+
+
 ##### `data`
 
 The `data` output port contains the location where the AOP_Strip_Processor output is stored. Contents may vary slightly depending on the input settings. The following listing  
@@ -204,7 +220,7 @@ The `log` output port contains the location where a trace of log messages genera
   * The 'enable_pansharpen' output is a high-resolution RGB image.  The process merges the lower resolution multispectral image with the higher resolution panchromatic image to produce a high resolution multispectral image (RGB). The default is to run pansharpening.  It must be set to 'False' if you want preserve the full 8-band or 4-band image from the input image.
 
 #### Add Custom DEM
-  * Using the Custome DEM Option for 'ortho_dem_specifier'. Custom DEM data must be pre-processed to fit the DG Tiling scheme using gdal_tiler; and uploaded to the customer's S3 bucket.  You must specify the full path to the Custom DEM.  No option needs to be executed to run in default mode (SRTM90). 
+  * Using the Custome DEM Option for 'ortho_dem_specifier'. Custom DEM data must be pre-processed to fit the DG Tiling scheme using gdal_tiler; and uploaded to the customer's S3 bucket.  You must specify the full path to the Custom DEM.  No option needs to be executed to run in default mode (SRTM90).
 
 #### Dynamic Range Adjustment
   * The default for 'enable_dra' is on (True) and it must be set to 'False' to produce a 4-band or 8-band image (+/- panchromatic band).  If Pansharpening has been set to False, then DRA must also be manually set to False. For all other Dynamic Range Adjustment Settings:  [see below](#using-dynammic-range-adjustment)
