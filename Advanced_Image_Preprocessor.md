@@ -85,7 +85,7 @@ data                     |          N/A          | S3 URL                       
 [bands](#select-bands-to-process)   |         Auto          | PAN+MS, PAN, MS, Auto           | Bands to process. `Auto` inspects input data for band info.
 [parts](#specifying-strip-parts)                    |       All Parts       | Comma-separated part numbers    | List of strip parts to include in processing.
 [ortho_epsg](#change-projection) |       EPSG:4326      | EPSG codes, UTM                 | EPSG code of projection for orthorectification. `UTM` automatically determines EPSG code from strip coordinates.
-[ortho_dem_specifier](#add-custom-DEM) | SRTM90  | S3 URL path to custom DEM | Runs in default mode unless a custom DEM is specified.
+[ortho_dem_specifier](#add-custom-dem) | SRTM90  | S3 URL path to custom DEM | Runs in default mode unless a custom DEM is specified.
 [ortho_pixel_size](#set-pixel-size) |         Auto          | Pixel size in meters, Auto      | Pixel size of orthorectified output. `Auto` inspects input data for collected pixel size.
 [ortho_tiling_scheme](#set-ortho-tiling-scheme)      |          N/A          | Ex: DGHalfMeter:18              | Tiling scheme and zoom level for orthorectification. Overrides `ortho_epsg` and `ortho_pixel_size`.
 [ortho_interpolation_type](#specify-interpolation-method) |         Cubic         | Nearest, Bilinear, Cubic        | Pixel interpolation type for orthorectification.
