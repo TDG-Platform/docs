@@ -215,7 +215,7 @@ The `log` output port contains the location where a trace of log messages genera
   * The 'enable_pansharpen' output is a high-resolution RGB image.  The process merges the lower resolution multispectral image with the higher resolution panchromatic image to produce a high resolution multispectral image (RGB). The default is to run pansharpening.  It must be set to 'False' if you want preserve the full 8-band or 4-band image from the input image.
 
 #### Add Custom DEM
-  * Using the Custome DEM Option for 'ortho_dem_specifier'. Custom DEM data must be pre-processed to fit the DG Tiling scheme using gdal_tiler; and uploaded to the customer's S3 bucket.  You must specify the full path to the Custom DEM.  No option needs to be executed to run in default mode (SRTM90).
+  * Using the Custom DEM Option for 'ortho_dem_specifier'. Custom DEM data must be pre-processed to fit the DG Tiling scheme using gdal_tiler; and uploaded to the customer's S3 bucket.  You must specify the full path to the Custom DEM.  No option needs to be executed to run in default mode (SRTM90).
 
 #### Dynamic Range Adjustment
   * The default for 'enable_dra' is on (True) and it must be set to 'False' to produce a 4-band or 8-band image (+/- panchromatic band).  If Pansharpening has been set to False, then DRA must also be manually set to False. For all other Dynamic Range Adjustment Settings:  [see below](#using-dynammic-range-adjustment)
