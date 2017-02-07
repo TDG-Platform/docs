@@ -84,13 +84,13 @@ Here are descriptions for the various GBDX supported ENVI data types and their v
 | Example Input Ports          | GBDX Type | Required | Description                              |
 | ---------------------------- | --------- | -------- | ---------------------------------------- |
 | *input_raster*               | Directory | See Task | Directory containing the files required for the task. |
-| *input_raster_format*        | String    | False    | A string for selecting the raster format (non-DG format). |
+| *input_raster_format*        | String    | False    | A string for selecting the raster format (non-DG format). Please refer to Supported Datasets table below for a list of valid values for currently supported image data products. |
 | *input_raster_filename*      | String    | False    | A string with the filename of the raster for ENVI to open. This overrides any file discovery. |
 | *input_raster_band_grouping* | String    | False    | A string name indentify which band grouping to use for the task. |
-| *dem_raster*                 | Directory | False    | Special case of ENVI Raster. Supports using ENVI built in DEM files. |
+| *dem_raster*                 | Directory | False    | Directory containing the DEM files required for the task. |
 | *dem_raster_filename*        | String    | False    | Special case of ENVI Raster filename. A string with the filename of the raster for ENVI to open. This overrides any file discovery. It also allows for using ENVI built in DEM raster. See below for details. |
 
-
+> Note: the example names in the table above are for demonstrating the typical set of port used to configure an input raster. The names for the input rasters can vary by task (ie - input_low_resolution_raster), but the set of input ports will always be standard. 
 
 ### Description
 
