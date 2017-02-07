@@ -8,20 +8,20 @@ In general the ENVI task runner is a GBDX execution interface for the ENVI**®**
 
 |              ENVI Data Type              | GBDX Type |
 | :--------------------------------------: | :-------: |
-|        [ENVIRaster](#ENVIRaster)         | Directory |
-|           [ENVIURI](#ENVIURI)            | Directory |
-| [ENVISpectralLibrary](#ENVISpectralLibrary) | Directory |
-|           [ENVIROI](#ENVIROI)            | Directory |
-|        [ENVIGCPSet](#ENVIGCPSet)         | Directory |
-|   [ENVITiePointSet](#ENVITiePointSet)    | Directory |
-|        [ENVIVector](#ENVIVector)         | Directory |
-|      [ENVICoordSys](#ENVICoordSys)       |  String   |
-| [ENVIGridDefinition](#ENVIGridDefinition) |  String   |
-|    [ENVISpatialRef](#ENVISpatialRef)     |   None    |
-| [ENVIPseudoRasterSpatialRef](#ENVIPseudoRasterSpatialRef) |  String   |
-| [ENVIStandardRasterSpatialRef](#ENVIStandardRasterSpatialRef) |  String   |
-| [ENVIRPCRasterSpatialRef](#ENVIRPCRasterSpatialRef) |  String   |
-|       [ENVIGeoJson](#ENVIGeoJson)        |  String   |
+|        [ENVIRaster](#enviraster)         | Directory |
+|           [ENVIURI](#enviuri)            | Directory |
+| [ENVISpectralLibrary](#envispectralLibrary) | Directory |
+|           [ENVIROI](#enviroi)            | Directory |
+|        [ENVIGCPSet](#envigcpset)         | Directory |
+|   [ENVITiePointSet](#envitiepointset)    | Directory |
+|        [ENVIVector](#envivector)         | Directory |
+|      [ENVICoordSys](#envicoordsys)       |  String   |
+| [ENVIGridDefinition](#envigriddefinition) |  String   |
+|    [ENVISpatialRef](#envispatialref)     |   None    |
+| [ENVIPseudoRasterSpatialRef](#envipseudorasterspatialref) |  String   |
+| [ENVIStandardRasterSpatialRef](#envistandardrasterspatialref) |  String   |
+| [ENVIRPCRasterSpatialRef](#envirpcrasterspatialref) |  String   |
+|       [ENVIGeoJson](#envigeojson)        |  String   |
 
 
 
