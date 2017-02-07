@@ -84,7 +84,7 @@ Here are descriptions for the various GBDX supported ENVI data types and their v
 | Example Input Ports          | GBDX Type | Required | Description                              |
 | ---------------------------- | --------- | -------- | ---------------------------------------- |
 | *input_raster*               | Directory | See Task | Directory containing the files required for the task. |
-| *input_raster_format*        | String    | False    | A string dictionary for selecting the raster format. |
+| *input_raster_format*        | String    | False    | A string for selecting the raster format (non-DG format). |
 | *input_raster_filename*      | String    | False    | A string with the filename of the raster for ENVI to open. This overrides any file discovery. |
 | *input_raster_band_grouping* | String    | False    | A string name indentify which band grouping to use for the task. |
 | *dem_raster*                 | Directory | False    | Special case of ENVI Raster. Supports using ENVI built in DEM files. |
@@ -107,7 +107,7 @@ task.inputs.input_raster = 's3://<bucket>/<folder>/'
 
 
 
-To configure the task runner to switch the file discovery logic, use the `*_format` input port to specify the a supported input raster format. Currently the task runner supports all standard DigitalGlobe formats plus`IKONOS`, `Landsat 8`, `Sentinel-2`. The following is an example:
+To configure the task runner to switch the file discovery logic, use the `*_format` input port to specify the a supported input raster format. Currently the task runner supports all standard DigitalGlobe formats plus`IKONOS`, `Landsat 8`. The following is an example:
 
 ```python
 ...
