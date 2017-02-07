@@ -2,7 +2,7 @@
 
 
 
-In general the ENVI task runner is a GBDX execution interface for the ENVI**®** Services Engine. Part of this interface is to provide support for the various [ENVI data types](https://www.harrisgeospatial.com/docs/supporteddatatypes.html). This document will cover the more complicated use case of specific ENVI data types, that cannot be covered by the various documents for each ENVI task. The following are the currently supported ENVI data types and their GBDX type:
+In general the ENVI task runner is a GBDX execution interface for the ENVI**®** Services Engine. Part of this interface is to provide support for the various [ENVI data types](https://www.harrisgeospatial.com/docs/supporteddatatypes.html). This document will cover the more complicated use cases of specific ENVI data types, that cannot be covered by the various documents for each ENVI task. The following are the currently supported ENVI data types and their GBDX type:
 
 
 
@@ -83,14 +83,14 @@ Here are descriptions for the various GBDX supported ENVI data types and their v
 
 | Example Input Ports          | GBDX Type | Required | Description                              |
 | ---------------------------- | --------- | -------- | ---------------------------------------- |
-| *input_raster*               | Directory | See Task | Directory containing the files required for the task. |
+| *input_raster*               | Directory | See Task | Directory containing the files required for the a task. |
 | *input_raster_format*        | String    | False    | A string for selecting the raster format (non-DG format). Please refer to Supported Datasets table below for a list of valid values for currently supported image data products. |
 | *input_raster_filename*      | String    | False    | A string with the filename of the raster for ENVI to open. This overrides any file discovery. |
 | *input_raster_band_grouping* | String    | False    | A string name indentify which band grouping to use for the task. |
-| *dem_raster*                 | Directory | False    | Directory containing the DEM files required for the task. |
+| *dem_raster*                 | Directory | False    | Directory containing the DEM files required for the a task. |
 | *dem_raster_filename*        | String    | False    | Special case of ENVI Raster filename. A string with the filename of the raster for ENVI to open. This overrides any file discovery. It also allows for using ENVI built in DEM raster. See below for details. |
 
-> Note: the example names in the table above are for demonstrating the typical set of port used to configure an input raster. The names for the input rasters can vary by task (ie - input_low_resolution_raster), but the set of input ports will always be standard. 
+> Note: the example names in the table above are for demonstrating the typical set of ports used to configure an input raster. The names for the input rasters can vary by task (ie - input_low_resolution_raster), but the set of supplemental input ports will always be standard. 
 
 ### Description
 
@@ -107,7 +107,7 @@ task.inputs.input_raster = 's3://<bucket>/<folder>/'
 
 
 
-To configure the task runner to switch the file discovery logic, use the `*_format` input port to specify the a supported input raster format. Currently the task runner supports all standard DigitalGlobe formats plus`IKONOS`, `Landsat 8`. The following is an example:
+To configure the task runner to switch the file discovery logic, use the `*_format` input port to specify the a supported input raster format. Currently the task runner supports all standard DigitalGlobe formats plus `IKONOS`, and `Landsat 8`. The following is an example:
 
 ```python
 ...
@@ -117,11 +117,11 @@ task.inputs.input_raster_format = 'landsat-8'
 ...
 ```
 
-> Note: See the ***Supported Datasets*** table below for the acceptable *input_raster_format* names.
+> Note: See the ***Supported Datasets*** table below for the acceptable *input_raster_format* names. Also, majority of use cases will also require the *_band_grouping port as ENVI loads all the bands as different indexes. 
 
 
 
-Alternately a user can overide all file discovery logic by using the `*_filename` input port. This passes the relative file name directly to the ENVI task engine. An example is as follows:
+Alternately a user can overide all file discovery logic by using the `*_filename` input port. This passes the relative file name directly to the ENVI task engine. It also supports Python's glob style patterns for file discovery. An example is as follows:
 
 ```python
 ...
@@ -130,6 +130,8 @@ task.inputs.input_raster = 's3://<bucket>/<folder>/'
 task.inputs.input_raster_filename = 'landsat8_MTL.txt'
 ...
 ```
+
+This port is particularily useful for use cases where a user has a dataset supported by ENVI, but the task runner doesn't have built in support for it. Also note, depending on how ENVI opens the raster, the `*_band_grouping` port may be required to select an appropriate index for a group of bands.
 
 
 
@@ -146,9 +148,7 @@ task.inputs.input_raster_band_grouping = 'multispectral'
 ...
 ```
 
-
-
-> Note: When using non-Worldview datasets, the ports `*_format` and `*_band_grouping` must be used together. Without the knowing the format of the raster, the proper band grouping names won't be found.
+> Note: When using non-Worldview datasets, the ports `*_format` and `*_band_grouping` must be used together. 
 
 
 
@@ -203,6 +203,8 @@ However, ENVI comes with the GMTED2010 DEM raster which is at 30 arc-seconds. An
 
 To use these files, the port `*_filename` can be used to specify the which of the above files to use as the DEM file for the task. The following is an example:
 
+
+
 ```python
 # Use the 30 arc-second DEM
 ...
@@ -229,7 +231,7 @@ task.inputs.dem_raster_filename = 'GMTED2010_polar.jp2'
 
 ### Description
 
-This input port is a generic file input for the ENVI task runner. The data type has no specific file type(s). The However, the ENVI task engine will only accept a single file name. By default, the task runner will search the input directory for any [supported file type](https://www.harrisgeospatial.com/docs/supportedformats.html). Which can result in multiple files being found by the task runner, which will cause an error. So, in order to use a port of this type, the task runner must be told which files to search for. This is done using the `*_filter` input port, which is prefixed with the name of the ENVIURI port. A usage example of this type of port is a follows:
+This input port is a generic file input for the ENVI task runner. The data type has no specific file type(s). The However, the ENVI task engine will only accept a single file name. By default, the task runner will search the input directory for any [supported file type](https://www.harrisgeospatial.com/docs/supportedformats.html). Which can result in multiple files being found by the task runner, which will cause an error. So, in order to use a port of this type, the task runner must be told which files to search for. This is done using the `*_filter` input port, which is prefixed with the name of the ENVIURI port. A usage example of this type of port is as follows:
 
 
 
@@ -245,7 +247,7 @@ task.inputs.input_raster_uri_filter = "*.dat"
 
 
 
-The `*_filter` port needs to be a single string, or a string list of comma seperated filter strings.  Each filter string must be a Python [globe2](https://docs.python.org/2/library/glob.html) style syntax. For example, a single string like `"**/*_MTL.txt"`, or a list of extensions (`'["*.dat", "**/_MTL.txt"]'`).  
+The `*_filter` port needs to be a single string filter, each filter string must be a Python [globe2](https://docs.python.org/2/library/glob.html) style pattern. For example, a single string like `"**/*_MTL.txt"` will recursively look for files ending in `_MTL.txt`, or a string like `*.dat` will non-recursively look for files ending in `.dat`.   
 
 
 
@@ -264,7 +266,7 @@ The `*_filter` port needs to be a single string, or a string list of comma seper
 
 ### Description
 
-This data type has two ports for two different use cases: providing the task runner with a spectral library file (S3 location), or using one of the spectral library files that is bundled with ENVI. When providing a spectral library file, the task runner will search the input directory for a file with the `*.sli` extension. The following example show this use case:
+This data type has two ports for two different use cases: providing the task runner with a spectral library file (S3 location), or using one of the spectral library files that is bundled with ENVI. When providing a spectral library file, the task runner will search the input directory for a file with the `*.sli` extension. The following example shows this use case:
 
 ```python
 ...
@@ -278,7 +280,7 @@ task.inputs.spectrum_name = '<spectrum_name>'
 
 
 
-To use one of the spectral library files bundled with the ENVI software, only the file name is required. The following example show this use case:
+To use one of the spectral library files bundled with the ENVI software, only the file name is required. The following example shows this use case:
 
 ```python
 ...
@@ -287,6 +289,8 @@ task.inputs.input_spectral_library_filename = 'veg_2grn.sli'
 task.inputs.spectrum_name = 'Dry Grass'
 ...
 ```
+
+> Note: Use the ENVI desktop application to find an appropriate *.sli file name. 
 
 
 
