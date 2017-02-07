@@ -41,7 +41,7 @@ In [3]: task = gbdx.Task("ENVI_QuerySpectralIndices")
 In [4]: task.inputs
 Out[4]:
 input_raster
-input_raster_metadata
+input_raster_format
 input_raster_filename
 file_types
 input_raster_band_grouping
@@ -84,11 +84,11 @@ Here are descriptions for the various GBDX supported ENVI data types and their v
 | Example Input Ports          | GBDX Type | Required | Description                              |
 | ---------------------------- | --------- | -------- | ---------------------------------------- |
 | *input_raster*               | Directory | See Task | Directory containing the files required for the task. |
-| *input_raster_metadata*      | String    | False    | A string dictionary for overridding the raster metadata. |
+| *input_raster_format*        | String    | False    | A string dictionary for selecting the raster format. |
 | *input_raster_filename*      | String    | False    | A string with the filename of the raster for ENVI to open. This overrides any file discovery. |
 | *input_raster_band_grouping* | String    | False    | A string name indentify which band grouping to use for the task. |
 | *dem_raster*                 | Directory | False    | Special case of ENVI Raster. Supports using ENVI built in DEM files. |
-| *dem_raster_metadata*        | String    | False    | Special case of ENVIRaster metadata. Supports the `dem file` attribute as described below. |
+| *dem_raster_filename*        | String    | False    | Special case of ENVI Raster filename. A string with the filename of the raster for ENVI to open. This overrides any file discovery. It also allows for using ENVI built in DEM raster. See below for details. |
 
 
 
@@ -148,7 +148,7 @@ task.inputs.input_raster_band_grouping = 'multispectral'
 
 
 
-> Note: When using non-Worldview datasets, the ports `*_metadata` and `*_band_grouping` must be used together. Without the `sensor type` attribute of metadata, the proper band grouping names won't be found.
+> Note: When using non-Worldview datasets, the ports `*_format` and `*_band_grouping` must be used together. Without the knowing the format of the raster, the proper band grouping names won't be found.
 
 
 
