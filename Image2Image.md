@@ -13,7 +13,7 @@ The image2image task will remove misregistrations between two images.  It will a
 ### Quickstart
 
 This script uses Image2Image to produce co-registered images from the test dataset:
-
+```python
    	from gbdxtools import Interface
 	from os.path import join
 	import uuid
@@ -42,6 +42,7 @@ This script uses Image2Image to produce co-registered images from the test datas
 	workflow.execute()
 	print workflow.id
 	print workflow.status
+```
 
 
 #### Test Datasets:
