@@ -1,4 +1,4 @@
-# Image2Image (Prelim Vesrion)
+# Image2Image (Prelim Version)
 Image de-shearing and registration
 
 # Inputs:
