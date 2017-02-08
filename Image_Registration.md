@@ -1,6 +1,6 @@
 # Image Registration (image2image)
 
-The image2image task will remove misregistrations between two images.  It will attempt to find similar image features that are misregistered by up to 20 pixels and warp the source image accordingly.  There is also an option to specify a warp boundary via a polygon shapefile.  In this case, there is a full warp nested inside the boundary and no warp outside the boundary, with a smooth transition in between.  The warped source will have the same metadata as the source and be output with the suffix “_radwarp” appended to the original filename.
+The Image Registration task will remove misregistrations between two images.  It will attempt to find similar image features that are misregistered by up to 20 pixels and warp the source image accordingly.  There is also an option to specify a warp boundary via a polygon shapefile.  In this case, there is a full warp nested inside the boundary and no warp outside the boundary, with a smooth transition in between.  The warped source will have the same metadata as the source and be output with the suffix “_radwarp” appended to the original filename.
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
@@ -12,7 +12,7 @@ The image2image task will remove misregistrations between two images.  It will a
 
 ### Quickstart
 
-This script uses Image2Image to produce co-registered images that are in separate directories.  If both images are in the same directory, then the source_filename and reference filename of the tifs must be added to the script.
+This script uses the Image Registration task to produce co-registered images that are in separate directories.  If both images are in the same directory, then the source_filename and reference filename of the tifs must be added to the script.
 
 ```python
    	from gbdxtools import Interface
