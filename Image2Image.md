@@ -20,23 +20,23 @@ This script uses Image2Image to produce co-registered images from the test datas
 	gbdx = Interface()
 	
 	# set my s3 bucket location:
-	my_bucket = 's3://gbd-customer-data/596bd3ed-ffad-496f-9394-291648fb8250/'
+	my_bucket = 's3://gbd-customer-data/acct#'
 	
 	# create task object
 	radwarp_task = gbdx.Task('image2image_1_2_0')
 	
 	# set the values of source_directory, reference_directory
-	radwarp_task.inputs.source_directory = join(my_bucket,'WarpTest/Desert/im1/')
-	radwarp_task.inputs.reference_directory = join(my_bucket,'WarpTest/Desert/im2/')
-	radwarp_task.inputs.boundary_directory = join(my_bucket,'WarpTest/Desert/')
-	radwarp_task.inputs.boundary_filename =  'nonconvex.shp'
+	im2im_task.inputs.source_directory = join(my_bucket,'short path to tif')
+	im2im_task.inputs.reference_directory = join(my_bucket,'short path to tif')
+	im2im_task.inputs.boundary_directory = join(my_bucket,'directory-name')
+	im2im_task.inputs.boundary_filename =  'customer_boundary.shp' # optional
 	
 	# put the task in a workflow
-	workflow = gbdx.Workflow([radwarp_task])
+	workflow = gbdx.Workflow([im2im_task])
 	
 	# save the data to an output_location of your choice
-	output_location = 'Output/DesertRun'
-	workflow.savedata(radwarp_task.outputs.out, output_location)
+	output_location = 'path to customer S3 output directory'
+	workflow.savedata(im2im_task.outputs.out, output_location)
 	
 	# Execute the Workflow
 	workflow.execute()
