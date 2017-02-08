@@ -1,6 +1,7 @@
 # Image Registration (image2image)
 
-The Image Registration task will remove misregistrations between two images.  It will attempt to find similar image features that are misregistered by up to 200 pixels and warp the source image accordingly.  There is also an option to specify a warp boundary via a polygon shapefile.  In this case, there is a full warp nested inside the boundary and no warp outside the boundary, with a smooth transition in between.  The warped source will have the same metadata as the source and be output with the suffix “warped” appended to the original filename.
+The image2image task will remove misregistrations between two images.  It does so by attempting to find similar image features and warping the source image accordingly.  The warped source will have the same metadata as the source and be output with the suffix “_warped” appended to the original filename.
+
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
@@ -11,7 +12,7 @@ The Image Registration task will remove misregistrations between two images.  It
 
 ### Quickstart
 
-This script uses the Image Registration task to produce co-registered images that are in separate directories.  If both images are in the same directory, then the source_filename and reference filename of the tifs must be added to the script.
+This script uses Image2Image to co-register two images.  The source image will be registered to the reference image and output to the specified directory.
 
 ```python
    	from gbdxtools import Interface
@@ -28,14 +29,14 @@ This script uses the Image Registration task to produce co-registered images tha
 	# set the values of source_directory, reference_directory
 	# if the images are in the same directory, you must include the tif file name.  See Input options below.
 	im2im_task.inputs.source_directory = join(my_bucket,'short path to source image directory')
+	im2im_task.inputs.source_filename = 'the source image filename with extension'
 	im2im_task.inputs.reference_directory = join(my_bucket,'short path to reference image directory')
-	im2im_task.inputs.boundary_directory = join(my_bucket,'directory-name')
-	im2im_task.inputs.boundary_filename =  'customer_boundary.shp' # optional
+	im2im_task.inputs.reference_filename = 'the reference image filename with extension'
 	
 	# put the task in a workflow
 	workflow = gbdx.Workflow([im2im_task])
 	
-	# save the data to an output_location of your choice
+	# save the data to an output location of your choice
 	workflow.savedata(im2im_task.outputs.out, location='path to customer S3 output directory')
 	
 	# Execute the Workflow
@@ -74,16 +75,14 @@ boundary_filename  |  NO |  shapefile   | file that limits the areal extent of t
   * Supports TIFFs (and vrts of TIFFs)
 *  Images must be same projection
 *  Images must fit in memory
-*  There is a 200 pixel search radius in the coarser of the two resolutions
+*  There is a 200 pixel search radius in the coarser of the two resolutions.
 *  Supports up to a factor of 25 resolution difference
 
 
-
 ### Output:
-RADWarp outputs the warped source image that is registered to the reference image.
+Image2image outputs the warped source image that is registered to the reference image.
 
-The warped source will be placed in the output s3 bucket.  This tiff image will have the same metadata as the source.  It will be output with the suffix “warped” appended to the original source filename.
-
+The warped source will be placed in the output s3 bucket.  This tiff image will have the same metadata as the source.  It will be output with the suffix “_warped” appended to the original source filename.
 
 ### Contact Us
-Tech Owner: [Mike Aschenbeck](#michael.aschenbeck@digitalglobe.com) & Editor:  [Kathleen Johnson](#kathleen.johnson@digitalglobe.com)
+Tech Owner: [Mike Aschenbeck](#michael.aschenbeck@digitalglobe.com) & Editor:  [Kathleen Johnson](#kathleen.johnsons@digitalglobe.com)
