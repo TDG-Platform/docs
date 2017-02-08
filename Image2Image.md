@@ -12,7 +12,7 @@ The image2image task will remove misregistrations between two images.  It will a
 
 ### Quickstart
 
-This script uses Image2Image to produce co-registered images that are in separate directories.  If both images are in the same directory, then the path must include the source_filename and reference filename of the tifs.
+This script uses Image2Image to produce co-registered images that are in separate directories.  If both images are in the same directory, then the source_filename and reference filename of the tifs must be added to the script.
 
 ```python
    	from gbdxtools import Interface
@@ -27,7 +27,7 @@ This script uses Image2Image to produce co-registered images that are in separat
 	im2im_task = gbdx.Task('image2image_1_2_0')
 	
 	# set the values of source_directory, reference_directory
-	# if the images are in the same directory, you must include the tif file name in the path.
+	# if the images are in the same directory, you must include the tif file name.  See Input options below.
 	im2im_task.inputs.source_directory = join(my_bucket,'short path to source image directory')
 	im2im_task.inputs.reference_directory = join(my_bucket,'short path to reference image directory')
 	im2im_task.inputs.boundary_directory = join(my_bucket,'directory-name')
