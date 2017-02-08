@@ -1,13 +1,12 @@
 # Image Registration (image2image)
 
-The Image Registration task will remove misregistrations between two images.  It will attempt to find similar image features that are misregistered by up to 20 pixels and warp the source image accordingly.  There is also an option to specify a warp boundary via a polygon shapefile.  In this case, there is a full warp nested inside the boundary and no warp outside the boundary, with a smooth transition in between.  The warped source will have the same metadata as the source and be output with the suffix “_radwarp” appended to the original filename.
+The Image Registration task will remove misregistrations between two images.  It will attempt to find similar image features that are misregistered by up to 200 pixels and warp the source image accordingly.  There is also an option to specify a warp boundary via a polygon shapefile.  In this case, there is a full warp nested inside the boundary and no warp outside the boundary, with a smooth transition in between.  The warped source will have the same metadata as the source and be output with the suffix “warped” appended to the original filename.
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Technical Notes](#technical-notes) - Detailed Description of Inputs
  * [Outputs](#outputs) - Task outputs and example contents.
- * [Known Issues](#known-issues)
  * [Contact Us](#contact-us)
 
 ### Quickstart
@@ -75,7 +74,7 @@ boundary_filename  |  NO |  shapefile   | file that limits the areal extent of t
   * Supports TIFFs (and vrts of TIFFs)
 *  Images must be same projection
 *  Images must fit in memory
-*  There is a 20 pixel search radius (reduced to 5 if factor of five resolution difference)
+*  There is a 200 pixel search radius (reduced to 5 if factor of five resolution difference)
   *  No warping beyond this radius
 *  Supports up to a factor of 5 resolution difference
 
@@ -84,8 +83,8 @@ boundary_filename  |  NO |  shapefile   | file that limits the areal extent of t
 ### Output:
 RADWarp outputs the warped source image that is registered to the reference image.
 
-The warped source will be placed in the output s3 bucket.  This tiff image will have the same metadata as the source.  It will be output with the suffix “_radwarp” appended to the original source filename.
+The warped source will be placed in the output s3 bucket.  This tiff image will have the same metadata as the source.  It will be output with the suffix “warped” appended to the original source filename.
 
 
 ### Contact Us
-Tech Owner: [Mike Aschenbeck](#acomermichael.aschenbeck@digitalglobe.com) & Editor:  [Kathleen Johnson](#kathleen.johnsons@digitalglobe.com)
+Tech Owner: [Mike Aschenbeck](#acomermichael.aschenbeck@digitalglobe.com) & Editor:  [Kathleen Johnson](#kathleen.johnson@digitalglobe.com)
