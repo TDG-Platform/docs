@@ -216,6 +216,28 @@ The `log` output port contains the location where a trace of log messages genera
 
 #### Add Custom DEM
   * Using the Custom DEM Option for 'ortho_dem_specifier'. Custom DEM data must be pre-processed to fit the DG Tiling scheme using gdal_tiler; and uploaded to the customer's S3 bucket.  You must specify the full path to the Custom DEM.  No option needs to be executed to run in default mode (SRTM90).
+  
+  ```python
+    # Using gdal_tiler, creates tiles for a custom DEM as input for AOP
+    from gbdxtools import Interface
+    gbdx = Interface()
+
+    # Edit the following path to reflect a specific path to the custom DEM
+    data = "s3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/Akejohnson_Files/kathleen_AOP_Test/GDAL_Tiler_Test/DEM1/ASTER_GDEM_v2.tif"
+ 
+    # Run gdal_tiler prep task
+    gdaltiler = gbdx.Task("gdal_tiler", data=data, tiling_scheme="DGTiling", zoom_level="9", pixel_size="1", compress="on")
+ 
+    workflow = gbdx.Workflow([ gdaltiler ])
+    workflow.savedata(gdaltiler.outputs.data.value,location='Akejohnson_Files/kathleen_AOP_Test/GDAL_Tiler_Test/Test7')
+    # workflow.savedata(data,location='Akejohnson_Files/kathleen_AOP_Test/GDAL_Tiler_Test/DEM1')
+ 
+    workflow.execute()
+    print workflow.id
+    print workflow.status
+ 
+ 
+  ```
 
 #### Dynamic Range Adjustment
   * The default for 'enable_dra' is on (True) and it must be set to 'False' to produce a 4-band or 8-band image (+/- panchromatic band).  If Pansharpening has been set to False, then DRA must also be manually set to False. For all other Dynamic Range Adjustment Settings:  [see below](#using-dynammic-range-adjustment)
