@@ -50,14 +50,14 @@ This script uses Image2Image to produce co-registered images that are in separat
           
 ### Inputs:
 
-Name                     |       File Type       |   Description
--------------------------|:---------------------:|---------------------------------
-source_directory         |  directory   | S3 location of the Image that provides the base layer for warping
-source_filename     |  geotiff     | source file must be set in the task command line if both files are located in the same directory
-reference_directory      |  directory   | S3 location of the Image that will be warped
-reference_filename  |  geotiff     | reference file must be set in the task command line if both files are located in the same directory
-boundary_directory  |  directory   | S3 location of the all the input data; only required if there is a boundary shapefile 
-boundary_filename   |  shapefile   | file that limits the areal extent of the image warping (optional)
+Name      |     Required          |       File Type       |   Description
+--------------|:-----------|:---------------------:|---------------------------------
+source_directory    | YES     |  directory   | S3 location of the Image that provides the base layer for warping
+source_filename   | NO  |  geotiff     | source file must be set in the task command line if both files are located in the same directory    
+reference_directory  | YES    |  directory   | S3 location of the Image that will be warped
+reference_filename  | NO |  geotiff     | reference file must be set in the task command line if both files are located in the same directory
+boundary_directory   |  NO |  directory   | S3 location of the all the input data; only required if there is a boundary shapefile 
+boundary_filename  |  NO |  shapefile   | file that limits the areal extent of the image warping (optional)
 
 #### Technical Notes
 *  Images should both be north up
