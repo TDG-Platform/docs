@@ -14,26 +14,34 @@ The image2image task will remove misregistrations between two images.  It will a
 
 This script uses Image2Image to produce co-registered images from the test dataset:
 
-    # Image2Image Test Dataset
-    from gbdxtools import Interface
-    gbdx = Interface()
-    import json
-    
-    source_data = "s3://gbd-customer-data/596bd3ed-ffad-496f-9394-291648fb8250/small/test_01ss.tif"
-    reference_data = "s3://gbd-customer-data/596bd3ed-ffad-496f-9394-291648fb8250/small/test_02ss.tif"
-    boundary_directory = "s3://gbd-customer-data/596bd3ed-ffad-496f-9394-291648fb8250/small"
-
-    im2imtask = gbdx.Task('image2image', source_data=source_data, reference_data=reference_data, 
-	    boundary_directory=boundary_directory, source_filename='test_01ss.tif', 
-	    reference_filename='test_02ss.tif', boundary_filename='right_boundary')
-
-    workflow = gbdx.Workflow([ im2imtask ])
-
-    workflow.savedata(im2imtask.outputs.out, location='S3 gbd-customer-data location')
-    workflow.execute()
-
-    print workflow.id
-    print workflow.status
+   	from gbdxtools import Interface
+	from os.path import join
+	import uuid
+	gbdx = Interface()
+	
+	# set my s3 bucket location:
+	my_bucket = 's3://gbd-customer-data/596bd3ed-ffad-496f-9394-291648fb8250/'
+	
+	# create task object
+	radwarp_task = gbdx.Task('image2image_1_2_0')
+	
+	# set the values of source_directory, reference_directory
+	radwarp_task.inputs.source_directory = join(my_bucket,'WarpTest/Desert/im1/')
+	radwarp_task.inputs.reference_directory = join(my_bucket,'WarpTest/Desert/im2/')
+	radwarp_task.inputs.boundary_directory = join(my_bucket,'WarpTest/Desert/')
+	radwarp_task.inputs.boundary_filename =  'nonconvex.shp'
+	
+	# put the task in a workflow
+	workflow = gbdx.Workflow([radwarp_task])
+	
+	# save the data to an output_location of your choice
+	output_location = 'Output/DesertRun'
+	workflow.savedata(radwarp_task.outputs.out, output_location)
+	
+	# Execute the Workflow
+	workflow.execute()
+	print workflow.id
+	print workflow.status
 
 
 #### Test Datasets:
