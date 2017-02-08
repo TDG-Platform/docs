@@ -215,7 +215,15 @@ The `log` output port contains the location where a trace of log messages genera
   * The 'enable_pansharpen' output is a high-resolution RGB image.  The process merges the lower resolution multispectral image with the higher resolution panchromatic image to produce a high resolution multispectral image (RGB). The default is to run pansharpening.  It must be set to 'False' if you want preserve the full 8-band or 4-band image from the input image.
 
 #### Add Custom DEM
-  * Using the Custom DEM Option for 'ortho_dem_specifier'. Custom DEM data must be pre-processed to fit the DG Tiling scheme using gdal_tiler; and uploaded to the customer's S3 bucket.  You must specify the full path to the Custom DEM.  No option needs to be executed to run in default mode (SRTM90).
+  * Using the Custom DEM Option for 'ortho_dem_specifier'. Custom DEM data must be pre-processed to fit the DG Tiling scheme using gdal_tiler; and uploaded to the customer's S3 bucket.  You must specify the full path to the Custom DEM.  No option needs to be executed to run in default mode (SRTM90).  
+  
+  Name | Required |   Valid Values  | Description
+-----|:--------|:-----------|:-------------
+data  |  Yes  |  S3 URL  |  path to the input custom DEM
+tiling_scheme | Yes | "DGTiling"  |  tiles teh DEM to be consistent with tiling usied by the Image Preprocessor
+zoom_level  |  Yes  |  Size Appropriate for DEM Resolution  |  "7" works for most cases
+pixel_size  |  Yes  |  pixel size of DEM in degrees  |   Must be in degrees and set according to the custom DEM
+compress  |  No  |  "on", "off"  |  saves storage space using a lossless compression algorithm
   
   ```python
     # Using gdal_tiler, creates tiles for a custom DEM as input for AOP
@@ -225,8 +233,8 @@ The `log` output port contains the location where a trace of log messages genera
     # Edit the following path to reflect a specific path to the custom DEM
     data = "s3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/Akejohnson_Files/kathleen_AOP_Test/GDAL_Tiler_Test/DEM1/ASTER_GDEM_v2.tif"
  
-    # Run gdal_tiler prep task
-    gdaltiler = gbdx.Task("gdal_tiler", data=data, tiling_scheme="DGTiling", zoom_level="9", pixel_size="1", compress="on")
+    # Run gdal_tiler prep task. The pixel_size must be set to the resolution of the DEM in degrees.  Change as necessary
+    gdaltiler = gbdx.Task("gdal_tiler", data=data, tiling_scheme="DGTiling", zoom_level="7", pixel_size="1", compress="on")
  
     workflow = gbdx.Workflow([ gdaltiler ])
     workflow.savedata(gdaltiler.outputs.data.value,location='Akejohnson_Files/kathleen_AOP_Test/GDAL_Tiler_Test/Test7')
