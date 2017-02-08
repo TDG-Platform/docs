@@ -87,4 +87,4 @@ The warped source will be placed in the output s3 bucket.  This tiff image will 
 
 
 ### Contact Us
-Tech Owner: [Mike Aschenbeck](#acomermichael.aschenbeck@digitalglobe.com) & Editor:  [Kathleen Johnson](#kathleen.johnson@digitalglobe.com)
+Tech Owner: [Mike Aschenbeck](#michael.aschenbeck@digitalglobe.com) & Editor:  [Kathleen Johnson](#kathleen.johnson@digitalglobe.com)
