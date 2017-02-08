@@ -12,7 +12,8 @@ The image2image task will remove misregistrations between two images.  It will a
 
 ### Quickstart
 
-This script uses Image2Image to produce co-registered images from the test dataset:
+This script uses Image2Image to produce co-registered images that are in separate directories.  If both images are in the same directory, then the path must include the source_filename and reference filename of the tifs.
+
 ```python
    	from gbdxtools import Interface
 	from os.path import join
@@ -23,11 +24,12 @@ This script uses Image2Image to produce co-registered images from the test datas
 	my_bucket = 's3://gbd-customer-data/acct#'
 	
 	# create task object
-	radwarp_task = gbdx.Task('image2image_1_2_0')
+	im2im_task = gbdx.Task('image2image_1_2_0')
 	
 	# set the values of source_directory, reference_directory
-	im2im_task.inputs.source_directory = join(my_bucket,'short path to tif')
-	im2im_task.inputs.reference_directory = join(my_bucket,'short path to tif')
+	# if the images are in the same directory, you must include the tif file name in the path.
+	im2im_task.inputs.source_directory = join(my_bucket,'short path to source image directory')
+	im2im_task.inputs.reference_directory = join(my_bucket,'short path to reference image directory')
 	im2im_task.inputs.boundary_directory = join(my_bucket,'directory-name')
 	im2im_task.inputs.boundary_filename =  'customer_boundary.shp' # optional
 	
@@ -45,13 +47,7 @@ This script uses Image2Image to produce co-registered images from the test datas
 ```
 
 
-#### Test Datasets:
-Sensor                   |       CATID           |   S3 URL
--------------------------|:---------------------:|---------------------------------
-Comming Soon             |                      |
-     
-     
-     
+          
 ### Inputs:
 
 Name                     |       File Type       |   Description
