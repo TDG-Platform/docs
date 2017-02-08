@@ -215,15 +215,15 @@ The `log` output port contains the location where a trace of log messages genera
   * The 'enable_pansharpen' output is a high-resolution RGB image.  The process merges the lower resolution multispectral image with the higher resolution panchromatic image to produce a high resolution multispectral image (RGB). The default is to run pansharpening.  It must be set to 'False' if you want preserve the full 8-band or 4-band image from the input image.
 
 #### Add Custom DEM
-  * Using the Custom DEM Option for 'ortho_dem_specifier'. Custom DEM data must be pre-processed to fit the DG Tiling scheme using gdal_tiler; and uploaded to the customer's S3 bucket.  You must specify the full path to the Custom DEM.  No option needs to be executed to run in default mode (SRTM90).  The table below descripes the gdal_tiler inputs:
+  * Using the Custom DEM Option for 'ortho_dem_specifier'. Custom DEM data must be pre-processed to fit the DG Tiling scheme using gdal_tiler; and uploaded to the customer's S3 bucket.  You must specify the full path to the Custom DEM.  No option needs to be executed to run in default mode (SRTM90).  The table below describes the gdal_tiler inputs:
   
   Name | Required |   Valid Values  | Description
 -----|:--------|:-----------|:-------------
-data  |  Yes  |  tiff  |  S3 URL path to the input custom DEM including file name
-tiling_scheme | Yes | "DGTiling"  |  tiles teh DEM to be consistent with tiling usied by the Image Preprocessor
+data  |  Yes  |  any format recognized by gdal  |  S3 URL path to the input custom DEM including file name
+tiling_scheme | Yes | "DGTiling"  |  tiles the DEM to be consistent with tiling usied by the Image Preprocessor
 zoom_level  |  Yes  |  Size Appropriate for DEM Resolution  |  "7" works for most cases
 pixel_size  |  Yes  |  pixel size of DEM in degrees  |   Must be in degrees and set according to the custom DEM
-compress  |  No  |  "on", "off"  |  saves storage space using a lossless compression algorithm
+compress  |  No  |  "on", "off"  |  highly recommended; saves storage space using a lossless compression algorithm
 
 Below is a QuickStart Script for gdal_tiler:
   
@@ -239,7 +239,8 @@ Below is a QuickStart Script for gdal_tiler:
     gdaltiler = gbdx.Task("gdal_tiler", data=data, tiling_scheme="DGTiling", zoom_level="7", pixel_size="1", compress="on")
  
     workflow = gbdx.Workflow([ gdaltiler ])
-    workflow.savedata(gdaltiler.outputs.data.value,location='customers output directory')
+    #
+    workflow.savedata(gdaltiler.outputs.data.value,location='customer directory used for the ortho_dem_specifier')
    
     workflow.execute()
     print workflow.id
