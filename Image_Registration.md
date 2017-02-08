@@ -74,9 +74,8 @@ boundary_filename  |  NO |  shapefile   | file that limits the areal extent of t
   * Supports TIFFs (and vrts of TIFFs)
 *  Images must be same projection
 *  Images must fit in memory
-*  There is a 200 pixel search radius (reduced to 5 if factor of five resolution difference)
-  *  No warping beyond this radius
-*  Supports up to a factor of 5 resolution difference
+*  There is a 200 pixel search radius in the coarser of the two resolutions
+*  Supports up to a factor of 25 resolution difference
 
 
 
