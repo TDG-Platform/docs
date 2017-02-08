@@ -37,8 +37,7 @@ This script uses Image2Image to produce co-registered images that are in separat
 	workflow = gbdx.Workflow([im2im_task])
 	
 	# save the data to an output_location of your choice
-	output_location = 'path to customer S3 output directory'
-	workflow.savedata(im2im_task.outputs.out, output_location)
+	workflow.savedata(im2im_task.outputs.out, location='path to customer S3 output directory')
 	
 	# Execute the Workflow
 	workflow.execute()
