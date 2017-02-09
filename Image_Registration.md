@@ -88,7 +88,7 @@ The warped source will be placed in the output s3 bucket.  This tiff image will 
 
 This Advanced Option permits the Customer to:
 * input the source image and the reference image from the same directory
-* use a boundary polygon (shapefile format) that selects the region fro which tie points are selected; and thereby defines the extent of the image that is warped. 
+* use a boundary polygon (shapefile format) that selects the region from which tie points are selected; and thereby defines the extent of the image that is warped. 
 
 
 ```python
