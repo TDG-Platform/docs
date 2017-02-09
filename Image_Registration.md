@@ -8,7 +8,7 @@ The image2image task will remove misregistrations between two images.  It does s
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Technical Notes](#technical-notes) - Detailed Description of Inputs
  * [Outputs](#outputs) - Task outputs and example contents.
- * [Advanced Options](#advanced-options)
+ * [Advanced Options](#advanced-options) - Example Setting Tie Point and Warping Boundaries
  * [Contact Us](#contact-us)
 
 ### Quickstart
@@ -88,7 +88,8 @@ The warped source will be placed in the output s3 bucket.  This tiff image will 
 
 This Advanced Option permits the Customer to:
 * input the source image and the reference image from the same directory
-* use a boundary polygon (shapefile format) that defines the extent of the output file
+* use a boundary polygon (shapefile format) that selects the region fro which tie points are selected; and thereby defines the extent of the image that is warped. 
+
 
 ```python
     
