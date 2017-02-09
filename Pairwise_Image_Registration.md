@@ -1,6 +1,6 @@
 # Pairwise Image Registration (image2image)
 
-The image2image task will remove misregistrations between two images.  It does so by attempting to find similar image features and warping the source image accordingly.  The warped source will have the same metadata as the source and be output with the suffix “_warped” appended to the original filename.
+The Pairwise Image Registration task will remove misregistrations between two images.  It does so by attempting to find similar image features and warping the source image accordingly.  The warped source will have the same metadata as the source and be output with the suffix “_warped” appended to the original filename.
 
 
 ### Table of Contents
@@ -13,7 +13,7 @@ The image2image task will remove misregistrations between two images.  It does s
 
 ### Quickstart
 
-This script uses Image2Image to co-register two images.  The source image will be registered to the reference image and output to the specified directory.
+This script uses the Pairwise Image Registration task to co-register two images.  The source image will be registered to the reference image and output to the specified directory.
 
 ```python
    	from gbdxtools import Interface
@@ -63,7 +63,7 @@ boundary_filename  |  NO |  shapefile   | file that limits the areal extent of t
 *  Images with different number of bands will use blue band.  The following formats are assumed, but the program should work regardless.
   * PAN
   * RGB
-  * BGRN
+  * BGRN (Includes GeoEye-1 and IKONOS)
   * WV2 8 band
   * WV3 16 band
 *  Images with different resolutions
@@ -80,7 +80,7 @@ boundary_filename  |  NO |  shapefile   | file that limits the areal extent of t
 
 
 ### Output:
-Image2image outputs the warped source image that is registered to the reference image.
+The Pairwaise Image Registration task outputs the warped source image that is registered to the reference image.
 
 The warped source will be placed in the output s3 bucket.  This tiff image will have the same metadata as the source.  It will be output with the suffix “_warped” appended to the original source filename.
 
