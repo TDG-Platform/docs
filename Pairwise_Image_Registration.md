@@ -1,4 +1,4 @@
-# Image Registration (image2image)
+# Pairwise Image Registration (image2image)
 
 The image2image task will remove misregistrations between two images.  It does so by attempting to find similar image features and warping the source image accordingly.  The warped source will have the same metadata as the source and be output with the suffix “_warped” appended to the original filename.
 
@@ -8,7 +8,7 @@ The image2image task will remove misregistrations between two images.  It does s
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Technical Notes](#technical-notes) - Detailed Description of Inputs
  * [Outputs](#outputs) - Task outputs and example contents.
- * [Advanced Options](#advanced-options) - Example Setting Tie Point and Warping Boundaries
+ * [Advanced Options](#advanced-options) - Example Setting Tiepoints and Warping Boundaries
  * [Contact Us](#contact-us)
 
 ### Quickstart
@@ -67,8 +67,8 @@ boundary_filename  |  NO |  shapefile   | file that limits the areal extent of t
   * WV2 8 band
   * WV3 16 band
 *  Images with different resolutions
-  * Code uses coarsest resolution for tie points
-  * Higher resolution image resampled using bilinear interpolation (just to find tie points)
+  * Code uses coarsest resolution for tiepoints
+  * Higher resolution image resampled using bilinear interpolation (just to find tiepoints)
 *  Datatype
   * Input datatype can be byte, int, or float
   * Working arrays are scaled to unsigned 8 bit
@@ -88,7 +88,7 @@ The warped source will be placed in the output s3 bucket.  This tiff image will 
 
 This Advanced Option permits the Customer to:
 * input the source image and the reference image from the same directory
-* use a boundary polygon (shapefile format) that selects the region from which tie points are selected; and thereby defines the extent of the image that is warped. 
+* use a boundary polygon (shapefile format) that selects the region from which tiepoints are selected; and thereby defines the extent of the image that is warped. 
 
 
 ```python
