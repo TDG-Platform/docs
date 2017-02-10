@@ -63,7 +63,7 @@ boundary_filename  |  NO |  shapefile   | file that limits the areal extent of t
 *  Images with different number of bands will use blue band.  The following formats are assumed, but the program should work regardless.
   * PAN
   * RGB
-  * BGRN (Includes GeoEye-1 and IKONOS)
+  * BGRN (Includes GeoEye-1, IKONOS and QuickBird)
   * WV2 8 band
   * WV3 16 band
 *  Images with different resolutions
