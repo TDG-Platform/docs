@@ -9,6 +9,7 @@ The Pairwise Image Registration task will remove misregistrations between two im
  * [Technical Notes](#technical-notes) - Detailed Description of Inputs
  * [Outputs](#outputs) - Task outputs and example contents.
  * [Advanced Options](#advanced-options) - Example Setting Tiepoints and Warping Boundaries
+ * [Known Issues](#known-issues)
  * [Contact Us](#contact-us)
 
 ### Quickstart
@@ -129,6 +130,9 @@ This Advanced Option permits the Customer to:
     print workflow.status
 
 ```
+
+### Known Issues
+You may encounter a limit on the size of the image that can be processed.  The image must 'fit in memory' and that is dependant on the AWS machine you are running the process on.  This issue will be resolved in the next update.
 
 ### Contact Us
 Tech Owner: [Mike Aschenbeck](#michael.aschenbeck@digitalglobe.com) & Editor:  [Kathleen Johnson](#kathleen.johnsons@digitalglobe.com)
