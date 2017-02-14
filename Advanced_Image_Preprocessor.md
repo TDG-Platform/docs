@@ -1,6 +1,6 @@
 # Advanced Image Preprocessor (AOP_Strip_Processor)
 
-This task runs the Advanced Advanced Image Preprocessor (AOP_Strip_Processor) algorithm to produce orthorectified imagery from raw (level 1B) imagery.  There are many additional processing options including atmospheric compensation (AComp, which is always recommended), pansharpening, adding a custom DEM and dynamic range adjustment (DRA).  
+This task runs the Advanced Advanced Image Preprocessor (AOP_Strip_Processor) algorithm to produce orthorectified imagery from raw (level 1B) imagery.  There are many additional processing options including atmospheric compensation (AComp, which is always recommended), pansharpening, [adding a custom DEM](#add-custom-dem) and dynamic range adjustment (DRA).  
 
 The Advanced Image Preprocessor can be run with Python using   [gbdxtools](https://github.com/DigitalGlobe/gbdxtools) or through the [GBDX Web Application](https://gbdx.geobigdata.io/materials/).  
 
@@ -215,7 +215,38 @@ The `log` output port contains the location where a trace of log messages genera
   * The 'enable_pansharpen' output is a high-resolution RGB image.  The process merges the lower resolution multispectral image with the higher resolution panchromatic image to produce a high resolution multispectral image (RGB). The default is to run pansharpening.  It must be set to 'False' if you want preserve the full 8-band or 4-band image from the input image.
 
 #### Add Custom DEM
-  * Using the Custom DEM Option for 'ortho_dem_specifier'. Custom DEM data must be pre-processed to fit the DG Tiling scheme using gdal_tiler; and uploaded to the customer's S3 bucket.  You must specify the full path to the Custom DEM.  No option needs to be executed to run in default mode (SRTM90).
+  * Using the Custom DEM Option for 'ortho_dem_specifier'. Custom DEM data must be pre-processed to fit the DG Tiling scheme using gdal_tiler; and uploaded to the customer's S3 bucket.  You must specify the full path to the Custom DEM.  No option needs to be executed to run in default mode (SRTM90).  The table below describes the gdal_tiler inputs:
+  
+  Name | Required |   Valid Values  | Description
+-----|:--------|:-----------|:-------------
+data  |  Yes  |  any format recognized by gdal  |  S3 URL path to the input custom DEM including file name
+tiling_scheme | Yes | "DGTiling"  |  tiles the DEM to be consistent with tiling usied by the Image Preprocessor
+zoom_level  |  Yes  |  Size Appropriate for DEM Resolution  |  "7" works for most cases
+pixel_size  |  Yes  |  pixel size of DEM in degrees  |   Must be in degrees and set according to the custom DEM
+compress  |  No  |  "on", "off"  |  highly recommended; saves storage space using a lossless compression algorithm
+
+Below is a QuickStart Script for gdal_tiler:
+  
+  ```python
+    # Using gdal_tiler, creates tiles for a custom DEM as input for AOP
+    from gbdxtools import Interface
+    gbdx = Interface()
+
+    # Edit the following path to reflect a specific path to the custom DEM
+    data = "s3://gbd-customer-data/acct#/example.tif"
+ 
+    # Run gdal_tiler prep task. The pixel_size must be set to the resolution of the DEM in degrees.  Change as necessary
+    gdaltiler = gbdx.Task("gdal_tiler", data=data, tiling_scheme="DGTiling", zoom_level="7", pixel_size="1", compress="on")
+ 
+    workflow = gbdx.Workflow([ gdaltiler ])
+    #
+    workflow.savedata(gdaltiler.outputs.data.value,location='customer directory used for the ortho_dem_specifier')
+   
+    workflow.execute()
+    print workflow.id
+    print workflow.status
+ 
+  ```
 
 #### Dynamic Range Adjustment
   * The default for 'enable_dra' is on (True) and it must be set to 'False' to produce a 4-band or 8-band image (+/- panchromatic band).  If Pansharpening has been set to False, then DRA must also be manually set to False. For all other Dynamic Range Adjustment Settings:  [see below](#using-dynammic-range-adjustment)
