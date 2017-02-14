@@ -174,7 +174,7 @@ See the below table for support datasets and the specific band grouping names.
 
 
 
-There are tasks in the ENVI catalogue that require DEM rasters as inputs, which are implemented as *Special Case ENVIRasters*. These can be considered a subset of ENVIRaster except they allow for using DEM Rasters that are already part of the ENVI software distribution, as well as user provided DEM rasters. Also, the ports `*_format` and `*-band_grouping ` are not applicable for these types of rasters. 
+There are tasks in the ENVI catalogue that require DEM rasters as inputs, which are implemented as *Special Case ENVIRasters*. These can be considered a subset of ENVIRaster except they allow for using DEM Rasters that are already part of the ENVI software distribution, as well as user provided DEM rasters. Also, the ports `*_format` and `*_band_grouping ` are not applicable for these types of rasters. 
 
 
 
