@@ -87,8 +87,6 @@ Here are descriptions for the various GBDX supported ENVI data types and their v
 | *input_raster_format*        | String    | False    | A string for selecting the raster format (non-DG format). Please refer to Supported Datasets table below for a list of valid values for currently supported image data products. |
 | *input_raster_filename*      | String    | False    | A string with the filename of the raster for ENVI to open. This overrides any file discovery. |
 | *input_raster_band_grouping* | String    | False    | A string name indentify which band grouping to use for the task. |
-| *dem_raster*                 | Directory | False    | Directory containing the DEM files required for the a task. |
-| *dem_raster_filename*        | String    | False    | Special case of ENVI Raster filename. A string with the filename of the raster for ENVI to open. This overrides any file discovery. It also allows for using ENVI built in DEM raster. See below for details. |
 
 > Note: the example names in the table above are for demonstrating the typical set of ports used to configure an input raster. The names for the input rasters can vary by task (ie - input_low_resolution_raster), but the set of supplemental input ports will always be standard. 
 
@@ -172,13 +170,26 @@ See the below table for support datasets and the specific band grouping names.
 
 
 
-#### ENVI DEM Files
+### ENVI DEM Rasters
 
 
 
-There are tasks in the ENVI catalogue that require DEM rasters as inputs. The ENVI task engine requires the name of the DEM raster to be used for those tasks. Therefore the ENVI task runner defaults to expecting the user to provide the the DEM file via S3. An example of this is similar to a typical ENVIRaster, as follows:
+There are tasks in the ENVI catalogue that require DEM rasters as inputs, which are implemented as *Special Case ENVIRasters*. These can be considered a subset of ENVIRaster except they allow for using DEM Rasters that are already part of the ENVI software distribution, as well as user provided DEM rasters. Also, the ports `*_format` and `*-band_grouping ` are not applicable for these types of rasters. 
 
 
+
+#### Input Ports
+
+| Example Input Ports   | GBDX Type | Required | Description                              |
+| --------------------- | --------- | -------- | ---------------------------------------- |
+| *dem_raster*          | Directory | False    | Directory containing the DEM files required for the a task. |
+| *dem_raster_filename* | String    | False    | Special case of ENVI Raster filename. A string with the filename of the raster for ENVI to open. This overrides any file discovery. It also allows for using ENVI built in DEM raster. See below for details. |
+
+> Note: the example names in the table above are for demonstrating the typical set of ports used to configure an input raster. The names for the input rasters can vary by task (ie - input_dem_raster). 
+
+
+
+Usage example for a user provided DEM raster is as follows:
 
 ```python
 ...
