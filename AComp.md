@@ -176,7 +176,6 @@ QB02 | 41,551,668 | 312.07 | 395.610  | 1.27  |
 
 Processing Level 2 or Level 3 imagery will require you to order the imagery outside the platform and upload it to your S3-customer location.
 
-AComp currently does not run end-to-end with ENVI Tasks.
 
 ### Contact Us
 Tech Owners: [Fabio Pacifici](#fpacific@digitalglobe.com), [Alex Comer](#acomer@digitalglobe.com) & Editor:  [Kathleen Johnson](#kathleen.johnsons@digitalglobe.com)
