@@ -48,9 +48,9 @@ The following table lists the ENVI ISO DATA Classification task:
 
 All inputs are **required**
 
-Name                     |       Default         |        Valid Values             |   Description
--------------------------|:---------------------:|---------------------------------|-----------------
-input_raster             |          N/A          | S3 URL   .TIF only              | S3 location of input data. S raster on which to perform ISODATA classification
+Name                     | Required   |      Default         |        Valid Values             |   Description
+-------------------------|:-------------:|:------------:|---------------------------------|-----------------
+input_raster             |   YES     |       N/A          | S3 URL   .TIF only              | S3 location of input data. S raster on which to perform ISODATA classification
 
 ### Outputs
 
