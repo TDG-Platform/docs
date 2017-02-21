@@ -67,7 +67,7 @@ This task will function on an image located in the S3 location.  The file type i
 **OPTIONAL SETTINGS AND DEFINITIONS:**
 
 Name                       |  Required    |     Default         |        Valid Values             |   Description
-------------------------:--------------:|:---------------------:|---------------------------------|-----------------
+------------------------|:--------------:|:---------------------:|---------------------------------|-----------------
 change_threshold_percent   |    NO    |     3 X 3         | string                          | The change threshold percentage that determines when to complete the classification.  When the percentage of pixels that change classes during an iteration is less than the threshold value, the classification completes
 number_of_classes          |   NO    |       2            | string                          | The requested number of classes to generate
 iterations                 |    NO    |      N/A          | string                          | The maximum iterations to perform.  If the change threshold percent is not met before the maximum number of iterations is reached, the classification completes
