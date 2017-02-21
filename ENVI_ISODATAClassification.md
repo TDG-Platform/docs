@@ -58,7 +58,7 @@ The following table lists the ISO DATA Classification task outputs.
 
 Name                | Required |   Description
 --------------------|:--------:|-----------------
-output_raster_uri   |     Y    | This will explain the output file location and provide the output in .TIF format with an ENVI .HDR file.
+output_raster_uri   |     YES    | This will explain the output file location and provide the output in .TIF format with an ENVI .HDR file.
 
 
 This task will function on an image located in the S3 location.  The file type input is preferred in the .hdr format.   Additional options include:
@@ -66,13 +66,13 @@ This task will function on an image located in the S3 location.  The file type i
 
 **OPTIONAL SETTINGS AND DEFINITIONS:**
 
-Name                       |       Default         |        Valid Values             |   Description
----------------------------|:---------------------:|---------------------------------|-----------------
-change_threshold_percent   |         3 X 3         | string                          | The change threshold percentage that determines when to complete the classification.  When the percentage of pixels that change classes during an iteration is less than the threshold value, the classification completes
-number_of_classes          |          2            | string                          | The requested number of classes to generate
-iterations                 |          N/A          | string                          | The maximum iterations to perform.  If the change threshold percent is not met before the maximum number of iterations is reached, the classification completes
-task_meta_data             |          N/A          | string                          | Output location for task meta data such as execution log and output JSON
-input_raster_format  |  N/A  |  string  |  A string dictionary for overridding the raster metadata.
+Name                       |  Required    |     Default         |        Valid Values             |   Description
+------------------------:--------------:|:---------------------:|---------------------------------|-----------------
+change_threshold_percent   |    NO    |     3 X 3         | string                          | The change threshold percentage that determines when to complete the classification.  When the percentage of pixels that change classes during an iteration is less than the threshold value, the classification completes
+number_of_classes          |   NO    |       2            | string                          | The requested number of classes to generate
+iterations                 |    NO    |      N/A          | string                          | The maximum iterations to perform.  If the change threshold percent is not met before the maximum number of iterations is reached, the classification completes
+task_meta_data             |    NO    |      N/A          | string                          | Output location for task meta data such as execution log and output JSON
+input_raster_format  |    NO     | N/A  |  string  |  A string dictionary for overridding the raster metadata.
 output_raster_uri_filename |         output        | Folder name in S3 location      | Specify the file name
 
 
