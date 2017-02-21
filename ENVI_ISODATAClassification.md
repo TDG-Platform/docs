@@ -73,7 +73,7 @@ number_of_classes          |   NO    |       2            | string              
 iterations                 |    NO    |      N/A          | string                          | The maximum iterations to perform.  If the change threshold percent is not met before the maximum number of iterations is reached, the classification completes
 task_meta_data             |    NO    |      N/A          | string                          | Output location for task meta data such as execution log and output JSON
 input_raster_format  |    NO     | N/A  |  string  |  A string dictionary for overridding the raster metadata.
-output_raster_uri_filename |         output        | Folder name in S3 location      | Specify the file name
+output_raster_uri_filename |  NO           output        | Folder name in S3 location      | Specify the file name
 
 
 **Data Structure for Expected Outputs:**
