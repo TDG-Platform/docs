@@ -85,15 +85,11 @@ prot_lulc = gbdx.Task("protogenV2LULC",raster=pp_task.outputs.data.value)
 # Run Combined Workflow
 workflow = gbdx.Workflow([ aoptask, pp_task, prot_lulc ])
 
-# Send output to  s3 Bucket
-start_time = datetime.datetime.now().isoformat()
-workflow.savedata(aoptask.outputs.data,location='kathleen_AOP_Test/Protogen_LULC/' + start_time)
-        
-start_time = datetime.datetime.now().isoformat() #time stamp for output file
-workflow.savedata(pp_task.outputs.data,location='kathleen_AOP_Test/Protogen_LULC/ProtoPrep/' + start_time)
-	
-start_time = datetime.datetime.now().isoformat() #time stamp for output file
-workflow.savedata(prot_lulc.outputs.data,location='kathleen_AOP_Test/Protogen_LULC/LULC/' + start_time)
+# Send output to  s3 Bucket. Once you are familiar with the process it is not necessary to save the 
+# output from the intermediate steps.
+workflow.savedata(aoptask.outputs.data,location='kathleen_AOP_Test/Protogen_LULC/')
+workflow.savedata(pp_task.outputs.data,location='kathleen_AOP_Test/Protogen_LULC/ProtoPrep/')
+workflow.savedata(prot_lulc.outputs.data,location='kathleen_AOP_Test/Protogen_LULC/LULC/')
 workflow.execute()
 
 print(workflow.id)
