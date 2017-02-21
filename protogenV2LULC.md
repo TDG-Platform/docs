@@ -70,6 +70,8 @@ The Automated Landuse Landcover Processor can be run directly from the output of
  gbdx = Interface()
 
  # Make sure DRA is disabled if you are processing both the PAN+MS files
+ #Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)  
+ data='s3://gbd-customer-data/CustomerAccount#/PathToImage/'
  aoptask = gbdx.Task("AOP_Strip_Processor", data=data, enable_acomp=True, bands="MS", enable_pansharpen=False, enable_dra=False)
 
 # Capture AOP task outputs
@@ -85,11 +87,12 @@ prot_lulc = gbdx.Task("protogenV2LULC",raster=pp_task.outputs.data.value)
 # Run Combined Workflow
 workflow = gbdx.Workflow([ aoptask, pp_task, prot_lulc ])
 
-# Send output to  s3 Bucket. Once you are familiar with the process it is not necessary to save the 
-# output from the intermediate steps.
-workflow.savedata(aoptask.outputs.data,location='kathleen_AOP_Test/Protogen_LULC/')
-workflow.savedata(pp_task.outputs.data,location='kathleen_AOP_Test/Protogen_LULC/ProtoPrep/')
-workflow.savedata(prot_lulc.outputs.data,location='kathleen_AOP_Test/Protogen_LULC/LULC/')
+# Send output to  s3 Bucket. 
+# Once you are familiar with the process it is not necessary to save the output from the intermediate steps.
+#Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)  
+workflow.savedata(aoptask.outputs.data,location='s3://gbd-customer-data/CustomerAccount#/Protogen_LULC/')
+workflow.savedata(pp_task.outputs.data,location='s3://gbd-customer-data/CustomerAccount#/ProtoPrep/')
+workflow.savedata(prot_lulc.outputs.data,location='s3://gbd-customer-data/CustomerAccount#/Protogen_LULC/LULC/')
 workflow.execute()
 
 print(workflow.id)
