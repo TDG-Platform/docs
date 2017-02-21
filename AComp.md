@@ -31,7 +31,7 @@ The AComp GBDX task can be run through a simple Python script using  [gbdxtools]
     # The data input and lines must be edited to point to an authorized customer S3 location)
     acomp = gbdx.Task('AComp', data='s3://gbd-customer-data/CustomerAccount#/PathToImage/')
     workflow = gbdx.Workflow([acomp])
-    #Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
+    # Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
     workflow.savedata(acomp.outputs.data, location='S3 gbd-customer-data location/<customer account>/output directory')
     workflow.execute()
 
@@ -113,6 +113,31 @@ DG Sensors Level 2 and Level 3 |  .TIF, .TIL, .IMD       |  NO   (individual .ti
 #### Run AComp end to end with an ENVI Task
 
 The example presented here demonstrates running ACOmp with ENVI ISODATA Classification. (I AM WORKING ON THIS TODAY)
+
+```python
+	# Run AComp end to end with an ENVI Task: Example using ISODATA Classification
+	from gbdxtools import Interface
+	gbdx = Interface()
+
+	# Run AComp 
+	# Edit the following line(s) to reflect specific folder(s) for the input file.
+	acomptask = gbdx.Task('AComp', exclude_bands='P', data='s3://gbd-customer-data/CustomerAccount#/PathToImage/')
+
+	# Run ENVI ISODATA Classification on the AComp output
+	isodata = gbdx.Task("ENVI_ISODATAClassification")
+
+	# Run the workflow and save the data
+	workflow = gbdx.Workflow([acomptask, isodata])
+	isodata.inputs.input_raster = acomptask.outputs.data.value
+	# Edit the following line(s) to reflect specific folder(s) for the output file.
+	workflow.savedata(acomptask.outputs.data, location='/CustomerAccount#/PathToOutputDirectory/')
+	workflow.savedata(isodata.outputs.output_raster_uri, location='/CustomerAccount#/PathToOutputDirectory/')
+	
+	workflow.execute()
+	print workflow.id
+	print workflow.status
+
+```
 
 #### Running AComp on VNIR+SWIR Imagery from WorldView-3
   
