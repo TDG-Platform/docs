@@ -8,7 +8,7 @@ of converting image Digital Number (DN) counts to surface reflectance. This remo
 * Variation due to different viewing geometries
 * Atmospheric effects
 
-The AComp GBDX task operates on imagery from Landsat-8 and all DG Sensors (except WorldView-1).  Input imagery must at least contain the VNIR multispectral bands, and optionally may also include panchromatic data and/or SWIR data. All output imagery is in GCS WGS 1984 geographic coordinates.  If you require orthorectification or output imagery in UTM projected coordinates,  then use the [Advanced Image Proprocessor](#https://github.com/TDG-Platform/docs/blob/master/Advanced_Image_Preprocessor.md).
+The AComp GBDX task operates on imagery from Landsat-8 and all DG Sensors (except WorldView-1).  Input imagery must at least contain the VNIR multispectral bands, and optionally may also include panchromatic data and/or SWIR data. All output imagery is in GCS WGS 1984 geographic coordinates.  If you require orthorectification or reprojection to UTM projected coordinates,  then use the [Advanced Image Proprocessor](#https://github.com/TDG-Platform/docs/blob/master/Advanced_Image_Preprocessor.md).
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
