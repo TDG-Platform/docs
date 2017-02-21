@@ -112,7 +112,7 @@ DG Sensors Level 2 and Level 3 |  .TIF, .TIL, .IMD       |  NO   (individual .ti
 
 #### Run AComp end to end with an ENVI Task
 
-The example presented here demonstrates running ACOmp with ENVI ISODATA Classification. (I AM WORKING ON THIS TODAY)
+The example presented here demonstrates running ACOmp with ENVI ISODATA Classification.
 
 ```python
 	# Run AComp end to end with an ENVI Task: Example using ISODATA Classification
