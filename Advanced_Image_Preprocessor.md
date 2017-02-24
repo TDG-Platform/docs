@@ -137,7 +137,7 @@ Please pay attention to the following **important** notes.
  * `enable_tiling` can only be `true` when `ortho_tiling_scheme` is set.
  * `ortho_epsg` can be set to `UTM` which automatically determines the correct EPSG code for the UTM zone at the center of the input data.
  * When set, `ortho_tiling_scheme` overrides `ortho_epsg` and `ortho_pixel_size`.
- * `ortho_dem_specifier` The Default DEM (SRTM90) currently doesn't include any DEMs that cover the globe north of +60 degrees latitude. Additional non-standard DEMs may be available upon request.  See [Advanced Options](#add-custom-DEM) to add your own DEM.
+ * `ortho_dem_specifier` The Default DEM (SRTM90) currently doesn't include any DEMs that cover the globe north of +60 degrees latitude. Additional non-standard DEMs may be available upon request.  See [Advanced Options](#advanced-options) to add your own DEM.
  * When `dra_mode` is set to `BaseLayerMatch`, a geographic projection must be used. Either `ortho_epsg` must be set to `EPSG:4326`, or `ortho_tiling_scheme` must be set to use DGHalfMeter at some zoom level.
  * For WorldView-1, `enable_acomp`, `enable_pansharpen`, and `enable_dra` must all be set to `false` since that sensor only produces panchromatic data.
 
