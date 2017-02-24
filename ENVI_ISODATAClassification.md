@@ -72,7 +72,8 @@ change_threshold_percent   |    NO    |     3 X 3         | string              
 number_of_classes          |   NO    |       2            | string                          | The requested number of classes to generate
 iterations                 |    NO    |      N/A          | string                          | The maximum iterations to perform.  If the change threshold percent is not met before the maximum number of iterations is reached, the classification completes
 task_meta_data             |    NO    |      N/A          | string                          | Output location for task meta data such as execution log and output JSON
-input_raster_format  |    NO     | N/A  |  string  |  A string dictionary for overridding the raster metadata.
+input_raster_format  |    NO     | N/A  |  string  |  A string for selecting the raster format (non-DG format). Please refer to Supported Datasets table below for a list of valid values for currently supported image data products.
+input_raster_band_groupings     |  NO    |  string   |  A string name indentify which band grouping to use for the task.
 output_raster_uri_filename |  NO      |     output        | Folder name in S3 location      | Specify the file name
 
 
