@@ -1,4 +1,4 @@
-# Suupercube Workflow
+# Supercube GBDX Workflow Template
 
 This document describes how to modify the Supercube GBDX workflow template in order to compute a 16-band stack from WV3 8-band DN VNIR and 8-band DN SWIR data that has undergone **_Level 3X_** processing. The resulting supercube is at the VNIR pixel resolution, and its extent is that of the overlap of the VNIR and SWIR. The processing involves the MutualInformationCoregister v8b task. (Version v10d of this task and workflow will be available shortly.) The algorithm for producing a supercube requires cloud and water processing; therefore a cloud and water mask are also generated -- both at VNIR resolution and cut to the extent of the supercube. For convenience, an RGB with the extent of the VNIR is also generated. 
 
@@ -11,8 +11,8 @@ import os
 from gbdxtools import Interface
 gbdx = Interface()
 
-in_base_dir = "s3://gbd-customer-data/58600248-2927-4523-b44b-5fec3d278c09/jm_images/"
-out_base_dir = "s3://gbd-customer-data/58600248-2927-4523-b44b-5fec3d278c09/jm_images/Seth_OUT/"
+in_base_dir = "s3://XXXXXXXXXXXX"
+out_base_dir = "s3://XXXXXXXXXXXX"
 
 ####### INPUTS ########
 

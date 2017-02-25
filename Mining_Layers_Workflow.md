@@ -18,8 +18,8 @@ import os
 from gbdxtools import Interface
 gbdx = Interface()
 
-in_base_dir = "s3://gbd-customer-data/58600248-2927-4523-b44b-5fec3d278c09/jm_images/"
-out_base_dir = "s3://gbd-customer-data/58600248-2927-4523-b44b-5fec3d278c09/jm_images/Seth_OUT/"
+in_base_dir = "s3://XXXXXXXXXXXXXX"
+out_base_dir = "s3://XXXXXXXXXXXXXX"
 
 ####### INPUTS #######
 
