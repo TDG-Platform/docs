@@ -27,10 +27,6 @@ out_scube_dir = os.path.join(out_base_dir, "SCUBE")
 out_water_scube_dir = os.path.join(out_base_dir, "WATER")
 out_cloud_scube_dir = os.path.join(out_base_dir, "CLOUD")
 
-####################################################################################
-#################### Supercube, Cloud and Water Masks ##############################
-####################################################################################
-
 ############## ACOMP
 acomp_task = gbdx.Task("AComp_1.0-debug",
                        data = dn_dir,
@@ -125,9 +121,7 @@ save_cloud_scube_task = gbdx.Task("StageDataToS3",
                             data = cloud_scube_dir,
                             destination = out_cloud_scube_dir)
 
-###################################################################################
-############################### Task List #########################################
-###################################################################################
+###############################################################
 
 workflow = gbdx.Workflow([acomp_task,
                           scube_prep_task,
