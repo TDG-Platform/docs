@@ -1,6 +1,8 @@
 # Suupercube Workflow
 
-This document describes how to modify the Supercube GBDX workflow template in order to compute a 16-band stack from WV3 8-band DN VNIR and 8-band DN SWIR data that has undergone **_Level 3X_** processing. The resulting supercube is at the VNIR pixel resolution, and its extent is that of the overlap of the VNIR and SWIR. The processing involves the MutualInformationCoregister v8b task. (Version v10d of this task and workflow will be available shortly.) The algorithm for producing a supercube requires cloud and water processing; therefore a cloud and water mask are also generated -- both at VNIR resolution and cut to the extent of the supercube. For convenience, an RGB with the extent of the VNIR is also generated. This task serves as a precursor for a DGLayers workflow, where the latter might utilize the supercube, cloud mask, and water mask.  
+This document describes how to modify the Supercube GBDX workflow template in order to compute a 16-band stack from WV3 8-band DN VNIR and 8-band DN SWIR data that has undergone **_Level 3X_** processing. The resulting supercube is at the VNIR pixel resolution, and its extent is that of the overlap of the VNIR and SWIR. The processing involves the MutualInformationCoregister v8b task. (Version v10d of this task and workflow will be available shortly.) The algorithm for producing a supercube requires cloud and water processing; therefore a cloud and water mask are also generated -- both at VNIR resolution and cut to the extent of the supercube. For convenience, an RGB with the extent of the VNIR is also generated. 
+
+This task serves as a precursor for a DGLayers workflow, where the latter might utilize the supercube, cloud mask, and water mask.  
 
 **Supercube Workflow Template:** 
 
