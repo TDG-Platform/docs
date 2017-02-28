@@ -59,9 +59,9 @@ input_raster_band_grouping     |  NO  |    NA   |  string   |  A string name ind
 The following table lists the ISO DATA Classification task outputs.
 
 Name                | Required |   Default  | Valid Values  |Description
---------------------|:--------:|------------|---------------|
+--------------------|:--------:|------------|---------------|---------------------
 output_raster_uri   |     YES   |   N/A |  .TIF, .HDR       | This will explain the output file location 
-output_raster_uri_filename |  NO      |  N/A    |   output        | Specify filename in S3 output location      
+output_raster_uri_filename |  NO      |  N/A    |   string  | Specify filename in S3 output location      
 
 
 This task will function on an image located in the S3 location.  The file type input is preferred in the .hdr format.   Additional options include:
