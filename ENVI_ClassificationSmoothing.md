@@ -50,7 +50,7 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
   Name            |  Required  | Default         |    Valid Values             | Description  
 ------------------|:---------: |:------------|------------- |---------------
 output_raster_uri | True   |   N/A    | .hdr, .tif | Specify a string with the fully qualified filename and path of the output raster. If you do not specify this property, the output raster is only temporary. Once the raster has no remaining references, ENVI deletes the temporary file.
-output_raster_uri_filename  |  False  |  data.hdr, data.tif   |   string  | A string with the filename of the output raster specified.
+output_raster_uri_filename  |  False  |  outputfile.hdr, outputfile.tif   |   string  | A string with the filename of the output raster specified.
 
 
 **ADDITIONAL OPTIONAL SETTINGS AND DEFINITIONS:**
