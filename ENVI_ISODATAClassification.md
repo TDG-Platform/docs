@@ -51,20 +51,23 @@ All inputs are **required**
 Name                     | Required   |      Default         |        Valid Values             |   Description
 -------------------------|:-------------:|:------------:|---------------------------------|-----------------
 input_raster             |   YES     |       N/A          | S3 URL   .TIF only              | S3 location of input data. S raster on which to perform ISODATA classification
+input_raster_format  |    NO     | N/A  |  string  |  A string for selecting the raster format (non-DG format). Please refer to Supported Datasets table below for a list of valid values for currently supported image data products.
+input_raster_band_grouping     |  NO  |    NA   |  string   |  A string name indentify which band grouping to use for the task.
 
 ### Outputs
 
 The following table lists the ISO DATA Classification task outputs.
 
-Name                | Required |   Description
---------------------|:--------:|-----------------
-output_raster_uri   |     YES    | This will explain the output file location and provide the output in .TIF format with an ENVI .HDR file.
+Name                | Required |   Default  | Valid Values  |Description
+--------------------|:--------:|------------|---------------|
+output_raster_uri   |     YES   |   N/A |  .TIF, .HDR       | This will explain the output file location 
+output_raster_uri_filename |  NO      |     output        | Folder name in S3 location      | Specify the file name
 
 
 This task will function on an image located in the S3 location.  The file type input is preferred in the .hdr format.   Additional options include:
 
 
-**OPTIONAL SETTINGS AND DEFINITIONS:**
+**ADDITIONAL OPTIONAL SETTINGS AND DEFINITIONS:**
 
 Name                       |  Required    |     Default         |        Valid Values             |   Description
 ------------------------|:--------------:|:---------------------:|---------------------------------|-----------------
@@ -72,9 +75,7 @@ change_threshold_percent   |    NO    |     3 X 3         | string              
 number_of_classes          |   NO    |       2            | string                          | The requested number of classes to generate
 iterations                 |    NO    |      N/A          | string                          | The maximum iterations to perform.  If the change threshold percent is not met before the maximum number of iterations is reached, the classification completes
 task_meta_data             |    NO    |      N/A          | string                          | Output location for task meta data such as execution log and output JSON
-input_raster_format  |    NO     | N/A  |  string  |  A string for selecting the raster format (non-DG format). Please refer to Supported Datasets table below for a list of valid values for currently supported image data products.
-input_raster_band_grouping     |  NO  |    NA   |  string   |  A string name indentify which band grouping to use for the task.
-output_raster_uri_filename |  NO      |     output        | Folder name in S3 location      | Specify the file name
+
 
 
 **Data Structure for Expected Outputs:**
