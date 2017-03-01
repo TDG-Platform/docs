@@ -47,19 +47,19 @@ workflow.status
 
 ### Inputs
 The following table lists all taskname inputs.
-Mandatory (optional) settings are listed as Required = True (Required = False).
+Mandatory (optional) settings are listed as Required = True (Required = False). For more information on ENVI specific inputs [see ENVI Task Runner Inputs Inputs](https://gbdxdocs.digitalglobe.com/docs/envi-task-runner-inputs)
 
   Name  |  Required  |  Default  |  Valid Values  |  Description  
 --------|:----------:|-----------|----------------|---------------
 file_types|False|None| .hdr,.tif|GBDX Option. Comma separated list of permitted file type extensions. Use this to filter input files -- Value Type: STRING
 input_raster1|True|None| A valid S3 folder containing image files. |Specify a single-band raster on which to perform an image difference of input band. -- Value Type: ENVIRASTER
-input_raster1_format|False|None| [More on ENVIRASTER input port](https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner_Inputs.md#enviraster)|Provide the format of the image, for example: landsat-8. -- Value Type: STRING
-input_raster1_band_grouping|False|None| [More on ENVIRASTER input port](https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner_Inputs.md#enviraster)|Provide the name of the band grouping to be used in the task, ie - panchromatic. -- Value Type: STRING
-input_raster1_filename|False|None| [More on ENVIRASTER input port](https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner_Inputs.md#enviraster) |Provide the explicit relative raster filename that ENVI will open. This overrides any file lookup in the task runner. -- Value Type: STRING
+input_raster1_format|False|None| [More on ENVIRASTER input port](https://gbdxdocs.digitalglobe.com/docs/envi-task-runner-inputs)|Provide the format of the image, for example: landsat-8. -- Value Type: STRING
+input_raster1_band_grouping|False|None| [More on ENVIRASTER input port](https://gbdxdocs.digitalglobe.com/docs/envi-task-runner-inputs)|Provide the name of the band grouping to be used in the task, ie - panchromatic. -- Value Type: STRING
+input_raster1_filename|False|None| [More on ENVIRASTER input port](https://gbdxdocs.digitalglobe.com/docs/envi-task-runner-inputs) |Provide the explicit relative raster filename that ENVI will open. This overrides any file lookup in the task runner. -- Value Type: STRING
 input_raster2|True|None|  A valid S3 folder containing image files.  |Specify a second single-band raster on which to perform an image difference of input band. -- Value Type: ENVIRASTER
-input_raster2_format|False|None| [More on ENVIRASTER input port](https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner_Inputs.md#enviraster)|Provide the format of the image, for example: landsat-8. -- Value Type: DICTIONARY
-input_raster2_band_grouping|False|None| [More on ENVIRASTER input port](https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner_Inputs.md#enviraster)|Provide the name of the band grouping to be used in the task, ie - panchromatic. -- Value Type: STRING
-input_raster2_filename|False|None| [More on ENVIRASTER input port](https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner_Inputs.md#enviraster) |Provide the explicit relative raster filename that ENVI will open. This overrides any file lookup in the task runner. -- Value Type: STRING
+input_raster2_format|False|None| [More on ENVIRASTER input port](https://gbdxdocs.digitalglobe.com/docs/envi-task-runner-inputs)|Provide the format of the image, for example: landsat-8. -- Value Type: DICTIONARY
+input_raster2_band_grouping|False|None| [More on ENVIRASTER input port](https://gbdxdocs.digitalglobe.com/docs/envi-task-runner-inputs)|Provide the name of the band grouping to be used in the task, ie - panchromatic. -- Value Type: STRING
+input_raster2_filename|False|None| [More on ENVIRASTER input port](https://gbdxdocs.digitalglobe.com/docs/envi-task-runner-inputs) |Provide the explicit relative raster filename that ENVI will open. This overrides any file lookup in the task runner. -- Value Type: STRING
 output_raster_uri_filename|False|None| output_raster |Specify a string with the fully-qualified path and filename for OUTPUT_RASTER. -- Value Type: STRING
 
 ### Outputs
