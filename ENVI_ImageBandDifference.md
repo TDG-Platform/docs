@@ -40,7 +40,7 @@ workflow.savedata(
 
 workflow.execute()
 
-# To monitor workflow, use the following command while 
+# To monitor workflow, use the following command while
 #  the Python interpreter is still open.
 workflow.status
 ```
@@ -60,7 +60,7 @@ input_raster2|True|None|  A valid S3 folder containing image files.  |Specify a 
 input_raster2_format|False|None| [More on ENVIRASTER input port](https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner_Inputs.md#enviraster)|Provide the format of the image, for example: landsat-8. -- Value Type: DICTIONARY
 input_raster2_band_grouping|False|None| [More on ENVIRASTER input port](https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner_Inputs.md#enviraster)|Provide the name of the band grouping to be used in the task, ie - panchromatic. -- Value Type: STRING
 input_raster2_filename|False|None| [More on ENVIRASTER input port](https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner_Inputs.md#enviraster) |Provide the explicit relative raster filename that ENVI will open. This overrides any file lookup in the task runner. -- Value Type: STRING
-output_raster_uri_filename|False|None| |Specify a string with the fully-qualified path and filename for OUTPUT_RASTER. -- Value Type: STRING
+output_raster_uri_filename|False|None| output_raster |Specify a string with the fully-qualified path and filename for OUTPUT_RASTER. -- Value Type: STRING
 
 ### Outputs
 The following table lists all taskname outputs.
@@ -85,9 +85,9 @@ gbdx = Interface()
 data1 = 's3://gbd-customer-data/CustomerAccount#/PathToImage1/'
 data2 = 's3://gbd-customer-data/CustomerAccount#/PathToImage2/'
 
-aoptask1 = gbdx.Task("AOP_Strip_Processor", 
+aoptask1 = gbdx.Task("AOP_Strip_Processor",
     data=data1, enable_acomp=True, enable_pansharpen=False, enable_dra=False, bands='MS')
-aoptask2 = gbdx.Task("AOP_Strip_Processor", 
+aoptask2 = gbdx.Task("AOP_Strip_Processor",
     data=data2, enable_acomp=True, enable_pansharpen=False, enable_dra=False, bands='MS')
 
 envi_ndvi1 = gbdx.Task("ENVI_SpectralIndex")
@@ -128,7 +128,7 @@ workflow.savedata(
 workflow.execute()
 
 
-# To monitor workflow, use the following command while 
+# To monitor workflow, use the following command while
 #  the Python interpreter is still open.
 workflow.status
 ```
