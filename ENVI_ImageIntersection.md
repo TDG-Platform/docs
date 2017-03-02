@@ -32,7 +32,6 @@ aoptask1 = gbdx.Task("AOP_Strip_Processor", data=data1, enable_acomp=True, enabl
 aoptask2 = gbdx.Task("AOP_Strip_Processor", data=data2, enable_acomp=True, enable_pansharpen=False, enable_dra=False, bands='MS')
 
 envi_II = gbdx.Task("ENVI_ImageIntersection")
-envi_II.inputs.file_types = "hdr"
 envi_II.inputs.input_raster1 = data1
 envi_II.inputs.input_raster2 = data2
 envi_II.inputs.output_raster1_uri_filename = "Image1"

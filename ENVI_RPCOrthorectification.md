@@ -43,7 +43,7 @@ wf_id = workflow.id
 
 ### Inputs
 The following table lists all taskname inputs.
-Mandatory (optional) settings are listed as Required = True (Required = False).  For more information on ENVI specific inputs [see ENVI Task Runner Inputs Inputs](https://gbdxdocs.digitalglobe.com/docs/envi-task-runner-inputs)
+Mandatory (optional) settings are listed as Required = True (Required = False).  For more information on ENVI specific inputs [see ENVI Task Runner Inputs](https://gbdxdocs.digitalglobe.com/docs/envi-task-runner-inputs)
 
   Name  |  Required  |  Default  |  Valid Values  |  Description  
 --------|:----------:|-----------|----------------|---------------
