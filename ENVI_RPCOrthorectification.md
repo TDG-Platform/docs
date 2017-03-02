@@ -26,7 +26,6 @@ gbdx = Interface()
 image = "s3://gbd-customer-data/CustomerAccount#/PathToImage1/"
 #Note: The dem_raster port is optional, and if it is missing, the task runner will use the GMTED2010.jp2
 envi_RPCO = gbdx.Task("ENVI_RPCOrthorectification")
-envi_RPCO.inputs.file_types = "tif"
 envi_RPCO.inputs.input_raster = image
 
 workflow = gbdx.Workflow([envi_RPCO])
@@ -50,7 +49,7 @@ Mandatory (optional) settings are listed as Required = True (Required = False). 
 file_types|False|None| .hdr, .tif |GBDX Option. Comma seperated list of permitted file type extensions. Use this to filter input files -- Value Type: STRING
 input_raster|True|None| Image with associated RPC information e.g. IKONOS imagery |Specify a raster that is the RPC-based image to orthorectify. -- Value Type: ENVIRASTER
 input_raster_metadata|False|None| |Provide a dictionary of attributes for overriding the raster metadata. -- Value Type: DICTIONARY
-input_raster_band_grouping|False|None| A string name identify which band grouping to use for the task.[see supported datasets](https://gbdxdocs.digitalglobe.com/docs/envi-task-runner-inputs)|Provide the name of the band grouping to be used in the task, ie - panchromatic. -- Value Type: STRING
+input_raster_band_grouping|False|None| A string name identify which band grouping to use for the task. [see supported datasets](https://gbdxdocs.digitalglobe.com/docs/envi-task-runner-inputs)|Provide the name of the band grouping to be used in the task, ie - panchromatic. -- Value Type: STRING
 dem_is_height_above_ellipsoid|False|None| True/False|Set this property to true if the DEM is already expressed as the height above the ellipsoid and no geoid offset is required. -- Value Type: BOOL
 output_subset|False|None| |Use this property to define a spatial subset from the input image that will apply to the output from ENVIRPCOrthorectificationTask. The output will be a rectangular subset that encompasses the the extent of the input subset. If you set this property, the output extent will be larger than that of the input subset, but the output may contain background pixels. Also, you do not need to specify the ENVIGCPSet::ApplyOffset method to adjust the position of ground control points (GCPs). Set this property to a four-element array expressing the spatial range (in pixels) of the input image. The array is of the form [x1, y1, x2, y2]. Pixel coordinates are zero-based. -- Value Type: INT[4]
 input_gcp|False|None| |A set of ground control points (GCPs). -- Value Type: ENVIGCPSET
