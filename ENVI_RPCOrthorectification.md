@@ -69,7 +69,7 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 
   Name  |  Required  |  Default  |  Valid Values  |  Description  
 --------|:----------:|-----------|----------------|---------------
-task_meta_data|False|None| |GBDX Option. Output location for task meta data such as execution log and output JSON
+task_meta_data|False|None| s3 location with the name|GBDX Option. Output location for task meta data such as execution log and output JSON
 output_raster_uri|True|None| |Outputor OUTPUT_RASTER. -- Value Type: ENVIURI
 
 **Output structure**
