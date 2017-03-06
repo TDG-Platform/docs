@@ -53,7 +53,7 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 -------------|:-----------:|:----------|----------|---------------
 input_raster | True   |     N/A    | .hdr, .tif | Specify a classification raster on which to perform aggregation.
 input_raster_format  |	False  |       N/A   |	string  |	A string for selecting the raster format (non-DG format). Please refer to Supported Datasets table below for a list of valid values for currently supported image data products.
-input_raster_band_grouping    |	False  |	string   |	A string name indentify which band grouping to use for the task.
+input_raster_band_grouping    |	False  |    N/A	|   string   |	A string name indentify which band grouping to use for the task.
 
 ### Outputs
 The following table lists all taskname outputs.
