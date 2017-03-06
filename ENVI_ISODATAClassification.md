@@ -52,7 +52,7 @@ Name                     | Required   |      Default         |        Valid Valu
 -------------------------|:-------------:|:------------:|---------------------------------|-----------------
 input_raster             |   YES     |       N/A          | S3 URL   .TIF only              | S3 location of input data. S raster on which to perform ISODATA classification
 input_raster_format  |    NO     | N/A  |  string  |  A string for selecting the raster format (non-DG format). Please refer to Supported Datasets table below for a list of valid values for currently supported image data products.
-input_raster_band_grouping     |  NO  |    NA   |  string   |  A string name indentify which band grouping to use for the task.
+input_raster_band_grouping     |  NO  |    N/A   |  string   |  A string name indentify which band grouping to use for the task.
 
 ### Outputs
 
