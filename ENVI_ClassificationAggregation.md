@@ -62,18 +62,18 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
   Name            |  Required  |  Default    |   Valid Values             | Description  
 ------------------|:---------: |:------------|------------- |---------------
 output_raster_uri | True       | .hdr, .tif | Specify a string with the fully qualified filename and path of the output raster. If you do not specify this property, the output raster is only temporary. Once the raster has no remaining references, ENVI deletes the temporary file.
-output_raster_uri_filename   |	NO    |	N/A   |	string	Specify filename in S3 output location
+output_raster_uri_filename   |	False    |	N/A   |	string	Specify filename in S3 output location
 
 
 
-**OPTIONAL SETTINGS AND DEFINITIONS:**
+**ADDITIONAL OPTIONAL SETTINGS AND DEFINITIONS:**
 
-Name                 |       Default    | Valid Values |   Description
----------------------|:----------------:|---------------------------------|-----------------
-ignore_validate      |          N/A     |     1        |Set this property to a value of 1 to run the task, even if validation of properties fails. This is an advanced option for users who want to first set all task properties before validating whether they meet the required criteria. This property is not set by default, which means that an exception will occur if any property does not meet the required criteria for successful execution of the task.
-minimum_size               |          9           |    any odd number >= 9          | Specify the aggregate minimum size in pixels. Regions with a size of this value or smaller are aggregated to an adjacent, larger region. The default value is 9.
-input_raster_format  |  N/A   |  string  |  A string dictionary for overridding the raster metadata.
-input_raster_band_grouping  |  N/A  | string  |  A string name indentify which band grouping to use for the task.
+Name                 |    Required    |   Default    | Valid Values |   Description
+---------------------|:-------|---------:|---------------------------------|-----------------
+ignore_validate      |    False   |   N/A     |     1        |Set this property to a value of 1 to run the task, even if validation of properties fails. This is an advanced option for users who want to first set all task properties before validating whether they meet the required criteria. This property is not set by default, which means that an exception will occur if any property does not meet the required criteria for successful execution of the task.
+minimum_size    |    False       |          9           |    any odd number >= 9          | Specify the aggregate minimum size in pixels. Regions with a size of this value or smaller are aggregated to an adjacent, larger region. The default value is 9.
+input_raster_filename    |  False   |   N/A    | string   |
+
 
 ### Advanced
 
