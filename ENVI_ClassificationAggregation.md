@@ -49,19 +49,20 @@ GE01| 57,498,000 | 332.97 | 419.17 | 1.26 |
 The following table lists all taskname inputs.
 Mandatory (optional) settings are listed as Required = True (Required = False).  
 
-  Name       |  Required  |  Valid Values       |  Description  
--------------|:-----------:|:--------------------|---------------
-input_raster | True       | .hdr, .tif | Specify a classification raster on which to perform aggregation.
-input_raster_format  |	False  |	string  |	A string for selecting the raster format (non-DG format). Please refer to Supported Datasets table below for a list of valid values for currently supported image data products.
+  Name       |  Required  |  Default   | Valid Values       |  Description  
+-------------|:-----------:|:----------|----------|---------------
+input_raster | True   |     N/A    | .hdr, .tif | Specify a classification raster on which to perform aggregation.
+input_raster_format  |	False  |       N/A   |	string  |	A string for selecting the raster format (non-DG format). Please refer to Supported Datasets table below for a list of valid values for currently supported image data products.
 input_raster_band_grouping    |	False  |	string   |	A string name indentify which band grouping to use for the task.
 
 ### Outputs
 The following table lists all taskname outputs.
 Mandatory (optional) settings are listed as Required = True (Required = False).
 
-  Name            |  Required  |  Valid Values             | Description  
-------------------|:---------: |:------------------------- |---------------
+  Name            |  Required  |  Default    |   Valid Values             | Description  
+------------------|:---------: |:------------|------------- |---------------
 output_raster_uri | True       | .hdr, .tif | Specify a string with the fully qualified filename and path of the output raster. If you do not specify this property, the output raster is only temporary. Once the raster has no remaining references, ENVI deletes the temporary file.
+output_raster_uri_filename   |	NO    |	N/A   |	string	Specify filename in S3 output location
 
 
 
