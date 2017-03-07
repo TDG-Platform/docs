@@ -11,7 +11,7 @@ The workflow calls the DGLayers GBDX task on two recipe files to do the stacking
 ***************************************************************************
 -->
 
-**HotMaps Workflow Template:** 
+**_HotMaps Workflow Template:_** 
 
 ```shell
 import os
@@ -169,7 +169,7 @@ The above template should reflect the latest versions of all tasks. Here are the
 
 The HotMaps workflow calls DGLayers on two recipe files:
 
-**stack_swir_on_vnir_recipe.txt:**
+**_stack_swir_on_vnir_recipe.txt:_**
 
 ```shell
 #########################################################################
@@ -204,7 +204,7 @@ stack_bands --outdirID n1 --indirIDs (SRC_vnir, *) (SRC_swir, *) --deliver
 ***************************************************************************
 -->
 
-**false_color_swir_recipe.txt:**
+**_false_color_swir_recipe.txt:_**
 
 ```shell
 #########################################################################
