@@ -2,7 +2,9 @@
 
 This document describes how to modify a HotMaps GBDX workflow template in order to identify the active fire pixels in a burn scene (a WV3 image), even through wood smoke. The inputs are WV3 DN 8-band VNIR and 8-band SWIR data with **_Level 3X_** processing. The SWIR sensor on WV3 is able to see through wood smoke. The output consists of three products: (1) Shape file whose polygons delimit active fire pixels; (2) False-color SWIR RGB raster image using bands 6, 3, 1, in that order, from bands 1 - 8 of the input SWIR image; (3) Cloud mask raster indicating water clouds that are impermeable to the SWIR sensor. 
 
-At the beginning of the workflow, the VNIR is mosaicked and fractionally pixel-aggregated to agree with the SWIR pixels.  The VNIR and SWIR are then stacked, but not registered, and clipped to the common overlap. This results in a "crude supercube" 16-band stack at SWIR resolution. The HotMaps analysis task takes this crude supercube as input. 
+At the beginning of the workflow, the VNIR is mosaicked and fractionally pixel-aggregated to agree with the SWIR pixels.  The VNIR and SWIR are then stacked, **_but not registered_**, and clipped to the common overlap. This results in a "crude supercube" 16-band stack at SWIR resolution. The HotMaps analysis task takes this crude supercube as input. 
+
+The workflow calls the DGLayers GBDX task on two recipe files to do the stacking of the VNIR and SWIR and to create the false-color 3-band SWIR. This is explained below.
 
 
 <!--
@@ -159,13 +161,13 @@ The above template should reflect the latest versions of all tasks. Here are the
 * Set **_in_base_dir_** -- this is the top-level S3 input directory that contains your DN data 
 * Set **_out_base_dir_** -- this is the top-level S3 output directory
 * Set **_dn_dir_**, **_vnir_dn_dir_**, and **_swir_dn_dir_** -- these are the S3 locations of the input DN data that will be AComp'd and Supercube'd
-* Set **_recipe_dir_** -- this is the directory containing your DGLayers recipe file **_and any auxiliary text files it refers to_** 
+* Set **_recipe_dir_** -- this is the directory containing the DGLayers recipe files
 
 <!--
 ***************************************************************************
 -->
 
-The HotMaps workflow calls the DGLayers task on two recipe files:
+The HotMaps workflow calls DGLayers on two recipe files:
 
 **stack_swir_on_vnir_recipe.txt:**
 
@@ -201,8 +203,6 @@ stack_bands --outdirID n1 --indirIDs (SRC_vnir, *) (SRC_swir, *) --deliver
 <!--
 ***************************************************************************
 -->
-
-The above recipe file references the following pair of auxiliary files:
 
 **false_color_swir_recipe.txt:**
 
