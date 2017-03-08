@@ -1,8 +1,8 @@
-# HotMaps GBDX Workflow Template
+# HotMaps GBDX Workflow 
 
-This document introduces the HotMaps GBDX workflow template and describes how to modify it in order to identify the active fire pixels in a WV3 image -- even through wood smoke (but not water vapour clouds). The input is WV3 DN 8-band VNIR and 8-band SWIR data with **_Level 3X_** ortho-processing. The SWIR sensor on WV3 is able to see through wood smoke. The output consists of three products: (1) a shape file whose polygons delimit active fire pixels; (2) a false-color SWIR RGB raster image using bands 6, 3, 1, in that order, from bands 1 - 8 of the input SWIR image; (3) a SWIR cloud mask raster indicating water clouds that are impermeable to the SWIR sensor. 
+This document introduces the HotMaps GBDX Workflow and describes how to modify it in order to identify the active fire pixels in a WV3 image -- even through smoke clouds (but not water vapour clouds). The SWIR sensor on WV3 is able to see through wood smoke. The input is WV3 DN 8-band VNIR and 8-band SWIR data. This workflow does not perform ortho-processing. The output consists of three products: (1) a shape file whose polygons delimit active fire pixels; (2) a false-color SWIR RGB raster image using bands 6, 3, 1, in that order, from bands 1 - 8 of the input SWIR image; (3) a SWIR cloud mask raster indicating water clouds that are impermeable to the SWIR sensor. 
 
-At the beginning of the workflow, the VNIR is mosaicked and fractionally pixel-aggregated to agree with the SWIR pixels.  The resulting VNIR and SWIR are then stacked, **_but not registered_**, and clipped to the common overlap, yielding a "crude "supercube", a 16-band stack at SWIR resolution. The HotMaps analysis task takes this crude supercube as input. 
+At the beginning of the workflow, the VNIR is mosaicked and fractionally pixel-aggregated to agree with the SWIR pixels.  The resulting VNIR and SWIR are then stacked, **_but not registered_**, and clipped to the common overlap, yielding a "crude supercube", a 16-band stack at SWIR resolution. The HotMap GBDX task takes this crude supercube as input. 
 
 The workflow calls the DGLayers GBDX task on two recipe files to perform the stacking of the VNIR and SWIR, and to create the false-color 3-band SWIR. 
 
@@ -10,7 +10,7 @@ The workflow calls the DGLayers GBDX task on two recipe files to perform the sta
 ***************************************************************************
 -->
 
-**_HotMaps Workflow Template:_** 
+**_HotMaps Workflow:_** 
 
 ```shell
 import os
@@ -33,6 +33,11 @@ recipe22_filename = "false_color_swir_recipe.txt"
 
 ####### OUTPUTS #######
 
+"""
+out_vnir_dir = os.path.join(out_base_dir, "VNIR")
+out_rc_vnir_dir = os.path.join(out_base_dir, "RC_VNIR")
+out_rc_swir_dir = os.path.join(out_base_dir, "RC_SWIR")
+"""
 out_scube_dir = os.path.join(out_base_dir, "SCUBE")
 out_hotmap_dir = os.path.join(out_base_dir, "HOTMAP")
 out_cloudmask_dir = os.path.join(out_base_dir, "SWIR_CLOUD_MASK")
@@ -48,10 +53,11 @@ mosaic_task = gbdx.Task("gdal-cli",
                         execution_strategy = 'runonce')
 
 mosaic_dn_vnir_dir = mosaic_task.outputs.data.value
-
+"""
 save_mosaic_task = gbdx.Task("StageDataToS3",
                              data = mosaic_dn_vnir_dir,
                              destination = out_vnir_dir)
+"""
 
 ############# Resample-and-Cut (VNIR to SWIR)
 rc_task = gbdx.Task("resample_and_cut_001",
@@ -65,7 +71,7 @@ rc_task = gbdx.Task("resample_and_cut_001",
 
 rc_vnir_dir = rc_task.outputs.out_A.value
 rc_swir_dir = rc_task.outputs.out_B.value
-
+"""
 save_rc_vnir_task = gbdx.Task("StageDataToS3",
                               data = rc_vnir_dir,
                               destination = out_rc_vnir_dir)
@@ -73,6 +79,7 @@ save_rc_vnir_task = gbdx.Task("StageDataToS3",
 save_rc_swir_task = gbdx.Task("StageDataToS3",
                               data = rc_swir_dir,
                               destination = out_rc_swir_dir)
+"""
 
 ############# Stack SWIR on VNIR
 stack_task = gbdx.Task("DGLayers_v_3_0",
@@ -155,7 +162,7 @@ print workflow.id
 ***************************************************************************
 -->
 
-The above template should reflect the latest versions of all the participating tasks. 
+The above workflow should reflect the latest versions of all the participating tasks. 
 Here are the modifications you need to make to run the workflow:
  
 * Set **_in_base_dir_** -- this is the top-level S3 input directory that contains your DN data 
@@ -167,7 +174,7 @@ Here are the modifications you need to make to run the workflow:
 ***************************************************************************
 -->
 
-The HotMaps workflow calls the DGLayers task on the following two recipe files:
+The workflow calls the DGLayers GBDX task on the following two recipe files:
 
 **_stack_swir_on_vnir_recipe.txt:_**
 
@@ -239,7 +246,7 @@ subset_bands --outdirID n1 --indirID SRC -bands 6 3 1 --deliver
 ***************************************************************************
 -->
 
-To run the HotMaps workflow, copy the two recipe files to your desired recipe directory on S3, set the directory paths (mentioned above) in the workflow as appropriate, and run. 
+To run the workflow, copy the two recipe files (create the files using cut and paste out of this document) to the desired recipe directory on S3, set the directory paths (mentioned above) as desired, and run. 
 
 
 

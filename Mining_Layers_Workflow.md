@@ -1,6 +1,6 @@
-# Mining Layers GBDX Workflow Template
+# Mining Layers GBDX Workflow 
 
-This document describes how to modify a supplied Mining Layers GBDX workflow template in order to compute desired mining layers (rasters and polygons) from WV3 DN VNIR and SWIR data with **_Level 3X_** processing. 
+This document introduces the Mining Layers GBDX Workflow and describes how to modify it in order to compute desired mining layers (rasters and polygons) from WV3 DN VNIR and SWIR data. This workflow does not perform ortho-processing. 
 
 The template has two parts: The first part computes a 16-band aligned AComp "supercube" from the 8-band DN VNIR plus 8-band DN SWIR data, as well as pixel-aligned water mask and cloud mask. The second part invokes the DGLayers task on a DGlayers recipe file. The recipe file describes the desired Mining Layers operations and outputs (e.g., indices, SAM classification map, masks, polygons, etc.) 
 
@@ -11,15 +11,16 @@ To learn about the operations that can be called from within a DGLayers recipe f
 ***************************************************************************
 -->
 
-**Mining Layers Workflow Template:** 
+**_Mining Layers Workflow:_** 
 
 ```shell
 import os
 from gbdxtools import Interface
 gbdx = Interface()
 
-in_base_dir = "s3://XXXXXXXXXXXXXX"
-out_base_dir = "s3://XXXXXXXXXXXXXX"
+# NOTE: Make sure these directory strings have the trailing "/" as shown
+in_base_dir = "s3://xxxxxxxxxxxxxx/"
+out_base_dir = "s3://xxxxxxxxxxxxxx/"
 
 ####### INPUTS #######
 
@@ -27,7 +28,7 @@ dn_dir = os.path.join(in_base_dir, "scube_data/")
 vnir_dn_dir = os.path.join(dn_dir, "vnir/")
 swir_dn_dir = os.path.join(dn_dir, "swir/")
 
-recipe_dir = "s3://gbd-customer-data/58600248-2927-4523-b44b-5fec3d278c09/jm_images/Seth_Temp/Recipes/"
+recipe_dir = os.path.join(in_base_dir, "recipes/")
 recipe_filename = "mining_layers_dgl_recipe.txt"
 
 ####### OUTPUTS (Supercube Processing) #######
@@ -212,7 +213,7 @@ print(workflow.id)
 ***************************************************************************
 -->
 
-The above template should reflect the latest versions of all tasks. Here are the modifications you need to make:
+The above workflow should reflect the latest versions of all tasks. Here are the modifications you need to make:
  
 * Set **_in_base_dir_** -- this is the top-level S3 input directory that contains your DN data 
 * Set **_out_base_dir_** -- this is the top-level S3 output directory
@@ -230,7 +231,7 @@ The above template should reflect the latest versions of all tasks. Here are the
 ***************************************************************************
 -->
 
-The Mining Layers workflow template presently calls the following DGLayers recipe file (but you can make your own):
+The above workflow presently calls the following DGLayers recipe file (but you can make your own):
 
 **mining_layers_dgl_recipe.txt:**
 
@@ -376,7 +377,7 @@ Column 8: muscovi1.spc Muscovite GDS107~~8
 ***************************************************************************
 -->
 
-To test the Mining Layers workflow template on the above DGLayers recipe file, copy the recipe file and its two auxiliary files (create the files using cut and paste out of this document) to your desired recipe directory on S3, set the directory paths (mentioned above) in the workflow as appropriate, and run. 
+To test the workflow on the above DGLayers recipe file, copy the recipe file and its two auxiliary files (create the files using cut and paste out of this document) to your desired recipe directory on S3, set the directory paths (mentioned above) in the workflow as appropriate, and run. 
 
 
 
