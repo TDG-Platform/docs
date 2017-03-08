@@ -73,7 +73,7 @@ Name                 |    Required    |   Default    | Valid Values |   Descript
 ---------------------|:-------|---------:|---------------------------------|-----------------
 ignore_validate      |    False   |   N/A     |     1        |Set this property to a value of 1 to run the task, even if validation of properties fails. This is an advanced option for users who want to first set all task properties before validating whether they meet the required criteria. This property is not set by default, which means that an exception will occur if any property does not meet the required criteria for successful execution of the task.
 minimum_size    |    False       |          9           |    any odd number >= 9          | Specify the aggregate minimum size in pixels. Regions with a size of this value or smaller are aggregated to an adjacent, larger region. The default value is 9.
-input_raster_filename    |  False   |   N/A    | string   |
+input_raster_filename    |  False   |   N/A    | string   |  Provide the explicit relative raster filename that ENVI will open. This overrides any file lookup in the task runner.
 
 
 ### Advanced
