@@ -61,9 +61,9 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 
   Name            |  Required  |  Default    |   Valid Values             | Description  
 ------------------|:---------: |:------------|------------- |---------------
-output_raster_uri | True       | .hdr, .tif | Specify a string with the fully qualified filename and path of the output raster. If you do not specify this property, the output raster is only temporary. Once the raster has no remaining references, ENVI deletes the temporary file.
-output_raster_uri_filename   |	False    |	N/A   |	string	Specify filename in S3 output location
-task_meta_data  |	False  |	N/A  |	GBDX Option. Output location for task meta data such as execution log and output JSON
+output_raster_uri | True       | .hdr, .tif | string  |Specify a string with the fully qualified filename and path of the output raster. If you do not specify this property, the output raster is only temporary. Once the raster has no remaining references, ENVI deletes the temporary file.
+output_raster_uri_filename   |	False    |	N/A   |	  string  | 	Specify filename in S3 output location
+task_meta_data  |	False  |	N/A  |	string  |GBDX Option. Output location for task meta data such as execution log and output JSON
 
 
 
