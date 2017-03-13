@@ -93,7 +93,7 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
   Name  |  Required  |  Default  |  Valid Values  |  Description  
 --------|:----------:|-----------|----------------|---------------
 output_raster_uri   | True  | None  | string  | Specify a string with the fully qualified filename and path of the output raster. If you do not specify this property, the output raster is only temporary. Once the raster has no remaining references, ENVI deletes the temporary file.
-task_meta_data    |  False     |   none     |     |  GBDX Option. Output location for task meta data such as execution log and output JSON
+task_meta_data    |  False     |   none     | string    |  GBDX Option. Output location for task meta data such as execution log and output JSON
 
 
 ### Advanced
