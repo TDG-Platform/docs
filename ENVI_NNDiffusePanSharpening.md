@@ -73,14 +73,14 @@ The following table lists all taskname inputs.  Mandatory (optional) settings ar
 
   Name  |  Required  |  Default  |Valid Values  |  Description  
 --------|:----------:|--------|--------|---------------
-input_low_resolution_raster |  True  |       | raster  | Specify a low-resolution raster.
-input_high_resolution_raster  |  True  |     | raster  |  Specify a high-resolution panchromatic raster.
-input_low_resolution_raster_format |  True  |      | code  | Describes sensor input type as shown above in examples.  Use these lines of code for the appropriate sensor. Required for these sensors. 
-input_high_resolution_raster_format |  True  |      | code  | Describes sensor input type as shown above in examples.  Use these lines of code for the appropriate sensor. Required for these sensors. 
-input_high_resolution_raster_filename |  False  |        | string  | Special case of ENVI Raster filename. A string with the filename of the high resolution Panchromatic raster for ENVI to open. This overrides any file discovery. 
-input_low_resolution_raster_filename  |  False  |       | string  |  Special case of ENVI Raster filename. A string with the filename of the low resolution Multispectral raster for ENVI to open. This overrides any file discovery. 
-input_raster_low_resolution_band_grouping  | False  |      | string  | A string name indentify which band grouping to use for the task.
-input_raster_high_resolution_band_grouping  | False  |      | string  | A string name indentify which band grouping to use for the task.
+input_low_resolution_raster |  True  |   N/A    | raster  | Specify a low-resolution raster.
+input_high_resolution_raster  |  True  |  N/A   | raster  |  Specify a high-resolution panchromatic raster.
+input_low_resolution_raster_format |  True  |  N/A    | code  | Describes sensor input type as shown above in examples.  Use these lines of code for the appropriate sensor. Required for these sensors. 
+input_high_resolution_raster_format |  True  |  N/A    | code  | Describes sensor input type as shown above in examples.  Use these lines of code for the appropriate sensor. Required for these sensors. 
+input_high_resolution_raster_filename |  False  |   N/A     | string  | Special case of ENVI Raster filename. A string with the filename of the high resolution Panchromatic raster for ENVI to open. This overrides any file discovery. 
+input_low_resolution_raster_filename  |  False  |   N/A    | string  |  Special case of ENVI Raster filename. A string with the filename of the low resolution Multispectral raster for ENVI to open. This overrides any file discovery. 
+input_raster_low_resolution_band_grouping  | False  |  N/A    | string  | A string name indentify which band grouping to use for the task.
+input_raster_high_resolution_band_grouping  | False  |  N/A    | string  | A string name indentify which band grouping to use for the task.
 intensity_smoothness  | False  |  The default is to dynamically adjust to local similarity, as shown in the equation in the ENVI Document. You can enter a value to override the default, for example, a value in the range 10 x √2 to 20.   |   positive number      | A positive number that defines the intensity smoothness factor (σ) of the NNDiffuse pan sharpening algorithm. A smaller INTENSITY_SMOOTHNESS value will restrict diffusion and produce sharper images, but will have more noise.  A larger value is also suggested for panchromatic scenes with high contrast (they require less diffusion sensitivity), and with complex scenes (to reduce the possibility of noise). 
 spatial_smoothness  |    False   |  PIXEL_SIZE_RATIO x 0.62      |   positive number       |A positive number that defines the spatial smoothness factor (σs) of the NNDiffuse pan sharpening algorithm. SPATIAL_SMOOTHNESS should be set to a value that will resemble a bicubic interpolation kernel.  
 pixel_size_ratio   |  False   |  resolution ratio of the sensor in meters (low-res/high-res)         |  integer    |   A scalar number that defines the pixel size ratio of the low-resolution raster and the high-resolution raster. The NNDiffuse pan-sharpening algorithm requires that the pixel size ratio be an integer. If this property is not set, the value is determined from the metadata of the input rasters. 
