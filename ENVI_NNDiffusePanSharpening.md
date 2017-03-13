@@ -77,8 +77,8 @@ input_low_resolution_raster |  True  |       | raster  | Specify a low-resolutio
 input_high_resolution_raster  |  True  |     | raster  |  Specify a high-resolution panchromatic raster.
 input_low_resolution_raster_format |  True  |      | code  | Describes sensor input type as shown above in examples.  Use these lines of code for the appropriate sensor. Required for these sensors. 
 input_high_resolution_raster_format |  True  |      | code  | Describes sensor input type as shown above in examples.  Use these lines of code for the appropriate sensor. Required for these sensors. 
-input_high_resolution_raster_filename |  False  |        | string  |
-input_low_resolution_raster_filename  |  False  |       | string  |
+input_high_resolution_raster_filename |  False  |        | string  | Special case of ENVI Raster filename. A string with the filename of the high resolution Panchromatic raster for ENVI to open. This overrides any file discovery. 
+input_low_resolution_raster_filename  |  False  |       | string  |  Special case of ENVI Raster filename. A string with the filename of the low resolution Multispectral raster for ENVI to open. This overrides any file discovery. 
 input_raster_low_resolution_band_grouping  | False  |      | string  | A string name indentify which band grouping to use for the task.
 input_raster_high_resolution_band_grouping  | False  |      | string  | A string name indentify which band grouping to use for the task.
 intensity_smoothness  | False  |  The default is to dynamically adjust to local similarity, as shown in the equation in the ENVI Document. You can enter a value to override the default, for example, a value in the range 10 x √2 to 20.   |   positive number      | A positive number that defines the intensity smoothness factor (σ) of the NNDiffuse pan sharpening algorithm. A smaller INTENSITY_SMOOTHNESS value will restrict diffusion and produce sharper images, but will have more noise.  A larger value is also suggested for panchromatic scenes with high contrast (they require less diffusion sensitivity), and with complex scenes (to reduce the possibility of noise). 
