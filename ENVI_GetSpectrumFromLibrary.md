@@ -42,10 +42,11 @@ This task requires that you first retrieve the list of available spectral librar
 The following table lists all taskname inputs.
 Mandatory (optional) settings are listed as Required = True (Required = False).
 
-  Name       |  Required  |  Description  
--------------|:-----------:|:---------------
-input_spectral_library | True       | Specify a spectral library from which to retrieve a particular spectrum.
-spectrum_name      | True       | Provide a string with the material spectrum to be retreived.
+  Name       |  Required  |  Default  |  Valid Values   | Description  
+-------------|:-----------:|:-----------|---------------|----------
+input_spectral_library | True   |         | Directory     | Specify a spectral library from which to retrieve a particular spectrum.
+input_spectral_library_filename  | True  |       |  string    | String name of the ENVI spectral library file
+spectrum_name      | True   |         |  string  | Provide a string with the material spectrum to be retreived.
 
 ### Outputs
 The following table lists all taskname outputs.
