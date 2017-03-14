@@ -90,7 +90,7 @@ The advanced script for this task demonstrates loading your own spectrum data to
 	
 	# Edit the following path to reflect a specific path to the Spectral Index File
 	getspectrum.input_spectral_library_filename = "veg_1dry.sli"
-	getspectrum.inputs.file_types = "HDR"
+	getspectrum.inputs.file_types = "hdr"
 	getspectrum.inputs.input_spectral_library = 's3://gbd-customer-data/CustomerAccount#/PathToSpectralLibrary/'
 	getspectrum.inputs.spectrum_name = "CDE054: Pinyon Pine (SAP)" # example from Spectral Index veg_1dry.sli
 
