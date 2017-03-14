@@ -47,7 +47,7 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 input_spectral_library_filename  | True  |  N/A     |  .sli  | String name of the ENVI spectral library file .sli
 input_spectral_library | False   |  N/A       | Directory     | Specify a spectral library from which to retrieve a particular spectrum. This may be an ENVI library or a library that you have uploaded.  It is required if you are using a custom library.
 spectrum_name     | True   |  N/A       |  string  | Provide a string with the material spectrum to be retreived.
-file_types   |  False     |  N/A    |  .HDR    |  Required when you are using a custom spectrum and spectral library
+file_types   |  False     |  N/A    |  .hdr    |  Required when you are using a custom spectrum and spectral library
 
 ### Outputs
 The following table lists all taskname outputs.
