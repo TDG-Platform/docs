@@ -96,6 +96,20 @@ output_raster_uri   | True  | None  | string  | Specify a string with the fully 
 task_meta_data    |  False     |   none     | string    |  GBDX Option. Output location for task meta data such as execution log and output JSON
 
 
+### Runtime
+
+The following table lists all applicable runtime outputs. (This section will be completed the Algorithm Curation team)
+For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
+
+  Sensor Name  |  Total Pixels  |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
+--------|:----------:|-----------|----------------|---------------
+QB | 41,551,668 | 312.07 | 1242.554  | 3.98 |
+WV02|35,872,942|329.87| 4555.128 | 13.81 |
+WV03|35,371,971|196.27| 6741.883 | 34.35 |
+GE01| 57,498,000|332.97| 2286.475 | 6.87 |
+IKONOS | 29,976,302     | 273.34   | 367.958  | 1.35   |
+
+
 ### Advanced
 This task requires that WorldView-2, Worldview-3, GeoEYE-1 and Quickbird imagery has been pre-processed using the [Advanced Image Preprocessor](#https://github.com/TDG-Platform/docs/blob/master/Advanced_Image_Preprocessor.md) for proper orthorectification of both the panchromatic and multispectral images. Use NNDiffuse Pansharpening on imagery from these sensors when you need full multipsectral band (4-band or 8-band) pansharpening.
 
@@ -125,21 +139,6 @@ This task requires that WorldView-2, Worldview-3, GeoEYE-1 and Quickbird imagery
 	print workflow.status
 
 ```
-
-
-### Runtime
-
-The following table lists all applicable runtime outputs. (This section will be completed the Algorithm Curation team)
-For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
-
-  Sensor Name  |  Total Pixels  |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
---------|:----------:|-----------|----------------|---------------
-QB | 41,551,668 | 312.07 | 1242.554  | 3.98 |
-WV02|35,872,942|329.87| 4555.128 | 13.81 |
-WV03|35,371,971|196.27| 6741.883 | 34.35 |
-GE01| 57,498,000|332.97| 2286.475 | 6.87 |
-IKONOS | 29,976,302     | 273.34   | 367.958  | 1.35   |
-
 
 #### Technical Notes
 
