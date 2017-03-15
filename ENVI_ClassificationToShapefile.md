@@ -7,10 +7,10 @@ This task can be run with Python using [gbdxtools](https://github.com/DigitalGlo
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
+ * [Runtime](#runtime) - Results of task benchmark tests.
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and output structure.
  * [Advanced](#advanced) - Additional information for advanced users.
- * [Runtime](#runtime) - Results of task benchmark tests.
  * [Issues](#issues) - Current or past known issues.
  * [Background](#background) - Background information.
  * [Contact](#contact) - Contact information.
@@ -50,6 +50,19 @@ workflow.savedata(
 # print wf_id
 # print status
 ```
+
+### Runtime
+
+The following table lists runtime outputs for applicable sensors.
+For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
+
+  Sensor Name  |  Total Pixels  |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
+--------|:----------:|-----------|----------------|---------------
+QB | 41,551,668 | 312.07 | 1,337.20 | 4.28 |
+WV02|35,872,942|329.87| 1,806.83 | 5.48|
+WV03|35,371,971|196.27| 18,209.79|92.78|
+GE| 57,498,000|332.97|3,012.48| 9.05|
+
 
 ### Inputs
 The following table lists all taskname inputs.
@@ -114,22 +127,9 @@ workflow.execute()
 # print status
 ```
 
-### Runtime
-
-The following table lists runtime outputs for applicable sensors.
-For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
-
-  Sensor Name  |  Total Pixels  |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
---------|:----------:|-----------|----------------|---------------
-QB | 41,551,668 | 312.07 | 1,337.20 | 4.28 |
-WV02|35,872,942|329.87| 1,806.83 | 5.48|
-WV03|35,371,971|196.27| 18,209.79|92.78|
-GE| 57,498,000|332.97|3,012.48| 9.05|
-
 
 ### Issues
-NA
-
+None
 
 ### Background
 For background on the development and implementation of this task see [here](http://www.harrisgeospatial.com/docs/ENVIClassificationToShapefileTask.html).
