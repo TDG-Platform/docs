@@ -54,10 +54,14 @@ GE01| 57,498,000 | 332.97 | 184.30 | 0.55 |
 The following table lists all taskname inputs.
 Mandatory (optional) settings are listed as Required = True (Required = False).
 
-  Name       |  Required  |  Valid Values       |  Description  
--------------|:-----------:|:--------------------|---------------
-input_raster | True       | s3 URL, .hdr, .tiff  | Specify the input raster to apply ROIs to generate a classification image.
-input_roi    | True       | .xml ROI file | Specify a single or an array of ROI to create the classification image from.
+  Name       |  Required  |  Default    |  Valid Values       |  Description  
+-------------|:-----------:|:------------|-------------|---------------
+input_raster | True       |        | s3 URL, .hdr, .tiff  | Specify the input raster to apply ROIs to generate a classification image.
+input_roi    | True       |         |  .xml ROI file | Specify a single or an array of ROI to create the classification image from.
+input_raster_format   |   False   |    N/A   |          |
+input_raster_band_grouping  |  False  |           |  string  |   A string name indentify which band grouping to use for the task.
+input_raster_filename       |   False   |        |   string   |
+ignore_validate      | False     |    N/A     |     1        |Set this property to a value of 1 to run the task, even if validation of properties fails. This is an advanced option for users who want to first set all task properties before validating whether they meet the required criteria. This property is not set by default, which means that an exception will occur if any property does not meet the required criteria for successful execution of the task.
 
 ### Outputs
 The following table lists all taskname outputs.
@@ -66,17 +70,13 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
   Name            |  Required  |  Valid Values             | Description  
 ------------------|:---------: |:------------------------- |---------------
 output_raster_uri | True       | s3 URL, .hdr, .tiff, .xml | Specify a string with the fully qualified filename and path of the output raster. If you do not specify this property, the output raster is only temporary. Once the raster has no remaining references, ENVI deletes the temporary file.
+output_raster_uri_filename    |  False    | string     |  
+task_meta_data   |   False  |    .json    | GBDX Option. Output location for task meta data such as execution log and output JSON
 
-
-**OPTIONAL SETTINGS AND DEFINITIONS:**
-
-Name                 |       Default    | Valid Values |   Description
----------------------|:----------------:|---------------------------------|-----------------
-ignore_validate      |          N/A     |     1        |Set this property to a value of 1 to run the task, even if validation of properties fails. This is an advanced option for users who want to first set all task properties before validating whether they meet the required criteria. This property is not set by default, which means that an exception will occur if any property does not meet the required criteria for successful execution of the task.
 
 ### Advanced
 
-To link the workflow of 1 input image into AOP_Strip_Processor into the ENVI ROI To CLassification task you must use the following GBDX tools script in python:
+To link the workflow of 1 input image into AOP_Strip_Processor and into the ENVI ROI To CLassification task you must use the following GBDX tools script python example:
 
 ```python
 	# Advanced Task Script:  AOP=>ROI=>Classification
