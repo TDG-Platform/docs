@@ -55,17 +55,10 @@ roi_name                 |          N/A          | String  (see example script) 
 
 The following table lists the ENVI_ImageThresholdToROI task outputs.
 
-Name                | Required |   Description
---------------------|:--------:|-----------------
-output_raster_uri   |     Y    | Specify a string with the fully-qualified path and file name for OUTPUT_RASTER.
-
-
-**OPTIONAL SETTINGS AND DEFINITIONS:**
-
-Name                       |       Default         |        Valid Values             |   Description
----------------------------|:---------------------:|---------------------------------|-----------------
-file_types                 |          N/A          | string                          | Comma separated list of permitted file type extensions. Use this to filter input files
-output_roi_uri_filename    |         true          | Folder name in S3 location      | Specify the file name
+Name          |  Required             |       Default         |        Valid Values             |   Description
+---------------|------------|:---------------------:|---------------------------------|-----------------
+output_raster_uri   |    True    | N/A     |       string    |Specify a string with the fully-qualified path and file name for OUTPUT_RASTER.
+output_roi_uri_filename    |  False   |      N/A        | Folder name in S3 location      | Specify the file name
 
 ### Runtime
 
