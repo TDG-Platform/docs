@@ -43,15 +43,15 @@ Tif files from the AOP_Strip_Processor were tested with this task to confirm fun
 
 **REQUIRED SETTINGS AND DEFINITIONS:**
 
-Name                     |       Default         |                 Valid Values                        |   Description
--------------------------|:---------------------:|-----------------------------------------------------|--------------------------------
-input_raster             |          N/A          | S3 URL   directory                                  | S3 location of input data specify the input raster for applying the thresholds
+Name        |  Required              |       Default         |                 Valid Values                        |   Description
+------------|-------------|:---------------------:|-----------------------------------------------------|--------------------------------
+input_raster     | True        |          N/A          | S3 URL   directory      | S3 location of input data specify the input raster for applying the thresholds
 input_raster_format   |  False    | N/A   |   string  | A string for selecting the raster format (non-DG format). Please refer to Supported Datasets table below for a list of valid values for currently supported image data products.
-input_raster_band_grouping  False  |  N/A   | string   |  A string name indentify which band grouping to use for the task.
+input_raster_band_grouping  | False  |  N/A   | string   |  A string name indentify which band grouping to use for the task.
 input_raster_filename   | False     |   N/A   |  string  |  Provide the explicit relative raster filename that ENVI will open. This overrides any file lookup in the task runner.
-roi_color                |          N/A          | 3,n byte array with RGB color (see example script)  | Define ROI color where n is the number of ROIs specified by ROI_NAME
-threshold                |          N/A          | [minimum, maximum, zero-based band number]          | specify an array that represents a threshold: [minimum, maximum, zero-based band number] You can have one or more thresholds to one or more ROIs
-roi_name                 |          N/A          | String  (see example script)                        | Specify a string or array of strings with the names of each ROI
+roi_color   |   True          |          N/A          | 3,n byte array with RGB color (see example script)  | Define ROI color where n is the number of ROIs specified by ROI_NAME
+threshold   | True             |          N/A          | [minimum, maximum, zero-based band number]          | specify an array that represents a threshold: [minimum, maximum, zero-based band number] You can have one or more thresholds to one or more ROIs
+roi_name    |   True          |          N/A          | String  (see example script)                        | Specify a string or array of strings with the names of each ROI
 
 
 ### Outputs
