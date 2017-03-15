@@ -56,11 +56,11 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 
   Name       |  Required  |  Default    |  Valid Values       |  Description  
 -------------|:-----------:|:------------|-------------|---------------
-input_raster | True       |        | s3 URL, .hdr, .tiff  | Specify the input raster to apply ROIs to generate a classification image.
-input_roi    | True       |         |  .xml ROI file | Specify a single or an array of ROI to create the classification image from.
-input_raster_format   |   False   |    N/A   |          |
+input_raster | True       |   N/A     | s3 URL, .hdr, .tiff  | Specify the input raster to apply ROIs to generate a classification image.
+input_roi    | True       |   N/A      |  .xml ROI file | Specify a single or an array of ROI to create the classification image from.
+input_raster_format   |   False   |    N/A   |  string     |  A string for selecting the raster format (non-DG format). Please refer to Supported Datasets table below for a list of valid values for currently supported image data products.
 input_raster_band_grouping  |  False  |           |  string  |   A string name indentify which band grouping to use for the task.
-input_raster_filename       |   False   |        |   string   |
+input_raster_filename       |   False   |  N/A      |   string   |  Provide the explicit relative raster filename that ENVI will open. This overrides any file lookup in the task runner.
 ignore_validate      | False     |    N/A     |     1        |Set this property to a value of 1 to run the task, even if validation of properties fails. This is an advanced option for users who want to first set all task properties before validating whether they meet the required criteria. This property is not set by default, which means that an exception will occur if any property does not meet the required criteria for successful execution of the task.
 
 ### Outputs
