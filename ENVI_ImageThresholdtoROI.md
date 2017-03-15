@@ -6,8 +6,8 @@
  * [Quickstart](#quickstart) - Get started!
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and example contents.
- * [Advanced](#advanced) - Full task workflow with optional parameters used as example
  * [Runtime](#runtime) - Example estimate of task runtime.
+ * [Advanced](#advanced) - Full task workflow with optional parameters used as example
  * [Contact Us](#contact-us) - Contact tech or document owner.
 
 **Example Script:** Run in IPython using the GBDXTools Interface
@@ -67,6 +67,18 @@ Name                       |       Default         |        Valid Values        
 file_types                 |          N/A          | string                          | Comma separated list of permitted file type extensions. Use this to filter input files
 output_roi_uri_filename    |         true          | Folder name in S3 location      | Specify the file name
 
+### Runtime
+
+The following table lists all applicable runtime outputs. (This section will be completed the Algorithm Curation team)
+For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
+
+  Sensor Name  | Total Pixels |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
+--------|:----------:|-----------|----------------|---------------
+QB | 41,551,668 | 312.07 |158.62 |0.51  
+WV02|35,872,942|329.87|167.47	|0.51
+WV03|35,371,971|175.47	|0.89 |.89
+GE| 57,498,000|162.43	|0.49 |0.49
+
 ###Advanced
 
 To link the workflow of 1 input image into AOP_Strip_Processor and the Image Threshold to ROI task, use the following GBDX tools script in python.
@@ -98,17 +110,6 @@ To link the workflow of 1 input image into AOP_Strip_Processor and the Image Thr
 
     print workflow.execute()
 ```
-### Runtime
-
-The following table lists all applicable runtime outputs. (This section will be completed the Algorithm Curation team)
-For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
-
-  Sensor Name  | Total Pixels |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
---------|:----------:|-----------|----------------|---------------
-QB | 41,551,668 | 312.07 |158.62 |0.51  
-WV02|35,872,942|329.87|167.47	|0.51
-WV03|35,371,971|175.47	|0.89 |.89
-GE| 57,498,000|162.43	|0.49 |0.49
 
 **Data Structure for Expected Outputs:**
 
