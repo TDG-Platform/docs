@@ -5,9 +5,9 @@ This task retrieves the details of a specified material from a spectral library.
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
- * [Runtime](#runtime) - Not Applicable
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs
+ * [Runtime](#runtime) - Not Applicable
  * [Advanced](#advanced) - Upload your own spectral files
  * [Contact Us](#contact-us)
 
@@ -48,6 +48,8 @@ input_spectral_library_filename  | True  |  N/A     |  .sli  | String name of th
 input_spectral_library | False   |  N/A       | Directory     | Specify a spectral library from which to retrieve a particular spectrum. This may be an ENVI library or a library that you have uploaded.  It is required if you are using a custom library.
 spectrum_name     | True   |  N/A       |  string  | Provide a string with the material spectrum to be retreived.
 file_types   |  False     |  N/A    |  .hdr    |  Required when you are using a custom spectrum and spectral library
+ignore_validate      |  False    |        N/A     |     1        |Set this property to a value of 1 to run the task, even if validation of properties fails. This is an advanced option for users who want to first set all task properties before validating whether they meet the required criteria. This property is not set by default, which means that an exception will occur if any property does not meet the required criteria for successful execution of the task.
+
 
 ### Outputs
 The following table lists all taskname outputs.
@@ -69,12 +71,6 @@ y_range      | The range of spectrum values.  | [0.0,1.0]
 spectrum     |A double-precision array representing the spectrum that matches the input spectrum name.|     0.03869999945163727, 0.03869999945163727,..........,0.0608999989926815, 0.06119999662041664
 reflectance_scale_factor  | The scale factor to use for translating the spectrum to reflectance.    |   default = 1.0
 
-
-**OPTIONAL SETTINGS AND DEFINITIONS:**
-
-Name                 |       Default    | Valid Values |   Description
----------------------|:----------------:|---------------------------------|-----------------
-ignore_validate      |          N/A     |     1        |Set this property to a value of 1 to run the task, even if validation of properties fails. This is an advanced option for users who want to first set all task properties before validating whether they meet the required criteria. This property is not set by default, which means that an exception will occur if any property does not meet the required criteria for successful execution of the task.
 
 ### Advanced
 
