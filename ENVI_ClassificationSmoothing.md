@@ -48,11 +48,14 @@ GE01| 57,498,000 | 332.97 | 181.06 | 0.54 |
 The following table lists all taskname inputs.
 Mandatory (optional) settings are listed as Required = True (Required = False).
 
-  Name       |  Required  |  Valid Values       |  Description  
--------------|:-----------:|:--------------------|---------------
-input_raster | True       | .hdr, .tif | Specify a classification raster on which to perform aggregation.
-input_raster_format  |   False  |  string  |  A string for selecting the raster format (non-DG format). Please refer to Supported Datasets table below for a list of valid values for currently supported image data products.
-input_raster_band_grouping  | False  | String  |  A string name indentify which band grouping to use for the task.
+  Name       |  Required  | Default    |   Valid Values       |  Description  
+-------------|:-----------:|:----------|----------|---------------
+input_raster | True       |  N/A      |   .hdr, .tif | Specify a classification raster on which to perform aggregation.
+input_raster_format  |   False  |   N/A      |  string  |  A string for selecting the raster format (non-DG format). Please refer to Supported Datasets table below for a list of valid values for currently supported image data products.
+input_raster_band_grouping  | False  |   N/A    |  String  |  A string name indentify which band grouping to use for the task.
+kernel_size     |    False        |      3      |    any odd number >= 3          | Specify an odd number with the smoothing kernel size. The minimum value is 3 pixels, and the default value is 3 pixels.
+ignore_validate      |  False   |         N/A     |     1        |Set this property to a value of 1 to run the task, even if validation of properties fails. This is an advanced option for users who want to first set all task properties before validating whether they meet the required criteria. This property is not set by default, which means that an exception will occur if any property does not meet the required criteria for successful execution of the task.
+
 
 ### Outputs
 The following table lists all taskname outputs.
@@ -62,14 +65,6 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 ------------------|:---------: |:------------|------------- |---------------
 output_raster_uri | True   |   N/A    | .hdr, .tif | Specify a string with the fully qualified filename and path of the output raster. If you do not specify this property, the output raster is only temporary. Once the raster has no remaining references, ENVI deletes the temporary file.
 output_raster_uri_filename  |  False  |  outputfile.hdr, outputfile.tif   |   string  | A string with the filename of the output raster specified.
-
-
-**ADDITIONAL OPTIONAL SETTINGS AND DEFINITIONS:**
-
-Name                 |       Default    | Valid Values |   Description
----------------------|:----------------:|---------------------------------|-----------------
-ignore_validate      |          N/A     |     1        |Set this property to a value of 1 to run the task, even if validation of properties fails. This is an advanced option for users who want to first set all task properties before validating whether they meet the required criteria. This property is not set by default, which means that an exception will occur if any property does not meet the required criteria for successful execution of the task.
-kernel_size                |           3           |    any odd number >= 3          | Specify an odd number with the smoothing kernel size. The minimum value is 3 pixels, and the default value is 3 pixels.
 
 
 ### Advanced
