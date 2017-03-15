@@ -5,9 +5,9 @@ This task creates a classification image from regions of interest (ROIs).  The i
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
- * [Runtime](#runtime) - Detailed Description of Inputs
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and example contents.
+ * [Runtime](#runtime) - Detailed Description of Inputs
  * [Advanced](#advanced) - Script performing multiple tasks in one workflow
  * [Contact Us](#contact-us)
 
@@ -37,19 +37,6 @@ This task requires that the image has been pre-processed using the [Advanced Ima
 	print workflow.status
 ```
 
-
-### Runtime
-
-The following table lists all applicable runtime outputs for the ENVI ROI to Classification. An estimated Runtime for the Advanced Script example can be derived from adding the result for the two pre-processing steps.
-
-  Sensor Name  |  Total Pixels  |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
---------|:----------:|-----------|----------------|---------------
-QB02 | 41,551,668 | 312.07 | 172.56 | 0.55 |
-WV02|35,872,942 | 329.87 | 173.40 | 0.53 |
-WV03|35,371,971 | 196.27 | 197.48 | 0.88 |
-GE01| 57,498,000 | 332.97 | 184.30 | 0.55 |
-
-
 ### Inputs
 The following table lists all taskname inputs.
 Mandatory (optional) settings are listed as Required = True (Required = False).
@@ -72,6 +59,20 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 output_raster_uri | True       | s3 URL, .hdr, .tiff, .xml | Specify a string with the fully qualified filename and path of the output raster. If you do not specify this property, the output raster is only temporary. Once the raster has no remaining references, ENVI deletes the temporary file.
 output_raster_uri_filename    |  False    | string     |  
 task_meta_data   |   False  |    .json    | GBDX Option. Output location for task meta data such as execution log and output JSON
+
+
+
+### Runtime
+
+The following table lists all applicable runtime outputs for the ENVI ROI to Classification. An estimated Runtime for the Advanced Script example can be derived from adding the result for the two pre-processing steps.
+
+  Sensor Name  |  Total Pixels  |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
+--------|:----------:|-----------|----------------|---------------
+QB02 | 41,551,668 | 312.07 | 172.56 | 0.55 |
+WV02|35,872,942 | 329.87 | 173.40 | 0.53 |
+WV03|35,371,971 | 196.27 | 197.48 | 0.88 |
+GE01| 57,498,000 | 332.97 | 184.30 | 0.55 |
+
 
 
 ### Advanced
