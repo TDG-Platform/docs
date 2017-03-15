@@ -6,8 +6,8 @@
  * [Quickstart](#quickstart) - Get started!
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and example contents.
- * [Advanced Options](#advanced-options)
  * [Runtime](#runtime) - Results of task benchmark tests.
+ * [Advanced Options](#advanced-options)
  * [Contact Us](#contact-us) - Contact tech or document owner.
 
 **Example Script:** Run in IPython using the GBDXTools Interface
@@ -53,6 +53,10 @@ Name                     | Required   |      Default         |        Valid Valu
 input_raster             |   YES     |       N/A          | S3 URL   .TIF only              | S3 location of input data. S raster on which to perform ISODATA classification
 input_raster_format  |    NO     | N/A  |  string  |  A string for selecting the raster format (non-DG format). Please refer to Supported Datasets table below for a list of valid values for currently supported image data products.
 input_raster_band_grouping     |  NO  |    N/A   |  string   |  A string name indentify which band grouping to use for the task.
+change_threshold_percent   |    NO    |     3 X 3         | string                          | The change threshold percentage that determines when to complete the classification.  When the percentage of pixels that change classes during an iteration is less than the threshold value, the classification completes
+number_of_classes          |   NO    |       2            | string                          | The requested number of classes to generate
+iterations                 |    NO    |      N/A          | string                          | The maximum iterations to perform.  If the change threshold percent is not met before the maximum number of iterations is reached, the classification completes
+task_meta_data             |    NO    |      N/A          | string                          | Output location for task meta data such as execution log and output JSON
 
 ### Outputs
 
@@ -66,17 +70,17 @@ output_raster_uri_filename |  NO      |  N/A    |   string  | Specify filename i
 
 This task will function on an image located in the S3 location.  The file type input is preferred in the .hdr format.   Additional options include:
 
+### Runtime
 
-**ADDITIONAL OPTIONAL SETTINGS AND DEFINITIONS:**
+The following table lists all applicable runtime outputs for the QuickStart Script. (This section will be completed the Algorithm Curation team)
+For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
 
-Name                       |  Required    |     Default         |        Valid Values             |   Description
-------------------------|:--------------:|:---------------------:|---------------------------------|-----------------
-change_threshold_percent   |    NO    |     3 X 3         | string                          | The change threshold percentage that determines when to complete the classification.  When the percentage of pixels that change classes during an iteration is less than the threshold value, the classification completes
-number_of_classes          |   NO    |       2            | string                          | The requested number of classes to generate
-iterations                 |    NO    |      N/A          | string                          | The maximum iterations to perform.  If the change threshold percent is not met before the maximum number of iterations is reached, the classification completes
-task_meta_data             |    NO    |      N/A          | string                          | Output location for task meta data such as execution log and output JSON
-
-
+  Sensor Name  |  Total Pixels  |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
+--------|:----------:|-----------|----------------|---------------
+QB | 41,551,668 | 312.07 | 308.27 | 0.99
+WV02|35,872,942|329.87|1,939.17 | 5.88
+WV03|35,371,971|196.27| 858.28|4.37
+GE| 57,498,000|332.97|490.32| 1.47
 
 **Data Structure for Expected Outputs:**
 
@@ -115,17 +119,7 @@ This script links the [Advanced Image Preprocessor](https://github.com/TDG-Platf
 	print workflow.status
 ```
 
-### Runtime
 
-The following table lists all applicable runtime outputs for the QuickStart Script. (This section will be completed the Algorithm Curation team)
-For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
-
-  Sensor Name  |  Total Pixels  |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
---------|:----------:|-----------|----------------|---------------
-QB | 41,551,668 | 312.07 | 308.27 | 0.99
-WV02|35,872,942|329.87|1,939.17 | 5.88
-WV03|35,371,971|196.27| 858.28|4.37
-GE| 57,498,000|332.97|490.32| 1.47
 
 ###Contact Us
 Document Owner - Carl Reeder - creeder@digitalglobe.com
