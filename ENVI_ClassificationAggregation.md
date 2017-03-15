@@ -6,9 +6,9 @@ For details regarding the operation of ENVI Tasks on the Platform refer to [ENVI
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
- * [Runtime](#runtime) - Detailed Description of Inputs
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and example contents.
+ * [Runtime](#runtime) - Detailed Description of Inputs
  * [Advanced](#advanced) - Script performing multiple tasks in one workflow
  * [Contact Us](#contact-us)
 
@@ -33,16 +33,6 @@ This task requires that the image has been pre-processed using the [Advanced Ima
 	print workflow.status
 ```
 
-### Runtime
-
-The following table lists all applicable runtime outputs for Classification Aggregation. An estimated Runtime for the Advanced Script example can be derived from adding the result for the two pre-processing steps. For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
-
-  Sensor Name  |  Total Pixels  |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
---------|:----------:|-----------|----------------|---------------
-QB02 | 41,551,668 | 312.07 | 328.42 | 1.05 |
-WV02|35,872,942 | 329.87 | 414.51 | 1.26 |
-WV03|35,371,971 | 196.27 | 447.80 | 2.28 |
-GE01| 57,498,000 | 332.97 | 419.17 | 1.26 |
 
 
 ### Inputs
@@ -68,6 +58,16 @@ output_raster_uri | True       | .hdr, .tif | string  |Specify a string with the
 output_raster_uri_filename   |	False    |	N/A   |	  string  | 	Specify filename in S3 output location
 task_meta_data  |	False  |	N/A  |	string  |GBDX Option. Output location for task meta data such as execution log and output JSON
 
+### Runtime
+
+The following table lists all applicable runtime outputs for Classification Aggregation. An estimated Runtime for the Advanced Script example can be derived from adding the result for the two pre-processing steps. For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
+
+  Sensor Name  |  Total Pixels  |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
+--------|:----------:|-----------|----------------|---------------
+QB02 | 41,551,668 | 312.07 | 328.42 | 1.05 |
+WV02|35,872,942 | 329.87 | 414.51 | 1.26 |
+WV03|35,371,971 | 196.27 | 447.80 | 2.28 |
+GE01| 57,498,000 | 332.97 | 419.17 | 1.26 |
 
 
 ### Advanced
