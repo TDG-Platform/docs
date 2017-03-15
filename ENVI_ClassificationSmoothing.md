@@ -4,10 +4,10 @@ This task removes speckling noise from a classification image. It uses majority 
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
+ * [Runtime](#runtime) - Detailed Description of Inputs
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and example contents.
  * [Advanced](#advanced) - Script performing multiple tasks in one workflow
- * [Runtime](#runtime) - Detailed Description of Inputs
  * [Contact Us](#contact-us)
 
 ### Quickstart
@@ -32,6 +32,17 @@ This task requires that the image has been pre-processed using the [Advanced Ima
 	print workflow.id
 	print workflow.status
 ```
+### Runtime
+
+The following table lists all applicable runtime outputs for Classification Smoothing. An estimated Runtime for the Advanced Script example can be derived from adding the result for the two pre-processing steps. For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
+
+  Sensor Name  |  Total Pixels  |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
+--------|:----------:|-----------|----------------|---------------
+QB02 | 41,551,668 | 312.07 | 173.91 | 0.56 |
+WV02|35,872,942 | 329.87 | 174.86 | 0.53 |
+WV03|35,371,971 | 196.27 | 161.52 | 0.82 |
+GE01| 57,498,000 | 332.97 | 181.06 | 0.54 |
+
 
 ### Inputs
 The following table lists all taskname inputs.
@@ -103,17 +114,6 @@ Included below is a complete end-to-end workflow for Advanced Image Preprocessin
 **Data Structure for Expected Outputs:**
 
 Your smoothed classification file will be written to the specified S3 Customer Location in the ENVI file format and tif format(e.g.  s3://gbd-customer-data/unique customer id/named directory/classification.hdr).  
-
-### Runtime
-
-The following table lists all applicable runtime outputs for Classification Smoothing. An estimated Runtime for the Advanced Script example can be derived from adding the result for the two pre-processing steps. For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
-
-  Sensor Name  |  Total Pixels  |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
---------|:----------:|-----------|----------------|---------------
-QB02 | 41,551,668 | 312.07 | 173.91 | 0.56 |
-WV02|35,872,942 | 329.87 | 174.86 | 0.53 |
-WV03|35,371,971 | 196.27 | 161.52 | 0.82 |
-GE01| 57,498,000 | 332.97 | 181.06 | 0.54 |
 
 For background on the development and implementation of Classification Smoothing refer to the [ENVI Documentation](https://www.harrisgeospatial.com/docs/classificationtutorial.html)
 
