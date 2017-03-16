@@ -22,7 +22,7 @@
     task.inputs.roi_name = "[\"Water\", \"Land\"]"
     task.inputs.roi_color = "[[0,255,0],[0,0,255]]"
     task.inputs.threshold = "[[138,221,0],[222,306,0]]"
-    task.inputs.output_roi_uri_filename = "roi.xml"
+    task.inputs.output_roi_uri_filename = "roi"
 
     workflow = gbdx.Workflow([task])
     workflow.savedata(
