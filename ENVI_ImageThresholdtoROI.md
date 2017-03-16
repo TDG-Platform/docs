@@ -19,7 +19,6 @@
     task = gbdx.Task("ENVI_ImageThresholdToROI")
     #Edit the following path to reflect a specific path to an image
     task.inputs.input_raster = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
-    task.inputs.file_types = "tif"
     task.inputs.roi_name = "[\"Water\", \"Land\"]"
     task.inputs.roi_color = "[[0,255,0],[0,0,255]]"
     task.inputs.threshold = "[[138,221,0],[222,306,0]]"
@@ -92,7 +91,6 @@ To link the workflow of 1 input image into AOP_Strip_Processor and the Image Thr
 
     task = gbdx.Task("ENVI_ImageThresholdToROI")
     task.inputs.input_raster = aoptask.outputs.data.value
-    task.inputs.file_types = "tif"
     task.inputs.roi_name = "[\"Water\", \"Land\"]"
     task.inputs.roi_color = "[[0,255,0],[0,0,255]]"
     task.inputs.threshold = "[[138,221,0],[222,306,0]]"
