@@ -117,5 +117,5 @@ Your smoothed classification file will be written to the specified S3 Customer L
 For background on the development and implementation of Classification Aggregation refer to the [ENVI Documentation](https://www.harrisgeospatial.com/docs/classificationtutorial.html)
 
 
-###Contact Us
+### Contact Us
 Document Owner - [Kathleen Johnson](kajohnso@digitalglobe.com)
