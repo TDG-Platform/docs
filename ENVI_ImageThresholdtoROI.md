@@ -76,7 +76,7 @@ WV02|35,872,942|329.87|167.47	|0.51
 WV03|35,371,971|175.47	|0.89 |.89
 GE| 57,498,000|162.43	|0.49 |0.49
 
-###Advanced
+### Advanced
 
 To link the workflow of 1 input image into AOP_Strip_Processor and the Image Threshold to ROI task, use the following GBDX tools script in python.
 
@@ -116,4 +116,4 @@ Your Processed ROI file will be written to the specified S3 Customer Location in
 For background on the development and implementation of Spectral Index refer to the [ENVI Documentation](https://www.harrisgeospatial.com/docs/enviimagethresholdtoroitask.html)
 
 ###Contact Us
-Document Owner - Carl Reeder - creeder@digitalglobe.com
+Document Owner - [Kathleen Johnson](#kathleen.johnson@digitalglobe.com)
