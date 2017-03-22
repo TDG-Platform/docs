@@ -8,7 +8,6 @@ This task requires a classification has been run as in the example workflow belo
  * [Quickstart](#quickstart) - Get started!
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and example contents.
- * [Advanced](#advanced) - Additional information for advanced users.
  * [Runtime](#runtime) - Example estimate of task runtime.
  * [Contact Us](#contact-us)
 
@@ -59,12 +58,15 @@ print workflow.execute()
 This task will function on an ENVI classification raster dataset.  
 The following table lists the inputs for ENVI_ClassificationClumping task:
 
-Name                     |       Default         |        Valid Values             |   Description
--------------------------|:---------------------:|---------------------------------|-----------------
-input_raster             |          N/A          | S3 URL   .hdr, .TIF             | S3 location of input data specify an ENVI classification raster output on which to perform classification clumping
-dilate_kernel              |         3 X 3         | string                          | Specify 2D array of zeros and ones that represents the structuring element (kernel) used for a dilate operation.Dilation is a morphological operation that uses a structuring element to expand the shapes contained in the input image
-erode_kernel               |         3 X 3         | string                          | Specify 2D array of zeros and ones that represents the structuring element (kernel) used for an erode operation
-class_order                |     first to last     | string                          | Specify the order of class names in which sieving is applied to the classification image.
+Name       | Required     |       Default         |        Valid Values             |   Description
+-----------|--------------|:---------------------:|---------------------------------|-----------------
+input_raster   | True          |          N/A          | S3 URL   .hdr, .TIF             | S3 location of input data specify an ENVI classification raster output on which to perform classification clumping
+input_raster_format  |	False  |       N/A   |	string  |	A string for selecting the raster format (non-DG format). Please refer to Supported Datasets table below for a list of valid values for currently supported image data products.
+input_raster_band_grouping    |	False  |    N/A	|   string   |	A string name indentify which band grouping to use for the task.
+input_raster_filename    |  False   |   N/A    | string   |  Provide the explicit relative raster filename that ENVI will open. This overrides any file lookup in the task runner.
+dilate_kernel    | True          |         3 X 3         | string                          | Specify 2D array of zeros and ones that represents the structuring element (kernel) used for a dilate operation.Dilation is a morphological operation that uses a structuring element to expand the shapes contained in the input image
+erode_kernel    | True           |         3 X 3         | string                          | Specify 2D array of zeros and ones that represents the structuring element (kernel) used for an erode operation
+class_order     | False           |     first to last     | string                          | Specify the order of class names in which sieving is applied to the classification image.
 
 ### Outputs
 
