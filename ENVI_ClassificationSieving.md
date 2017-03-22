@@ -7,6 +7,7 @@
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and example contents.
  * [Runtime](#runtime) - Example estimate of task runtime.
+ * [Contact Us](#contact-us)
 
  ### Quickstart
 **Example Script:** Run in IPython using the GBDXTools Interface
@@ -84,5 +85,8 @@ GE| 57,498,000|332.97|171.95 | 0.52
 
 Your processed classification file will be written to the specified S3 Customer Location in the ENVI .hdr file format and tif format(e.g.  s3://gbd-customer-data/unique customer id/named directory/output.hdr).  
 
-
 For background on the development and implementation of Classification Sieving refer to the [ENVI Documentation](https://www.harrisgeospatial.com/docs/sievingclasses.html)
+
+
+### Contact Us
+Document Owner - [Kathleen Johnson](kajohnso@digitalglobe.com)
