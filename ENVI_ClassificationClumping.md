@@ -12,7 +12,7 @@ This task requires a classification has been run as in the example workflow belo
  * [Contact Us](#contact-us)
 
 ### Quickstart
-*Example Script:* Run in IPython using the GBDXTools Interface
+*Example Script:* Run in IPython using the gbdxtools Interface
 
 ```python
 # Quickstart **Example Script Run in Python using the gbdxTools Interface
@@ -82,7 +82,7 @@ This task will function on an ENVI classification raster located in the S3 locat
 
 **Data Structure for Expected Outputs:**
 
-Your post-classification file will be written to the specified S3 Customer Location in the ENVI .hdr file format and tif format(e.g.  s3://gbd-customer-data/unique customer id/named directory/output.hdr).  
+Your post-classification file will be written to the specified S3 Customer Location in the ENVI .hdr file format and tif format (e.g.  s3://gbd-customer-data/unique customer id/named directory/output.hdr).  
 
 ### Runtime
 
