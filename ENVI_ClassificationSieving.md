@@ -50,9 +50,9 @@ input_raster     |    True        |          N/A          | S3 URL   ENVI .hdr o
 input_raster_format  |	False  |       N/A   |	string  |	A string for selecting the raster format (non-DG format). Please refer to Supported Datasets table below for a list of valid values for currently supported image data products.
 input_raster_band_grouping    |	False  |    N/A	|   string   |	A string name indentify which band grouping to use for the task.
 input_raster_filename    |  False   |   N/A    | string   |  Provide the explicit relative raster filename that ENVI will open. This overrides any file lookup in the task runner.
-minimum_size    | False           |         3 X 3         | string                          | Specify the minimum size of a blob to keep. If a minimum size is not defined, the minimum size will be set to two
-pixel_connectivity  |     False       |   The default is 8    | string                          | Specify 4 (four-neighbor) or 8 (eight-neighbor) regions around a pixel are searched, for continuous blobs.
-class_order     | False           |     first to last     | string                          | Specify the order of class names in which sieving is applied to the classification image.
+minimum_size    | False           |         3 X 3         | string             | Specify the minimum size of a blob to keep. If a minimum size is not defined, the minimum size will be set to two
+pixel_connectivity  |     False       |   The default is 8    | string              | Specify 4 (four-neighbor) or 8 (eight-neighbor) regions around a pixel are searched, for continuous blobs.
+class_order     | False           |     first to last     | string                 | Specify the order of class names in which sieving is applied to the classification image.
 
 
 
@@ -64,7 +64,7 @@ Name                | Required |   Description
 --------------------|:--------:|-----------------
 output_raster_uri   |  True    | Specify a string with the fully-qualified path and file name for OUTPUT_RASTER.
 task_meta_data          |  False          | Output location for task meta data such as execution log and output JSON
-output_raster_uri_filename |     False    | Folder name in S3 location with the specified file name
+output_raster_uri_filename |     False    | Specify filename in S3 output location
 
 
 ### Runtime
