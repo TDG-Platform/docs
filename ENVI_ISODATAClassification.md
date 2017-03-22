@@ -122,4 +122,5 @@ This script links the [Advanced Image Preprocessor](https://github.com/TDG-Platf
 
 
 ###Contact Us
-Document Owner - Carl Reeder - creeder@digitalglobe.com
+
+Document Owner - [Kathleen Johnson](#kathleen.johnson@digitalglobe.com)
