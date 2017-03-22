@@ -134,4 +134,4 @@ For background on the development and implementation of this task see [here](htt
 
 
 ### Contact
-Document Owner - [Kathleen Johnson](#kathleen.johnson@digitalglobe.com
+Document Owner - [Kathleen Johnson](#kathleen.johnson@digitalglobe.com)
