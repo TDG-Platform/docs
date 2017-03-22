@@ -6,7 +6,6 @@
  * [Quickstart](#quickstart) - Get started!
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and example contents.
- * [Advanced](#advanced) - Additional information for advanced users.
  * [Runtime](#runtime) - Example estimate of task runtime.
 
  ### Quickstart
@@ -19,11 +18,9 @@ gbdx = Interface()
 isodata = gbdx.Task("ENVI_ISODATAClassification")
 #Edit the following path to reflect a specific path to an image
 isodata.inputs.input_raster = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
-isodata.inputs.file_types = "tif"
 
 sieve = gbdx.Task("ENVI_ClassificationSieving")
 sieve.inputs.input_raster = isodata.outputs.output_raster_uri.value
-sieve.inputs.file_types = "hdr"
 
 workflow = gbdx.Workflow([isodata, sieve])
 #Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
@@ -47,9 +44,13 @@ This task will function on a classification image located in the S3 location.  T
 
 All inputs are **required**
 
-Name                     |       Default         |        Valid Values             |   Description
--------------------------|:---------------------:|---------------------------------|-----------------
-input_raster             |          N/A          | S3 URL   ENVI .hdr only         | S3 location of input data specify a raster on which to perform classification sieving
+Name        | Required             |       Default         |        Valid Values             |   Description
+---------------|:----------|:---------------------:|---------------------------------|-----------------
+input_raster     |    True        |          N/A          | S3 URL   ENVI .hdr only         | S3 location of input data specify a raster on which to perform classification sieving
+minimum_size    | False           |         3 X 3         | string                          | Specify the minimum size of a blob to keep. If a minimum size is not defined, the minimum size will be set to two
+pixel_connectivity  |     False       |   The default is 8    | string                          | Specify 4 (four-neighbor) or 8 (eight-neighbor) regions around a pixel are searched, for continuous blobs.
+class_order     | False           |     first to last     | string                          | Specify the order of class names in which sieving is applied to the classification image.
+output_raster_uri_filename |     False     |    output         | Folder name in S3 location     | Specify the file name
 
 
 ### Outputs
@@ -58,19 +59,15 @@ The following table lists the Sieving task outputs.
 
 Name                | Required |   Description
 --------------------|:--------:|-----------------
-output_raster_uri   |     Y    | Specify a string with the fully-qualified path and file name for OUTPUT_RASTER.
+output_raster_uri   |  True    | Specify a string with the fully-qualified path and file name for OUTPUT_RASTER.
+task_meta_data          |  False          | Output location for task meta data such as execution log and output JSON
 
 
 **OPTIONAL SETTINGS AND DEFINITIONS:**
 
 Name                       |       Default         |        Valid Values             |   Description
 ---------------------------|:---------------------:|---------------------------------|-----------------
-file_types                 |          N/A          | string                          | Comma separated list of permitted file type extensions. Use this to filter input files
-minimum_size               |         3 X 3         | string                          | Specify the minimum size of a blob to keep. If a minimum size is not defined, the minimum size will be set to two
-pixel_connectivity         |   The default is 8    | string                          | Specify 4 (four-neighbor) or 8 (eight-neighbor) regions around a pixel are searched, for continuous blobs.
-class_order                |     first to last     | string                          | Specify the order of class names in which sieving is applied to the classification image.
-task_meta_data             |          N/A          | string                          | Output location for task meta data such as execution log and output JSON
-output_raster_uri_filename |         output         | Folder name in S3 location     | Specify the file name
+
 
 
 ### Runtime
