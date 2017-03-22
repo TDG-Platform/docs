@@ -61,6 +61,7 @@ export_class_clrs|False|None|see Description |Set this property to export CLASS_
 export_classes|False|None| Must be identical to the classification .hdr file class names|Specify a string array with class names to export to the shapefile. -- Value Type: STRING To edit names of the classes you may manually edit the names in the .hdr output, or use a software package to edit the attribute names.
 export_area|False|None| see Description|Set this property to export AREA as a shapefile attribute for each polygon. The options are true (default) or false. -- Value Type: BOOL
 output_vector_uri_filename|False|None| string name e.g. "classificationShape"|OUTPUT_VECTOR. -- Value Type: ENVIURI
+ignore_validate      |    False   |   N/A     |     1        |Set this property to a value of 1 to run the task, even if validation of properties fails. This is an advanced option for users who want to first set all task properties before validating whether they meet the required criteria. This property is not set by default, which means that an exception will occur if any property does not meet the required criteria for successful execution of the task.
 
 ### Outputs
 The following table lists all taskname outputs.
