@@ -10,7 +10,7 @@
  * [Contact Us](#contact-us)
 
  ### Quickstart
-**Example Script:** Run in IPython using the GBDXTools Interface
+**Example Script:** Run in IPython using the gbdxtools Interface
 
 ```python
 from gbdxtools import Interface
@@ -41,7 +41,7 @@ print workflow.execute()
 
 ### Inputs
 **Description of Input Parameters and Options for "ENVI_ClassificationSieving":**
-This task will function on a classification image located in the S3 location.  The file type input of the classification is preferred in the .hdr format.  An example of ENVI ISO Data Classification is provided in the sample script above. Additional options include:
+This task will function on a classification image located in the S3 location.  The file type input of the classification is preferred in the .hdr format.  An example of ENVI ISOData Classification is provided in the sample script above. Additional options include:
 
 All inputs are **required**
 
@@ -54,8 +54,6 @@ input_raster_filename    |  False   |   N/A    | string   |  Provide the explici
 minimum_size    | False           |         3 X 3         | string             | Specify the minimum size of a blob to keep. If a minimum size is not defined, the minimum size will be set to two
 pixel_connectivity  |     False       |   The default is 8    | string              | Specify 4 (four-neighbor) or 8 (eight-neighbor) regions around a pixel are searched, for continuous blobs.
 class_order     | False           |     first to last     | string                 | Specify the order of class names in which sieving is applied to the classification image.
-
-
 
 ### Outputs
 
