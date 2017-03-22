@@ -63,13 +63,6 @@ output_raster_uri   |  True    | Specify a string with the fully-qualified path 
 task_meta_data          |  False          | Output location for task meta data such as execution log and output JSON
 
 
-**OPTIONAL SETTINGS AND DEFINITIONS:**
-
-Name                       |       Default         |        Valid Values             |   Description
----------------------------|:---------------------:|---------------------------------|-----------------
-
-
-
 ### Runtime
 
 The following table lists all applicable runtime outputs. (This section will be completed the Algorithm Curation team)
