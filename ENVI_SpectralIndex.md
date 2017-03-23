@@ -1,4 +1,4 @@
-# ENVI_SpectralIndex
+# ENVI SpectralIndex
 
 ENVI_SpectralIndex. This task creates a spectral index raster from one pre-defined spectral index. Spectral indices are combinations of surface reflectance at two or more wavelengths that indicate relative abundance of features of interest. This task is used to compute a single index on a combination of multi spectral bands within an image. This task can be used to compute indices such as the Normalized Difference Vegetation Index (NDVI). An index such as NDVI will be passed into the task and a single band raster with the results of the index will be returned as output.
 
@@ -40,15 +40,15 @@ print workflow.status
 ### Inputs
 The following table lists all inputs for this task. For details regarding the use of all ENVI input types refer to the [ENVI Task Runner Inputs]([See ENVIRASTER input type](https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner_Inputs.md)) documentation.
 
-| Name                       | Required | Default | Valid Values                             | Description                              |
-| -------------------------- | :------: | :-----: | ---------------------------------------- | ---------------------------------------- |
-| file_types                 |  False   |  None   | string                                   | GBDX Option. Comma separated list of permitted file type extensions. Use this to filter input files -- Value Type: STRING |
-| input_raster               |   True   |  None   | A valid S3 URL containing image files.   | Specify a raster from which to run the task. -- Value Type: ENVIRASTER |
+| Name                       | Required | Default |               Valid Values               | Description                              |
+| -------------------------- | :------: | :-----: | :--------------------------------------: | ---------------------------------------- |
+| file_types                 |  False   |  None   |                  string                  | GBDX Option. Comma separated list of permitted file type extensions. Use this to filter input files -- Value Type: STRING |
+| input_raster               |   True   |  None   |  A valid S3 URL containing image files.  | Specify a raster from which to run the task. -- Value Type: ENVIRASTER |
 | input_raster_format        |  False   |  None   | [See ENVIRASTER input type](https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner_Inputs.md) | Provide the format of the image, for example: landsat-8. -- Value Type: STRING |
 | input_raster_band_grouping |  False   |  None   | [See ENVIRASTER input type](https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner_Inputs.md) | Provide the name of the band grouping to be used in the task, ie - panchromatic. -- Value Type: STRING |
 | input_raster_filename      |  False   |  None   | [See ENVIRASTER input type](https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner_Inputs.md) | Provide the explicit relative raster filename that ENVI will open. This overrides any file lookup in the task runner. -- Value Type: STRING |
-| index                      |   True   |  None   | string                                   | Specify a string, or array of strings, representing the pre-defined spectral indices to apply to the input raster. -- Value Type: STRING |
-| output_raster_uri_filename |  False   |  None   | string                                   | Specify a string with the fully-qualified path and filename for OUTPUT_RASTER. -- Value Type: STRING |
+| index                      |   True   |  None   |                  string                  | Specify a string, or array of strings, representing the pre-defined spectral indices to apply to the input raster. -- Value Type: STRING |
+| output_raster_uri_filename |  False   |  None   |                  string                  | Specify a string with the fully-qualified path and filename for OUTPUT_RASTER. -- Value Type: STRING |
 
 ### Outputs
 
