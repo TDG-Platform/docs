@@ -1,4 +1,4 @@
-# ENVI SpectralIndex
+# ENVI Spectral Index
 
 ENVI_SpectralIndex. This task creates a spectral index raster from one pre-defined spectral index. Spectral indices are combinations of surface reflectance at two or more wavelengths that indicate relative abundance of features of interest. This task is used to compute a single index on a combination of multi spectral bands within an image. This task can be used to compute indices such as the Normalized Difference Vegetation Index (NDVI). An index such as NDVI will be passed into the task and a single band raster with the results of the index will be returned as output.
 
@@ -52,7 +52,7 @@ The following table lists all inputs for this task. For details regarding the us
 
 ### Outputs
 
-The following table lists the Spectral Index task outputs.
+The following table lists all the tasks outputs.
 
 | Name              | Required | Description                              |
 | ----------------- | :------: | ---------------------------------------- |

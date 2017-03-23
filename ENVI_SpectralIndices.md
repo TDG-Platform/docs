@@ -1,4 +1,4 @@
-# ENVI SpectralIndices
+# ENVI Spectral Indices
 
 ### Description
 This task creates a spectral index raster with one or more bands, where each band represents a different spectral index. Spectral indices are combinations of surface reflectance at two or more wavelengths that indicate relative abundance of features of interest.
@@ -56,7 +56,7 @@ The following table lists all inputs for this task. For details regarding the us
 ### 
 
 ### Outputs
-The following table lists the Spectral Index task outputs.
+The following table lists all the tasks outputs.
 
 | Name              | Required | Description                              |
 | ----------------- | :------: | ---------------------------------------- |
@@ -71,7 +71,7 @@ The index image file will be written to the specified S3 Customer Account Locati
 
 ### Runtime
 
-The following table lists all applicable runtime outputs. (This section will be completed the Algorithm Curation team). For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
+The following table lists all applicable runtime outputs. (This section will be completed the Algorithm Curation team). For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here).
 
 | Sensor Name | Total Pixels  | Total Area (k2) | Time(secs) | Time/Area k2 |
 | ----------- | :-----------: | --------------- | ---------- | ------------ |
