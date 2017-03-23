@@ -63,7 +63,6 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 input_raster|True|None| requires two rasters to detect change, (input_raster1, input_raster2)|Specify two rasters on which to threshold. -- Value Type: ENVIRASTER
 increase_threshold|False|None|Threshold must match values within the input rasters|Specify the increase threshold to show areas of increase. -- Value Type: DOUBLE
 decrease_threshold|False|None|Threshold must match values within the input rasters|Specify the decrease threshold to show areas of decrease. -- Value Type: DOUBLE
-output_raster_uri_filename|False|None|Name e.g. "ChangeThresholdClassification" |Outputor OUTPUT_RASTER. -- Value Type: ENVIURI
 
 ### Outputs
 The following table lists all taskname outputs.
@@ -73,6 +72,8 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 --------|:----------:|-----------|----------------|---------------
 task_meta_data|False|None| |GBDX Option. Output location for task meta data such as execution log and output JSON
 output_raster_uri|True|None|s3 Location for output raster |Outputor OUTPUT_RASTER. -- Value Type: ENVIURI
+output_raster_uri_filename|False|None|Name e.g. "ChangeThresholdClassification" |Outputor OUTPUT_RASTER. -- Value Type: ENVIURI
+
 
 **Output structure**
 
