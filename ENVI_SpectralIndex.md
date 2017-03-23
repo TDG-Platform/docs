@@ -16,9 +16,6 @@ ENVI_SpectralIndex. This task creates a spectral index raster from one pre-defin
 This script gives the example of ENVI Spectral Index with a single tif file as input.
 
 ```python
-# Quickstart **Example Script Run in Python using the gbdxTools InterfaceExample producing a single band vegetation mask from a tif file.
-# First Initialize the Environment
-
 from gbdxtools import Interface
 gbdx = Interface()
 
