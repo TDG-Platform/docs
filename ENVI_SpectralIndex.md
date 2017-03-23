@@ -29,7 +29,7 @@ workflow = gbdx.Workflow([envi_ndvi])
 
 workflow.savedata(
    envi_ndvi.outputs.output_raster_uri,
-      location='NDVI/output_raster_uri' # edit location to suit account
+   location='NDVI/output_raster_uri' # edit location to suit account
 )
 
 print workflow.execute()
@@ -98,7 +98,6 @@ aoptask.inputs.bands = 'MS'
 envi_ndvi = gbdx.Task("ENVI_SpectralIndex")
 envi_ndvi.inputs.input_raster = aoptask.outputs.data.value
 envi_ndvi.inputs.index = "Normalized Difference Vegetation Index"
-envi_ndvi.inputs.input_raster_format = 'ikonos'
 
 workflow = gbdx.Workflow([aoptask, envi_ndvi])
 
