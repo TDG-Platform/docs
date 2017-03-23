@@ -9,8 +9,8 @@ This task can be run with Python using [gbdxtools](https://github.com/DigitalGlo
  * [Quickstart](#quickstart) - Get started!
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and output structure.
- * [Advanced](#advanced) - Additional information for advanced users.
  * [Runtime](#runtime) - Example estimate of task runtime.
+ * [Advanced](#advanced) - Additional information for advanced users.
  * [Issues](#issues) - Current or past known issues.
  * [Background](#background) - Background information.
  * [Contact](#contact) - Contact information.
@@ -61,6 +61,9 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
   Name  |  Required  |  Default  |  Valid Values  |  Description  
 --------|:----------:|-----------|----------------|---------------
 input_raster|True|None| requires two rasters to detect change, (input_raster1, input_raster2)|Specify two rasters on which to threshold. -- Value Type: ENVIRASTER
+input_raster_format  |	False  |       N/A   |	string  |	A string for selecting the raster format (non-DG format). Please refer to Supported Datasets table below for a list of valid values for currently supported image data products.
+input_raster_band_grouping    |	False  |    N/A	|   string   |	A string name indentify which band grouping to use for the task.
+input_raster_filename    |  False   |   N/A    | string   |  Provide the explicit relative raster filename that ENVI will open. This overrides any file lookup in the task runner.
 increase_threshold|False|None|Threshold must match values within the input rasters|Specify the increase threshold to show areas of increase. -- Value Type: DOUBLE
 decrease_threshold|False|None|Threshold must match values within the input rasters|Specify the decrease threshold to show areas of decrease. -- Value Type: DOUBLE
 
