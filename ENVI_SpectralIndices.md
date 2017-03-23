@@ -6,14 +6,13 @@ This task creates a spectral index raster with one or more bands, where each ban
 This task can be run with Python using [gbdxtools](https://github.com/DigitalGlobe/gbdxtools) or through the [GBDX Web Application](https://gbdx.geobigdata.io/materials/)
 
 ### Table of Contents
- * [Quickstart](#quickstart) - Get started!
- * [Inputs](#inputs) - Required and optional task inputs.
- * [Outputs](#outputs) - Task outputs and output structure.
- * [Advanced](#advanced) - Additional information for advanced users.
- * [Runtime](#runtime) - Example estimate of task runtime.
- * [Issues](#issues) - Current or past known issues.
- * [Background](#background) - Background information.
- * [Contact](#contact) - Contact information.
+
+- [Quickstart](#quickstart) - Get started!
+- [Inputs](#inputs) - Required and optional task inputs.
+- [Outputs](#outputs) - Task outputs and example contents.
+- [Runtime](#runtime) - Example estimate of task runtime.
+- [Advanced](#advanced) - Additional information for advanced users.
+- [Contact Us](#contact-us) - Contact tech or document owner.
 
 ### Quickstart
 Quick start example.
@@ -55,20 +54,20 @@ wf_id = workflow.id
 The following table lists all taskname inputs.
 Mandatory (optional) settings are listed as Required = True (Required = False). For details regarding the use of input ports refer to the [ENVI Task Runner](https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner.md) documentation.
 
-  Name  |  Required  |  Default  |  Valid Values  |  Description  
---------|:----------:|-----------|----------------|---------------
-input_raster    |  True |       N/A          | S3 URL   .TIF and .hdr only     | S3 location of input .tif file processed through AOP_Strip_Processor.
-index     |    True |     N/A          |     string of index name        | Specify a string, or array of strings, representing the pre-defined spectral indices to apply to the input raster.
-input_raster_band_grouping| False |N/A                  | Sensor Specific [See input port documentation](https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner.md#ENVIRPCRasterSpatialRef) | Specify band group e.g. "multispectral".  input_raster_band_grouping "panchromatic" will not function in the Spectral Index task.
-output_raster_uri_filename | N/A | string name for output e.g. "NDVI" | output raster file name
+| Name                       | Required | Default                            | Valid Values                             | Description                              |
+| -------------------------- | :------: | ---------------------------------- | ---------------------------------------- | ---------------------------------------- |
+| input_raster               |   True   | N/A                                | S3 URL   .TIF and .hdr only              | S3 location of input .tif file processed through AOP_Strip_Processor. |
+| index                      |   True   | N/A                                | string of index name                     | Specify a string, or array of strings, representing the pre-defined spectral indices to apply to the input raster. |
+| input_raster_band_grouping |  False   | N/A                                | Sensor Specific [See input port documentation](https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner.md#ENVIRPCRasterSpatialRef) | Specify band group e.g. "multispectral".  input_raster_band_grouping "panchromatic" will not function in the Spectral Index task. |
+| output_raster_uri_filename |   N/A    | string name for output e.g. "NDVI" | output raster file name                  |                                          |
 ### Outputs
 The following table lists all taskname outputs.
 Mandatory (optional) settings are listed as Required = True (Required = False).
 
-  Name  |  Required  |  Default  |  Valid Values  |  Description  
---------|:----------:|-----------|----------------|---------------
-task_meta_data|False|None|.log |GBDX Option. Output location for task meta data such as execution log and output JSON
-output_raster_uri|True|None|.TIF |Outputor OUTPUT_RASTER. -- Value Type: ENVIURI
+| Name              | Required | Default | Valid Values | Description                              |
+| ----------------- | :------: | ------- | ------------ | ---------------------------------------- |
+| task_meta_data    |  False   | None    | .log         | GBDX Option. Output location for task meta data such as execution log and output JSON |
+| output_raster_uri |   True   | None    | .TIF         | Outputor OUTPUT_RASTER. -- Value Type: ENVIURI |
 
 **Output structure**
 
@@ -120,13 +119,13 @@ workflow.status
 The following table lists all applicable runtime outputs. (This section will be completed the Algorithm Curation team)
 For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
 
-  Sensor Name  | Total Pixels |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
---------|:----------:|-----------|----------------|---------------
-QB | 41,551,668 | 312.07 | 184.23 | 0.59
-WV01| 1,028,100,320 |351.72 | NA| NA
-WV02|35,872,942|329.87| 215.81|0.65
-WV03|35,371,971|196.27| 247.30|1.26
-GE| 57,498,000|332.97|216.80 |0.65
+| Sensor Name | Total Pixels  | Total Area (k2) | Time(secs) | Time/Area k2 |
+| ----------- | :-----------: | --------------- | ---------- | ------------ |
+| QB          |  41,551,668   | 312.07          | 184.23     | 0.59         |
+| WV01        | 1,028,100,320 | 351.72          | NA         | NA           |
+| WV02        |  35,872,942   | 329.87          | 215.81     | 0.65         |
+| WV03        |  35,371,971   | 196.27          | 247.30     | 1.26         |
+| GE          |  57,498,000   | 332.97          | 216.80     | 0.65         |
 
 
 ### Issues
