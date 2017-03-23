@@ -67,7 +67,7 @@ The following table lists all the tasks outputs.
 
 ##### Output Structure
 
-The index image file will be written to the specified S3 Customer Account Location in GeoTiff (\*.tif) format, with an ENVI header file (\*.hdr).
+The output_raster image file will be written to the specified S3 Customer Account Location in GeoTiff (\*.tif) format, with an ENVI header file (\*.hdr).
 
 
 
