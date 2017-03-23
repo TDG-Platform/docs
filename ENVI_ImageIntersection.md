@@ -9,10 +9,9 @@ This task can be run with Python using [gbdxtools](https://github.com/DigitalGlo
  * [Quickstart](#quickstart) - Get started!
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and output structure.
- * [Advanced](#advanced) - Additional information for advanced users.
  * [Runtime](#runtime) - Example estimate of task runtime.
+ * [Advanced](#advanced) - Additional information for advanced users.
  * [Issues](#issues) - Current or past known issues.
- * [Background](#background) - Background information.
  * [Contact](#contact) - Contact information.
 
 ### Quickstart
@@ -60,13 +59,11 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 
   Name  |  Required  |  Default  |  Valid Values  |  Description  
 --------|:----------:|-----------|----------------|---------------
-file_types|False|None|.hdr, .tif |GBDX Option. Comma seperated list of permitted file type extensions. Use this to filter input files -- Value Type: STRING
 warping_method|False|Triangulation|"Polynomial", "Rigorous", "Triangulation" |Specify the warping method to use. -- Value Type: STRING -- Default Value: "Triangulation"
-output_raster2_uri_filename|False|None| |Outputor OUTPUT_RASTER2. -- Value Type: ENVIURI
 resampling|False|None|Nearest Neighbor, Bilinear, Cubic Convolution |Specify the resampling method.  Nearest Neighbor: Uses the nearest pixel without any interpolation.  Bilinear: Performs a linear interpolation using four pixels to resample, Cubic Convolution: Uses 16 pixels to approximate the sinc function using cubic polynomials to resample the image. -- Value Type: STRING -- Default Value: "Bilinear"
 input_raster1|True|None| |Specify a raster to use as the base for computing the intersection. -- Value Type: ENVIRASTER
 input_raster2|True|None| |Specify a second raster for computing the intersection. -- Value Type: ENVIRASTER
-output_raster1_uri_filename|False|None| |Output OUTPUT_RASTER1. -- Value Type: ENVIURI
+
 
 ### Outputs
 The following table lists all taskname outputs.
@@ -76,7 +73,9 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 --------|:----------:|-----------|----------------|---------------
 task_meta_data|False|None| |GBDX Option. Output location for task meta data such as execution log and output JSON
 output_raster2_uri|True|None| |Outputor OUTPUT_RASTER2. -- Value Type: ENVIURI
+output_raster2_uri_filename|False|None| |Outputor OUTPUT_RASTER2. -- Value Type: ENVIURI
 output_raster1_uri|True|None| |Outputor OUTPUT_RASTER1. -- Value Type: ENVIURI
+output_raster1_uri_filename|False|None| |Output OUTPUT_RASTER1. -- Value Type: ENVIURI
 
 **Output structure**
 
