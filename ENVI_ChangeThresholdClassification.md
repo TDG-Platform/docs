@@ -170,4 +170,4 @@ For background on the development and implementation of ENVI_ChangeThresholdClas
 
 
 ### Contact
-Document owner - Carl Reeder creeder@digitalglobe.com
+Document owner - [Kathleen Johnson](#kathleen.johnson@digitalglobe.com)
