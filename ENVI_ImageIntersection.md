@@ -62,11 +62,11 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 warping_method|False|Triangulation|"Polynomial", "Rigorous", "Triangulation" |Specify the warping method to use. -- Value Type: STRING -- Default Value: "Triangulation"
 resampling|False|None|Nearest Neighbor, Bilinear, Cubic Convolution |Specify the resampling method.  Nearest Neighbor: Uses the nearest pixel without any interpolation.  Bilinear: Performs a linear interpolation using four pixels to resample, Cubic Convolution: Uses 16 pixels to approximate the sinc function using cubic polynomials to resample the image. -- Value Type: STRING -- Default Value: "Bilinear"
 input_raster1|True|None| |Specify a raster to use as the base for computing the intersection. -- Value Type: ENVIRASTER
-input_raster1_format  |	False  |       N/A   |	string  |	A string for selecting the raster format (non-DG format). Please refer to Supported Datasets table below for a list of valid values for currently supported image data products.
+input_raster1_format  |	False  |       N/A   |	string  |	A string for selecting the format for raster1 (non-DG format). Please refer to Supported Datasets table below for a list of valid values for currently supported image data products.
 input_raster1_band_grouping    |	False  |    N/A	|   string   |	A string name indentify which band grouping to use for the task.
 input_raster1_filename    |  False   |   N/A    | string   |  Provide the explicit relative raster filename that ENVI will open. This overrides any file lookup in the task runner.
 input_raster2|True|None| |Specify a second raster for computing the intersection. -- Value Type: ENVIRASTER
-input_raste2r_format  |	False  |       N/A   |	string  |	A string for selecting the raster format (non-DG format). Please refer to Supported Datasets table below for a list of valid values for currently supported image data products.
+input_raster2_format  |	False  |       N/A   |	string  |	A string for selecting the format for raster 2 (non-DG format). Please refer to Supported Datasets table below for a list of valid values for currently supported image data products.
 input_raster2_band_grouping    |	False  |    N/A	|   string   |	A string name indentify which band grouping to use for the task.
 input_raster2_filename    |  False   |   N/A    | string   |  Provide the explicit relative raster filename that ENVI will open. This overrides any file lookup in the task runner.
 
