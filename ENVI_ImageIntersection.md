@@ -87,11 +87,7 @@ output_raster1_uri_filename|False|None| |Output OUTPUT_RASTER1. -- Value Type: E
 
 The output of this task will be two rasters (input_raster1 and input_raster2) rezised to the shared extent or overlap of the rasters.
 
-### Advanced
 
-```
-#python advanced script under development
-```
 ### Runtime
 
 The following table lists runtime outputs for applicable sensors.
@@ -105,6 +101,11 @@ WV02|638,471,053|1276.9| 407.27 | 0.32|
 WV03|260,999,184|391|383.55|0.98|
 GE| 350,236,670|577.8|697.86| 1.21|
 
+### Advanced
+
+```
+#python advanced script under development
+```
 
 ### Issues
 Currently the advanced options for the task and the task in the gbdx webapp are not available because of the requirement of multiple input parameters.
