@@ -119,8 +119,6 @@ print workflow.status
 ```
 
 
-### Issues
-Currently the advanced task in the Web App 2.0 will process an image with Normalized Difference Vegetation Index, WorldView Built-Up Index, WorldView Non-Homogeneous Feature Difference, WorldView Water Index, WorldView Soil Index (Aug 8th, 2016). However, custom workflows with gbdxtools may include any of the indices compatible with the task (see link in Advanced section)
 
 ### Background
 

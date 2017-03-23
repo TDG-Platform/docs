@@ -50,12 +50,10 @@ The following table lists all inputs for this task. For details regarding the us
 | suppress_vegetation        |  False   |  False   |                True/False                | Set this property to true to suppress vegetation anomalies in the RXD results. The options are true or false (default). -- Value Type: BOOL |
 | mean_calculation_method    |  False   | 'Global' |            'Global', 'Local'             | Specify one of the values from the CHOICE_LIST, indicating which mean calculation method to use.  Global: Derive the mean spectrum from the full dataset, Local: Derive the mean spectrum from the KERNEL_SIZE around a given pixel.  -- Value Type: STRING |
 | anomaly_detection_method   |  False   |  'RXD'   |         'RXD', 'UTD', 'RXD-UTD'          | Specify one of the values from the CHOICE_LIST, indicating which method to use. RXD: Standard RXD algorithm, UTD: Uniform Target Detector algorithm, RXD-UTD: Hybrid of the RXD and UTD algorithms. -- Value Type: STRING |
-| kernel_size                |  False   |   '9'    |                                          | Specify the kernel size in pixels, around a given pixel that will be used to create a mean spectrum.  Use an odd number. The minimum value is 3, and the maximum value is (number of columns - 1) less than (number of rows - 1).  Specify KERNEL_SIZE only when using the 'Local' option for MEAN_CALCULATION_METHOD. -- Value Type: UINT |
+| kernel_size                |  False   |   '9'    |                  string                  | Specify the kernel size in pixels, around a given pixel that will be used to create a mean spectrum.  Use an odd number. The minimum value is 3, and the maximum value is (number of columns - 1) less than (number of rows - 1).  Specify KERNEL_SIZE only when using the 'Local' option for MEAN_CALCULATION_METHOD. -- Value Type: UINT |
 | output_raster_uri_filename |  False   |   None   |                  string                  | Specify a string with the fully-qualified path and filename for OUTPUT_RASTER. -- Value Type: STRING |
 
 ### 
-
-
 
 
 ### Outputs
@@ -89,7 +87,37 @@ For details on the methods of testing the runtimes of the task visit the followi
 
 ### Advanced
 
-Advanced examples for this task are under development...
+Workflow example from AOP to ENVI's RX Anomaly Detection task.
+
+```python
+from gbdxtools import Interface
+gbdx = Interface()
+
+# Edit the following path to reflect a specific path to an image
+data = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
+
+aoptask = gbdx.Task("AOP_Strip_Processor") 
+aoptask.inputs.data = data
+aoptask.inputs.enable_dra = False
+aoptask.inputs.bands = 'MS'
+
+envi = gbdx.Task("ENVI_RXAnomalyDetection")
+envi.inputs.input_raster = aop2task.outputs.data.value
+envi.inputs.mean_calculation_method = 'Local'
+envi.inputs.kernel_size = '15'
+envi.inputs.anomaly_detection_method = 'RXD-UTD'
+
+workflow = gbdx.Workflow([aoptask, envi])
+
+workflow.savedata(
+    envi.outputs.output_raster_uri,
+    location='AOP_ENVI_SIS/output_raster_uri'
+)
+
+print workflow.execute()
+print workflow.status
+# Repeat workflow.status as needed to monitor progress.
+```
 
 
 
