@@ -9,10 +9,9 @@ This task can be run with Python using [gbdxtools](https://github.com/DigitalGlo
  * [Quickstart](#quickstart) - Get started!
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and output structure.
- * [Advanced](#advanced) - Additional information for advanced users.
  * [Runtime](#runtime) - Example estimate of task runtime.
+ * [Advanced](#advanced) - Additional information for advanced users.
  * [Issues](#issues) - Current or past known issues.
- * [Background](#background) - Background information.
  * [Contact](#contact) - Contact information.
 
 ### Quickstart
@@ -92,6 +91,15 @@ output_raster_uri_filename|False|None|Name e.g. "AutoChangeThresholdClassificati
 
 The output of the Change Threshold Classification task is a single band raster in both .hdr and .tif format.  Based on the thresholds selected for change (increase/decrease) the image will show increases in pixel values in blue, and decreases in red.
 
+### Runtime
+
+The following table lists all applicable runtime outputs. For this task two images were used to produce the runtime results
+For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GitHUB page here)
+
+  Sensor Name  | Total Pixels |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
+--------|:----------:|-----------|----------------|---------------
+WV02|73,005,420|292.02| 169.60| 0.58
+
 
 ### Advanced
 This task will take two multispectral images, which share geo-spatial extent, as input.  This example workflow includes the following ENVI tasks to prepare the images for the Change Threshold Classification task: Spectral Index, Image Intersection, and Image Band Difference.  Input rasters for the Change Threshold Classification task may be any  set of 1 band rasters sharing the same extent, spatial reference and pixel value format (e.g. Normalized Difference Vegetation Index)
@@ -157,14 +165,6 @@ status = workflow.status["state"]
 wf_id = workflow.id
 
 ```
-### Runtime
-
-The following table lists all applicable runtime outputs. For this task two images were used to produce the runtime results
-For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GitHUB page here)
-
-  Sensor Name  | Total Pixels |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
---------|:----------:|-----------|----------------|---------------
-WV02|73,005,420|292.02| 169.60| 0.58
 
 ### Issues
 Input rasters for the ENVI_AutoChangeThresholdClassification task will require pre-processing to fit specific input requirements.  Auto threshold may also require experimentation and iteration to find an acceptable threshold method (e.g. Kapur may not be the ideal method for a given raster dataset)
