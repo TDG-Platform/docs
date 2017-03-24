@@ -7,10 +7,9 @@ This task can be run with Python using [gbdxtools](https://github.com/DigitalGlo
  * [Quickstart](#quickstart) - Get started!
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and output structure.
- * [Advanced](#advanced) - Additional information for advanced users.
  * [Runtime](#runtime) - Example estimate of task runtime.
+ * [Advanced](#advanced) - Additional information for advanced users.
  * [Issues](#issues) - Current or past known issues.
- * [Background](#background) - Background information.
  * [Contact](#contact) - Contact information.
 
 ### Quickstart
@@ -46,6 +45,7 @@ workflow.status
 ```
 
 ### Inputs
+
 The following table lists all taskname inputs.
 Mandatory (optional) settings are listed as Required = True (Required = False). For more information on ENVI specific inputs [see ENVI Task Runner Inputs](https://gbdxdocs.digitalglobe.com/docs/envi-task-runner-inputs)
 
@@ -63,6 +63,7 @@ input_raster2_filename|False|None| [More on ENVIRASTER input port](https://gbdxd
 output_raster_uri_filename|False|None| output_raster |Specify a string with the fully-qualified path and filename for OUTPUT_RASTER. -- Value Type: STRING
 
 ### Outputs
+
 The following table lists all taskname outputs.
 Mandatory (optional) settings are listed as Required = True (Required = False).
 
@@ -74,6 +75,15 @@ output_raster_uri|True|None| Output for OUTPUT_RASTER. -- Value Type: ENVIURI
 **Output structure**
 
 The output of this task is a single band raster of the difference between the two input raster datasets, in both ENVI standard format (including header file) and .tif format.
+
+### Runtime
+
+The following table lists all applicable runtime outputs. (This section will be completed the Algorithm Curation team)
+For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
+
+  Sensor Name  | Total Pixels| Total Area (k2)  |  Time(min)  |  Time/Area k2
+--------|:----------:|-----------|----------------|---------------
+WV02|73,005,420|292.02| 169.60| 0.74
 
 ### Advanced
 ```Python
@@ -133,16 +143,6 @@ workflow.execute()
 workflow.status
 ```
 
-
-### Runtime
-
-The following table lists all applicable runtime outputs. (This section will be completed the Algorithm Curation team)
-For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
-
-  Sensor Name  | Total Pixels| Total Area (k2)  |  Time(min)  |  Time/Area k2
---------|:----------:|-----------|----------------|---------------
-WV02|73,005,420|292.02| 169.60| 0.74
-
 ### Issues
 Processing of the images before running the task ENVI_ImageBandDifference may be required. Examples of image processing steps which may be useful prior to running this task are found in the advanced options.  
 
@@ -151,4 +151,4 @@ For background on the development and implementation of ENVI_ImageBandDifference
 
 
 ### Contact
-Document Owner - Carl Reeder - creeder@digitalglobe.com
+Document Owner - [Kathleen Johnson](kathleen.johnson@digitalglobe.com)
