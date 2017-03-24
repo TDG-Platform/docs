@@ -69,6 +69,14 @@ input_raster_filename    |  False   |   N/A    | string   |  Provide the explici
 change_type|False|Both|"Increase", "Decrease", "Both" |The type of change to consider for change of interest -- Value Type: STRING
 threshold_method|False|Otsu|"Otsu", "Tsai", "Kapur", "Kittler" |Specify the thresholding method. -- Value Type: STRING
 
+**Description of Auto Threshold Methods**
+
+Name      | Description
+----------|:---------------
+Otsu      | A histogram shape-based method that is based on discriminate analysis. It uses the zero- and first-order cumulative moments of the histogram for calculating the value of the thresholding level.
+Tsai      | A moment-based method. It determines the threshold so that the first three moments of the input image are preserved in the output image.
+Kapur     | An entropy-based method. It considers the thresholding image as two classes of events, with each class characterized by a Probability Density Function (PDF). The method then maximizes the sum of the entropy of the two PDFs to converge on a single threshold value.
+Kittler   | A histogram shape-based method. It approximates the histogram as a bimodal Gaussian distribution and finds a cutoff point. The cost function is based on the Bayes classification rule.
 
 ### Outputs
 The following table lists all taskname outputs.
