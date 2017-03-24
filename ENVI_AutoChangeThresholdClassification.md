@@ -28,13 +28,11 @@ NDVI1 = 's3://gbd-customer-data/CustomerAccount#/PathToImage1/'
 NDVI2 = 's3://gbd-customer-data/CustomerAccount#/PathToImage2/'
 
 envi_IBD = gbdx.Task("ENVI_ImageBandDifference")
-envi_IBD.inputs.file_types = "tif"
 envi_IBD.inputs.input_raster1 = NDVI1
 envi_IBD.inputs.input_raster2 = NDVI2
 
 envi_ACTC = gbdx.Task("ENVI_AutoChangeThresholdClassification")
 envi_ACTC.inputs.threshold_method = "Kapur"
-envi_ACTC.inputs.file_types = "tif"
 envi_ACTC.inputs.input_raster = envi_IBD.outputs.output_raster_uri.value
 
 
