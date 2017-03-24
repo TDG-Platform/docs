@@ -26,7 +26,7 @@ gbdx = Interface()
 data = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
 
 envi = gbdx.Task("ENVI_QuerySpectralIndices")
-envi.inputs.input_raster = aop2envi.outputs.output_data.value
+envi.inputs.input_raster = data
 
 workflow = gbdx.Workflow([envi])
 

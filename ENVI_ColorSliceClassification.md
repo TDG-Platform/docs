@@ -132,8 +132,8 @@ workflow.savedata(
 workflow.execute()
 
 print workflow.execute()
-print workflow.id
 print workflow.status
+# Repeat workflow.status as needed to monitor progress.
 ```
 
 **Sample Output:**
