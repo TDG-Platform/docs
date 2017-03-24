@@ -62,11 +62,13 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 
   Name  |  Required  |  Default  |  Valid Values  |  Description  
 --------|:----------:|-----------|----------------|---------------
-file_types|False|None| .hdr,.tif|GBDX Option. Comma separated list of permitted file type extensions. Use this to filter input files -- Value Type: STRING
 input_raster|True|None| Requires two rasters to detect change, (input_raster1, input_raster2)|Specify two rasters on which to threshold. -- Value Type: ENVIRASTER
+input_raster_format  |	False  |       N/A   |	string  |	A string for selecting the raster format (non-DG format). Please refer to Supported Datasets table below for a list of valid values for currently supported image data products.
+input_raster_band_grouping    |	False  |    N/A	|   string   |	A string name indentify which band grouping to use for the task.
+input_raster_filename    |  False   |   N/A    | string   |  Provide the explicit relative raster filename that ENVI will open. This overrides any file lookup in the task runner.
 change_type|False|Both|"Increase", "Decrease", "Both" |The type of change to consider for change of interest -- Value Type: STRING
 threshold_method|False|Otsu|"Otsu", "Tsai", "Kapur", "Kittler" |Specify the thresholding method. -- Value Type: STRING
-output_raster_uri_filename|False|None|Name e.g. "AutoChangeThresholdClassification_Kapur" |Outputor OUTPUT_RASTER. -- Value Type: ENVIURI
+
 
 ### Outputs
 The following table lists all taskname outputs.
@@ -76,6 +78,7 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 --------|:----------:|-----------|----------------|---------------
 task_meta_data|False|None| |GBDX Option. Output location for task meta data such as execution log and output JSON
 output_raster_uri|True|None|s3 Location for output raster |Outputor OUTPUT_RASTER. -- Value Type: ENVIURI
+output_raster_uri_filename|False|None|Name e.g. "AutoChangeThresholdClassification_Kapur" |Outputor OUTPUT_RASTER. -- Value Type: ENVIURI
 
 **Output structure**
 
