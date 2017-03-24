@@ -59,7 +59,7 @@ The following table lists all inputs for this task. For details regarding the us
 | class_colors               |  False   | None    | i.e. - '[[255,0,0], [0,0,200], [0,200,0]]' | Specify a (3,n) byte array with the RGB colors for the given ranges, where n is the number of classes.  Use this property in conjunction with CLASS_RANGES. -- Value Type: BYTE[3, *] |
 | reverse_color_table        |  False   | None    | True/False                               | Set this property to reverse the color table.  Use this property in conjunction with COLOR_TABLE_NAME property. The options are true or false. -- Value Type: BOOL |
 | data_maximum               |  False   | None    | Varies depending on raster values        | Specify the maximum value used to calculate data ranges with NUMBER_OF_RANGES.  If this is not set, then the largest value in the INPUT_RASTER band is used. -- Value Type: DOUBLE |
-| class_ranges               |  False   | None    | i.e. - [[min_0, max)0], …, [min_n, max_n]] | Specify a (2,n) array of color slice ranges, where n is the number of classes.  In each array element, specify the minimum and maximum data value for the class. -- Value Type: DOUBLE |
+| class_ranges               |  False   | None    | i.e. - '[[min_0, max)0], …, [min_n, max_n]]' | Specify a (2,n) array of color slice ranges, where n is the number of classes.  In each array element, specify the minimum and maximum data value for the class. -- Value Type: DOUBLE |
 | range_size                 |  False   | None    | string                                   | Specify the width of each data range to create.  The NUMBER_OF_RANGES is used in conjunction with RANGE_SIZE.  Any data above DATA_MINIMUM+NUMBER_OF_RANGES*RANGE_SIZE will not be classified.  -- Value Type: DOUBLE |
 | data_minimum               |  False   | None    | Varies depending on raster values        | Specify the minimum value used to calculate data ranges with NUMBER_OF_RANGES or RANGE_SIZE.  If this is not set, then the smallest value in the INPUT_RASTER band is used. -- Value Type: DOUBLE |
 | number_of_ranges           |  False   | None    | dependent on minimum and maximum         | Specify the number of data ranges to create.  If RANGE_SIZE is specified, then the ranges are each that width, starting at DATA_MINIMUM and ending at DATA_MINIMUM+NUMBER_OF_RANGES*RANGE_SIZE.  If RANGE_SIZE is not specified, then the ranges are equal width between DATA_MINIMUM and DATA_MAXIMUM. -- Value Type: UINT |
@@ -119,13 +119,14 @@ envi_ndvi.inputs.index = "Normalized Difference Vegetation Index"
 
 envi_color = gbdx.Task('ENVI_ColorSliceClassification') 
 envi_color.inputs.input_raster = envi_ndvi.outputs.output_raster_uri.value
-# TODO add more optional inputs...
+envi_color.inputs.color_table_name = 'CB-RdYlGn'
+envi_color.inputs.number_of_ranges = 15
 
 workflow = gbdx.Workflow([aoptask, envi_ndvi, envi_color])
 
 workflow.savedata(
   envi_color.outputs.output_raster_uri,
-  location='Benchmark/color_slice/Color16'
+  location='Test_color_slice'
 )
 
 workflow.execute()
@@ -135,7 +136,19 @@ print workflow.id
 print workflow.status
 ```
 
+**Sample Output:**
 
+***AOP_Strip_Processor Output***
+
+![AOP_Strip_Processor](colorslice_imgs/rgb.tiff)
+
+***NDVI Output***
+
+![ndvi](colorslice_imgs/ndvi.tiff)
+
+***Color Slice Output***
+
+![colorslice](colorslice_imgs/colorslice.tiff)
 
 
 ### Background
