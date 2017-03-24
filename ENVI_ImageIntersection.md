@@ -103,10 +103,7 @@ GE| 350,236,670|577.8|697.86| 1.21|
 
 ### Advanced
 
-```
-#python advanced script under development
-```
-Click on this link to see an advanced example using [ENVI_ImageIntersection](https://github.com/TDG-Platform/docs/blob/master/ENVI_ChangeThresholdClassification.md)
+Click on this link to see an advanced example using [ENVI_ImageIntersection](https://github.com/TDG-Platform/docs/blob/master/ENVI_ChangeThresholdClassification.md#advanced).
 
 ### Issues
 Currently the advanced options for the task and the task in the gbdx webapp are not available because of the requirement of multiple input parameters.
