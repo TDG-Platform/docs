@@ -78,14 +78,14 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
   Name  |  Required  |  Default  |  Valid Values  |  Description  
 --------|:----------:|-----------|----------------|---------------
 task_meta_data|False|None| |GBDX Option. Output location for task meta data such as execution log and output JSON
-output_raster2_uri|True|None| |Outputor OUTPUT_RASTER2. -- Value Type: ENVIURI
-output_raster2_uri_filename|False|None| |Outputor OUTPUT_RASTER2. -- Value Type: ENVIURI
-output_raster1_uri|True|None| |Outputor OUTPUT_RASTER1. -- Value Type: ENVIURI
+output_raster2_uri|True|None| |Output or OUTPUT_RASTER2. -- Value Type: ENVIURI
+output_raster2_uri_filename|False|None| |Output or OUTPUT_RASTER2. -- Value Type: ENVIURI
+output_raster1_uri|True|None| |Outpu tor OUTPUT_RASTER1. -- Value Type: ENVIURI
 output_raster1_uri_filename|False|None| |Output OUTPUT_RASTER1. -- Value Type: ENVIURI
 
 **Output structure**
 
-The output of this task will be two rasters (input_raster1 and input_raster2) rezised to the shared extent or overlap of the rasters.
+The output of this task will be two rasters (output_raster1 and output_raster2) rezised to the shared extent or overlap of the rasters.
 
 
 ### Runtime
@@ -106,6 +106,7 @@ GE| 350,236,670|577.8|697.86| 1.21|
 ```
 #python advanced script under development
 ```
+Click on this link to see an advanced example using [ENVI_ImageIntersection](https://github.com/TDG-Platform/docs/blob/master/ENVI_ChangeThresholdClassification.md)
 
 ### Issues
 Currently the advanced options for the task and the task in the gbdx webapp are not available because of the requirement of multiple input parameters.
@@ -116,4 +117,4 @@ For background on the development and implementation of ENVI_ImageIntersection s
 
 
 ### Contact
-Document Owner - Carl Reeder - creeder@digitalglobe.com
+Document Owner - [Kathleen Johnson](kathleen.johnson@digitalglobe.com)
