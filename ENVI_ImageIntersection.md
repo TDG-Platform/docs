@@ -102,9 +102,74 @@ WV03|260,999,184|391|383.55|0.98|
 GE| 350,236,670|577.8|697.86| 1.21|
 
 ### Advanced
+This task will take two multispectral images, which share geo-spatial extent, as input.  This example workflow includes the following ENVI tasks to prepare the images for the Change Threshold Classification task: Spectral Index, Image Intersection, and Image Band Difference.  Input rasters for the Change Threshold Classification task may be any  set of 1 band rasters sharing the same extent, spatial reference and pixel value format (e.g. Normalized Difference Vegetation Index)
 
-Click on this link to see an advanced example using [ENVI_ImageIntersection](https://github.com/TDG-Platform/docs/blob/master/ENVI_ChangeThresholdClassification.md#advanced).
+```python
 
+from gbdxtools import Interface
+gbdx = Interface()
+
+#Edit the following path to reflect a specific path to an image
+data1 = 's3://gbd-customer-data/CustomerAccount#/PathToImage1/'
+data2 = 's3://gbd-customer-data/CustomerAccount#/PathToImage2/'
+
+aoptask1 = gbdx.Task("AOP_Strip_Processor", data=data1, enable_acomp=True, enable_pansharpen=False, enable_dra=False, bands='MS')
+aoptask2 = gbdx.Task("AOP_Strip_Processor", data=data2, enable_acomp=True, enable_pansharpen=False, enable_dra=False, bands='MS')
+
+# Capture AOP task outputs
+#orthoed_output = aoptask.get_output('data')
+
+envi_ndvi1 = gbdx.Task("ENVI_SpectralIndex")
+envi_ndvi1.inputs.input_raster = aoptask1.outputs.data.value
+envi_ndvi1.inputs.index = "Normalized Difference Vegetation Index"
+
+envi_ndvi2 = gbdx.Task("ENVI_SpectralIndex")
+envi_ndvi2.inputs.input_raster = aoptask2.outputs.data.value
+envi_ndvi2.inputs.index = "Normalized Difference Vegetation Index"
+
+envi_II = gbdx.Task("ENVI_ImageIntersection")
+envi_II.inputs.input_raster1 = envi_ndvi1.outputs.output_raster_uri.value
+envi_II.inputs.input_raster2 = envi_ndvi2.outputs.output_raster_uri.value
+envi_II.inputs.output_raster1_uri_filename = "NDVI1"
+envi_II.inputs.output_raster2_uri_filename = "NDVI2"
+
+
+envi_IBD = gbdx.Task("ENVI_ImageBandDifference")
+envi_IBD.inputs.file_types = "hdr"
+envi_IBD.inputs.input_raster1 = envi_II.outputs.output_raster1_uri.value
+envi_IBD.inputs.input_raster2 = envi_II.outputs.output_raster2_uri.value
+
+envi_CTC = gbdx.Task("ENVI_ChangeThresholdClassification")
+envi_CTC.inputs.increase_threshold = "0.1"
+envi_CTC.inputs.decrease_threshold = "0.5"
+envi_CTC.inputs.file_types = "hdr"
+envi_CTC.inputs.input_raster = envi_IBD.outputs.output_raster_uri.value
+
+
+workflow = gbdx.Workflow([aoptask1, aoptask2, envi_ndvi1, envi_ndvi2, envi_II, envi_IBD, envi_CTC])
+
+#Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
+workflow.savedata(
+    envi_II.outputs.output_raster1_uri,
+        location='ENVI_ImageIntersection/fromNDVI'
+)
+
+workflow.savedata(
+    envi_II.outputs.output_raster2_uri,
+        location='ENVI_ImageIntersection/fromNDVI'
+)
+
+workflow.savedata(
+    envi_CTC.outputs.output_raster_uri,
+        location='ENVI_CTC/NDVI_threshold'
+)
+
+workflow.execute()
+
+status = workflow.status["state"]
+wf_id = workflow.id
+
+```
 ### Issues
 Currently the advanced options for the task and the task in the gbdx webapp are not available because of the requirement of multiple input parameters.
 
