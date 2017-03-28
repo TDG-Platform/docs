@@ -1,15 +1,15 @@
-# ENVI_ClassificationClumping
+# ENVI Classification Clumping
 
-**ENVI_ClassificationClumping** This task performs a clumping method on a classification image. This operation clumps adjacent similar classified areas using morphological operators. Classified images often suffer from a lack of spatial coherency (speckle or holes in classified areas). Low pass filtering could be used to smooth these images, but the class information would be contaminated by adjacent class codes. Clumping classes solves this problem. The selected classes are clumped together by first performing a dilate operation then an erode operation on the classified image using one specified kernel (structuring element) for each operation
+This task performs a clumping method on a classification image. This operation clumps adjacent similar classified areas using morphological operators. Classified images often suffer from a lack of spatial coherency (speckle or holes in classified areas). Low pass filtering could be used to smooth these images, but the class information would be contaminated by adjacent class codes. Clumping classes solves this problem. The selected classes are clumped together by first performing a dilate operation then an erode operation on the classified image using one specified kernel (structuring element) for each operation
 
 This task requires a classification has been run as in the example workflow below. The [Sieving Classification](https://github.com/TDG-Platform/docs/blob/envi_tasks_docs/ENVI_ClassificationSieving.md) task is utilized before Classification Clumping.
 
 ### Table of Contents
- * [Quickstart](#quickstart) - Get started!
- * [Inputs](#inputs) - Required and optional task inputs.
- * [Outputs](#outputs) - Task outputs and example contents.
- * [Runtime](#runtime) - Example estimate of task runtime.
- * [Contact Us](#contact-us)
+* [Quickstart](#quickstart) - Get started!
+* [Inputs](#inputs) - Required and optional task inputs.
+* [Outputs](#outputs) - Task outputs and example contents.
+* [Runtime](#runtime) - Example estimate of task runtime.
+* [Contact Us](#contact-us)
 
 ### Quickstart
 *Example Script:* Run in IPython using the gbdxtools Interface
@@ -58,25 +58,25 @@ print workflow.execute()
 This task will function on an ENVI classification raster dataset.  
 The following table lists the inputs for ENVI_ClassificationClumping task:
 
-Name       | Required     |       Default         |        Valid Values             |   Description
------------|--------------|:---------------------:|---------------------------------|-----------------
-input_raster   | True          |          N/A          | S3 URL   .hdr, .TIF             | S3 location of input data specify an ENVI classification raster output on which to perform classification clumping
-input_raster_format  |	False  |       N/A   |	string  |	A string for selecting the raster format (non-DG format). Please refer to Supported Datasets table below for a list of valid values for currently supported image data products.
-input_raster_band_grouping    |	False  |    N/A	|   string   |	A string name indentify which band grouping to use for the task.
-input_raster_filename    |  False   |   N/A    | string   |  Provide the explicit relative raster filename that ENVI will open. This overrides any file lookup in the task runner.
-dilate_kernel    | True          |         3 X 3         | string                          | Specify 2D array of zeros and ones that represents the structuring element (kernel) used for a dilate operation.Dilation is a morphological operation that uses a structuring element to expand the shapes contained in the input image
-erode_kernel    | True           |         3 X 3         | string                          | Specify 2D array of zeros and ones that represents the structuring element (kernel) used for an erode operation
-class_order     | False           |     first to last     | string                          | Specify the order of class names in which sieving is applied to the classification image.
+| Name                       | Required |    Default    | Valid Values        | Description                              |
+| -------------------------- | -------- | :-----------: | ------------------- | ---------------------------------------- |
+| input_raster               | True     |      N/A      | S3 URL   .hdr, .TIF | S3 location of input data specify an ENVI classification raster output on which to perform classification clumping |
+| input_raster_format        | False    |      N/A      | string              | A string for selecting the raster format (non-DG format). Please refer to Supported Datasets table below for a list of valid values for currently supported image data products. |
+| input_raster_band_grouping | False    |      N/A      | string              | A string name indentify which band grouping to use for the task. |
+| input_raster_filename      | False    |      N/A      | string              | Provide the explicit relative raster filename that ENVI will open. This overrides any file lookup in the task runner. |
+| dilate_kernel              | True     |     3 X 3     | string              | Specify 2D array of zeros and ones that represents the structuring element (kernel) used for a dilate operation.Dilation is a morphological operation that uses a structuring element to expand the shapes contained in the input image |
+| erode_kernel               | True     |     3 X 3     | string              | Specify 2D array of zeros and ones that represents the structuring element (kernel) used for an erode operation |
+| class_order                | False    | first to last | string              | Specify the order of class names in which sieving is applied to the classification image. |
 
 ### Outputs
 
 The following table lists the Classification Clumping task outputs.
 
-Name            | Required |   Description
-----------------|:--------:|-----------------
-output_raster   |   True   | This will explain the output file location and provide the output in .TIF format.
-task_meta_data             |          False        | Output location for task meta data such as execution log and output JSON
-output_raster_uri_filename |         False      | Specify the file name in S3 location 
+| Name                       | Required | Description                              |
+| -------------------------- | :------: | ---------------------------------------- |
+| output_raster              |   True   | This will explain the output file location and provide the output in .TIF format. |
+| task_meta_data             |  False   | Output location for task meta data such as execution log and output JSON |
+| output_raster_uri_filename |  False   | Specify the file name in S3 location     |
 
 This task will function on an ENVI classification raster located in the S3 location.  An example of ENVI ISODATA Classification and Sieving are provided in the sample script above to demonstrate a full workflow. The Sieving task is recommended to precede the classification clumping task to further refine the ENVI classification raster. 
 
@@ -89,12 +89,12 @@ Your post-classification file will be written to the specified S3 Customer Locat
 The following table lists all applicable runtime outputs. (This section will be completed the Algorithm Curation team)
 For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
 
-  Sensor Name  | Total Pixels |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
---------|:----------:|-----------|----------------|---------------
-QB |41,551,668|312.07|155.93|0.5|  
-WV02|35,872,942|329.87|171.72|0.52
-WV03|35,371,971|196.27|173.03|0.88
-GE| 57,498,000|332.97|173.03|0.52 |
+| Sensor Name | Total Pixels | Total Area (k2) | Time(secs) | Time/Area k2 |
+| ----------- | :----------: | --------------- | ---------- | ------------ |
+| QB          |  41,551,668  | 312.07          | 155.93     | 0.5          |
+| WV02        |  35,872,942  | 329.87          | 171.72     | 0.52         |
+| WV03        |  35,371,971  | 196.27          | 173.03     | 0.88         |
+| GE          |  57,498,000  | 332.97          | 173.03     | 0.52         |
 
 
 For background on the development and implementation of Classification Clumping refer to the [ENVI Documentation](http://www.harrisgeospatial.com/docs/enviclassificationclumpingtask.html)
