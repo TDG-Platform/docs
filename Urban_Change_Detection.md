@@ -118,4 +118,4 @@ See issues for cd_prep
 ### Contact Us
 Tech Owners: [Jeff Collins](#jcollins@digitalglobe.com), [Carsten Tusk](#ctusk@digitalglobe.com)
 
-Document Owner: TBD
+Document Owner: [Kathleen Johnson](#kathleen.johnson@digitalglobe.com)
