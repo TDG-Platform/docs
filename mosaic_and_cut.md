@@ -1,12 +1,8 @@
 ## Mosaic-And-Cut GBDX Task 
 
-This document shows how to call the Mosaic-And-Cut GBDX Task within the context of a GBDX Workflow. This task builds a virtual mosaic (VRT file) from the Tiff images in a target directory, chips that mosaic with the Tiff image that's in the source directory, clips the target chip and source image to the common overlap with the mosaic, and outputs both the target chip and the clipped source image. The target images are all assumed to be all of the same resolution, but are not assumed to be of the same resolution as the source image. The output target mosaic chip represents a nearest-neighbour resampling of the target images.
+This document shows how to call the Mosaic-And-Cut GBDX Task within the context of a GBDX Workflow. This task builds a virtual mosaic (VRT file) from the Tiff images in a target directory, chips that mosaic by the extent of the Tiff image in the source directory, clips the source image to the extent of the chip, and outputs both the target chip and the clipped source image. Though the target images are all assumed to be all of the same resolution, they are not assumed to be of the same resolution as the source image. The output target mosaic chip represents a nearest-neighbour resampling of the target images. The input target directory is allowed to have sub-directories (but no deeper). All images in the target directory and its subdirectories participate in the VRT that is constructed. 
 
-Depth 1
-
-NOTE: Even if the source image and target images are of the same resolution and pixel alignment, you cannot assume that teh output target chip and the output clipped source image are of identical extent. The two extents may differ by a pixel. If you need teh resulting image sto be the same extent, same resolution, and row-column dimension, then a subsequent call to teh the Resample-And-Cut GBDX task is required. 
-
-of source Tiff image to the pixel centers of a target Tiff image, clips the target image and the resampled source image to the common overlap, and outputs the two clipped images.  
+Even if the source image and target images are of the same resolution and pixel alignment, do not assume that the output target chip and the output clipped source image are of identical extent. The two extents may differ by a pixel. If you need the resulting image to be the same extent, same resolution, and same row-column dimension, then a subsequent call to the the Resample-And-Cut GBDX task is required. 
 
 <!--
 ***************************************************************************
@@ -74,11 +70,11 @@ Set this port as desired.
 The **_osuffA_** port indicates the file name suffix that will be used for the output clipped source.
 Set this port as desired.
 
-The **_osuffB_** port indicates the file name suffix that will be used for the output clipped target image.
+The **_osuffB_** port indicates the file name suffix that will be used for the output target chip.
 Set this port as desired.
 
-Batch Mode: The input source directory is allowed to contain multiples images. (It is already assumed the 
-input target directory contains one or more images). In this case, each source image will be used to chip the 
+Batch Mode: The input source directory is allowed to contain multiples images. (It is assumed the 
+input target directory contains one or more images in general). In this case, each source image will be used to chip the 
 virtual mosaic. This source images will be processed in parallel.
 
 The other modifications you need to make to run the workflow are as follows:
