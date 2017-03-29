@@ -22,8 +22,8 @@ source_dir = os.path.join(in_base_dir, "XXXXXXX/")
 target_dir = os.path.join(in_base_dir, "XXXXXXX/")
 
 ####### OUTPUTS #######
-out_rc_vnir_dir = os.path.join(out_base_dir, "RC_SOURCE")
-out_rc_swir_dir = os.path.join(out_base_dir, "RC_TARGET")
+out_rc_source_dir = os.path.join(out_base_dir, "RC_SOURCE")
+out_rc_target_dir = os.path.join(out_base_dir, "RC_TARGET")
 
 ########################################################
 
@@ -84,7 +84,7 @@ Set this port as desired.
 The **_osuffA_** port indicates the file name suffix that will be used for the output clipped resampled source.
 Set this port as desired.
 
-The **_osuffA_** port indicates the file name suffix that will be used for the output clipped target image.
+The **_osuffB_** port indicates the file name suffix that will be used for the output clipped target image.
 Set this port as desired.
 
 Batch Mode: The input source directory and input target directory are allowed to contain multiples images 
