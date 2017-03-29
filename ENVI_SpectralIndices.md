@@ -1,4 +1,4 @@
-# ENVI_SpectralIndices
+# ENVI Spectral Indices
 
 ### Description
 This task creates a spectral index raster with one or more bands, where each band represents a different spectral index. Spectral indices are combinations of surface reflectance at two or more wavelengths that indicate relative abundance of features of interest.
@@ -6,73 +6,82 @@ This task creates a spectral index raster with one or more bands, where each ban
 This task can be run with Python using [gbdxtools](https://github.com/DigitalGlobe/gbdxtools) or through the [GBDX Web Application](https://gbdx.geobigdata.io/materials/)
 
 ### Table of Contents
- * [Quickstart](#quickstart) - Get started!
- * [Inputs](#inputs) - Required and optional task inputs.
- * [Outputs](#outputs) - Task outputs and output structure.
- * [Advanced](#advanced) - Additional information for advanced users.
- * [Runtime](#runtime) - Example estimate of task runtime.
- * [Issues](#issues) - Current or past known issues.
- * [Background](#background) - Background information.
- * [Contact](#contact) - Contact information.
+
+- [Quickstart](#quickstart) - Get started!
+- [Inputs](#inputs) - Required and optional task inputs.
+- [Outputs](#outputs) - Task outputs and example contents.
+- [Runtime](#runtime) - Example estimate of task runtime.
+- [Advanced](#advanced) - Additional information for advanced users.
+- [Contact Us](#contact-us) - Contact tech or document owner.
 
 ### Quickstart
-Quick start example.
+Example Script: Run in a python environment (i.e. - IPython) using the gbdxtools interface.
 
 ```python
-
-# Quickstart **Example Script Run in Python using the gbdxTools InterfaceExample producing a single band vegetation mask from a tif file.
-# First Initialize the Environment
 from gbdxtools import Interface
 gbdx = Interface()
 
-aop2envi = gbdx.Task("AOP_ENVI_HDR")
-#Edit the following path to reflect a specific path to an image
-aop2envi.inputs.image = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
-envi_ndvi = gbdx.Task("ENVI_SpectralIndices")
-envi_ndvi.inputs.input_raster = aop2envi.outputs.output_data.value
-envi_ndvi.inputs.file_types = "hdr"
-# Specify a string/list of indicies to run on the input_raster variable.  The order of indicies wi
-envi_ndvi.inputs.index = '["Normalized Difference Vegetation Index", "WorldView Soil Index"]'
+# Edit the following path to reflect a specific path to an image
+image = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
 
-#Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
-workflow = gbdx.Workflow([aop2envi, envi_ndvi])
+envi = gbdx.Task("ENVI_SpectralIndices")
+envi.inputs.input_raster = image
+envi.inputs.index = '["Normalized Difference Vegetation Index", "WorldView Soil Index"]'
+
+workflow = gbdx.Workflow([envi])
+
 workflow.savedata(
-	       aop2envi.outputs.output_data,
-	          location='ENVI/spectralindices'
+   envi.outputs.output_raster_uri,
+   location='ENVI_SIS/output_raster_uri' # edit location to suit account
 )
-workflow.savedata(
-	       envi_ndvi.outputs.output_raster_uri,
-	          location='ENVI/spectralindices'
-)
-workflow.execute()
-status = workflow.status["state"]
-wf_id = workflow.id
-# print wf_id
-# print status
+
+print workflow.execute()
+print workflow.status
+# Repeat workflow.status as needed to monitor progress.
 ```
 
 ### Inputs
-The following table lists all taskname inputs.
-Mandatory (optional) settings are listed as Required = True (Required = False). For details regarding the use of input ports refer to the [ENVI Task Runner](https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner.md) documentation.
+The following table lists all inputs for this task. For details regarding the use of all ENVI input types refer to the [ENVI Task Runner Inputs]([See ENVIRASTER input type](https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner_Inputs.md)) documentation.
 
-  Name  |  Required  |  Default  |  Valid Values  |  Description  
---------|:----------:|-----------|----------------|---------------
-input_raster    |  True |       N/A          | S3 URL   .TIF and .hdr only     | S3 location of input .tif file processed through AOP_Strip_Processor.
-index     |    True |     N/A          |     string of index name        | Specify a string, or array of strings, representing the pre-defined spectral indices to apply to the input raster.
-input_raster_band_grouping| False |N/A                  | Sensor Specific [See input port documentation](https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner.md#ENVIRPCRasterSpatialRef) | Specify band group e.g. "multispectral".  input_raster_band_grouping "panchromatic" will not function in the Spectral Index task.
-output_raster_uri_filename | N/A | string name for output e.g. "NDVI" | output raster file name
+| Name                       | Required | Default |               Valid Values               | Description                              |
+| -------------------------- | :------: | :-----: | :--------------------------------------: | ---------------------------------------- |
+| file_types                 |  False   |  None   |                  string                  | GBDX Option. Comma separated list of permitted file type extensions. Use this to filter input files -- Value Type: STRING |
+| input_raster               |   True   |  None   |  A valid S3 URL containing image files.  | Specify a raster from which to run the task. -- Value Type: ENVIRASTER |
+| input_raster_format        |  False   |  None   | [See ENVIRASTER input type](https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner_Inputs.md) | Provide the format of the image, for example: landsat-8. -- Value Type: STRING |
+| input_raster_band_grouping |  False   |  None   | [See ENVIRASTER input type](https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner_Inputs.md) | Provide the name of the band grouping to be used in the task, ie - panchromatic. -- Value Type: STRING |
+| input_raster_filename      |  False   |  None   | [See ENVIRASTER input type](https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner_Inputs.md) | Provide the explicit relative raster filename that ENVI will open. This overrides any file lookup in the task runner. -- Value Type: STRING |
+| index                      |   True   |  None   |                  string                  | Specify a string, or array of strings, representing the pre-defined spectral indices to apply to the input raster. -- Value Type: STRING |
+| output_raster_uri_filename |  False   |  None   |                  string                  | Specify a string with the fully-qualified path and filename for OUTPUT_RASTER. -- Value Type: STRING |
+
+### 
+
 ### Outputs
-The following table lists all taskname outputs.
-Mandatory (optional) settings are listed as Required = True (Required = False).
+The following table lists all the tasks outputs.
 
-  Name  |  Required  |  Default  |  Valid Values  |  Description  
---------|:----------:|-----------|----------------|---------------
-task_meta_data|False|None|.log |GBDX Option. Output location for task meta data such as execution log and output JSON
-output_raster_uri|True|None|.TIF |Outputor OUTPUT_RASTER. -- Value Type: ENVIURI
+| Name              | Required | Description                              |
+| ----------------- | :------: | ---------------------------------------- |
+| output_raster_uri |   True   | Output for OUTPUT_RASTER.                |
+| task_meta_data    |  False   | GBDX Option. Output location for task meta data such as execution log and output JSON. |
 
-**Output structure**
+##### Output Structure
 
-The output of this task will be a single tif with multiple bands representing the indices listed.
+The output_raster image file will be written to the specified S3 Customer Account Location in GeoTiff (\*.tif) format, with an ENVI header file (\*.hdr).
+
+
+
+### Runtime
+
+The following table lists all applicable runtime outputs. (This section will be completed the Algorithm Curation team). For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here).
+
+| Sensor Name | Total Pixels  | Total Area (k2) | Time(secs) | Time/Area k2 |
+| ----------- | :-----------: | --------------- | ---------- | ------------ |
+| QB          |  41,551,668   | 312.07          | 184.23     | 0.59         |
+| WV01        | 1,028,100,320 | 351.72          | NA         | NA           |
+| WV02        |  35,872,942   | 329.87          | 215.81     | 0.65         |
+| WV03        |  35,371,971   | 196.27          | 247.30     | 1.26         |
+| GE          |  57,498,000   | 332.97          | 216.80     | 0.65         |
+
+### 
 
 
 ### Advanced
@@ -82,59 +91,38 @@ http://www.harrisgeospatial.com/docs/alphabeticallistspectralindices.html
 Example of workflow with Spectral Indices including preprocessing steps in gbdxtools
 
 ```python
-
 from gbdxtools import Interface
 gbdx = Interface()
 
-#Edit the following path to reflect a specific path to an image
+# Edit the following path to reflect a specific path to an image
 data = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
-aoptask = gbdx.Task('AOP_Strip_Processor', data=data, bands='MS', enable_acomp=True, enable_pansharpen=False, enable_dra=False)     # creates acomp'd multispectral image
 
-aop2envi = gbdx.Task("AOP_ENVI_HDR")
-aop2envi.inputs.image = aoptask.outputs.data.value
+aoptask = gbdx.Task("AOP_Strip_Processor") 
+aoptask.inputs.data = data
+aoptask.inputs.enable_dra = False
+aoptask.inputs.bands = 'MS'
 
-envi_ndvi = gbdx.Task("ENVI_SpectralIndices")
-envi_ndvi.inputs.input_raster = aop2envi.outputs.output_data.value
-envi_ndvi.inputs.file_types = "hdr"
-# Specify a string/list of indicies to run on the input_raster variable.  The order of indicies wi
-envi_ndvi.inputs.index = '["Normalized Difference Vegetation Index", "WorldView Built-Up Index", "WorldView Non-Homogeneous Feature Difference", "WorldView Water Index", "WorldView Soil Index"]'
+envi = gbdx.Task("ENVI_SpectralIndices")
+envi.inputs.input_raster = aop2task.outputs.data.value
+envi.inputs.index = '["Normalized Difference Vegetation Index", "WorldView Built-Up Index", "WorldView Non-Homogeneous Feature Difference", "WorldView Water Index", "WorldView Soil Index"]'
 
-workflow = gbdx.Workflow([aoptask, aop2envi, envi_ndvi])
-#Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
-workflow.savedata(
-   aop2envi.outputs.output_data,
-      location='ENVI/SpectralIndices/AOP'
-)
+workflow = gbdx.Workflow([aoptask, envi])
 
 workflow.savedata(
-   envi_ndvi.outputs.output_raster_uri,
-      location='ENVI/SpectralIndices'
+   envi.outputs.output_raster_uri,
+   location='AOP_ENVI_SIS/output_raster_uri'
 )
 
-workflow.execute()
-workflow.status
+print workflow.execute()
+print workflow.status
+# Repeat workflow.status as needed to monitor progress.
 ```
 
-### Runtime
 
-The following table lists all applicable runtime outputs. (This section will be completed the Algorithm Curation team)
-For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
-
-  Sensor Name  | Total Pixels |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
---------|:----------:|-----------|----------------|---------------
-QB | 41,551,668 | 312.07 | 184.23 | 0.59
-WV01| 1,028,100,320 |351.72 | NA| NA
-WV02|35,872,942|329.87| 215.81|0.65
-WV03|35,371,971|196.27| 247.30|1.26
-GE| 57,498,000|332.97|216.80 |0.65
-
-
-### Issues
-Currently the advanced task in the Web App 2.0 will process an image with Normalized Difference Vegetation Index, WorldView Built-Up Index, WorldView Non-Homogeneous Feature Difference, WorldView Water Index, WorldView Soil Index (Aug 8th, 2016). However, custom workflows with gbdxtools may include any of the indices compatible with the task (see link in Advanced section)
 
 ### Background
 
-For background on the development and implementation of Spectral Index refer to the [ENVI Documentation](https://www.harrisgeospatial.com/docs/spectralindices.html)
+For background on the development and implementation of Spectral Index refer to the [ENVI Documentation](https://www.harrisgeospatial.com/docs/spectralindices.html), and ENVI's task documentation [here](https://www.harrisgeospatial.com/docs/ENVISpectralIndicesTask.html).
 
 
 ### Contact

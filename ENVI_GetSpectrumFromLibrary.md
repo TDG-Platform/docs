@@ -5,9 +5,9 @@ This task retrieves the details of a specified material from a spectral library.
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
- * [Runtime](#runtime) - Not Applicable
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs
+ * [Runtime](#runtime) - Not Applicable
  * [Advanced](#advanced) - Upload your own spectral files
  * [Contact Us](#contact-us)
 
@@ -42,10 +42,14 @@ This task requires that you first retrieve the list of available spectral librar
 The following table lists all taskname inputs.
 Mandatory (optional) settings are listed as Required = True (Required = False).
 
-  Name       |  Required  |  Description  
--------------|:-----------:|:---------------
-input_spectral_library | True       | Specify a spectral library from which to retrieve a particular spectrum.
-spectrum_name      | True       | Provide a string with the material spectrum to be retreived.
+  Name       |  Required  |  Default  |  Valid Values   | Description  
+-------------|:-----------:|:-----------|---------------|----------
+input_spectral_library_filename  | True  |  N/A     |  .sli  | String name of the ENVI spectral library file .sli
+input_spectral_library | False   |  N/A       | Directory     | Specify a spectral library from which to retrieve a particular spectrum. This may be an ENVI library or a library that you have uploaded.  It is required if you are using a custom library.
+spectrum_name     | True   |  N/A       |  string  | Provide a string with the material spectrum to be retreived.
+file_types   |  False     |  N/A    |  .hdr    |  Required when you are using a custom spectrum and spectral library
+ignore_validate      |  False    |        N/A     |     1        |Set this property to a value of 1 to run the task, even if validation of properties fails. This is an advanced option for users who want to first set all task properties before validating whether they meet the required criteria. This property is not set by default, which means that an exception will occur if any property does not meet the required criteria for successful execution of the task.
+
 
 ### Outputs
 The following table lists all taskname outputs.
@@ -68,12 +72,6 @@ spectrum     |A double-precision array representing the spectrum that matches th
 reflectance_scale_factor  | The scale factor to use for translating the spectrum to reflectance.    |   default = 1.0
 
 
-**OPTIONAL SETTINGS AND DEFINITIONS:**
-
-Name                 |       Default    | Valid Values |   Description
----------------------|:----------------:|---------------------------------|-----------------
-ignore_validate      |          N/A     |     1        |Set this property to a value of 1 to run the task, even if validation of properties fails. This is an advanced option for users who want to first set all task properties before validating whether they meet the required criteria. This property is not set by default, which means that an exception will occur if any property does not meet the required criteria for successful execution of the task.
-
 ### Advanced
 
 The advanced script for this task demonstrates loading your own spectrum data to run the task. The Advanced Script example uses the ENVI  *"veg_1dry.sli"* spectral index file and the *CDE054: Pinyon Pine (SAP)* spectrum. If you use your own spectral data, and it is a .sli file, you must create an "HDR" file.
@@ -88,7 +86,7 @@ The advanced script for this task demonstrates loading your own spectrum data to
 	
 	# Edit the following path to reflect a specific path to the Spectral Index File
 	getspectrum.input_spectral_library_filename = "veg_1dry.sli"
-	getspectrum.inputs.file_types = "HDR"
+	getspectrum.inputs.file_types = "hdr"
 	getspectrum.inputs.input_spectral_library = 's3://gbd-customer-data/CustomerAccount#/PathToSpectralLibrary/'
 	getspectrum.inputs.spectrum_name = "CDE054: Pinyon Pine (SAP)" # example from Spectral Index veg_1dry.sli
 
