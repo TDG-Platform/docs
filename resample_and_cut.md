@@ -1,6 +1,6 @@
 ## Resample-And-Cut GBDX Task 
 
-This document shows how to call the Resample-And-Cut GBDX Task within the context of a GBDX Workflow. This task resamples a source Tiff image to the pixel centers of a target Tiff image, clips the target image and the resampled source image to the common overlap, and outputs the two clipped images.  
+This document shows how to call the Resample-And-Cut GBDX Task within the context of a GBDX Workflow. This task resamples a source Tiff image to the pixel centers of a target Tiff image, clips the target image and the resampled source image to the common overlap, and outputs the two clipped images. The source image and the target image are both assumed to have square pixels.  
 
 <!--
 ***************************************************************************
@@ -78,7 +78,7 @@ Set this port as desired.
 The **_prefixLen_** port indicates how many characters of the input source file name will be 
 used in both the output clipped target file name and the output clipped resampled source file name. 
 If the value is set to '0', then none of the input source file name will be used. If the value 
-is set to a large number (e.g., '250')then all of the input source file name will be used. 
+is set to a large number (e.g., '250'),then all of the input source file name will be used. 
 Set this port as desired.
 
 The **_osuffA_** port indicates the file name suffix that will be used for the output clipped resampled source.
