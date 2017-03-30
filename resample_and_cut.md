@@ -2,6 +2,7 @@
 
 This document shows how to call the Resample-And-Cut GBDX Task within the context of a GBDX Workflow. This task resamples a source Tiff image to the pixel centers of a target Tiff image, clips the target image and the resampled source image to the common overlap, and outputs the two clipped images. The source image and the target image are both assumed to have square pixels.  
 
+
 <!--
 ***************************************************************************
 -->

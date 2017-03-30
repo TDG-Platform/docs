@@ -4,6 +4,7 @@ This document shows how to call the Mosaic-And-Cut GBDX Task within the context 
 
 Even if the source image and target images are of the same resolution and pixel alignment, do not assume that the output target chip and the output clipped source image are of identical extent. The two extents may differ by a pixel. If you need the resulting image to be the same extent, same resolution, and same row-column dimension, then a subsequent call to the the Resample-And-Cut GBDX task is required. 
 
+
 <!--
 ***************************************************************************
 -->
