@@ -17,7 +17,7 @@ The Pairwise Image Registration task will remove misregistrations between two im
 This script uses the Pairwise Image Registration task to co-register two images.  The source image will be registered to the reference image and output to the specified directory.
 
 ```python
-   	from gbdxtools import Interface
+    from gbdxtools import Interface
     from os.path import join
     import uuid
     gbdx = Interface()
