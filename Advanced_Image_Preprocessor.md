@@ -10,6 +10,7 @@ The Advanced Image Preprocessor can be run with Python using   [gbdxtools](https
  * [Outputs](#outputs) - Task outputs and example contents.
  * [Advanced Options](#advanced-options) - Additional information for advanced users.
  * [Runtime](#runtime) - Results of task benchmark tests to find average runtimes.
+ * [Known Issues](#known-issues)
  * [Contact Us ](#contact-us) - Contact information.
 
 
@@ -304,6 +305,8 @@ GE01| 57,498,000|332.97|560.836 | 1.68|
 #### Known Issues:
 ##### Specify DEM
   * The default DEM (digital elevation model) used in the orthorectification process is SRTM90 (Shuttle Radar Topography Mission). Custom DEM's can be used, but require some preprocessing.  Please contact us for details.
+  * Custom DEM input does not work for polar stereographic projections.
+  * Custom DEM input is assumed to be in meters
 
 #### Contact Us   
 If your customer is having a specific problem. Tech Owner: [Tim Harris](Tim.Harris@digitalglobe.com) & Editor: [Kathleen Johnson](kajohnso@digitalglobe.com)
