@@ -216,7 +216,7 @@ The `log` output port contains the location where a trace of log messages genera
   * The 'enable_pansharpen' output is a high-resolution RGB image.  The process merges the lower resolution multispectral image with the higher resolution panchromatic image to produce a high resolution multispectral image (RGB). The default is to run pansharpening.  It must be set to 'False' if you want preserve the full 8-band or 4-band image from the input image.
 
 #### Add Custom DEM
-  * Using the Custom DEM Option for 'ortho_dem_specifier'. Custom DEM data must be pre-processed to fit the DG Tiling Scheme (implies EPSG:4326) using gdal_tiler, which automatically reprojects the DEM to EPSG:4326; and uploaded to the customer's S3 bucket.  You must specify the full path to the Custom DEM.  No option needs to be executed to run in default mode (SRTM90).  The table below describes the gdal_tiler inputs:
+* Using the Custom DEM Option for 'ortho_dem_specifier'. The custom DEM must first be uploaded to the customer's S3 bucket; and you must specify the full path to the Custom DEM. Custom DEM data must be pre-processed to fit the DG Tiling Scheme using gdal_tiler, which automatically reprojects the DEM to EPSG:4326.  No option needs to be executed to run in default mode (SRTM90).  The table below describes the gdal_tiler inputs:
   
   Name | Required |   Valid Values  | Description
 -----|:--------|:-----------|:-------------
