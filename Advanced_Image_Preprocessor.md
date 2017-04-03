@@ -10,7 +10,7 @@ The Advanced Image Preprocessor can be run with Python using   [gbdxtools](https
  * [Outputs](#outputs) - Task outputs and example contents.
  * [Advanced Options](#advanced-options) - Additional information for advanced users.
  * [Runtime](#runtime) - Results of task benchmark tests to find average runtimes.
- * [Known Issues](#known-issues)
+ * [Known Issues](#known-issues) - Custom DEM
  * [Contact Us ](#contact-us) - Contact information.
 
 
@@ -216,7 +216,7 @@ The `log` output port contains the location where a trace of log messages genera
   * The 'enable_pansharpen' output is a high-resolution RGB image.  The process merges the lower resolution multispectral image with the higher resolution panchromatic image to produce a high resolution multispectral image (RGB). The default is to run pansharpening.  It must be set to 'False' if you want preserve the full 8-band or 4-band image from the input image.
 
 #### Add Custom DEM
-  * Using the Custom DEM Option for 'ortho_dem_specifier'. Custom DEM data must be pre-processed to fit the DG Tiling scheme using gdal_tiler; and uploaded to the customer's S3 bucket.  You must specify the full path to the Custom DEM.  No option needs to be executed to run in default mode (SRTM90).  The table below describes the gdal_tiler inputs:
+  * Using the Custom DEM Option for 'ortho_dem_specifier'. Custom DEM data must be pre-processed to fit the DG Tiling Scheme (implies EPSG:4326) using gdal_tiler, which automatically reprojects the DEM to EPSG:4326; and uploaded to the customer's S3 bucket.  You must specify the full path to the Custom DEM.  No option needs to be executed to run in default mode (SRTM90).  The table below describes the gdal_tiler inputs:
   
   Name | Required |   Valid Values  | Description
 -----|:--------|:-----------|:-------------
@@ -303,7 +303,7 @@ WV03|35,371,971|196.27|655.671 | 3.34|
 GE01| 57,498,000|332.97|560.836 | 1.68|
 
 #### Known Issues:
-##### Specify DEM
+##### Specify a Custom DEM
   * The default DEM (digital elevation model) used in the orthorectification process is SRTM90 (Shuttle Radar Topography Mission). Custom DEM's can be used, but require some preprocessing.  Please contact us for details.
   * Custom DEM input does not work for polar stereographic projections.
   * Custom DEM input is assumed to be in meters
