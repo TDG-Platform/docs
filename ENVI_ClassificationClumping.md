@@ -17,6 +17,7 @@ This task requires a classification has been run as in the example workflow belo
 
 
 
+
 ### Quickstart
 
 Example Script: Run in a python environment (i.e. - IPython) using the gbdxtools interface.
@@ -26,11 +27,11 @@ from gbdxtools import Interface
 gbdx = Interface()
 
 # Edit the following path to reflect a specific path to an image
-#	Note: Inpout raster must be a classification image, see advanced for example
+#	Note: Input raster must be a classification image, see advanced for example
 data = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
 
 envi = gbdx.Task("ENVI_ClassificationClumping")
-envi.inputs.input_raster = sieve.outputs.output_raster_uri.value
+envi.inputs.input_raster = data
 
 workflow = gbdx.Workflow([envi])
 
@@ -43,6 +44,8 @@ print workflow.execute()
 print workflow.status
 # Repeat workflow.status as needed to monitor progress.
 ```
+
+
 
 ### Inputs
 
@@ -59,6 +62,8 @@ The following table lists all inputs for this task. For details regarding the us
 | class_order                |  False   |        [first to last order]        |                  string                  | Specify the order of class names in which sieving is applied to the classification image. -- Value Type: STRING[*] |
 | output_raster_uri_filename |  False   |                None                 |                  string                  | Specify a string with the fully-qualified path and filename for OUTPUT_RASTER. -- Value Type: STRING |
 
+
+
 ### Outputs
 
 The following table lists all the tasks outputs.
@@ -71,6 +76,8 @@ The following table lists all the tasks outputs.
 ##### Output Structure
 
 The output_raster image file will be written to the specified S3 Customer Account Location in GeoTiff (\*.tif) format, with an ENVI header file (\*.hdr).
+
+
 
 ### Runtime
 
@@ -128,6 +135,8 @@ print workflow.status
 ### Background
 
 For background on the development and implementation of Classification Clumping refer to the [ENVI Documentation](http://www.harrisgeospatial.com/docs/enviclassificationclumpingtask.html)
+
+
 
 ###Contact Us
 

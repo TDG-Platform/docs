@@ -24,7 +24,7 @@ from gbdxtools import Interface
 gbdx = Interface()
 
 # Edit the following path to reflect a specific path to an image
-#  Note: The input should already be a classification!
+#  Note: Input raster must be a classification image, see advanced for example
 data = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
 
 envi = gbdx.Task("ENVI_ClassificationAggregation")

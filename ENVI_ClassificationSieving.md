@@ -21,11 +21,11 @@ from gbdxtools import Interface
 gbdx = Interface()
 
 # Edit the following path to reflect a specific path to an image
-#	Note: Inpout raster must be a classification image, see advanced for example
+#	Note: Input raster must be a classification image, see advanced for example
 data = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
 
 envi = gbdx.Task("ENVI_ClassificationSieving")
-envi.inputs.input_raster = sieve.outputs.output_raster_uri.value
+envi.inputs.input_raster = data
 
 workflow = gbdx.Workflow([envi])
 

@@ -11,6 +11,8 @@ This task uses the Reed-Xiaoli Detector (RXD) algorithm to identify the spectral
 - [Advanced](#advanced) - Additional information for advanced users.
 - [Contact Us](#contact-us) - Contact tech or document owner.
 
+
+
 ### Quickstart
 
 Example Script: Run in a python environment (i.e. - IPython) using the gbdxtools interface.
@@ -37,7 +39,10 @@ print workflow.status
 # Repeat workflow.status as needed to monitor progress.
 ```
 
+
+
 ### Inputs
+
 The following table lists all inputs for this task. For details regarding the use of all ENVI input types refer to the [ENVI Task Runner Inputs]([See ENVIRASTER input type](https://github.com/TDG-Platform/docs/blob/master/ENVI_Task_Runner_Inputs.md)) documentation.
 
 | Name                       | Required | Default  |               Valid Values               | Description                              |
@@ -125,5 +130,8 @@ print workflow.status
 
 For background on the development and implementation of RX Anomaly Detection refer to the [ENVI Documentation](https://www.harrisgeospatial.com/docs/rxanomalydetection.html), and ENVI's task documentation [here](https://www.harrisgeospatial.com/docs/ENVIRXAnomalyDetectionTask.html).
 
+
+
 ###Contact Us
+
 Document Owner - Carl Reeder - creeder@digitalglobe.com
