@@ -10,6 +10,7 @@ This task can be run with Python using [gbdxtools](https://github.com/DigitalGlo
 - [Outputs](#outputs) - Task outputs and example contents.
 - [Runtime](#runtime) - Example estimate of task runtime.
 - [Advanced](#advanced) - Additional information for advanced users.
+- [Known Issues](#known-issues) - Best Orthorectification Options for WorkdView Imagery
 - [Contact Us](#contact-us) - Contact tech or document owner.
 
 ### Quickstart
