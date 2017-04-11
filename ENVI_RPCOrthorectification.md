@@ -114,7 +114,7 @@ print workflow.status
 ```
 
 ### Known Issues:  
-Not recommended for use with WorlView level 1B imagery (Includes WV01, WV02, WV03).  See background information for details.
+Not recommended for use with WorldView level 1B imagery (Includes WV01, WV02, WV03).  See background information for details on RPCOrthorectification limitations.  For WorldView imagery, Orthorectification using the [Advanced Image Preprocessor](https://github.com/TDG-Platform/docs/blob/master/Advanced_Image_Preprocessor.md) is recommended.
 
 ### Background
 For background on the development and implementation of ENVI_RPCOrthorectification see [here](http://www.harrisgeospatial.com/docs/RPCOrthorectification.html).
