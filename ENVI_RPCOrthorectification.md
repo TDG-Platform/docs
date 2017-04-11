@@ -113,8 +113,8 @@ print workflow.status
 # Repeat workflow.status as needed to monitor progress.
 ```
 
-
-
+### Known Issues:  
+Not recommended for use with WorlView level 1B imagery (Includes WV01, WV02, WV03).  See background information for details.
 
 ### Background
 For background on the development and implementation of ENVI_RPCOrthorectification see [here](http://www.harrisgeospatial.com/docs/RPCOrthorectification.html).
