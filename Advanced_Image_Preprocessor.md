@@ -30,7 +30,7 @@ data = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
 aoptask = gbdx.Task('AOP_Strip_Processor', data=data, enable_pansharpen=False, enable_dra=False)
 workflow = gbdx.Workflow([ aoptask ])
 #Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
-workflow.savedata(aoptask.outputs.data, location='S3 gbd-customer-data location/<customer account>/output directory')
+workflow.savedata(aoptask.outputs.data, location='output directory')
 
 workflow.execute()
 
@@ -241,7 +241,7 @@ Below is a QuickStart Script for gdal_tiler:
  
     workflow = gbdx.Workflow([ gdaltiler ])
     #
-    workflow.savedata(gdaltiler.outputs.data.value,location='customer directory used for the ortho_dem_specifier')
+    workflow.savedata(gdaltiler.outputs.data.value,location='customer output directory used for the ortho_dem_specifier')
    
     workflow.execute()
     print workflow.id
