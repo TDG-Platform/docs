@@ -26,7 +26,7 @@ This script uses the Pairwise Image Registration task to co-register two images.
     my_bucket = 's3://gbd-customer-data/acct#'
 
     # create task object
-    im2im_task = gbdx.Task('image2image_1_2_0')
+    im2im_task = gbdx.Task('image2image')
 
     # set the values of source_directory, reference_directory
     # this assumes each directory contains a single image
@@ -103,7 +103,7 @@ This Advanced Option permits the Customer to:
     my_bucket = 's3://gbd-customer-data/acct#'
 
     # create task object
-    im2im_task = gbdx.Task('image2image_1_2_0')
+    im2im_task = gbdx.Task('image2image')
 
     # set the values of source_directory, reference_directory
     im2im_task.inputs.source_directory = join(my_bucket,'short path to source image directory')
@@ -132,7 +132,7 @@ This Advanced Option permits the Customer to:
 ```
 
 ### Known Issues
-You may encounter a limit on the size of the image that can be processed.  The image must 'fit in memory' and that is dependant on the AWS machine you are running the process on.  This issue will be resolved in the next update.
+Pairwise Image Registration has been certified for source image strips and mosiacs up to 12 GB in size registered to a reference image of similar size. You may encounter a limit on the size of the image that can be processed for Mosiacs larger than 12 GB, because the AWS system may time out. If you wish to process an image >12 GB please contact us.
 
 ### Contact Us
 Tech Owner: [Mike Aschenbeck](#michael.aschenbeck@digitalglobe.com) & Editor:  [Kathleen Johnson](#kathleen.johnsons@digitalglobe.com)
