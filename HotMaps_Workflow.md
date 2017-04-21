@@ -26,25 +26,15 @@ out_base_dir = "s3://xxxxxxxxxxxxx/"
 dn_dir = os.path.join(in_base_dir, "dn_data/")
 dn_vnir_dir = os.path.join(dn_dir, "vnir/")
 dn_swir_dir = os.path.join(dn_dir, "swir/")
-recipe_dir = os.path.join(in_base_dir, "recipes/")
-
-recipe11_filename = "stack_swir_on_vnir_recipe.txt"
-recipe22_filename = "false_color_swir_recipe.txt"
 
 ####### OUTPUTS #######
-
-"""
-out_vnir_dir = os.path.join(out_base_dir, "VNIR")
-out_rc_vnir_dir = os.path.join(out_base_dir, "RC_VNIR")
-out_rc_swir_dir = os.path.join(out_base_dir, "RC_SWIR")
-"""
 out_scube_dir = os.path.join(out_base_dir, "SCUBE")
 out_hotmap_dir = os.path.join(out_base_dir, "HOTMAP")
-out_cloudmask_dir = os.path.join(out_base_dir, "SWIR_CLOUD_MASK")
+out_swir_cloud_dir = os.path.join(out_base_dir, "SWIR_CLOUD_MASK")
 
-########################################################
+####################################################################################
 
-############# Mosaic the VNIR tiles
+############# Mosaic the VNIR tiles 
 cmd = "gdalbuildvrt $indir/out.vrt $indir/*.TIF; "
 cmd += "gdal_translate $indir/out.vrt $outdir/mosaic_dn_vnir.tif"
 mosaic_task = gbdx.Task("gdal-cli",
@@ -53,11 +43,6 @@ mosaic_task = gbdx.Task("gdal-cli",
                         execution_strategy = 'runonce')
 
 mosaic_dn_vnir_dir = mosaic_task.outputs.data.value
-"""
-save_mosaic_task = gbdx.Task("StageDataToS3",
-                             data = mosaic_dn_vnir_dir,
-                             destination = out_vnir_dir)
-"""
 
 ############# Resample-and-Cut (VNIR to SWIR)
 rc_task = gbdx.Task("resample_and_cut_001",
@@ -71,36 +56,33 @@ rc_task = gbdx.Task("resample_and_cut_001",
 
 rc_vnir_dir = rc_task.outputs.out_A.value
 rc_swir_dir = rc_task.outputs.out_B.value
-"""
-save_rc_vnir_task = gbdx.Task("StageDataToS3",
-                              data = rc_vnir_dir,
-                              destination = out_rc_vnir_dir)
 
-save_rc_swir_task = gbdx.Task("StageDataToS3",
-                              data = rc_swir_dir,
-                              destination = out_rc_swir_dir)
-"""
+############# Stack SWIR on VNIR  
+cmd22 = "infile=`ls $indir/dataS/*.tif`; "  # Note: back-ticks not single quotes
+cmd22 += 'infname=$(basename "$infile" .tif); '  
+cmd22 += "infprefix=${infname::39}; "
+cmd22 += "outfname=$infprefix'_SCUBE.tif'; "
+cmd22 += "mkdir $outdir/data; "
+cmd22 += "gdal_merge.py -separate -o $outdir/data/$outfname $indir/dataV/*.tif $indir/dataS/*.tif"
+stack_task = gbdx.Task('gdal-cli-multiplex')
+stack_task.inputs.dataV = rc_vnir_dir
+stack_task.inputs.dataS = rc_swir_dir
+stack_task.inputs.command = cmd22
+stack_task.execution_strategy='runonce'
 
-############# Stack SWIR on VNIR
-stack_task = gbdx.Task("DGLayers_v_3_0",
-                     SRC_vnir = rc_vnir_dir,
-                     SRC_swir = rc_swir_dir,
-                     recipe_dir = recipe_dir,
-                     recipe_filename = recipe11_filename)
+scube_dir_00 = stack_task.outputs.data.value
 
-scube_dir_00 = stack_task.outputs.DST.value
-
-############# Copy Scube and IMD's to new directory
-cmd = "mkdir $outdir/data; "
-cmd += "mv $indir/dataScube/*.tif $outdir/data; "
-cmd += "cp $indir/dataV/*.IMD $outdir/data; "
-cmd += "cp $indir/dataS/*.IMD $outdir/data"
+############# Copy IMD's to SCUBE directory
+cmd33 = "mkdir $outdir/data; "
+cmd33 += "mv $indir/dataScube/*.tif $outdir/data; "
+cmd33 += "cp $indir/dataV/*.IMD $outdir/data; "
+cmd33 += "cp $indir/dataS/*.IMD $outdir/data"
 copy_task = gbdx.Task('gdal-cli-multiplex')
 copy_task.inputs.dataScube = scube_dir_00
 copy_task.inputs.dataV = dn_vnir_dir
 copy_task.inputs.dataS = dn_swir_dir
-copy_task.inputs.command = cmd
-copy_task.execution_strategy='runonce'
+copy_task.inputs.command = cmd33
+copy_task.execution_strategy = 'runonce'
 
 scube_dir = copy_task.outputs.data.value
 
@@ -109,19 +91,19 @@ save_scube_task = gbdx.Task("StageDataToS3",
                             destination = out_scube_dir)
 
 ############# SWIR Cloud Mask
-cloud_mask_task = gbdx.Task('SWIRcloudMask',
-                            image=scube_dir)
+swir_cloud_task = gbdx.Task('SWIRcloudMask',
+                            image = scube_dir)
 
-cloud_mask_dir = cloud_mask_task.outputs.mask.value
+swir_cloud_dir = swir_cloud_task.outputs.mask.value
 
-save_cloud_mask_task = gbdx.Task("StageDataToS3",
-                             data = cloud_mask_dir,
-                             destination = out_cloudmask_dir)
+save_swir_cloud_task = gbdx.Task("StageDataToS3",
+                             data = swir_cloud_dir,
+                             destination = out_swir_cloud_dir)
 
-############# HotMap With Cloud Mask
+############# HotMap With SWIR Cloud Mask
 hotmap_task = gbdx.Task('hotmap',
-                        data= scube_dir,
-                        mask=cloud_mask_dir)
+                        data = scube_dir,
+                        mask = swir_cloud_dir)
 
 hotmap_dir = hotmap_task.outputs.out.value
 
@@ -129,13 +111,19 @@ save_hotmap_task = gbdx.Task("StageDataToS3",
                             data = hotmap_dir,
                             destination = out_hotmap_dir)
 
-############# False color SWIR
-fc_swir_task = gbdx.Task("DGLayers_v_3_0",
-                      SRC = rc_swir_dir,
-                      recipe_dir = recipe_dir,
-                      recipe_filename = recipe22_filename)
- 
-fc_swir_dir = fc_swir_task.outputs.DST.value
+############# False color SWIR 
+cmd44 = "infile=`ls $indir/*.tif`; "  # Note: back-ticks not single quotes
+cmd44 += 'infname=$(basename "$infile" .tif); '  
+cmd44 += "infprefix=${infname::39}; "
+cmd44 += "outfname=$infprefix'_swir_6_3_1_rgb.tif'; "
+cmd44 += "gdal_translate -b 6 -b 3 -b 1 $indir/*.tif $outdir/$outfname; "
+cmd44 += "rm $outdir/*.tif.aux.xml"
+fc_swir_task = gbdx.Task("gdal-cli",
+                        command = cmd44,
+                        data = rc_swir_dir,
+                        execution_strategy = 'runonce')
+
+fc_swir_dir = fc_swir_task.outputs.data.value 
 
 save_fc_swir_task = gbdx.Task("StageDataToS3",
                              data = fc_swir_dir,
@@ -147,14 +135,16 @@ workflow = gbdx.Workflow([mosaic_task,
                           stack_task,
                           copy_task,
                           save_scube_task,
-                          cloud_mask_task,
-                          save_cloud_mask_task,
+                          swir_cloud_task,
+                          save_swir_cloud_task,
                           hotmap_task,
                           save_hotmap_task,
                           fc_swir_task,
                           save_fc_swir_task])
 
+#print workflow.generate_workflow_description()
 workflow.execute()
+print
 print workflow.id
 ```
 
@@ -167,86 +157,8 @@ Here are the modifications you need to make to run the workflow:
  
 * Set **_in_base_dir_** -- this is the top-level S3 input directory that contains your DN data 
 * Set **_out_base_dir_** -- this is the top-level S3 output directory
-* Set **_dn_dir_**, **_vnir_dn_dir_**, and **_swir_dn_dir_** -- these are the S3 locations of the input WV3 DN data 
-* Set **_recipe_dir_** -- this is the directory containing the DGLayers recipe files
+* Set **_dn_dir_**, **_dn_vnir_dir_**, and **_dn_swir_dir_** -- these are the S3 locations of the input WV3 DN data 
 
-<!--
-***************************************************************************
--->
-
-The workflow calls the DGLayers GBDX task on the following two recipe files:
-
-**_stack_swir_on_vnir_recipe.txt:_**
-
-```shell
-#########################################################################
-###################   DGLayers Recipe File    ##########################
-#########################################################################
-
-# Stack SWIR on VNIR
-
-#------------------------------------------------------------------------
-#	Optional renaming of output directories and files.
-# 	Use sandwiched pair: BEGIN_RENAME_OUTPUTS, END_RENAME_OUTPUTS
-#   PREFIX_LEN length of file name prefix from SRC file that will be 
-#		used in the file name of corresponding output files
-#   Triplets of form: <outdir_id> <outdir_name> <suffix>. Indicates 
-#   	that directory <outdir_id> is to be renamed <outdir_name> and 
-#		that the file names will involve the suffix string <suffix>
-#------------------------------------------------------------------------
-
-BEGIN_RENAME_OUTPUTS
-PREFIX_LEN 39
-n1 DST scube
-END_RENAME_OUTPUTS
-
-#------------------------------------------------------------------------
-#                             Process Flow 
-#------------------------------------------------------------------------
-
-stack_bands --outdirID n1 --indirIDs (SRC_vnir, *) (SRC_swir, *) --deliver
-```
-
-<!--
-***************************************************************************
--->
-
-**_false_color_swir_recipe.txt:_**
-
-```shell
-#########################################################################
-####################   DGLayers Recipe File    ##########################
-#########################################################################
-
-# Given an 8-band SWIR, create a false-color 3-band SWIR:  6, 3, 1 (RGB)
-
-#------------------------------------------------------------------------
-#	Optional renaming of output directories and files.
-# 	Use sandwiched pair: BEGIN_RENAME_OUTPUTS, END_RENAME_OUTPUTS
-#   PREFIX_LEN length of file name prefix from SRC file that will be 
-#		used in the file name of corresponding output files
-#   Triplets of form: <outdir_id> <outdir_name> <suffix>. Indicates 
-#   	that directory <outdir_id> is to be renamed <outdir_name> and 
-#		that the file names will involve the suffix string <suffix>
-#------------------------------------------------------------------------
-
-BEGIN_RENAME_OUTPUTS
-PREFIX_LEN 39
-n1 DST swir_6_3_1_RGB
-END_RENAME_OUTPUTS
-
-#------------------------------------------------------------------------
-#                             Process Flow 
-#------------------------------------------------------------------------
-
-subset_bands --outdirID n1 --indirID SRC -bands 6 3 1 --deliver
-```
-
-<!--
-***************************************************************************
--->
-
-To run the workflow, copy the two recipe files (create the files using cut and paste out of this document) to the desired recipe directory on S3, set the directory paths (mentioned above) as desired, and run. 
 
 
 
