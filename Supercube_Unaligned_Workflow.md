@@ -1,6 +1,6 @@
 ## Supercube (Unaligned) GBDX Workflow 
 
-This document introduces the Supercube (Unaligned) GBDX Workflow and describes how to modify it in order to build an unaligned 16-band "supercube" stack from WV3 8-band VNIR and 8-band SWIR data. The input data can be DN data or Acomp'd data. This workflow does not perform ortho-processing. In the workflow, the VNIR is resampled to the SWIR, or vice versa, and the resulting datasets are then clipped to the common overlap and stacked, to form a 16-band supercube. The workflow calls the DGLayers GBDX task on a recipe file to perform the stacking of the VNIR and SWIR.
+This document introduces the Supercube (Unaligned) GBDX Workflow and describes how to modify it in order to build an unaligned 16-band "supercube" stack from WV3 8-band VNIR and 8-band SWIR data. The input data can be DN data or Acomp'd data. This workflow does not perform ortho-processing. In the workflow, the VNIR is resampled to the SWIR, or vice versa, and the resulting datasets are then clipped to the common overlap and stacked, to form a 16-band supercube. 
 
 <!--
 ***************************************************************************
@@ -95,7 +95,7 @@ Here are the modifications you need to make to run the workflow:
 ***************************************************************************
 -->
 
-To run the workflow, copy the recipe file (create the file using cut and paste out of this document) to the desired recipe directory on S3, set the directory paths (mentioned above) as desired, and run. 
+To run the workflow, set the directory paths (mentioned above) as desired and run. 
 
 
 
