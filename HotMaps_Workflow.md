@@ -4,8 +4,6 @@ This document introduces the HotMaps GBDX Workflow and describes how to modify i
 
 At the beginning of the workflow, the VNIR is mosaicked and fractionally pixel-aggregated to agree with the SWIR pixels.  The resulting VNIR and SWIR are then stacked, **_but not registered_**, and clipped to the common overlap, yielding a "crude supercube", a 16-band stack at SWIR resolution. The HotMap GBDX task takes this crude supercube as input. 
 
-The workflow calls the DGLayers GBDX task on two recipe files to perform the stacking of the VNIR and SWIR, and to create the false-color 3-band SWIR. 
-
 <!--
 ***************************************************************************
 -->

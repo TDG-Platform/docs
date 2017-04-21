@@ -91,11 +91,7 @@ Here are the modifications you need to make to run the workflow:
 * Set **_data_dir_**, **_vnir_dir_**, and **_swir_dir_** -- these are the S3 locations of the input WV3 DN data 
 * In the rc_task, **_input_A_** (source) is resampled to **_input_B_** (target), and then both are clipped to the common overlap. Set those ports as desired. Set the resampling method **_r_meth_** to be any of the resampling methods available for gdalwarp in GDAL 2.0. For proper fractional pixel aggregation, however, set it to 'dg_average'.
 
-<!--
-***************************************************************************
--->
 
-To run the workflow, set the directory paths (mentioned above) as desired and run. 
 
 
 
