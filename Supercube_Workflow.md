@@ -28,7 +28,7 @@ out_cloud_scube_dir = os.path.join(out_base_dir, "CLOUD_SCUBE")
 out_mi_mask_dir = os.path.join(out_base_dir, "MI_MASK")
 out_mi_tmp_dir = os.path.join(out_base_dir, "MI_TMP")
 
-####################################################################################
+#####################################################################################
 
 ############# ACOMP - now assembles Acomp VNIR tiles into single TIF
 acomp_task = gbdx.Task("AComp_internal",
