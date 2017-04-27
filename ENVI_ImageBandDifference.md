@@ -22,7 +22,8 @@ from gbdxtools import Interface
 gbdx = Interface()
 
 # Insert correct path to image in S3 location.
-# Images must have an intersection, otherwise the task will fail.
+# Note: Images must have the same dimensions, have a single band, and from the same sensor. 
+#   See Advanced script for example of end to end example.
 data1 = 's3://gbd-customer-data/CustomerAccount#/PathToImage1/'
 data2 = 's3://gbd-customer-data/CustomerAccount#/PathToImage2/'
 
