@@ -1,6 +1,6 @@
 # DGLayers GBDX Task
 
-The DGLayers (Generic Derived Layer Generator) GBDX task is a general-purpose recipe-driven workflow engine useful 
+The DGLayers GBDX task is a general-purpose recipe-driven workflow engine that is useful 
 for generating a wide variety of derived layers from input raster data (**_TIFF only_**). Output layers can be raster 
 layers or polygon vector layers. A DGLayers recipe is a text file that describes a sequence of layer functions 
 participating a flow graph without loops. 
@@ -72,7 +72,7 @@ or run separately after the DGLayers process is completed.
 					 SRC3 = 's3://my_dir/my_indir_3/', 
 					 recipe_dir = 's3://my_dir/my_recipes/', 
 					 recipe_filename = 'my_recipe.txt',
-					 generate_top_dir = 'False')	
+					 generate_top_dir = 'False') 
 					 
 	workflow = gbdx.Workflow([dgl_task])
 
@@ -104,17 +104,17 @@ or run separately after the DGLayers process is completed.
 					 SRC3 = 's3://my_dir/my_indir_3/', 
 					 recipe_dir = 's3://my_dir/my_recipes/', 
 					 recipe_filename = 'my_recipe.txt',
-					 generate_top_dir = 'True')	
+					 generate_top_dir = 'True')	#<---------------------- Note
 					 
 	workflow = gbdx.Workflow([dgl_task])
 
 	# Because the argument "generate_top_dir" was set to 'True' in the above call to dgl_task,
 	# a single top-level output port/directory, DST_LAYERS, will be created that contains 
-	# subdirectories corresponding to the output symbols (that start with "DST") in the DGLayers
-	# recipe file. These sub-directories will not have output ports of their own. The advantage 
-	# of a top-level DST_LAYERS port is that the workflow does not need to know what output
-	# subdirectories are specified by the recipe file. This represents complete decoupling 
-	# of the workflow from the recipe file. 
+	# subdirectories corresponding to the output symbols in the DGLayers recipe file. These 
+	# sub-directories will not have output ports of their own. The advantage of a top-level 
+	# DST_LAYERS port is that the workflow does not need to know what output
+	# subdirectories are specified by the recipe file. This workflow is thus completely 
+	# decoupled from the recipe file. 
 	workflow.savedata(dgl_task.outputs.DST_LAYERS.value, location='my_outdir')
 
 	workflow.execute()

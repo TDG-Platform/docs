@@ -1,6 +1,6 @@
-# Material Layers (from orthorecified DN Data) GBDX Workflow 
+# Material Layers (from Orthorectified DN Data) GBDX Workflow 
 
-This document introduces the Material Layers (from Orthorectified DN Data) GBDX Workflow and describes how to modify it in order to compute desired material layers (rasters and polygons) from WV3 orthorecified DN VNIR and SWIR data. This workflow assumes the input DN data has been orthorectified.  
+This document introduces the Material Layers (from Orthorectified DN Data) GBDX Workflow and describes how to modify it in order to compute desired material layers (rasters and polygons) from WV3 orthorectified DN VNIR and SWIR data. This workflow assumes the input DN data has been orthorectified.  
 
 The template has two parts: The first part computes a 16-band aligned AComp "supercube" from the 8-band DN VNIR plus 8-band DN SWIR data, as well as pixel-aligned water mask and cloud mask. The second part invokes the DGLayers task on a DGlayers recipe file. The recipe file describes the desired Material Layers operations and outputs (e.g., indices, SAM classification map, masks, polygons, etc.) 
 
