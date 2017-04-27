@@ -1,8 +1,8 @@
-# Mining Layers GBDX Workflow 
+# Material Layers (from orthorecified DN Data) GBDX Workflow 
 
-This document introduces the Mining Layers GBDX Workflow and describes how to modify it in order to compute desired mining layers (rasters and polygons) from WV3 DN VNIR and SWIR data. This workflow assumes the input DN data has been orthorectified.  
+This document introduces the Material Layers (from Orthorectified DN Data) GBDX Workflow and describes how to modify it in order to compute desired material layers (rasters and polygons) from WV3 orthorecified DN VNIR and SWIR data. This workflow assumes the input DN data has been orthorectified.  
 
-The template has two parts: The first part computes a 16-band aligned AComp "supercube" from the 8-band DN VNIR plus 8-band DN SWIR data, as well as pixel-aligned water mask and cloud mask. The second part invokes the DGLayers task on a DGlayers recipe file. The recipe file describes the desired Mining Layers operations and outputs (e.g., indices, SAM classification map, masks, polygons, etc.) 
+The template has two parts: The first part computes a 16-band aligned AComp "supercube" from the 8-band DN VNIR plus 8-band DN SWIR data, as well as pixel-aligned water mask and cloud mask. The second part invokes the DGLayers task on a DGlayers recipe file. The recipe file describes the desired Material Layers operations and outputs (e.g., indices, SAM classification map, masks, polygons, etc.) 
 
 To learn about the operations that can be called from within a DGLayers recipe file, see the documentation for [DGLayers] 
 (https://github.digitalglobe.com/nw002655/dglayers/blob/master/DGLayers-GBDX.md)
@@ -11,7 +11,7 @@ To learn about the operations that can be called from within a DGLayers recipe f
 ***************************************************************************
 -->
 
-**_Mining Layers Workflow:_** 
+**_Material Layers (from Orthorecified DN Data) Workflow:_** 
 
 ```shell
 import os
@@ -39,10 +39,7 @@ out_mi_mask_dir = os.path.join(out_base_dir, "MI_MASK")
 out_mi_tmp_dir = os.path.join(out_base_dir, "MI_TMP")
 
 ####### OUTPUTS (DGLayers Processing) #######
-out_indices_dir = os.path.join(out_base_dir, "INDICES")
-out_classmap_dir = os.path.join(out_base_dir, "CLASSMAP")
-out_combo_mask_dir = os.path.join(out_base_dir, "COMBO_MASK")
-out_veg_polys_dir = os.path.join(out_base_dir, "VEG_POLYS")
+out_layers_dir = os.path.join(out_base_dir, "LAYERS")
 
 ####################################################################################
 #################### Supercube, Cloud and Water Masks ##############################
@@ -204,47 +201,28 @@ save_cloud_scube_task = gbdx.Task("StageDataToS3",
 ################################## DGLayers ########################################
 ####################################################################################
 
-# Mining Layers Task 
 # SRCXXX is an input symbol in the DGLayers recipe file
-layers_task = gbdx.Task("DGLayers_v_3_0", 
+layers_task = gbdx.Task("DGLayers", 
                      SRC1_SCUBE = scube_dir, 
                      SRC2_CLOUD = cloud_scube_dir,
                      SRC3_WATER = water_scube_dir,
                      recipe_dir = recipe_dir, 
-                     recipe_filename = recipe_filename)
+                     recipe_filename = recipe_filename,
+                     generate_top_dir = 'True') # <-- generate a single top-level output port
 
-###################################################################################
-####################### Write Recipe-Directed Outputs #############################
-###################################################################################
+# The top-level output port is always named DST_LAYERS
+layers_dir = layers_task.outputs.DST_LAYERS.value
 
-# DST_XXX is an output symbol in the DGLayers recipe file
-indices_dir = layers_task.outputs.DST_INDICES.value
-classmap_dir = layers_task.outputs.DST_CLASSMAP.value
-combo_mask_dir = layers_task.outputs.DST_COMBO_MASK.value
-veg_polys_dir = layers_task.outputs.DST_VEG_POLYS.value
-
-save_indices_task = gbdx.Task("StageDataToS3",
-                          data = indices_dir,
-                          destination = out_indices_dir)
-
-save_classmap_task = gbdx.Task("StageDataToS3",
-                          data = classmap_dir,
-                          destination = out_classmap_dir)
-
-save_combo_mask_task = gbdx.Task("StageDataToS3",
-                          data = combo_mask_dir,
-                          destination = out_combo_mask_dir)
-
-save_veg_polys_task = gbdx.Task("StageDataToS3",
-                          data = veg_polys_dir,
-                          destination = out_veg_polys_dir)
+save_layers_task = gbdx.Task("StageDataToS3",
+                          data = layers_dir,
+                          destination = out_layers_dir)
 
 ###################################################################################
 ############################### Task List #########################################
 ###################################################################################
 
 workflow = gbdx.Workflow([acomp_task,
-						  copy_task,
+                          copy_task,
                           water_task,
                           cloud_task,
                           union_task,
@@ -258,10 +236,7 @@ workflow = gbdx.Workflow([acomp_task,
                           rc_cloud_scube_task,
                           save_cloud_scube_task,
                           layers_task,
-                          save_indices_task,
-                          save_classmap_task,
-                          save_combo_mask_task,
-                          save_veg_polys_task])
+                          save_layers_task])
 
 workflow.execute()
 print(workflow.id)
@@ -278,12 +253,7 @@ The above workflow should reflect the latest versions of all tasks. Here are the
 * Set **_dn_dir_**, **_vnir_dn_dir_**, and **_swir_dn_dir_** -- these are the S3 locations of the input DN data that will be AComp'd and Supercube'd
 * Set **_recipe_dir_** -- this is the directory containing your DGLayers recipe file **_and any auxiliary text files it refers to_** 
 * Set **_recipe_filename_** -- this is the file name of your DGLayers recipe file 
-
-* In the section of the template entitled, **_OUTPUTS (DGLayers Processing)_**, set the output subdirectories that you want in your **_out_base_dir_**. These subdirectories correspond (perhaps in one-to-many fashion) with the output directory symbols in your DGLayers recipe file.
-
-* In the section of the template entitled, **_Write Recipe-Directed Outputs_**, write the save-tasks that correspond to directory output symbols in your DGLayers recipe. These save-tasks will write the the DGlayers output data to S3. 
-
-* Modify the call to *gbdx.Workflow*([...]) so that it calls your save tasks.
+* Set **_out_layers_dir_** -- this is the desired output directory on s3
 
 <!--
 ***************************************************************************
