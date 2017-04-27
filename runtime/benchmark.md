@@ -1,10 +1,10 @@
-#Test Goals/Objectives
+# Test Goals/Objectives
 
 Our main test goal for the GBDX tasks is to develop a set of average runtimes for each task.  We will identify a baseline for each task (algorithm) at the atomic task level in GBDX.  A set of applicable calibration images will be utilized for the test.
 
 A secondary objective is to provide a set of python test scripts which will support automated testing of gbdx tasks using gbdxtools.  These scripts will be included in the GitHUB and GBDX university documentation and provide gbdx consumers with examples of how to run a task. 
 
-#Definitions
+# Definitions
 **CI environment** - is the practice of merging all developer working copies to a shared mainline several times a day.
 
 **GAC** – Geospatial Big data Algorithm Curation team – Team responsible for curation and documentation of tasks on the GBDX platform.
@@ -21,13 +21,13 @@ A secondary objective is to provide a set of python test scripts which will supp
 
 **GBDX- Web App** – The web application is a graphical user interface (GUI) where you can define your area of interest, create material sets, and process imagery data.
 
-*#Areas to be tested
+# Areas to be tested
 
 Within GBDX list of tasks tested for correct functionality, the following task categories will be tested:
-ENVI tasks
-Preprocessing tasks
-Image mining/ analytic tasks 
-Third party tasks
+* ENVI tasks
+* Preprocessing tasks
+* Image mining/ analytic tasks 
+* Third party tasks
 
 Each task will be tested with applicable imagery and settings.  The test results will be normalized based on a runtime per geographic area.  These metrics will be reported within each task document in the format shown in Table 1. 
 
@@ -41,13 +41,13 @@ WV02|Pan - 0.5m MS – 2 m |35,872,942(ms)| 329.87| 651.095| 1.97
 WV02|Pan – 0.31.m MS – 1.24m |35,371,971(ms)| 196.27| 655.671| 3.34
 WV03|Pan – 0.31.m MS – 1.24m |57,498,000(ms)| 332.97| 560.836| 1.68
 
-#Features not to be tested
+# Features not to be tested
 
 The runtime tests will not be exhaustive tests of all parameters of a task and possible workflow combinations. When possible, default values will be utilized to minimize complexity. The runtime of a single task will be tested and averaged.  Further, the tests will not include external sensors or imagery (e.g. Rapid Eye).
 
 Each task requires different testing types. As the organization and usability of gbdxtools and the Web App evolve, automation will be developed to replace manual testing. However, automated tests cannot cover all user scenarios; hence, manual tests will continue to be executed throughout the GBDX platform lifecycle. 
 
-#Automated Testing
+# Automated Testing
 
 Automation testing is critical to the success of products in the market. Most manual tests have to be re-executed repeatedly during development, so automating these repetitive test cases will save time and money. Specifically, tests should be re-executed whenever source code is modified. By automating these repeated tests, time is given back to GAC engineers to develop more detailed test cases that add to the depth of the testing coverage.
 
@@ -65,7 +65,7 @@ All automated tests for the GBDX tasks can be described in one of these types of
 
 Each product requires different testing types. For this release, only manual tests will be executed from only a user-level perspective. No automation tests will be developed since our release timeframe is extremely short.
 
-#Manual Testing
+# Manual Testing
 
 Manual software testing is performed by a human carefully going through the workflow of the product, trying various usage and input combinations, comparing the results to the expected behavior and recording their observations. 
 
@@ -84,7 +84,7 @@ This type of manual testing is the most common type of testing the GAC team will
 Example Functional Test –
 Verify that if a task is in GBDX Catalogue, that it can be run on sample imagery with gbdxtools after being processed through AOP_Strip_Processor or Acomp.
 
-#GBDX Integration – Test products that are integrated into a platform
+# GBDX Integration – Test products that are integrated into a platform
 
 Integration testing is the verification of correct interaction between multiple units/components of software that are part of a larger system. This type of manual testing requires the tasks be deployed to GBDX and also requires a fully functional GBDX/IIP environment is functional ready for integration. GAC will verify that our integration is seamless and workflows are stable and easy to run.
 
@@ -112,7 +112,7 @@ Regression tests are implemented accordingly as follows:
 Example Regression Test -
 Verify that Acomp processing still works with the new updates to the algorithm.
 
-#End-to-End – Verifying customer scenarios from start to finish
+# End-to-End – Verifying customer scenarios from start to finish
 
 This type of manual testing can be viewed as being "full" functional testing to the maximum. We learn from our customer’s usage patterns and build these tests based on their experiences and requirements. A single End-to-End test case is always made up of a series of steps/actions that a customer would take while using the product. Also, each test always includes some input and finishes with a verified output or output set of information.
 
@@ -124,7 +124,7 @@ Basic performance testing measurements will be created on a single-user, single-
 
 Standard benchmark image data sets will be created and used for performance testing for each product (see Table 3). This is to simulate our most common customer scenarios when collecting performance measurements.
 
-#Example Performance Test –
+# Example Performance Test –
 Verify the runtime for ENVI_SpectralIndex using gbdxtools on the default domain.
 
 **Test Environments**
@@ -145,7 +145,7 @@ supertask| m3.xlarge|2x40 SSD|80|4|15|$0.266|(20%) $0.052 , (50%) $0.133
 
 •	EC2 instances – hosted in the AWS Cloud, which provides on-demand delivery of IT resources and applications via the Internet with pay-as-you-go pricing.
 
-#Test Resources
+# Test Resources
 Testing and documentation will occur on a prioritized basis dictated by the JIRA backlog, which is organized by the PM. We have a total of 2 test resources available. The GAC team will focus on the following milestones for the GBDX list of tasks in 2016:
 
 •	Verify and test ENVI tasks
