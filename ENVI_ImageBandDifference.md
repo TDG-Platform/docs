@@ -1,6 +1,6 @@
 # ENVI Image Band Difference
 
-This task performs a difference analysis on a specific band in two images.
+This task performs a difference analysis on a specific band in two images from the same sensor.
 
 This task can be run with Python using [gbdxtools](https://github.com/DigitalGlobe/gbdxtools) or through the [GBDX Web Application](https://gbdx.geobigdata.io/materials/)
 
