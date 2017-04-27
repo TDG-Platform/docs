@@ -16,6 +16,7 @@ Building a recipe and running DGLayers on that recipe should be considered an al
 
 * DGLayers better supports rapid prototyping than gdal_cli and gdal_cli_multiplex. (Additionally, if DG internal, you can pull docker from docker hub and prototype locally.)
 
+
 * Each GBDX task in a GBDX workflow incurs I/O between an EC2 machine and S3, whereas each function call in a DGLayers recipe incurs I/O only from the EC2 to the EC2 
 
 * Building a new recipe for DGLayers does not involve the overhead associated with building a new GBDX task (Docker, JSON, registration, Github, etc.)   
