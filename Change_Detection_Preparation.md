@@ -26,23 +26,23 @@ or run separately after the cd_prep process is completed.
 **Example Script:** These basic settings will run CDPrep from a pair of input orthorectified, AComped image output from the Advanced Image Preprocessor. See also examples listed under the [Advanced Options](#advanced-options).
 
 ```python
-    # Run The Change Detection Preparation Task on a pair of images
-    from gbdxtools import Interface
-    gbdx = Interface()
+# Run The Change Detection Preparation Task on a pair of images
+from gbdxtools import Interface
+gbdx = Interface()
 
-    # The data input and lines must be edited to point to an authorized customer S3 location)
-    cd_prep = gbdx.Task('cd_prep_crop', 
-                       pre_image_dir='s3://gbd-customer-data/CustomerAccount#/PathToPreImage/',
-                       post_image_dir='s3://gbd-customer-data/CustomerAccount#/PathToPostImage')
+# The data input and lines must be edited to point to an authorized customer S3 location)
+cd_prep = gbdx.Task('cd_prep_crop', 
+                    pre_image_dir='s3://gbd-customer-data/CustomerAccount#/PathToPreImage/',
+                    post_image_dir='s3://gbd-customer-data/CustomerAccount#/PathToPostImage')
     
-    workflow = gbdx.Workflow([cd_prep])
-    #Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
-    workflow.savedata(cd_prep.outputs.final_pre_image_dir, location='CDPrep/pre_image_dir')
-    workflow.savedata(cd_prep.outputs.final_post_image_dir, location='CDPrep/post_image_dir')
-    workflow.execute()
+workflow = gbdx.Workflow([cd_prep])
+#Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
+workflow.savedata(cd_prep.outputs.final_pre_image_dir, location='CDPrep/pre_image_dir')
+workflow.savedata(cd_prep.outputs.final_post_image_dir, location='CDPrep/post_image_dir')
+workflow.execute()
 
-    print workflow.id
-    print workflow.status
+print workflow.id
+print workflow.status
 ```
 
 **Example Run in IPython:**
