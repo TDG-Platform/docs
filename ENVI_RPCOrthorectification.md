@@ -80,7 +80,13 @@ The output_raster image file will be written to the specified S3 Customer Accoun
 
 ### Runtime
 
-To Come...
+The following table lists all applicable runtime outputs. (This section will be completed the Algorithm Curation team). For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here).
+
+| Sensor Name | Total Pixels | Total Area (k2) | Time(secs) | Time/Area k2 |
+| ----------- | :----------: | --------------- | ---------- | ------------ |
+| IKONOS      |  29,976,302  | 273.34          | 205.855    | 0.75         |
+|Landsat-8    |              |                 |            |              | 
+
 
 
 
