@@ -23,9 +23,10 @@ gbdx = Interface()
 # Edit the following path to reflect a specific path to an image
 data = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
 
-# Note: The dem_raster port is optional, and if it is not included, the task runner will use the GMTED2010.jp2.
+# Note: The dem_raster port is optional, and if it is not included, the task runner will use the GMTED2010.jp2 as the default.
 envi_RPCO = gbdx.Task("ENVI_RPCOrthorectification")
 envi_RPCO.inputs.input_raster = data
+envi_RPCO.inputs.input_raster_band_grouping = 'multispectral'
 
 workflow = gbdx.Workflow([envi_RPCO])
 
