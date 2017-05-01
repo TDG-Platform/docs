@@ -10,7 +10,7 @@ This task can be run with Python using [gbdxtools](https://github.com/DigitalGlo
 - [Outputs](#outputs) - Task outputs and example contents.
 - [Runtime](#runtime) - Example estimate of task runtime.
 - [Advanced](#advanced) - Additional information for advanced users.
-- [Known Issues](#known-issues) - Recommended Orthorectification Options for WorldView Imagery
+- [Known Issues](#known-issues) - Recommended Orthorectification Options for WorldView, QuickBird and GeoEye-1 Imagery
 - [Contact Us](#contact-us) - Contact tech or document owner.
 
 ### Quickstart
@@ -117,7 +117,7 @@ print workflow.status
 ```
 
 ### Known Issues:  
-Not recommended for use with WorldView (includes WV01, WV02, WV03, WV04) GeoEye-1 (GE01) or QuickBird (QB02) level 1B imagery.  See background information for details on RPCOrthorectification limitations.  For Level 1B DG Sensor Imagery (including Landsat-8), Orthorectification using the [Advanced Image Preprocessor](https://github.com/TDG-Platform/docs/blob/master/Advanced_Image_Preprocessor.md) is recommended. RPCOrthorectifcation may be used with IKONOS Imagery, which is produced as a Level 2A product.
+Not recommended for use with WorldView (includes WV01, WV02, WV03, WV04) GeoEye-1 (GE01) or QuickBird (QB02) level 1B imagery.  See background information for details on RPCOrthorectification limitations.  For Level 1B DG Sensor Imagery Orthorectification using the [Advanced Image Preprocessor](https://github.com/TDG-Platform/docs/blob/master/Advanced_Image_Preprocessor.md) is recommended. RPCOrthorectifcation may be used with IKONOS Imagery, which is produced as a Level 2A product.
 
 ### Background
 For background on the development and implementation of ENVI_RPCOrthorectification see [here](http://www.harrisgeospatial.com/docs/RPCOrthorectification.html).
