@@ -71,11 +71,9 @@ The following table lists all the tasks outputs.
 | task_meta_data    |  False   | GBDX Option. Output location for task meta data such as execution log and output JSON. |
 
 
-
 ##### Output Structure
 
 The output_raster image file will be written to the specified S3 Customer Account Location in GeoTiff (\*.tif) format, with an ENVI header file (\*.hdr).
-
 
 
 ### Runtime
@@ -85,12 +83,8 @@ The following table lists all applicable runtime outputs. (This section will be 
 | Sensor Name | Total Pixels | Total Area (k2) | Time(secs) | Time/Area k2 |
 | ----------- | :----------: | --------------- | ---------- | ------------ |
 | IKONOS      |  29,976,302  | 273.34          | 205.855    | 0.75         |
-|Landsat-8    |              |                 |            |              | 
-
-
-
-
-
+ 
+ 
 ### Advanced
 Include example(s) with complicated parameter settings and/or example(s) where the task is used as part of a workflow involving other GBDX tasks.
 
@@ -130,4 +124,5 @@ For background on the development and implementation of ENVI_RPCOrthorectificati
 
 
 ### Contact
-Document owner - Kathleen Johnson (#kathleen.johnson@digitalglobe.com)
+
+Document owner - [Kathleen Johnson](#kathleen.johnson@digitalglobe.com)
