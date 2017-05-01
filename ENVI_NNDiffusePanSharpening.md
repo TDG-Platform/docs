@@ -160,4 +160,4 @@ Sun, W., B. Chen, and D.W. Messinger. "Nearest Neighbor Diffusion Based Pan Shar
 
 ### Contact Us
 
-Document Owner - Kathleen Johnson - [#kajohnso@digitalglobe.com]
+Document Owner - [Kathleen Johnson](#kajohnso@digitalglobe.com)
