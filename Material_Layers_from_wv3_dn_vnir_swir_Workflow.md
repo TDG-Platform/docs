@@ -41,7 +41,11 @@ out_cloud_scube_dir = os.path.join(out_base_dir, "CLOUD_SCUBE")
 out_layers_dir = os.path.join(out_base_dir, "LAYERS")
 
 ###### DEBUG OUTPUTS ################
-out_acomp_dir = os.path.join(out_base_dir, "Ortho_and_AComp_UTM")
+if input_data_is_1b:
+    out_acomp_dir = os.path.join(out_base_dir, "Ortho_and_AComp_UTM")
+else:
+    out_acomp_dir = os.path.join(out_base_dir, "ACOMP")
+
 out_vnir_imd_dir = os.path.join(out_base_dir, "vnir_imd_dir")
 out_swir_imd_dir = os.path.join(out_base_dir, "swir_imd_dir")
 out_cloud_vnir_dir = os.path.join(out_base_dir, "CLOUD_VNIR")
@@ -157,7 +161,12 @@ save_cloud_vnir_task = gbdx.Task("StageDataToS3",
 # 14AUG28191207-M2AS-054759622010_01_ACOMP_LULC_MASK.tif
 cmd33 = "infile=`ls $indir/dataC/*.tif`; "  # Note: back-ticks not single quotes
 cmd33 += 'infname=$(basename "$infile" .tif); '  
-cmd33 += "infprefix=${infname::34}; "
+if input_data_is_1b:
+    cmd33 += "infprefix=${infname::34}; "
+else:
+    cmd33 += "str=${infname:34:2}"
+    cmd33 += 'if [ "$str" == "_P" ]; then n=39; else n=34; fi'
+    cmd33 += "infprefix=${infname::n}; "
 cmd33 += "outfname=$infprefix'_ACOMP_LULC_MASK.tif'; "
 cmd33 += "mkdir $outdir/data; "
 cmd33 += 'gdal_calc.py -A $indir/dataW/*.tif -B $indir/dataC/*.tif --outfile=$outdir/data/$outfname '
@@ -296,6 +305,7 @@ workflow = gbdx.Workflow([first_task,
                           water_task,
                           union_task,
                           mi_task,
+                          save_mi_mask_task,
                           stack_task,
                           save_scube_task,
                           filegen_task,
