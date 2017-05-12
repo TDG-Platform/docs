@@ -14,12 +14,15 @@ To learn about the operations that can be called from within a DGLayers recipe f
 **_Material Layers (from WV3 DN VNIR and SWIR) Workflow:_** 
 
 ```shell
+#!/usr/bin/python
+
 import os
+import copy
 from gbdxtools import Interface
 gbdx = Interface()
 
 in_base_dir = "s3://gbd-customer-data/58600248-2927-4523-b44b-5fec3d278c09/seth/"
-out_base_dir = os.path.join(in_base_dir, "MATERIAL_LAYERS_050417_CC/")
+out_base_dir = os.path.join(in_base_dir, "OUTPUTS_Material_Layers/Niwot_051017/")
 
 ####### INPUTS #######
 input_data_is_1b = True  # True/False
@@ -28,6 +31,7 @@ dn_vnir_dir = os.path.join(dn_data_dir, "vnir_1b")
 dn_swir_dir = os.path.join(dn_data_dir, "swir_1b")
 recipe_dir = os.path.join(in_base_dir, "Mining_Layers/Recipes/")
 recipe_filename = "seth_recipe_small_test.txt"
+py_script_file = os.path.join(in_base_dir, "PYTHON_SCRIPTS/create_wv3_scube_text_files.py")
 
 ####### OUTPUTS #######
 out_acomp_rgb_dir = os.path.join(out_base_dir, "ACOMP_RGB")
@@ -50,26 +54,26 @@ out_mi_tmp_dir = os.path.join(out_base_dir, "MI_TMP")
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 if input_data_is_1b:
     ############## Orthorectify 1B and AComp -- ALSO converts to UTM
-    ughli_task = gbdx.Task('ughli', 
+    print "From 1B"
+    first_task = gbdx.Task('ughli', 
                         data = dn_vnir_dir, 
                         swir = dn_swir_dir, 
                         bands = "Multi,All-S",    # Suppress PAN processing in orthorectify and reproject
                         exclude_bands = "P",      # Suppress PAN processing in AComp
-                        epsg_code = "EPSG:26713", 
+                        epsg_code = "UTM", 
                         pixel_size_ms = "2.0",
                         pixel_size_swir = "7.5",
                         compute_noise = "true")
 
-    acomp_dir = ughli_task.outputs.data.value  
-
 else: # ortho
     ############## Just do AComp #############
-    acomp_task = gbdx.Task("AComp_internal",
+    print "From Ortho"
+    first_task = gbdx.Task("AComp_internal",
                            data = dn_data_dir,
                            compute_noise = True)
-    
-    acomp_dir = acomp_task.outputs.data.value
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+acomp_dir = first_task.outputs.data.value
 
 save_acomp_task = gbdx.Task('StageDataToS3', 
                     data = acomp_dir, 
@@ -121,7 +125,7 @@ rgb_task = gbdx.Task("gdal-cli",
 
 acomp_rgb_dir = rgb_task.outputs.data.value # <-------------------------- Not used downstream
 
-save_acomp_rgb_task = gbdx.Task("StageDataToS3",
+save_rgb_task = gbdx.Task("StageDataToS3",
                           data = acomp_rgb_dir,
                           destination = out_acomp_rgb_dir)
 
@@ -223,6 +227,19 @@ save_scube_task = gbdx.Task("StageDataToS3",
                             data = scube_dir,
                             destination = out_scube_dir)
 
+############# Create bands text file and wavelengths text file for Scube 
+cmd55 = "python $indir/create_wv3_scube_text_files.py $outdir"
+filegen_task = gbdx.Task("gdal-cli", 
+                      command = cmd55,
+                      data = os.path.dirname(py_script_file), 
+                      execution_strategy = 'runonce')
+
+filegen_dir = filegen_task.outputs.data.value
+
+save_filegen_task = gbdx.Task("StageDataToS3",
+                           data = filegen_dir,
+                           destination = out_scube_dir)
+
 # ########### Resample Water Mask to Supercube and cut to the overlap.
 rc_water_scube_task = gbdx.Task("resample_and_cut_001",
                     input_A = water_vnir_dir,
@@ -271,28 +288,18 @@ save_layers_task = gbdx.Task("StageDataToS3",
 
 ####################################################################################
 
-if input_data_is_1b:
-    first_task = ughli_task
-else:
-    first_task = acomp_task
-
-workflow = gbdx.Workflow([ughli_task,
-                          save_acomp_task,
+workflow = gbdx.Workflow([first_task,
                           copy_task,
-                          save_vnir_imd_task, 
-                          save_swir_imd_task, 
                           rgb_task,
-                          save_acomp_rgb_task, 
+                          save_rgb_task,
                           cloud_task,
-                          save_cloud_vnir_task,
                           water_task,
-                          save_water_vnir_task,
                           union_task,
-                          save_mi_mask_task, 
                           mi_task,
-                          save_mi_tmp_task,
                           stack_task,
                           save_scube_task,
+                          filegen_task,
+                          save_filegen_task,
                           rc_water_scube_task, 
                           save_water_scube_task,
                           rc_cloud_scube_task,
