@@ -83,6 +83,9 @@ For details on the methods of testing the runtimes of the task visit the followi
 | Sensor Name | Total Pixels | Total Area (k2) | Time(min) | Time/Area k2 |
 | ----------- | :----------: | --------------- | --------- | ------------ |
 | WV02        |  73,005,420  | 292.02          | 169.60    | 0.74         |
+| Wv03        |           | 167.091       | 167.091   | 0.98     |
+| GE01        |           | 165.061      |  312.104    |  0.53   |
+|  QB02       |           | 170.367      |  321.188    |  0.54  
 
 
 
