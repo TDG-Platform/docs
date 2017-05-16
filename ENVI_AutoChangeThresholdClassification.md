@@ -93,9 +93,12 @@ The output_raster image file will be written to the specified S3 Customer Accoun
 
 The following table lists all applicable runtime outputs. For this task two images were used to produce the runtime results. For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GitHUB page here).
 
-| Sensor Name | Total Pixels | Total Area (k2) | Time(secs) | Time/Area k2 |
-| ----------- | :----------: | --------------- | ---------- | ------------ |
-| WV02        |  73,005,420  | 292.02          | 169.60     | 0.58         |
+| Sensor Name | Total Pixels | Total Area (k2) | Time(sec) | Time/Area k2 |
+| ----------- | :----------: | --------------- | --------- | ------------ |
+| WV02        | 31,754,708  | 480.820     |  173.763  | 0.36     |
+| WV03        |  30,096,907 | 167.091      |  174.597   | 1.04    |
+| GE01        | 28,492,530  | 312.104      |  158.564   |  0.51    |
+| QB02        | 22,635,330  | 321.188      | 158.312  |  0.49    |
 
 
 ### Advanced
