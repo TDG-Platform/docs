@@ -80,7 +80,7 @@ The output_raster image file will be written to the specified S3 Customer Accoun
 The following table lists all applicable runtime outputs. (This section will be completed the Algorithm Curation team)
 For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
 
-| Sensor Name | Total Pixels | Total Area (k2) | Time(min) | Time/Area k2 |
+| Sensor Name | Total Pixels | Total Area (k2) | Time(sec) | Time/Area k2 |
 | ----------- | :----------: | --------------- | --------- | ------------ |
 | WV02        | 31,754,708  | 292.02          | 169.60    | 0.74         |
 | Wv03        |  30,096,907 | 167.091       | 167.091   | 0.98     |
