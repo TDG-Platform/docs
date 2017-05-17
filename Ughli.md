@@ -41,7 +41,7 @@ print workflow.status
 ### Inputs
 
 The following table lists all taskname inputs.
-Mandatory (optional) settings are listed as Required = True (Required = False).
+Mandatory (optional) settings are listed as Required = Yes.
 
   Name                  |  Required  |  Default              |  Valid Values       |  Description  
 ------------------------|------------|-----------------------|---------------------|-----------------------------------------------
