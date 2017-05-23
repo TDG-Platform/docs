@@ -117,7 +117,7 @@ print workflow.status
 ```
 
 ### Known Issues:  
-This algorithm provides the ability to orthorectify IKONOS imagery available on the GBDX platform as level OrthoReady-2A data products. In order to orthorectify all other DigitalGlobe imagery on GBDX as level Basic-1B data products from QuickBird, GeoEye-1 or WorldView-1/2/3 sensors we recommend using the Advanced Image Preprocessor [https://gbdxdocs.digitalglobe.com/docs/advanced-image-preprocessor] algorithm instead since it automatically uses a very high resolution DEM for elevation source during the orthorectification process which can improve terrain correction.
+This algorithm provides the ability to orthorectify IKONOS imagery available on the GBDX platform as level OrthoReady-2A data products. In order to orthorectify all other DigitalGlobe imagery on GBDX as level Basic-1B data products from QuickBird, GeoEye-1 or WorldView-1/2/3 sensors we recommend using the [Advanced Image Preprocessor](https://gbdxdocs.digitalglobe.com/docs/advanced-image-preprocessor) algorithm instead since it automatically uses a very high resolution DEM for elevation source during the orthorectification process which can improve terrain correction.
 
 ### Background
 For background on the development and implementation of ENVI_RPCOrthorectification see [here](http://www.harrisgeospatial.com/docs/RPCOrthorectification.html).
