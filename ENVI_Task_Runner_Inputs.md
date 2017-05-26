@@ -2,7 +2,7 @@
 
 
 
-In general the ENVI task runner is a GBDX execution interface for the ENVI**®** Services Engine. Part of this interface is to provide support for the various [ENVI data types](https://www.harrisgeospatial.com/docs/supporteddatatypes.html). This document will cover the more complicated use cases of specific ENVI data types, that cannot be covered by the various documents for each ENVI task. The following are the currently supported ENVI data types and their GBDX type:
+In general the ENVI task runner is a GBDX execution interface for the ENVI**®** Engine. Part of this interface is to provide support for the various [ENVI data types](https://www.harrisgeospatial.com/docs/supporteddatatypes.html). This document will cover the more complicated use cases of specific ENVI data types, that cannot be covered by the various documents for each ENVI task. The following are the currently supported ENVI data types and their GBDX type:
 
 
 

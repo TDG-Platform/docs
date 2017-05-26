@@ -126,9 +126,10 @@ For details on the methods of testing the runtimes of the task visit the followi
 
 ###Known Issues
 
-See issues for image2image
+See issues for image2image:
+    -fails if not enough tie points (<20)
 
-See issues for CloudPuncher
+See issues for CloudPuncher ???? don't have this??
 
 (### need to determine more issues during testing)
 

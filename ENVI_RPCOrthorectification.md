@@ -117,7 +117,7 @@ print workflow.status
 ```
 
 ### Known Issues:  
-Not recommended for use with WorldView (includes WV01, WV02, WV03, WV04) GeoEye-1 (GE01) or QuickBird (QB02) level 1B imagery.  See background information for details on RPCOrthorectification limitations.  For Level 1B DG Sensor Imagery Orthorectification using the [Advanced Image Preprocessor](https://github.com/TDG-Platform/docs/blob/master/Advanced_Image_Preprocessor.md) is recommended. RPCOrthorectifcation may be used with IKONOS Imagery, which is produced as a Level 2A product.
+This algorithm provides the ability to orthorectify IKONOS imagery available on the GBDX platform as level OrthoReady-2A data products. In order to orthorectify all other DigitalGlobe imagery on GBDX as level Basic-1B data products from QuickBird, GeoEye-1 or WorldView-1/2/3 sensors we recommend using the [Advanced Image Preprocessor](https://gbdxdocs.digitalglobe.com/docs/advanced-image-preprocessor) algorithm instead since it automatically uses a very high resolution DEM for elevation source during the orthorectification process which can improve terrain correction.
 
 ### Background
 For background on the development and implementation of ENVI_RPCOrthorectification see [here](http://www.harrisgeospatial.com/docs/RPCOrthorectification.html).
