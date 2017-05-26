@@ -1,8 +1,8 @@
 # Ughli
 
-The ughli GBDX task performs orthorectification and atmospheric compensation on DigitalGlobe 1B images
+The ughli GBDX task performs orthorectification and atmospheric compensation on DigitalGlobe 1B images.
 
-ughli can be run with Python using [gbdxtools](https://github.com/DigitalGlobe/gbdxtools) or through the [GBDX Web Application](https://gbdx.geobigdata.io/materials/).  
+The ughli GBDX task can be run with Python using [gbdxtools](https://github.com/DigitalGlobe/gbdxtools) or through the [GBDX Web Application](https://gbdx.geobigdata.io/materials/).  
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
@@ -72,7 +72,7 @@ data    |  Yes       |  N/A      |  Any           |  Location where output is st
 
 **Output structure**
 
-In the case where acompEnabled is true (the default), the output directory port "data" contains the orthorectified and atmospherically compensated output TIF images, with one TIF each for multispectral, pan, and swir data (if present). In addition, a "GIS_FILES" subfolder will be present in the "vnir" folder that contains vector shapefiles relevant to the VNIR strip. If SWIR imagery was processed, a "GIS_FILES" subfolder will be present in the "swir" folder that contains vector shapefiles relevant to the SWIR strip. A manifest.json file is also produced cataloging the salient output files, which can be useful for identifying output files of interest. For example:
+In the case where acompEnabled is true (the default), the output directory port "data" contains the orthorectified and atmospherically compensated output TIF images, with one TIF each for multispectral, pan, and SWIR data (if present). In addition, a "GIS_FILES" subfolder will be present in the "vnir" folder that contains vector shapefiles relevant to the VNIR strip. If SWIR imagery was processed, a "GIS_FILES" subfolder will be present in the "swir" folder that contains vector shapefiles relevant to the SWIR strip. A manifest.json file is also produced cataloging the salient output files, which can be useful for identifying output files of interest. For example:
 
     ./metrics.txt
     ./manifest.json
@@ -150,7 +150,7 @@ strip that is further divided into subfolders for each part, as well as a "GIS_F
 
 ### Advanced
 The following more complicated example performs orthorectification and atmospheric compensation on associated VNIR and SWIR strips, 
-processing only MS+SWIR (skipping PAN), and projects the output into the appropriate UTM zone. The desired MS and SWIR pixel pixel sizes are explicitly specified.
+processing only MS+SWIR (skipping PAN), and projects the output into the appropriate UTM zone. The desired MS and SWIR pixel sizes are explicitly specified.
 
     swir_1b_s3_location = "s3://gbd-customer-data/CustomerAccount#/PathToVNIR1BImage/"
     vnir_1b_s3_location = "s3://gbd-customer-data/CustomerAccount#/PathToSWIR1BImage/"
@@ -182,7 +182,7 @@ WV03|35,371,971|196.27| |
 GE| 57,498,000|332.97| |
 
 ### Issues
-Only DigitalGlobe 1B images are accepted as input. AComp processing requires at least contain the VNIR multispectral bands, and optionally may also include panchromatic data and/or SWIR data. Therefore, if acompEnabled=true, this task cannot be run on WorldView-1 imagery, or on panchromatic or SWIR bands in the absence of multispectral data.
+Only DigitalGlobe 1B images are accepted as input. AComp processing requires at least the VNIR multispectral bands, and optionally will also accept panchromatic data and/or SWIR data. Therefore, if acompEnabled=true, this task cannot be run on WorldView-1 imagery, or on panchromatic or SWIR bands in the absence of multispectral data.
 
 ### Contact
 If you have any questions or issues with this task, please contact gbdx-support@digitalglobe.com .

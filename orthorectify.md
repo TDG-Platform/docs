@@ -48,7 +48,7 @@ Mandatory (optional) settings are listed as Required = Yes.
 data                    |  Yes       |  N/A                  |  S3 bucket location |  Location of DG 1B product containing PAN/VNIR
 swir                    |  No        |  None                 |  S3 bucket location |  Location of DG 1B product containing associated SWIR
 epsg_code               |  No        |  EPSG:4326            |  EPSG:epsg-code     |  EPSG code, e.g.: "EPSG:4326". Set to "UTM" for automatic UTM zone selection 
-pixel_size_ms           |  No        |  2.0                  |  Real number        |  DG pixel size for MS parts in meters. Requires epsg_code to also be specified. Automatically determined from metadata if not specified.
+pixel_size_ms           |  No        |  2.0                  |  Real number        |  DG pixel size for MS parts in meters. Requires epsg_code to also be specified. Automatically determined from metadata if not specified. Set to "auto" to have MS pixel size computed from PAN pixel size. 
 pixel_size_pan          |  No        |  0.5                  |  Real Number        |  DG pixel size for PAN parts in meters. Requires epsg_code to also be specified. Automatically determined from metadata if not specified.
 pixel_size_swir         |  No        |  7.5                  |  Real number        |  DG pixel size for SWIR parts in meters. Requires epsg_code to also be specified. Automatically determined from metadata if not specified.
 tiling_spec_ms          |  No        |  DGHALFMETER:16       |  DG tiling spec     |  DG tiling spec for MS parts. Not allowed if epsg_code is specified.
@@ -112,7 +112,7 @@ strip that is further divided into subfolders for each part, as well as a "GIS_F
 
 
 ### Advanced
-The following more complicated example performs orthorectification and atmospheric compensation on associated VNIR and SWIR strips, 
+The following more complicated example performs orthorectification on associated VNIR and SWIR strips, 
 processing only MS+SWIR (skipping PAN), and projects the output into the appropriate UTM zone. The desired MS and SWIR pixel pixel sizes are explicitly specified.
 
     swir_1b_s3_location = "s3://gbd-customer-data/CustomerAccount#/PathToVNIR1BImage/"
