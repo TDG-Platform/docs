@@ -1,33 +1,31 @@
 # DGLayers GBDX Task
 
-The DGLayers GBDX task is a general-purpose recipe-driven workflow engine that is useful 
-for generating a wide variety of derived layers from input raster data (**_TIFF only_**). Output layers can be raster 
-layers or polygon vector layers. A DGLayers recipe is a text file that describes a sequence of layer functions 
-participating a flow graph without loops. 
+Developer: Seth Malitz
 
-A DGLayers recipe can call almost any Python array function in the numpy and scipy libraries. It can also call any of 
+The DGLayers (Derived Layer Generator) GBDX task is a general-purpose recipe-driven workflow engine that can be used to generate a wide variety of raster and vector layers from input raster data (**_TIFF only_**). A DGLayers recipe is a text file that describes a flow grapf of operations. 
+
+A DGLayers recipe can invoke almost any Python array operation in the numpy and scipy libraries. It can invoke any of 
 roughly two dozen built-in functions, including: a fast polygonize (much faster than gdal_polygonize), morphological 
-cleaning operations, spectral indices, spectral angle mapper, class coalesce 
-in a thematic map, dynamic range adjustment, high-quality edge computation, etc. 
+cleaning operations, spectral indices, spectral angle mapper, class coalesce in a thematic map, dynamic range adjustment, high-quality edge computation, etc. 
 
-Building a recipe and running DGLayers on that recipe should be considered an alternative to using the gdal-cli and gdal-cli-multiplex GBDX tasks, or building a new GBDX task, or building a GBDX workflow that chains together GBDX tasks. Here's why:
+Building a recipe and running DGLayers on that recipe should be considered an alternative to using the gdal-cli and gdal-cli-multiplex GBDX tasks, or building a new GBDX task, or building a new GBDX workflow that chains together GBDX tasks. Here are the reasons why:
 
-* Compared to gdal_cli and gdal-cli-multiplex, which allow numpy calls via gdal_calc, the DGLayers task additionally allows for calls to other Python libraries (e.g., scipy). Additionally, DGLayers recipe syntax is more user-friendly than gdal_calc syntax.
+* When chaining tasks together in a GBDX workflow, each task is run on a separate EC2 instance. This entails a lot of I/O between EC2 and s3 as the output of one task feeds into the next. By contrast, DGLayers performs all its operations on a single EC2 instance and incurs no such I/O.
 
-* DGLayers better supports rapid prototyping than gdal_cli and gdal_cli_multiplex. (Additionally, if DG internal, you can pull docker from docker hub and prototype locally.)
+* Building a new recipe for DGLayers does not involve the overhead associated with building a new GBDX task (wrapper, docker, JSON, registration, Github, etc.)
 
+* Compared to gdal_cli and gdal-cli-multiplex, which allow numpy calls via gdal_calc, the DGLayers task allows for calls to other Python libraries (e.g., scipy). More importantly, DGLayers recipe syntax is much more user-friendly than gdal_calc syntax.
 
-* Each GBDX task in a GBDX workflow incurs I/O between an EC2 machine and S3, whereas each function call in a DGLayers recipe incurs I/O only from the EC2 to the EC2 
-
-* Building a new recipe for DGLayers does not involve the overhead associated with building a new GBDX task (Docker, JSON, registration, Github, etc.)   
+* DGLayers auto-names all output directories and files, and for some operations, auto-generates text legend files.
 
 * DGLayers, when run in "batch mode", can deliver parallelism across the cores of an EC2 instance
 
-* DGLayers automatically names intermediate files and output files
+* DGLayers is ideally suited for rapid prototyping of new products 
 
-Input rasters can be single band or multi-band, and of any data type. **_Input raster files 
+
+Input rasters can be single band or multi-band, and be of any data type. **_Input raster files 
 can be arbitrarily large_**. DGLayers will decompose large rasters into strips for processing and 
-then reassemble at the end. **_Input raster files must have .tif or .TIF endings_**.
+reassemble at the end. **_Input raster files must have .tif or .TIF endings_**.
 
 Input raster data is presented to DGLayers in one or more input directories, each with one or more raster files.
 If there are multiple input directories, each with a single raster, then those rasters must be 
@@ -41,8 +39,7 @@ the first file C1 in C. Similarly, this must hold for the second file of A, the 
 A, and so on. The association {A1, B1, C1} is a **_raster group_**. Similarly, {A2, B2, C2} is an
 input raster group, and so on. Raster outputs for a raster group are consistent with the rasters in that group. 
 
-There might be one output directory or multiple output directories. The number of files (raster or shape) in each 
-output directory is the same as the number of files in each input directory. 
+Depending on the recipe, there could be one output directory or multiple output directories. 
   
 The DGLayers GBDX task can be run through a simple Python script using  
 [gbdxtools](https://github.com/DigitalGlobe/gbdxtools/blob/master/docs/user_guide.rst), 
@@ -56,90 +53,106 @@ or run separately after the DGLayers process is completed.
 ***************************************************************************
 -->
 
-**Example DGLayers Workflow:** 
+**DGLayers Workflow - Example 1:** 
 
 ```shell
 	from gbdxtools import Interface
 	gbdx = Interface()
 
-	# In this example SRC1, SRC2, and SRC3 are input port/directory symbols that appear in the 
+	# In this example SRC1, SRC2, and SRC3 are input directory ports that appear in the 
 	# DGLayers recipe file. Each of these input directories must have the same number of 
-	# TIFF raster files. In the lexicographic ordering: "SRC1" < "SRC2" < "SRC3". So the 
-	# file names in directory SRC1 will be used to name the output files. 
+	# TIFF raster files. The input directory port names satsify "SRC1" < "SRC2" < "SRC3"
+	# in the lexicographic ordering. This means that the file names in SRC1 will be used 
+	# to name the output files. 
 	dgl_task = gbdx.Task("DGLayers", 
-					 SRC1 = 's3://my_dir/my_indir_1/', 
-					 SRC2 = 's3://my_dir/my_indir_2/', 
-					 SRC3 = 's3://my_dir/my_indir_3/', 
-					 recipe_dir = 's3://my_dir/my_recipes/', 
+					 SRC1 = 'my_indir_1/', 
+					 SRC2 = 'my_indir_2/', 
+					 SRC3 = 'my_indir_3/', 
+					 recipe_dir = 'my_recipe_dir/', 
 					 recipe_filename = 'my_recipe.txt',
-					 generate_top_dir = 'False') 
+					 generate_top_dir = 'False')	
 					 
 	workflow = gbdx.Workflow([dgl_task])
 
-	# DST_1 and DST_2 are output port/directory symbols that appears in the DGLayers recipe file.  	
+	# Because the argument 'generate_top_dir' is set to False, we have the following behavior:
+
+	# DST_1 and DST_2 are output directory ports that appear in the DGLayers recipe file.  	
 	workflow.savedata(dgl_task.outputs.DST_1.value, location='my_outdir_1')
 	workflow.savedata(dgl_task.outputs.DST_2.value, location='my_outdir_2')
 
 	# The LOGS symbol does not appear in the DGLayers recipe file. It denotes a
-	# generated output directory of log files that is created by default.	
+	# generated output directory port for log files (including recipe file and other 
+	# input configuration files) and is created by default.	
 	workflow.savedata(dgl_task.outputs.LOGS.value, location='my_outdir_logs')	
 
 	workflow.execute()
 	print workflow.id
 ```	
 
-**Example DGLayers Workflow:** 
+**DGLayers Workflow - Example 2:** 
 
 ```shell
 	from gbdxtools import Interface
 	gbdx = Interface()
 
-	# In this example SRC1, SRC2, and SRC3 are input directory symbols that appear in the 
-	# DGLayers recipe file. Each of these input directories must have the same number of 
-	# TIFF raster files. In the lexicographic ordering: "SRC1" < "SRC2" < "SRC3". So the 
-	# file names in directory SRC1 will be used to name the output files. 
 	dgl_task = gbdx.Task("DGLayers", 
-					 SRC1 = 's3://my_dir/my_indir_1/', 
-					 SRC2 = 's3://my_dir/my_indir_2/', 
-					 SRC3 = 's3://my_dir/my_indir_3/', 
-					 recipe_dir = 's3://my_dir/my_recipes/', 
+					 SRC1 = 'my_indir_1/', 
+					 SRC2 = 'my_indir_2/', 
+					 SRC3 = 'my_indir_3/', 
+					 recipe_dir = 'my_recipe_dir/', 
 					 recipe_filename = 'my_recipe.txt',
-					 generate_top_dir = 'True')	#<---------------------- Note
+					 generate_top_dir = 'True')	
 					 
 	workflow = gbdx.Workflow([dgl_task])
 
-	# Because the argument "generate_top_dir" was set to 'True' in the above call to dgl_task,
-	# a single top-level output port/directory, DST_LAYERS, will be created that contains 
-	# subdirectories corresponding to the output symbols in the DGLayers recipe file. These 
-	# sub-directories will not have output ports of their own. The advantage of a top-level 
-	# DST_LAYERS port is that the workflow does not need to know what output
-	# subdirectories are specified by the recipe file. This workflow is thus completely 
-	# decoupled from the recipe file. 
+	# Because the argument "generate_top_dir" was set to True, a single top-level output 
+	# port, named DST_LAYERS, gets created to house output sub-directories associated with 
+	# output symbols in the DGLayers recipe file. These output sub-directories will not have 
+	# output ports of their own. The advantage of a top-level DST_LAYERS port is that the 
+	# workflow does not need to know what output sub-directories are specified by the recipe. 
+	# In this way, the workflow does not need to have knowledge of the recipe internals.  
 	workflow.savedata(dgl_task.outputs.DST_LAYERS.value, location='my_outdir')
 
 	workflow.execute()
 	print workflow.id
 ```
 
-The following is an associated recipe file 
-for the above workflows. In this recipe, it is assumed that SRC2 and SRC3 contain single-band 
-0/1 TIFF files and SRC1 is an arbitrary single-band TIFF file. 
+The following are example recipe files for the above workflows. In the 
+present situation, it is assumed that SRC2 and SRC3 contain single-band 0/1 
+TIFF files and SRC1 is an arbitrary single-band TIFF file. 
 
-**Example Recipe File:** 
+**Recipe File (for DGLayers Workflow -- Example 1):** 
 
 ```shell
-	#########################################################################
-	###################   DGLayers Recipe File    ###########################
-	#########################################################################
+#########################################################################
+###################   DGLayers Recipe File    ###########################
+#########################################################################
 
-	BEGIN_RENAME_OUTPUTS
-	PREFIX_LEN 31
-	n0 DST_1 union_mask
-	n5 DST_2 burn
-	END_RENAME_OUTPUTS
+BEGIN_RENAME_OUTPUTS
+PREFIX_LEN 31
+n0 DST_1 umask
+n5 DST_2 burn
+END_RENAME_OUTPUTS
 
-	n0 = np.logical_or(SRC2, SRC3) --deliver
-	n5 = np.where(n0, 255, SRC1) --deliver
+n0 = np.logical_or(SRC2, SRC3) --deliver
+n5 = np.where(n0, 255, SRC1) --deliver
+```	
+
+**Recipe File (for DGLayers Workflow -- Example 2):** 
+
+```shell
+#########################################################################
+###################   DGLayers Recipe File    ###########################
+#########################################################################
+
+BEGIN_RENAME_OUTPUTS
+PREFIX_LEN 31
+n0 UNION_MASK umask
+n5 BURNED_IN burn
+END_RENAME_OUTPUTS
+
+n0 = np.logical_or(SRC2, SRC3) --deliver
+n5 = np.where(n0, 255, SRC1) --deliver
 ```	
  
 <!--
@@ -163,7 +176,7 @@ for the above workflows. In this recipe, it is assumed that SRC2 and SRC3 contai
 	* type: 'string' 
     * name: 'recipe_filename' 
 	
-* Create just one output port, DST_LAYERS, that contains subdirectories ('True' or 'False')? If 'False' then an output port is created for each symbol beginning "DST" in the recipe file:
+* Argument specifies ('True' or 'False') whether or not to create just one output port, DST_LAYERS, to contain the output sub-directories specified in the recipe file? If 'False', then an output port will be created for each output symbol beginning "DST" in the recipe file:
 	* required: 'True' 
 	* type: 'string' 
     * name: 'generate_top_dir' 	
@@ -182,26 +195,26 @@ for the above workflows. In this recipe, it is assumed that SRC2 and SRC3 contai
 ## Recipe File 
 
 A DGLayers recipe file mentions symbols (directory IDs) and commands (layer operations). 
-Symbols that begin with "SRC" represent input raster (source) directories.
-Symbols that begin with "DST" represent output (destination) directories.
-Symbols that begin "Nx" or "nx", where x is a digit, represent derived directories 
-that are local to the EC2 instance. Symbols can be viewed as nodes in a flow graph. 
-Each command can be viewed as a many-to-one "funnel-arc" from one or more input nodes to 
+Symbols that begin with "SRC" represent input directory ports. 
+Symbols that begin with "DST" represent output directory ports.
+Symbols that begin "Nx" or "nx", where x is a digit, represent intermediate directories. 
+Symbols can be viewed as nodes in a flow graph. 
+Each command can be viewed as a "funnel-arc" from one or more input nodes to 
 a single output node. The resulting flow graph must not contain cycles. 
 
 Other aspects of recipe syntax:
 
 * Comment lines begin with "#". White space lines are ignored. 
 
-* All source (input) directory ID's must begin with "SRC". Examples: SRC, SRC1, SRC2_DSM. Suppose your source symbols are SRC1_fred, SRC2_bill, SRC3_ted. Since "SRC1_fred" is the first symbol in the lexicographic ordering of the symbols, its file names will be used in the naming of the output files generated by DGLayers. 
+* All source (input) directory symbols must begin with "SRC". Examples: SRC, SRC1, SRC2_DSM. Suppose your source symbols are SRC1_fred, SRC2_bill, SRC3_ted. Since "SRC1_fred" is the first symbol in the lexicographic ordering of the symbols, its file names will be used in the naming of the output files generated by DGLayers. 
 
-* All derived directory ID's must begin with 'Nx' or 'nx' where "x" **_is a digit_**. Examples include: N2, n35A, n4_tree_mask. **_However, double underscore in the ID is not allowed_**.
+* All derived directory symbols must begin with 'Nx' or 'nx' where "x" **_is a digit_**. Examples include: N2, n35A, n4_tree_mask. **_However, double underscore in the symbol is not allowed_**.
 
-* All persistent output directory ID's must be renamed so as to begin with "DST". Examples: DST, DST_2, DST33, DST_NDVI 
+* All symbols representing output directory ports must begin with "DST". Examples: DST, DST_2, DST33, DST_NDVI 
 
-* Putting the "--deliver" option after any command indicates that the output node represents a persistent (deliverable) output directory. If you do not specifying this option, the directory is not available for output and will be erased.
+* Putting the "--deliver" option after any command indicates that the output directory is deliverable. Otherwise, the directory will go away when the DGLayers task invocation ends. 
 
-* To indicate that all derived directories are to be deliverable, use the DELIVER_ALL tag prior the command sequence
+* To indicate that all intermediate directories are deliverable: place the tag, DELIVER_ALL, prior the command sequence
 
 * To suppress a passage of the recipe, bracket the passage between tags BEGIN_IGNORE and END_IGNORE 
 
@@ -265,91 +278,10 @@ polygonize --outdirID n4 --indirID n3 --deliver
 
 ```shell
 #########################################################################
-####################   DGLayers Recipe File    ##########################
-#########################################################################
-
-# Create Mining Layers -- Indices, SAM class map, and combination mask
-# Assumes the following input symbols:
-# 	SRC1_SCUBE -- AComp'd supercube 0-10000 uint16 image
-# 	SRC2_CLOUD -- cloud mask with 255 = cloud, 0 = non-cloud
-# 	SRC3_WATER -- water mask with 255 = water, 0 = non-water
-
-#------------------------------------------------------------------------
-#          Optional file symbols must begin with "FILE_" 
-#------------------------------------------------------------------------
-
-FILE_1 = WorldView3_mineral_indices_20150424_SMmods.exp
-FILE_2 = general_minerals_for_testing_simplified_WV3.txt
-
-#------------------------------------------------------------------------
-#	Rename output directories and files.
-# 	Use sandwiched pair: BEGIN_RENAME_OUTPUTS, END_RENAME_OUTPUTS
-#   PREFIX_LEN <j>: means preserve the first j characters of SRC input 
-#       file names to use in the names of corresponding output files. 
-#   Triplets of form: <outdir_id> <outdir_name> <suffix>. Indicates 
-#   	that directory <outdir_id> is to be renamed <outdir_name> and 
-#		that the file names will involve the suffix string <suffix>
-#------------------------------------------------------------------------
-
-BEGIN_RENAME_OUTPUTS
-PREFIX_LEN 31
-n1i DST_INDICES indices
-n1m DST_CLASSMAP classmap
-n5s DST_COMBO_MASK comboMask
-END_RENAME_OUTPUTS
-
-#------------------------------------------------------------------------
-#                             Process Flow 
-#------------------------------------------------------------------------
-
-##### black fill
-subset_bands --outdirID n1b --indirID SRC1_SCUBE -bands 9
-n2b = np.where(n1b == 0, 1, 0).astype(np.bool) 
-
-##### veg mask 
-indices -outdirID n1v -indirID SRC1_SCUBE -indexIDandExp NDVI (B7-B5)/(B7+B5) -noDataValIn 0 -noDataValOut 0 
-n2v = np.where(n1v > 0.3, 1, 0).astype(np.bool) 
-
-##### Dark mask 
-indices -outdirID n1d -indirID SRC1_SCUBE -indexIDandExp AVG (B2+B3+B5)/3 -noDataValIn 0 -noDataValOut 0 
-n2d = np.where(n1d < 500, 1, 0).astype(np.bool)  
-
-##### Indices 
-indices -outdirID n1i -indirID SRC1_SCUBE -indexIDsFromFile FILE_1 all -noDataValIn -0 -noDataValOut 9999 -deliver
-
-##### Class map
-spec_angle_mapper -outdirID n1m -indirID SRC1_SCUBE -materialIDsFromFile FILE_2 all -defAngThreshRad 0.175 -rules -noDataValIn 0 -noDataValOut 255 -deliver
-
-################
-### Merge Masks
-################
-
-### Dark --> 1 
-n1s = np.where(n2d, 1, 0).astype(np.uint8) 
-### Vegetation --> 2
-n2s = np.where(n2v, 2, n1s).astype(np.uint8)
-### Water --> 3
-n3s = np.where(SRC3_WATER, 3, n2s).astype(np.uint8)
-### Cloud --> 4 
-n4s = np.where(SRC2_CLOUD, 4, n3s).astype(np.uint8)
-### Black fill --> 5
-n5s = np.where(n2b, 5, n4s).astype(np.uint8) -deliver
-```
-
-<!--
-***************************************************************************
--->
-
-**Example Recipe File:** 
-
-```shell
-#########################################################################
 ###################   DGLayers Recipe File    ##########################
 #########################################################################
 #
-# Create 2m Tree Digital Height Model (TDHM) for PSMA from 
-# 2m DSM, 2m DTM, and 2m LULC.
-# Assumes the following input symbols:
+# Create Tree Digital Height Model (TDHM) from DSM, DTM, and LULC.
 # 	SRC1_lulc -- LULC, 2m, 8-bit
 # 	SRC2_dsm  -- DSM, 2m, 32-bit, no_data = -9999
 # 	SRC3_dtm  -- DTM, 2m, 32-bit, no_data = -8888
@@ -366,7 +298,7 @@ n5s = np.where(n2b, 5, n4s).astype(np.uint8) -deliver
 
 BEGIN_RENAME_OUTPUTS
 PREFIX_LEN 18
-n5_tree_dhm DST TREE_DHM
+n5_tree_dhm  DST_TREE_DHM  tree_dhm
 END_RENAME_OUTPUTS
 
 #------------------------------------------------------------------------
@@ -393,11 +325,124 @@ n5_tree_dhm = np.where(n3_umask, -8888, n4_dhm) --deliver
 ***************************************************************************
 -->
 
+**Example Recipe File:** 
+
+```shell
+#########################################################################
+###################   DGLayers Recipe File    ##########################
+#########################################################################
+
+# Build Material Layers 
+# 	SRC2_CLOUD -- cloud mask with 255 = cloud, 0 = non-cloud
+# 	SRC3_WATER -- water mask with 255 = water, 0 = non-water
+# 	SRC1_SCUBE -- AComp'd supercube 0 - 10000 uint16 image
+
+#------------------------------------------------------------------------
+#          Optional file symbols must begin with "FILE_" 
+#------------------------------------------------------------------------
+
+FILE_1 = WorldView3_mineral_indices_20150424_SMmods.exp
+FILE_2 = general_minerals_for_testing_simplified_WV3.txt
+
+#------------------------------------------------------------------------
+#	Optional renaming of output directories and files.
+# 	Use sandwiched pair: BEGIN_RENAME_OUTPUTS, END_RENAME_OUTPUTS
+#   PREFIX_LEN length of file name prefix from SRC file that will be 
+#		used in the file name of corresponding output files
+#   Triplets of form: <outdir_id> <outdir_name> <suffix>. Indicates 
+#   	that directory <outdir_id> is to be renamed <outdir_name> and 
+#		that the file names will involve the suffix string <suffix>
+#------------------------------------------------------------------------
+
+BEGIN_RENAME_OUTPUTS
+PREFIX_LEN 34
+n1i DST_INDICES indices
+n1m DST_CLASSMAP classmap
+n5_cmask DST_COMBO_MASK comboMask
+n0_poly DST_POLYGONS polys
+END_RENAME_OUTPUTS
+
+#------------------------------------------------------------------------
+#                             Process Flow 
+#------------------------------------------------------------------------
+
+#######################
+### black fill
+#######################
+
+subset_bands --outdirID n1b --indirID SRC1_SCUBE -bands 9
+n2b = np.where(n1b == 0, 1, 0).astype(np.bool) 
+
+#######################
+### veg mask 
+#######################
+
+indices -outdirID n1v -indirID SRC1_SCUBE -indexIDandExp NDVI (B7-B5)/(B7+B5) -noDataValIn 0 -noDataValOut 0 
+n2v = np.where(n1v > 0.3, 1, 0).astype(np.bool) 
+
+#######################
+### Dark mask 
+#######################
+
+indices -outdirID n1d -indirID SRC1_SCUBE -indexIDandExp AVG (B2+B3+B5)/3 -noDataValIn 0 -noDataValOut 0 
+n2d = np.where(n1d < 500, 1, 0).astype(np.bool)  
+
+#######################
+### Indices 
+#######################
+
+# Using the noDataValOut of black fill
+indices -outdirID n1i -indirID SRC1_SCUBE -indexIDsFromFile FILE_1 all -noDataValIn -0 -noDataValOut 9999 -deliver
+
+#######################
+### Class map
+#######################
+
+# Use -rules if want rules file
+# Note: tolerance = 0.125
+spec_angle_mapper -outdirID n1m -indirID SRC1_SCUBE -materialIDsFromFile FILE_2 all -defAngThreshRad 0.125 -rules -noDataValIn 0 -noDataValOut 255 -deliver
+
+###################################
+### Merge masks into combined mask
+###################################
+
+### Dark --> 1 
+n1s = np.where(n2d, 1, 0).astype(np.uint8) 
+### Vegetation --> 2
+n2s = np.where(n2v, 2, n1s).astype(np.uint8)
+### Water --> 3
+n3s = np.where(SRC3_WATER, 3, n2s).astype(np.uint8)
+### Cloud --> 4 
+n4s = np.where(SRC2_CLOUD, 4, n3s).astype(np.uint8)
+### Black fill --> 5
+n5_cmask = np.where(n2b, 5, n4s).astype(np.uint8) -deliver
+
+#####################
+### Polygons
+#####################
+
+### Subset Amphibole and Muscovite (Outputs README)
+subset_bands -outdirID n0_idx -indirID n1i -bands 9 14 
+
+### Mask the layers (Outputs README)
+mask_burn --outdirID n0_midx --indirID n0_idx --indirMaskID n5_cmask --maskVal 0 
+
+### Theshold the layers (Outputs README)
+threshold_the_stack --outdirID n0_thresh --indirID n0_midx --threshPairs (1.25, 2.0) (1.10, 1.75) 
+
+### Polygonize the layers 
+polygonize -outdirID n0_poly -indirID n0_thresh --deliver
+```
+
+<!--
+***************************************************************************
+-->
+
 ## Python-like recipe commands
 In a DGLayers recipe you can call virtually any Python function (from numpy
-or scipy libraries) that goes from one or more numpy arrays (of same row-column dimension) 
+or scipy libraries) that goes from one or more numpy arrays, all of the same row-column dimension,
 to a new numpy array of the same row-column dimension. The functions you see below are
-some examples that satisfy the property. See Internet for descriptions.
+examples that satisfy the property. See Internet for descriptions.
 ```shell				
 # In the recipe, use the syntax: <node_id> = <library>.<function>(<arguments>) 
 # For numpy functions, <library> equals "np" rather than "numpy"
@@ -460,7 +505,7 @@ edge_nb
 # Miscellaneous 
 coalesce_classmap (plus text legend)
 indices (plus text legend)
-mask_burn
+mask_burn (plus text legend)
 posterize (plus text legend)				
 rgb_to_hsv
 skeletonize (<---- coming soon)
@@ -471,12 +516,12 @@ other_class_algs (<------ coming soon from J. Shafer)
 polygonize	
 		
 # Threshold
-thresh_minmax_the_band	(plus text legend)
-thresh_minmax_the_stack (plus text legend)	
+threshold_the_band	(plus text legend)
+threshold_the_stack (plus text legend)	
 
 # Utilities		
 stack_bands	
-subset_bands	
+subset_bands (plus text legend)
 ```
 
 <!--
@@ -490,14 +535,14 @@ classmap_argmin -outdirID <node_id> -indirID <node_id>  -noDataVal <val>
 # Related: 
 classmap_argmax
 ```
-The above command takes as input a multi-band raster and returns a single-band UCHAR raster. For each multi-band input pixel, this function determines which band has the minimum value and writes that band index to the corresponding output pixel. Band indexing begins at 1. If the multi-band pixel contains a <no_data_val>, then 0 is written to the output pixel. If the input stack is accompanied by a text legend that was generated by DGLayers, a text legend (README.txt) will be generated for the output raster. **_DONE_**
+The above command takes as input a multi-band raster and returns a single-band UCHAR raster. For each multi-band input pixel, this function determines which band has the minimum value and writes that band index to the corresponding output pixel. Band indexing begins at 1. If the multi-band pixel contains a <no_data_val>, then 0 is written to the output pixel. If the input stack is accompanied by a text legend that was generated by DGLayers, a text legend README.txt will be generated for the output raster. 
 
 ### Binary morphology 
 **_Command:_**
 ```shell
 <node_id> = do_8_conn_to_4_conn(<node_id>) 
 ```
-The above command takes as input a single-band 0-1 UCHAR raster and returns a single-band 0-1 UCHAR raster. This function adds 1's as necessary to create 4-connected regions of 1's from 8-connected regions of 1's. **_DONE_**
+The above command takes as input a single-band 0-1 UCHAR raster and returns a single-band 0-1 UCHAR raster. This function adds 1's as necessary to create 4-connected regions of 1's from 8-connected regions of 1's. 
 
 **_Command:_**
 ```shell
@@ -513,7 +558,7 @@ The above command takes as input a single-band 0-1 UCHAR raster and returns a si
 	binary_erase_fat_ones, binary_erase_fat_zeros, 	
 	binary_erase_thin_ones, binary_erase_thin_zeros
 ```
-The above command takes as input a single-band 0-1 UCHAR raster and returns a single-band 0-1 UCHAR raster. This function dilates the 1's by a disc of the specified radius in specified units. Edge effects are handled correctly. All the related commands listed have the same interface. **_DONE_**
+The above command takes as input a single-band 0-1 UCHAR raster and returns a single-band 0-1 UCHAR raster. This function dilates the 1's by a disc of the specified radius in specified units. Edge effects are handled correctly. All the related commands listed have the same interface. 
 
 **_Command:_**
 ```shell
@@ -522,32 +567,32 @@ binary_erase_small_blobs_ones --outdirID <node_id> --indirID <node_id>  --maxWid
 # Related: 
 	binary_erase_small_blobs_zeros
 ```
-The above command takes as input a single-band 0-1 UCHAR raster and returns a single-band 0-1 UCHAR raster. This function erases any blob of 1's that fits inside a rectangle (not assumed axis-aligned) of the specified dimensions in the specified units. **_DONE_**
+The above command takes as input a single-band 0-1 UCHAR raster and returns a single-band 0-1 UCHAR raster. This function erases any blob of 1's that fits inside a rectangle (not assumed axis-aligned) of the specified dimensions in the specified units. 
 
 ### Contrast stretch 
 ```shell
 dra_single_band --outdirID <node_id> --indirID <node_id> 
 ```
-The above command takes as input a single-band raster of USHORT 11-bit (0-2047) and returns a single-band raster of USHORT 11-bit (0-2047). This function performs a data-driven dynamic range adjustment of the input raster. **_DONE_**
+The above command takes as input a single-band raster of USHORT 11-bit (0-2047) and returns a single-band raster of USHORT 11-bit (0-2047). This function performs a data-driven dynamic range adjustment of the input raster. 
 
 ### Filters
 **_Command:_**
 ```shell
 <node_id> = convolve_3x3(<node_id>) 
 ```
-The above command takes as input a multi-band raster of any data type and returns a multi-band raster of the same data type and with the same number of bands. Each band of the output raster is the convolution of the 3x3 equal-weights averaging kernel and the corresponding band of the input raster.   **_DONE_**
+The above command takes as input a multi-band raster of any data type and returns a multi-band raster of the same data type and with the same number of bands. Each band of the output raster is the convolution of the 3x3 equal-weights averaging kernel and the corresponding band of the input raster.   
 
 **_Command:_**
 ```shell
 <node_id> = median_3x3(<node_id>) 
 ```
-The above command takes as input a multi-band raster of any data type and returns a multi-band raster of the same data type and with the same number of bands. Each band of the output raster is obtained by applying the 3x3 median filter kernel to the corresponding band of the input raster. **_DONE_**
+The above command takes as input a multi-band raster of any data type and returns a multi-band raster of the same data type and with the same number of bands. Each band of the output raster is obtained by applying the 3x3 median filter kernel to the corresponding band of the input raster. 
 
 **_Command:_**
 ```shell
 edge_nb --outdirID <node_id> --indirID <node_id> 
 ```
-The above command takes as input a single-band raster of USHORT 11-bit (0-2047) and returns a single-band raster of USHORT 11-bit (0-2047). This function computes "edge-strength" using the legacy GeoEye implementation of Navatia-Babu edge detection. This function would typically be called on a "prepared" input raster, one that has been dynamically range adjusted (via a call to built-in command "dra_single_band") and smoothed (via call to built-in command "convolve_3x3"). Then "edges" can be obtained by thresholding this edge-strength raster. **_DONE_**
+The above command takes as input a single-band raster of USHORT 11-bit (0-2047) and returns a single-band raster of USHORT 11-bit (0-2047). This function computes "edge-strength" using the legacy GeoEye implementation of Navatia-Babu edge detection. This function would typically be called on a "prepared" input raster, one that has been dynamically range adjusted (via a call to built-in command "dra_single_band") and smoothed (via call to built-in command "convolve_3x3"). Then "edges" can be obtained by thresholding this edge-strength raster. 
 
 ### Miscellaneous
 **_Command:_**
@@ -565,7 +610,7 @@ Example coalesce file:
 	5 : Mineral : 
 	6 : Unknown Label 1 : 29
 ```
-The above command takes as input a single-band UCHAR raster and returns a single-band UCHAR raster. The specified coalesce-file tells this function which old class labels of the input raster are to be mapped to which new class labels of the output raster. Every old class label must be assigned to a new class label. This coalesce-file must begin with a single header line. Each subsequent line must be of the form (new label) : (name) : (list of old labels). The latter list can be empty. **_DONE_**
+The above command takes as input a single-band UCHAR raster and returns a single-band UCHAR raster. The specified coalesce-file tells this function which old class labels of the input raster are to be mapped to which new class labels of the output raster. Every old class label must be assigned to a new class label. This coalesce-file must begin with a single header line. Each subsequent line must be of the form (new label) : (name) : (list of old labels). The latter list can be empty. 
 
 **_Command:_**
 ```shell
@@ -574,7 +619,7 @@ indices -outdirID <node_id> -indirID <node_id> -indexIDandExp <index_name> <band
 # Example:
 	indices -outdirID n4 -indirID n2 -indexIDandExp NDVI (b7-b5)/(b7+b5) -noDataValIn 0 -noDataValOut 9999
 ```
-The above command takes as input a multi-band raster of any data type and returns a multi-band raster of FLOAT32 and a text legend (README.txt). The band math expression can involve parentheses, arithmetic operations, exponent (carrot), numbers, log, and sqrt, **_but not spaces_**. Designate bands with B1, B2, B3,... or b1, b2, b3,.... **_DONE_**
+The above command takes as input a multi-band raster of any data type and returns a multi-band raster of FLOAT32 and a text legend README.TXT. The band math expression can involve parentheses, arithmetic operations, exponent (carrot), numbers, log, and sqrt, **_but not spaces_**. Designate bands with B1, B2, B3,... or b1, b2, b3,.... 
 
 **_Command:_**
 ```shell
@@ -586,20 +631,20 @@ indices --outdirID <node_id> --indirID <node_id> --indexIDsFromFile <file_symbol
 ```
 Example index file:
 ```shell
-	# ENVI EXPRESSIONS
-	B5/B3 : Ferric oxide composition
-	(B13/B7) + (B3/B5) : Ferrous, Fe2+
-	B11/B13 : Laterite
-	B11/B5 : Gossan
-	B13/B11 : Ferrous iron index
+# ENVI EXPRESSIONS
+B5/B3 : Ferric oxide composition
+(B13/B7) + (B3/B5) : Ferrous, Fe2+
+B11/B13 : Laterite
+B11/B5 : Gossan
+B13/B11 : Ferrous iron index
 ```
-The above command takes as input a multi-band raster of any data type and returns a multi-band raster of FLOAT32 and a text legend (README.txt). This function builds an index raster stack according to the band math expressions contained in an index file. Command syntax allows the user to reference specific indices within the file or reference all indices within the file. The file may contain any number of comment lines that begin with "#" and blank lines -- these will ignored. Each non-ignored line must be of the form (band_math) : (index_name). The (band_math) can involve spaces, parentheses, arithmetic operations, exponent (carrot), numbers, log, and sqrt. The (index_name) can be any string, and may contain spaces, commas, and so on, but not colons. **_If the user is referencing a subset of the file indices, then every index name in the file must be a string without spaces_**. The bands in the band math expressions must be labelled B1, B2, B3,.... or b1, b2, b3,.... If the user references an ordered subset of indices in the file, then the ordering of the output bands corresponds to the ordered subset. If the user references all the indices in the file, then the ordering of the output bands corresponds to the file ordering. **_DONE_**
+The above command takes as input a multi-band raster of any data type and returns a multi-band raster of FLOAT32 and a text legend README.txt (as well as a README_22.txt for ENVI users). This function builds an index raster stack according to the band math expressions contained in an index file. Command syntax allows the user to reference specific indices within the file or reference all indices within the file. The file may contain any number of comment lines that begin with "#" and blank lines -- these will ignored. Each non-ignored line must be of the form (band_math) : (index_name). The (band_math) can involve spaces, parentheses, arithmetic operations, exponent (carrot), numbers, log, and sqrt. The (index_name) can be any string, and may contain spaces, commas, and so on, but not colons. **_If the user is referencing a subset of the file indices, then every index name in the file must be a string without spaces_**. The bands in the band math expressions must be labelled B1, B2, B3,.... or b1, b2, b3,.... If the user references an ordered subset of indices in the file, then the ordering of the output bands corresponds to the ordered subset. If the user references all the indices in the file, then the ordering of the output bands corresponds to the file ordering. 
 
 **_Command:_**
 ```shell
 mask_burn --outdirID <node_id> --indirID <node_id> --indirMaskID <node_id> -maskVal <val>
 ```
-The above command takes as input a multi-band "source" raster of any data type and a single-band "mask" raster, and returns a multi-band raster identical to the source raster except that wherever the mask raster is True, the value for "-maskVal" is burned through all the layers of the source raster. **_DONE_**
+The above command takes as input a multi-band "source" raster of any data type and a single-band "mask" raster, and returns a multi-band raster identical to the source raster except that wherever the mask raster is True, the value for "-maskVal" is burned through all the layers of the source raster. 
 
 **_Command:_**
 ```shell
@@ -608,13 +653,13 @@ posterize --outdirID <node_id> --indirID <node_id> --cutoffs <val_1> <val_2> ...
 # Example:
 	posterize --outdirID n2 --indirID n1 --cutoffs 0.3 0.5 0.6 
 ```
-The above command takes as input a single-band raster of any data type and returns a single-band raster of UCHAR and a text legend (README.txt). In the example above, the output raster has value 0 where input raster in (-infinity, 0.3], value 1 where input raster in (0.3, 0.5], value 2 where input raster in (0.5, 0.6], and so on. **_DONE_**
+The above command takes as input a single-band raster of any data type and returns a single-band raster of UCHAR and a text legend README.TXT. In the example above, the output raster has value 0 where input raster in (-infinity, 0.3], value 1 where input raster in (0.3, 0.5], value 2 where input raster in (0.5, 0.6], and so on. 
 
 **_Command:_**
 ```shell
 rgb_to_color_space --outdirID <node_id> --indirID <node_id> -rgb <r_band> <g_band> <b_band> -colorSpace HSV 
 ```
-The above command takes as input a multi-band AComp'd reflectance raster of USHORT (0-10000) and returns a 3-band raster of UCHAR. It converts specified RGB layers to HSV (see Wikipedia), in that order. The "-rgb" option identifies which three bands of the input raster comprise R, G, B, in that order. Band indexing begins at 1. **_DONE_**
+The above command takes as input a multi-band AComp'd reflectance raster of USHORT (0-10000) and returns a 3-band raster of UCHAR. It converts specified RGB layers to HSV (see Wikipedia), in that order. The "-rgb" option identifies which three bands of the input raster comprise R, G, B, in that order. Band indexing begins at 1. 
 
 **_Command:_**
 ```shell
@@ -662,7 +707,7 @@ Example angle threshold file:
 	alunite1.spc : 0.20
 	gypsum1.spc : 0.18
 ```
-The above command takes as input a multi-band AComp'd reflectance raster of USHORT (0-10000) and returns a single-band "class map" raster of UCHAR, an optional multi-band "rules" ("angles") raster of USHORT, and a text legend (README.txt) accompanying each. This function applies the usual Spectral Angle Mapping calculation to produce the rasters. The "rules" raster will only be generated when the "-rules" option is invoked. The "rules" raster is computed as the integer part of "angle(radians) x 10000". Depending on input file size and the number of materials specified, the "rules" raster can be a very large file. The number of bands in the "rules" raster is the same as the number of materials referenced by the user, and the ordering of the bands corresponds to the ordering in the material list referenced by the user. If the user references all the materials in the spectral library, then the ordering of the output bands follows the file order of materials. 
+The above command takes as input a multi-band AComp'd reflectance raster of USHORT (0-10000) and returns a single-band "class map" raster of UCHAR, an optional multi-band "rules" ("angles") raster of USHORT, and a text legend README.txt (as well as README_22.txt for ENVI users) accompanying each. This function applies the usual Spectral Angle Mapping calculation to produce the rasters. The "rules" raster will only be generated when the "-rules" option is invoked. The "rules" raster is computed as the integer part of "angle(radians) x 10000". Depending on input file size and the number of materials specified, the "rules" raster can be a very large file. The number of bands in the "rules" raster is the same as the number of materials referenced by the user, and the ordering of the bands corresponds to the ordering in the material list referenced by the user. If the user references all the materials in the spectral library, then the ordering of the output bands follows the file order of materials. 
 
 The spectral library file must be the text file equivalent of an ENVI spectral library file. The first line is a header. The second line is "Column 1: X Axis". That is followed by one line per material. In turn, that is followed by the material spectra in column format. The first "material spectrum" is associated with "Column 1: X Axis".
 
@@ -670,32 +715,33 @@ TBD: Describe format of angle thresholds file.
 
 TBD: What material name in file has spaces in it? 
 
-The "-defAngThreshRad" option allows the user to set a universal default threshold angle (radians) such that, for any pixel and any material, if the spectral angle between pixel and material is greater than the default, the material is disqualified from being explanatory for the pixel. The "-angThresholdsRad" option allows the user to set threshold angles on a per-material basis. Alternatively, the "-angThreshRadFile" option can be used to set threshold angles on a per-material basis. **_DONE_**
+The "-defAngThreshRad" option allows the user to set a universal default threshold angle (radians) such that, for any pixel and any material, if the spectral angle between pixel and material is greater than the default, the material is disqualified from being explanatory for the pixel. The "-angThresholdsRad" option allows the user to set threshold angles on a per-material basis. Alternatively, the "-angThreshRadFile" option can be used to set threshold angles on a per-material basis. 
 
 ### Polygonize 
 ```shell
 polygonize  --indirID <node_id> --outdirID <node_id> 
 ```
-The above command takes as input a single-band raster of UCHAR, and returns an ESRI shapefile of polygons corresponding to the regions of non-zeroes. This function calls Chris Padwick's fast polygonize code, which is orders of magnitude faster than gdal_polygonize and "pulls back" where polygons would otherwise self-touch. (Some GIS software doesn't handle self-touching polygons.) Polygons with holes (multi-polygons) are correctly handled. **_DONE_**
+The above command takes as input a multi-band raster of UCHAR, and returns an ESRI polygon shapefile for each band, where the polygons correspond to the contiguous regions of non-zeroe pixels in the band. This function calls Chris Padwick's fast polygonize code, which is orders of magnitude faster than gdal_polygonize and "pulls back" where polygons would otherwise self-touch. (Some GIS software doesn't handle self-touching polygons.) Polygons with holes (multi-polygons) are correctly handled. Depending on whether or not a README.txt is present in the input directory, attribute columns are added to the shapefile. For DigitalGlobe image data, these include: band number, Acquisition Date-Time, and Order Item Number. If the input README.txt contains band names or band thresholds, colums are added to the shapefiles to display that information. 
 
 ### Threshold 
 **_Command:_**
 ```shell
-thresh_minmax_the_stack -outdirID <node_id> -indirID <node_id> -minmaxPairs <threshold_pairs>
+threshold_the_stack -outdirID <node_id> -indirID <node_id> -threshPairs <threshold_pairs> -threshFile <file>
 
 # Example:
-	thresh_minmax_the_stack -outdirID n5 -indirID n4 -minmaxPairs (*, 0.5) (0.3, 0.4)  
+	threshold_the_stack -outdirID n5 -indirID n4 -threshPairs (*, 0.5) (0.3, 0.4)  
+	threshold_the_stack -outdirID n5 -indirID n4 -threshFile my_thresh_file.txt 	
 ```
-The above command takes as input a multi-band raster of any data type and a threshold pair for each band, and returns a multi-band 0-1 raster of UCHAR and an accompanying text legend (README.txt). The output raster has the same number of bands as the input raster. The "star" in ("star", X) means minus infinity. The "star" in (X, "star") means plus infinity. In the example, it is assumed that the input raster has two bands. The first band in the output raster is 1 wherever the first band of the input raster is between minus infinity and 0.5, and 0 otherwise. The second band in the output raster is 1 wherever the second band of the input raster is between 0.3 and 0.4, and 0 otherwise. **_DONE_**
+The above command takes as input a multi-band raster of any data type and a threshold pair for each band, and returns a multi-band 0-1 raster of UCHAR and an accompanying text legend README.txt. The output raster has the same number of bands as the input raster. The "star" in ("star", X) means minus infinity. The "star" in (X, "star") means plus infinity. In the first example, it is assumed that the input raster has two bands. The first band in the output raster is 1 wherever the first band of the input raster is between minus infinity and 0.5, and 0 otherwise. The second band in the output raster is 1 wherever the second band of the input raster is between 0.3 and 0.4, and 0 otherwise. In the second example, the threshold pairs are read line by line from a text file, where each line is of the form "<band_num> : <band name> : <threshold_pair>" (the quotes are **_not_** part of the line). An example line is "3 : Ferric Iron A : (1.3, 2.5)". The two colons are required. The band numbers proceed sequentially 1, 2, 3, etc. The band name is allowed to be the empty string. The file can include comment lines (that begin with #) and blanks lines. 
 
 **_Command:_**
 ```shell
-thresh_minmax_the_band -outdirID <node_id> -indirID <node_id> -minmaxPairs <threshold_pairs>  
+threshold_the_band -outdirID <node_id> -indirID <node_id> -threshPairs <threshold_pairs>  
 
 # Example:
-	thresh_minmax_the_band -outdirID n5 -indirID n4  -minmaxPairs (*, 0.5) (0.3, 0.4)  
+	threshold_the_band -outdirID n5 -indirID n4  -threshPairs (*, 0.5) (0.3, 0.4)  
 ```
-The above command takes as input a single-band raster of any data type and a sequence of threshold pairs, and returns a multi-band 0-1 raster of UCHAR and an accompanying text legend (README.txt). The output raster has the same number of bands as there are pairs in the sequence. The "star" in ("star", X) means minus infinity. The "star" in (X, "star") means plus infinity. In the example, the first band in the output raster is 1 wherever the input raster is between minus infinity and 0.5, and 0 otherwise. The second band in the output raster is 1 wherever the input raster is between 0.3 and 0.4, and 0 otherwise. **_DONE_**
+The above command takes as input a single-band raster of any data type and a sequence of threshold pairs, and returns a multi-band 0-1 raster of UCHAR and an accompanying text legend README.txt. The output raster has the same number of bands as there are specified threshold pairs. The "star" in ("star", X) means minus infinity. The "star" in (X, "star") means plus infinity. In the example, the first band in the output raster is 1 wherever the input raster is between minus infinity and 0.5, and 0 otherwise. The second band in the output raster is 1 wherever the input raster is between 0.3 and 0.4, and 0 otherwise. 
 
 ### Utilities 
 **_Command:_**            
@@ -705,7 +751,7 @@ stack_bands --outdirID <node_id> --indirIDs <(node_id, band) (node_id, band) ...
 #Example:
 	stack_bands --outdirID n7 --indirIDs (n5, *) (n2, 7) (n2, 6) (n3, 4)  
 ```
-The above command takes as input a sequence of pairs of the for (multi-band raster, band) and returns a new multi-band raster consisting of the specified bands in the specified order. The input rasters must all be of the same data type. The symbol * means include all bands from the corresponding input raster. Band indexing starts at 1. **_DONE_**
+The above command takes as input a sequence of pairs of the for (multi-band raster, band) and returns a new multi-band raster consisting of the specified bands in the specified order. The input rasters must all be of the same data type. The symbol * means include all bands from the corresponding input raster. Band indexing starts at 1. 
 
 **_Command:_**
 ```shell
@@ -714,12 +760,11 @@ subset_bands --outdirID <node_id> --indirID <node_id> -bands <idx1 idx2 ...>
 # Example:
 	subset_bands --outdirID n3 --indirID n1 -bands 2 5 1 7 
 ```
-The above command takes as input a multi-band raster and a sequence of bands indices, and returns a new multi-band raster consisting of the specified bands in the specified order. Band indexing starts at 1. **_DONE_**
+The above command takes as input a multi-band raster and a sequence of bands indices, and returns a new multi-band raster consisting of the specified bands in the specified order. Band indexing starts at 1. If the input directory contains a README.txt describing each band, it will be band-subsetted to form an output README.txt.
 
 ## Known Issues
 
 * "saveData" task might not be working with DGLayers. For now, may have to call "StageDataToS3" task
-* polygonize does not presently work on multi-band 0-1 input rasters
 * polygonize [-thematic] option does not presently work on spectral_angle_mapper output class map because polygonize is expecting README.TXT instead of README_CLASSMAP.TXT
 * polygonize [-geojson] option does not work. This option is supposed to output a polygon geojson in addition to polygon shapefile.
 * Sometimes when polygon would otherwise be self-touching, Chris Padwick's algorithm is a little aggressive in the "pull back".
