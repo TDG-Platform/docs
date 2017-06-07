@@ -1,50 +1,51 @@
-# Material Layers (from WV3 DN VNIR and SWIR) GBDX Workflow 
+# Information Layers (from WV3 DN VNIR and SWIR) GBDX Workflow 
 
-This document introduces the Material Layers (from Orthorectified DN Data) GBDX Workflow and describes how to modify it in order to compute desired material layers (rasters and polygons) from WV3 orthorectified DN VNIR and SWIR data. This workflow assumes the input DN data has been orthorectified.  
+This document introduces the Information Layers GBDX Workflow and describes how to modify it in order to compute desired information layers (rasters and polygons) from WV3 8-band VNIR and 8-band SWIR digital number (DN) data. The workflow operates on orthorectified or Level 1B imagery. If starting from 1B's, all products are output in the corresponding UTM projection. The output products are: RGB, 16-band aligned AComp "Supercube", water mask, cloud mask, and derived raster and vector layers as specified in a recipe file. The layers are generated from the supercube by the DGLayers task running on the recipe file. 
 
-The template has two parts: The first part computes a 16-band aligned AComp "supercube" from the 8-band DN VNIR plus 8-band DN SWIR data, as well as pixel-aligned water mask and cloud mask. The second part invokes the DGLayers task on a DGlayers recipe file. The recipe file describes the desired Material Layers operations and outputs (e.g., indices, SAM classification map, masks, polygons, etc.) 
-
-To learn about the operations that can be called from within a DGLayers recipe file, see the documentation for [DGLayers] 
+See the documentation for [DGLayers] 
 (https://github.digitalglobe.com/nw002655/dglayers/blob/master/DGLayers-GBDX.md)
 
 <!--
 ***************************************************************************
 -->
 
-**_Material Layers (from WV3 DN VNIR and SWIR) Workflow:_** 
+**_Information Layers (from WV3 DN VNIR and SWIR) Workflow:_** 
 
 ```shell
-#!/usr/bin/python
-
 import os
-import copy
 from gbdxtools import Interface
 gbdx = Interface()
 
 in_base_dir = "s3://gbd-customer-data/58600248-2927-4523-b44b-5fec3d278c09/seth/"
-out_base_dir = os.path.join(in_base_dir, "OUTPUTS_Material_Layers/Niwot_051017/")
+out_base_dir = os.path.join(in_base_dir, "DGL_OUTPUTS/LA_acq031317_2AC_oldProto_run053117/")
 
-####### INPUTS #######
-input_data_is_1b = True  # True/False
-dn_data_dir = os.path.join(in_base_dir, "fromAlex/")
-dn_vnir_dir = os.path.join(dn_data_dir, "vnir_1b")
-dn_swir_dir = os.path.join(dn_data_dir, "swir_1b")
-recipe_dir = os.path.join(in_base_dir, "Mining_Layers/Recipes/")
-recipe_filename = "seth_recipe_small_test.txt"
-py_script_file = os.path.join(in_base_dir, "PYTHON_SCRIPTS/create_wv3_scube_text_files.py")
+############ INPUTS ############
+input_data_is_1b = True  # True/False # <------------------------------------
+input_data_is_1b:
+	vnir_reproj_res = "2.0"
+	swir_reproj_res = "7.5"
+dn_data_dir = os.path.join(in_base_dir, "DGL_DATA/Level_1B/LAX_03_13_2017/")      
+dn_vnir_dir = os.path.join(dn_data_dir, "vnir/056576499010_01/")
+dn_swir_dir = os.path.join(dn_data_dir, "swir/056380581010_01/")
+recipe_dir = os.path.join(in_base_dir, "DEMO_RECIPES_Material_Layers/Fullerton/")
+recipe_filename = "info_layers_dgl_recipe.txt"
+seth_dir = "s3://gbd-customer-data/58600248-2927-4523-b44b-5fec3d278c09/seth/"
+py_script_file = os.path.join(seth_dir, "PYTHON_SCRIPTS/create_wv3_scube_text_files.py")
 
-####### OUTPUTS #######
-out_acomp_rgb_dir = os.path.join(out_base_dir, "ACOMP_RGB")
+############ OUTPUTS ############
+out_rgb_dir = os.path.join(out_base_dir, "RGB")
 out_scube_dir = os.path.join(out_base_dir, "ACOMP_SCUBE")
 out_water_scube_dir = os.path.join(out_base_dir, "WATER_SCUBE")
 out_cloud_scube_dir = os.path.join(out_base_dir, "CLOUD_SCUBE")
 out_layers_dir = os.path.join(out_base_dir, "LAYERS")
 
-###### DEBUG OUTPUTS ################
+########## DEBUG OUTPUTS ################
 if input_data_is_1b:
-    out_acomp_dir = os.path.join(out_base_dir, "Ortho_and_AComp_UTM")
+    out_acomp_new_dir = os.path.join(out_base_dir, "Ortho_and_ACompNew_UTM")
+    out_acomp_old_dir = os.path.join(out_base_dir, "Ortho_and_ACompOld_UTM")
 else:
-    out_acomp_dir = os.path.join(out_base_dir, "ACOMP")
+    out_acomp_new_dir = os.path.join(out_base_dir, "ACOMP_NEW")
+    out_acomp_old_dir = os.path.join(out_base_dir, "ACOMP_OLD")
 
 out_vnir_imd_dir = os.path.join(out_base_dir, "vnir_imd_dir")
 out_swir_imd_dir = os.path.join(out_base_dir, "swir_imd_dir")
@@ -56,35 +57,146 @@ out_mi_tmp_dir = os.path.join(out_base_dir, "MI_TMP")
 ####################################################################################
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+#     Build Water and Cloud Mask -- use old (default) AC gain offsets          TBD -- do Orthorectify then AComp to save runtime
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
 if input_data_is_1b:
     ############## Orthorectify 1B and AComp -- ALSO converts to UTM
-    print "From 1B"
+    print "Starting with 1B's"
     first_task = gbdx.Task('ughli', 
+                        data = dn_vnir_dir, #<---------- VNIR only
+                        bands = "Multi,All-S",    # Suppress PAN processing in orthorectify and reproject
+                        exclude_bands = "P",      # Suppress PAN processing in AComp
+                        epsg_code = "UTM", 
+                        pixel_size_ms = vnir_reproj_res,
+                        pixel_size_swir = swir_reproj_res,
+                        compute_noise = "false")  #<------- No noise files 
+
+else: # ortho
+    ############## Just do AComp #############
+    print "Starting with Ortho's"
+    first_task = gbdx.Task("AComp_internal",
+                           data = dn_vnir_dir, #<---------- VNIR only
+                           compute_noise = False) #<------- No noise files 
+
+acomp_old_dir = first_task.outputs.data.value
+
+save_acomp_old_task = gbdx.Task('StageDataToS3', 
+                    data = acomp_old_dir, 
+                    destination = out_acomp_old_dir)
+
+############# Move AComp VNIR to its own directory
+cmd = "mv $indir/*-M*_ACOMP.TIF $outdir"
+move_vnir_task = gbdx.Task("gdal-cli",
+                      command = cmd,
+                      data = acomp_old_dir,
+                      execution_strategy = 'runonce')
+
+acomp_vnir_old_dir = move_vnir_task.outputs.data.value
+
+############# Make RGB (convenience output)
+cmd = "infile=`ls $indir/*.TIF`; "              # Note: back-ticks not single quotes
+cmd += 'infname=$(basename "$infile" .TIF); '
+cmd += "outfname=$infname'_5_3_2_rgb.tif'; "
+cmd += "gdal_translate -b 5 -b 3 -b 2 $indir/*.TIF $outdir/$outfname"   # TBD -- get the output file name right!!!!!!!!!!!!!!!!!!!!!!!!
+rgb_task = gbdx.Task("gdal-cli",
+                     command = cmd,
+                     data = acomp_vnir_old_dir,
+                     execution_strategy = 'runonce')
+
+rgb_dir = rgb_task.outputs.data.value 
+
+save_rgb_task = gbdx.Task("StageDataToS3",
+                          data = rgb_dir,
+                          destination = out_rgb_dir)
+
+############# Water Mask
+# Build a water mask boolean raster. water = 255; non-water = 0
+water_task = gbdx.Task("protogenV2RAW",
+                       raster = acomp_vnir_old_dir)
+
+water_vnir_dir = water_task.outputs.data.value
+
+save_water_vnir_task = gbdx.Task("StageDataToS3",
+                            data = water_vnir_dir,
+                            destination = out_water_vnir_dir)
+
+############# Cloud Mask
+# Build a cloud mask boolean raster. cloud = 255; non-cloud = 0
+cloud_task = gbdx.Task("protogenV2RAC",
+                       raster = acomp_vnir_old_dir)
+
+cloud_vnir_dir = cloud_task.outputs.data.value
+
+save_cloud_vnir_task = gbdx.Task("StageDataToS3",
+                            data = cloud_vnir_dir,
+                            destination = out_cloud_vnir_dir)
+
+############# Union Cloud and Water Mask for MI
+# NOTE: The output mask file needs a very specific naming convention in order 
+# to be ingested by mi_setup task. Here is example of output file name:
+# 14AUG28191207-M2AS-054759622010_01_ACOMP_LULC_MASK.tif
+cmd = "infile=`ls $indir/dataC/*.tif`; "  # Note: back-ticks not single quotes
+cmd += 'infname=$(basename "$infile" .tif); '  
+if input_data_is_1b:
+    cmd += "infprefix=${infname::34}; "
+else:
+    cmd += "str=${infname:34:2}; "
+    cmd += 'if [ "$str" == "_P" ]; then n=39; else n=34; fi; '
+    cmd += "infprefix=${infname::n}; "
+cmd += "outfname=$infprefix'_ACOMP_LULC_MASK.tif'; "
+cmd += "mkdir $outdir/data; "
+cmd += 'gdal_calc.py -A $indir/dataW/*.tif -B $indir/dataC/*.tif --outfile=$outdir/data/$outfname '
+cmd += '--calc="numpy.where(B,B,A)" --type=Byte'
+union_mask_task = gbdx.Task('gdal-cli-multiplex')
+union_mask_task.inputs.dataC = cloud_vnir_dir
+union_mask_task.inputs.dataW = water_vnir_dir
+union_mask_task.inputs.command = cmd
+union_mask_task.execution_strategy='runonce'
+
+mi_mask_dir = union_mask_task.outputs.data.value
+
+save_mi_mask_task = gbdx.Task("StageDataToS3",
+                            data = mi_mask_dir,
+                            destination = out_mi_mask_dir)
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+#      Build supercube for material ID -- use new AC gain offsets
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+acomp_gain_offset_file = "gainOffsetTable_WV3_2016v0.xml", # Bill
+#acomp_gain_offset_file = "gainOffsetTable_1.0_2015v2_SWIR_2016.xml", # Brett
+
+if input_data_is_1b:
+    ############## Orthorectify 1B and AComp -- ALSO converts to UTM
+    print "Starting with 1B's"
+    second_task = gbdx.Task('ughli', 
                         data = dn_vnir_dir, 
                         swir = dn_swir_dir, 
                         bands = "Multi,All-S",    # Suppress PAN processing in orthorectify and reproject
                         exclude_bands = "P",      # Suppress PAN processing in AComp
                         epsg_code = "UTM", 
-                        pixel_size_ms = "2.0",
-                        pixel_size_swir = "7.5",
+                        pixel_size_ms = vnir_reproj_res,
+                        pixel_size_swir = swir_reproj_res,
+                        gain_offset_file = acomp_gain_offset_file, # Omit this argument if using defaults
                         compute_noise = "true")
 
 else: # ortho
     ############## Just do AComp #############
-    print "From Ortho"
-    first_task = gbdx.Task("AComp_internal",
+    print "Starting with Ortho's"
+    second_task = gbdx.Task("AComp_internal",
                            data = dn_data_dir,
+                           gain_offset_file = acomp_gain_offset_file, # Omit this argument if using defaults
                            compute_noise = True)
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-acomp_dir = first_task.outputs.data.value
+acomp_new_dir = second_task.outputs.data.value
 
-save_acomp_task = gbdx.Task('StageDataToS3', 
-                    data = acomp_dir, 
-                    destination = out_acomp_dir)
+save_acomp_new_task = gbdx.Task('StageDataToS3', 
+                    data = acomp_new_dir, 
+                    destination = out_acomp_new_dir)
 
-############# Copy AComp VNIR and IMD's to their own directories
-cmd = "mkdir $outdir/dataV $outdir/dataVimd $outdir/dataSimd; "
+############# Copy IMD's to their own directories
+cmd = "mkdir $outdir/dataVimd $outdir/dataSimd; "
 
 cmd += "infile=`ls $indir/data/*-M*.IMD`; "  # Note: back-ticks not single quotes
 cmd += 'infname=$(basename "$infile" .IMD); '  
@@ -98,16 +210,13 @@ cmd += "infprefix=${infname::${#infname}-6}; " # Strip off "_ACOMP"
 cmd += "outfname=$infprefix'.IMD'; "
 cmd += "cp $indir/data/*-A*.IMD $outdir/dataSimd/$outfname; "
 
-cmd += "cp $indir/data/*-M*_ACOMP.TIF $outdir/dataV"
+copy_imd_task = gbdx.Task('gdal-cli-multiplex')
+copy_imd_task.inputs.data = acomp_new_dir
+copy_imd_task.inputs.command = cmd
+copy_imd_task.execution_strategy='runonce'
 
-copy_task = gbdx.Task('gdal-cli-multiplex')
-copy_task.inputs.data = acomp_dir
-copy_task.inputs.command = cmd
-copy_task.execution_strategy='runonce'
-
-vnir_imd_dir = copy_task.outputs.dataVimd.value
-swir_imd_dir = copy_task.outputs.dataSimd.value
-acomp_vnir_dir = copy_task.outputs.dataV.value
+vnir_imd_dir = copy_imd_task.outputs.dataVimd.value
+swir_imd_dir = copy_imd_task.outputs.dataSimd.value
 
 save_vnir_imd_task = gbdx.Task("StageDataToS3",
                             data = vnir_imd_dir,
@@ -117,77 +226,11 @@ save_swir_imd_task = gbdx.Task("StageDataToS3",
                             data = swir_imd_dir,
                             destination = out_swir_imd_dir)
 
-############# RGB 
-cmd22 = "infile=`ls $indir/*.TIF`; "              # Note: back-ticks not single quotes
-cmd22 += 'infname=$(basename "$infile" .TIF); '
-cmd22 += "outfname=$infname'_5_3_2_rgb.tif'; "
-cmd22 += "gdal_translate -b 5 -b 3 -b 2 $indir/*.TIF $outdir/$outfname"   # TBD -- get the output file name right!!!!!!!!!!!!!!!!!!!!!!!!
-rgb_task = gbdx.Task("gdal-cli",
-                     command = cmd22,
-                     data = acomp_vnir_dir,
-                     execution_strategy = 'runonce')
-
-acomp_rgb_dir = rgb_task.outputs.data.value # <-------------------------- Not used downstream
-
-save_rgb_task = gbdx.Task("StageDataToS3",
-                          data = acomp_rgb_dir,
-                          destination = out_acomp_rgb_dir)
-
-############# Water Mask
-# Build a water mask boolean raster. water = 255; non-water = 0
-water_task = gbdx.Task("protogenV2RAW",
-                       raster = acomp_vnir_dir)
-
-water_vnir_dir = water_task.outputs.data.value
-
-save_water_vnir_task = gbdx.Task("StageDataToS3",
-                            data = water_vnir_dir,
-                            destination = out_water_vnir_dir)
-
-############# Cloud Mask
-# Build a cloud mask boolean raster. cloud = 255; non-cloud = 0
-cloud_task = gbdx.Task("protogenV2RAC",
-                       raster = acomp_vnir_dir)
-
-cloud_vnir_dir = cloud_task.outputs.data.value
-
-save_cloud_vnir_task = gbdx.Task("StageDataToS3",
-                            data = cloud_vnir_dir,
-                            destination = out_cloud_vnir_dir)
-
-############# Union Cloud and Water Mask for MI
-# NOTE: The output mask file needs a very specific naming convention in order 
-# to be ingested by mi_setup task. Here is example of output file name:
-# 14AUG28191207-M2AS-054759622010_01_ACOMP_LULC_MASK.tif
-cmd33 = "infile=`ls $indir/dataC/*.tif`; "  # Note: back-ticks not single quotes
-cmd33 += 'infname=$(basename "$infile" .tif); '  
-if input_data_is_1b:
-    cmd33 += "infprefix=${infname::34}; "
-else:
-    cmd33 += "str=${infname:34:2}"
-    cmd33 += 'if [ "$str" == "_P" ]; then n=39; else n=34; fi'
-    cmd33 += "infprefix=${infname::n}; "
-cmd33 += "outfname=$infprefix'_ACOMP_LULC_MASK.tif'; "
-cmd33 += "mkdir $outdir/data; "
-cmd33 += 'gdal_calc.py -A $indir/dataW/*.tif -B $indir/dataC/*.tif --outfile=$outdir/data/$outfname '
-cmd33 += '--calc="numpy.where(B,B,A)" --type=Byte'
-union_task = gbdx.Task('gdal-cli-multiplex')
-union_task.inputs.dataC = cloud_vnir_dir
-union_task.inputs.dataW = water_vnir_dir
-union_task.inputs.command = cmd33
-union_task.execution_strategy='runonce'
-
-mi_mask_dir = union_task.outputs.data.value
-
-save_mi_mask_task = gbdx.Task("StageDataToS3",
-                            data = mi_mask_dir,
-                            destination = out_mi_mask_dir)
-
 ############# Mutual Information v10
-mi_task = gbdx.Task("mi_setup", 
+mi_setup_task = gbdx.Task("mi_setup", 
                        vnirPort = vnir_imd_dir,
                        swirPort = swir_imd_dir, 
-                       acompPort = acomp_dir,
+                       acompPort = acomp_new_dir,
                        classPort = mi_mask_dir, 
                        resamplingKernel = 'nearestNeighbour', # bilinear, bicubic
                        useAComp = True, 
@@ -203,30 +246,26 @@ mi_task = gbdx.Task("mi_setup",
 
 # Wierd Gregory arguments 
 dockerRoot = "/mnt/work/"
-mi_task.inputs.vnirDir = os.path.join(dockerRoot, "input/vnirPort")
-mi_task.inputs.swirDir = os.path.join(dockerRoot, "input/swirPort")
-mi_task.inputs.acompDir = os.path.join(dockerRoot, "input/acompPort")
-mi_task.inputs.classDir = os.path.join(dockerRoot, "input/classPort")
-mi_task.inputs.outDir = os.path.join(dockerRoot, "output/outPort")
-mi_task.inputs.tmpDir = os.path.join(dockerRoot, "output/tmpPort")
-mi_task.inputs.statusFile = os.path.join(dockerRoot, "status.json")
+mi_setup_task.inputs.vnirDir = os.path.join(dockerRoot, "input/vnirPort")
+mi_setup_task.inputs.swirDir = os.path.join(dockerRoot, "input/swirPort")
+mi_setup_task.inputs.acompDir = os.path.join(dockerRoot, "input/acompPort")
+mi_setup_task.inputs.classDir = os.path.join(dockerRoot, "input/classPort")
+mi_setup_task.inputs.outDir = os.path.join(dockerRoot, "output/outPort")
+mi_setup_task.inputs.tmpDir = os.path.join(dockerRoot, "output/tmpPort")
+mi_setup_task.inputs.statusFile = os.path.join(dockerRoot, "status.json")
 
 # Name EC2 directories
-mi_out_dir = mi_task.outputs.outPort.value
-mi_tmp_dir = mi_task.outputs.tmpPort.value
-
-save_mi_tmp_task = gbdx.Task("StageDataToS3",
-                            data = mi_tmp_dir,
-                            destination = out_mi_tmp_dir)
+mi_out_dir = mi_setup_task.outputs.outPort.value
+mi_tmp_dir = mi_setup_task.outputs.tmpPort.value
 
 ############# Stack MI SWIR on MI VNIR 
-cmd44 = "infile=`ls $indir/*-A*.TIF`; "  # Note: back-ticks not single quotes
-cmd44 += 'infname=$(basename "$infile" .TIF); '  
-cmd44 += "infprefix=${infname::34}; "
-cmd44 += "outfname=$infprefix'_ACOMP_SCUBE.TIF'; "
-cmd44 += "gdal_merge.py -separate -o $outdir/$outfname $indir/*-M*.TIF $indir/*-A*.TIF"
+cmd = "infile=`ls $indir/*-A*.TIF`; "  # Note: back-ticks not single quotes
+cmd += 'infname=$(basename "$infile" .TIF); '  
+cmd += "infprefix=${infname::34}; "
+cmd += "outfname=$infprefix'_ACOMP_SCUBE.TIF'; "
+cmd += "gdal_merge.py -separate -o $outdir/$outfname $indir/*-M*.TIF $indir/*-A*.TIF"
 stack_task = gbdx.Task("gdal-cli",
-                      command = cmd44,
+                      command = cmd,
                       data = mi_out_dir,
                       execution_strategy = 'runonce')
 
@@ -237,9 +276,9 @@ save_scube_task = gbdx.Task("StageDataToS3",
                             destination = out_scube_dir)
 
 ############# Create bands text file and wavelengths text file for Scube 
-cmd55 = "python $indir/create_wv3_scube_text_files.py $outdir"
+cmd = "python $indir/create_wv3_scube_text_files.py $outdir"
 filegen_task = gbdx.Task("gdal-cli", 
-                      command = cmd55,
+                      command = cmd,
                       data = os.path.dirname(py_script_file), 
                       execution_strategy = 'runonce')
 
@@ -248,6 +287,10 @@ filegen_dir = filegen_task.outputs.data.value
 save_filegen_task = gbdx.Task("StageDataToS3",
                            data = filegen_dir,
                            destination = out_scube_dir)
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+#      Cut Water and Cloud Mask to Supercube in prep for DGLayers
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 # ########### Resample Water Mask to Supercube and cut to the overlap.
 rc_water_scube_task = gbdx.Task("resample_and_cut_001",
@@ -279,7 +322,10 @@ save_cloud_scube_task = gbdx.Task("StageDataToS3",
                             data = cloud_scube_dir,
                             destination = out_cloud_scube_dir)
 
-############# Compute Material Layers
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+#                          Call DGLayers 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
 # SRCXXX is an input symbol in the DGLayers recipe 
 layers_task = gbdx.Task("DGLayers",  
                      SRC1_SCUBE = scube_dir, 
@@ -297,15 +343,17 @@ save_layers_task = gbdx.Task("StageDataToS3",
 
 ####################################################################################
 
-workflow = gbdx.Workflow([first_task,
-                          copy_task,
+workflow = gbdx.Workflow([first_task, # <----------- Call to AComp with default gain offsets
+                          move_vnir_task,
                           rgb_task,
                           save_rgb_task,
-                          cloud_task,
                           water_task,
-                          union_task,
-                          mi_task,
+                          cloud_task,
+                          union_mask_task,
                           save_mi_mask_task,
+                          second_task, # <---------- Call to AComp with new gain offsets                       
+                          copy_imd_task,
+                          mi_setup_task,
                           stack_task,
                           save_scube_task,
                           filegen_task,
@@ -313,13 +361,11 @@ workflow = gbdx.Workflow([first_task,
                           rc_water_scube_task, 
                           save_water_scube_task,
                           rc_cloud_scube_task,
-                          save_cloud_scube_task, 
+                          save_cloud_scube_task,
                           layers_task,
-                          save_layers_task])
+                          save_layers_task]) 
 
-#print workflow.generate_workflow_description()
 workflow.execute()
-print 
 print workflow.id
 ```
 
@@ -327,22 +373,73 @@ print workflow.id
 ***************************************************************************
 -->
 
-The above workflow should reflect the latest versions of all tasks. Here are the modifications you need to make:
+Here are the modifications you need to make to the above workflow for your application:
  
-* Set **_in_base_dir_** -- this is the top-level S3 input directory that contains your DN data 
-* Set **_out_base_dir_** -- this is the top-level S3 output directory
-* Set **_dn_dir_**, **_vnir_dn_dir_**, and **_swir_dn_dir_** -- these are the S3 locations of the input DN data that will be AComp'd and Supercube'd
-* Set **_recipe_dir_** -- this is the directory containing your DGLayers recipe file **_and any auxiliary text files it refers to_** 
+* Set **_in_base_dir_** -- this is the top-level S3 input directory that contains your DN input data 
+* Set **_out_base_dir_** -- this is your  top-level S3 output directory
+* Set **_input_data_is_1b_** -- (True/False) this indicates whether the input DN data is Level 1B processing or not
+* Set **_vnir_reproj_res_** and **_swir_reproj_res_** -- these are the target reprojection resolutions when converting 1B to UTM
+* Set **_dn_dir_**, **_vnir_dn_dir_**, and **_swir_dn_dir_** -- these are the S3 locations of your DN input data 
+* Set **_recipe_dir_** -- this is the S3 directory that contains your DGLayers recipe file **_and any auxiliary files it refers to_** 
 * Set **_recipe_filename_** -- this is the file name of your DGLayers recipe file 
-* Set **_out_layers_dir_** -- this is the desired output directory on s3
+* Set **_py_script_file_** -- this is the path to a python script that writes band names and wavelengths files for the output supercube
 
 <!--
 ***************************************************************************
 -->
 
-The above workflow presently calls the following DGLayers recipe file (but you can make your own):
+The above workflow calls the following Python script:
 
-**mining_layers_dgl_recipe.txt:**
+**create_wv3_scube_text_files.py:**
+
+```shell
+import os
+from glob import glob
+import argparse
+
+if __name__ == "__main__":
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("outdir")
+    args = parser.parse_args()
+    outdir = args.outdir
+
+    band_list = ['1_coastal', '2_blue','3_green','4_yellow',
+                 '5_red','6_rededge', '7_nir1', '8_nir2',
+                 '9_SWIR-1', '10_SWIR-2', '11_SWIR-3', '12_SWIR-4', 
+                 '13_SWIR-5', '14_SWIR-6', '15_SWIR-7', '16_SWIR-8'] 
+
+    fobj = open(os.path.join(outdir, "bands.txt"), "w")
+    for x in band_list:
+        fobj.write(x + "\n")
+    fobj.close()
+
+    wave_list = ['427.399994', 
+                 '481.899994', 
+                 '547.099976', 
+                 '604.299988',  
+                 '660.099976',  
+                 '722.700012', 
+                 '824.000000', 
+                 '913.599976',  
+                 '1209.099976', 
+                 '1571.599976', 
+                 '1661.099976', 
+                 '1729.500000', 
+                 '2163.699951',  
+                 '2202.199951',  
+                 '2259.300049', 
+                 '2329.199951']  
+
+    fobj = open(os.path.join(outdir, "wavelengths.txt"), "w")
+    for x in wave_list:
+        fobj.write(x + "\n")
+    fobj.close()
+```
+
+The above workflow presently calls the following DGLayers recipe file:
+
+**info_layers_dgl_recipe.txt:**
 
 ```shell
 #########################################################################
@@ -495,7 +592,7 @@ Column 9: calcite1.spc Calcite WS272
 ***************************************************************************
 -->
 
-To test the workflow on the above DGLayers recipe file, copy the recipe file and its two auxiliary files (create the files using cut and paste out of this document) to your desired recipe directory on S3, set the directory paths in the workflow as appropriate, and run. 
+To test the workflow on the above DGLayers recipe file, copy the recipe file and its two auxiliary files (create the files using cut and paste out of this document) to your desired recipe directory on S3, set the directory paths in the workflow as appropriate.  Similarly copy th epython script create_wv3_scube_text_files.py to the desired directory on S3, and set the file path appropriately.
 
 
 
