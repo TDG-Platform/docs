@@ -164,8 +164,8 @@ save_mi_mask_task = gbdx.Task("StageDataToS3",
 #      Build supercube for material ID -- use new AC gain offsets
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-acomp_gain_offset_file = "gainOffsetTable_WV3_2016v0.xml", # Bill
-#acomp_gain_offset_file = "gainOffsetTable_1.0_2015v2_SWIR_2016.xml", # Brett
+acomp_gain_offset_file = "gainOffsetTable_WV3_2016v0.xml" # Bill
+#acomp_gain_offset_file = "gainOffsetTable_1.0_2015v2_SWIR_2016.xml" # Brett
 
 if input_data_is_1b:
     ############## Orthorectify 1B and AComp -- ALSO converts to UTM
