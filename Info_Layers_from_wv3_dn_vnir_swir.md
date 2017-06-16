@@ -18,28 +18,29 @@ gbdx = Interface()
 
 in_base_dir = "s3://gbd-customer-data/58600248-2927-4523-b44b-5fec3d278c09/seth/"
 out_base_dir = os.path.join(in_base_dir, "DGL_OUTPUTS/LA_acq031317_2AC_oldProto_run053117/")
+print out_base_dir
 
-############ INPUTS ############
-input_data_is_1b = True  # True/False 
+####### INPUTS #######
+input_data_is_1b = True  # True/False
 if input_data_is_1b:
-	vnir_reproj_res = "2.0"
-	swir_reproj_res = "7.5"
+    vnir_reproj_res = "2.0"
+    swir_reproj_res = "7.5"
 dn_data_dir = os.path.join(in_base_dir, "DGL_DATA/Level_1B/LAX_03_13_2017/")      
 dn_vnir_dir = os.path.join(dn_data_dir, "vnir/056576499010_01/")
 dn_swir_dir = os.path.join(dn_data_dir, "swir/056380581010_01/")
 recipe_dir = os.path.join(in_base_dir, "DEMO_RECIPES_Material_Layers/Fullerton/")
-recipe_filename = "info_layers_dgl_recipe.txt"
+recipe_filename = "recipe_fullerton_052317.txt"
 seth_dir = "s3://gbd-customer-data/58600248-2927-4523-b44b-5fec3d278c09/seth/"
 py_script_file = os.path.join(seth_dir, "PYTHON_SCRIPTS/create_wv3_scube_text_files.py")
 
-############ OUTPUTS ############
+####### OUTPUTS #######
 out_rgb_dir = os.path.join(out_base_dir, "RGB")
 out_scube_dir = os.path.join(out_base_dir, "ACOMP_SCUBE")
 out_water_scube_dir = os.path.join(out_base_dir, "WATER_SCUBE")
 out_cloud_scube_dir = os.path.join(out_base_dir, "CLOUD_SCUBE")
 out_layers_dir = os.path.join(out_base_dir, "LAYERS")
 
-########## DEBUG OUTPUTS ################
+###### DEBUG OUTPUTS ################
 if input_data_is_1b:
     out_acomp_new_dir = os.path.join(out_base_dir, "Ortho_and_ACompNew_UTM")
     out_acomp_old_dir = os.path.join(out_base_dir, "Ortho_and_ACompOld_UTM")
@@ -57,7 +58,7 @@ out_mi_tmp_dir = os.path.join(out_base_dir, "MI_TMP")
 ####################################################################################
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-#     Build Water and Cloud Mask -- use old (default) AC gain offsets          
+#     Build Water and Cloud Mask -- use old (default) AC gain offsets          TBD -- do Orthorectify then AComp to save runtime
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 if input_data_is_1b:
@@ -65,9 +66,9 @@ if input_data_is_1b:
     print "Starting with 1B's"
     first_task = gbdx.Task('ughli', 
                         data = dn_vnir_dir, #<---------- VNIR only
-                        bands = "Multi,All-S",    # Suppress PAN processing in orthorectify and reproject
-                        exclude_bands = "P",      # Suppress PAN processing in AComp
-                        epsg_code = "UTM", 
+                        bands = "Multi",                # Suppress PAN and SWIR processing in orthorectify and reproject
+                        exclude_bands = "P, All-S",     # Suppress PAN and SWIR processing in AComp
+                        epsg_code = "UTM",
                         pixel_size_ms = vnir_reproj_res,
                         pixel_size_swir = swir_reproj_res,
                         compute_noise = "false")  #<------- No noise files 
@@ -75,9 +76,9 @@ if input_data_is_1b:
 else: # ortho
     ############## Just do AComp #############
     print "Starting with Ortho's"
-    first_task = gbdx.Task("AComp_internal",
+    first_task = gbdx.Task("AComp",
                            data = dn_vnir_dir, #<---------- VNIR only
-                           compute_noise = False) #<------- No noise files 
+                           compute_noise = "false") #<------- No noise files 
 
 acomp_old_dir = first_task.outputs.data.value
 
@@ -98,7 +99,7 @@ acomp_vnir_old_dir = move_vnir_task.outputs.data.value
 cmd = "infile=`ls $indir/*.TIF`; "              # Note: back-ticks not single quotes
 cmd += 'infname=$(basename "$infile" .TIF); '
 cmd += "outfname=$infname'_5_3_2_rgb.tif'; "
-cmd += "gdal_translate -b 5 -b 3 -b 2 $indir/*.TIF $outdir/$outfname"   # TBD -- get the output file name right!!!!!!!!!!!!!!!!!!!!!!!!
+cmd += "gdal_translate -b 5 -b 3 -b 2 $indir/*.TIF $outdir/$outfname"   
 rgb_task = gbdx.Task("gdal-cli",
                      command = cmd,
                      data = acomp_vnir_old_dir,
@@ -178,16 +179,16 @@ if input_data_is_1b:
                         epsg_code = "UTM", 
                         pixel_size_ms = vnir_reproj_res,
                         pixel_size_swir = swir_reproj_res,
-                        gain_offset_file = acomp_gain_offset_file, # Omit this argument if using defaults
+                        gain_offset_file = acomp_gain_offset_file,
                         compute_noise = "true")
 
 else: # ortho
     ############## Just do AComp #############
     print "Starting with Ortho's"
-    second_task = gbdx.Task("AComp_internal",
+    second_task = gbdx.Task("AComp", 
                            data = dn_data_dir,
-                           gain_offset_file = acomp_gain_offset_file, # Omit this argument if using defaults
-                           compute_noise = True)
+                           gain_offset_file = acomp_gain_offset_file,
+                           compute_noise = "true")
 
 acomp_new_dir = second_task.outputs.data.value
 
@@ -243,6 +244,21 @@ mi_setup_task = gbdx.Task("mi_setup",
                        buildClassifier = False,
                        buildMask = True,
                        buildAlignImages = True)
+
+"""
+###### TBD Should be doing things this way!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+                       useAComp = "true", 
+                       lulcMask = "true",
+                       waterMask = "false",
+                       cloudMask = "false",
+                       darkMask = "true",
+                       buildVrt = "true",
+                       buildAComp = "false",
+                       buildClassifier = "false",
+                       buildMask = "true",
+                       buildAlignImages = "true")
+"""
 
 # Wierd Gregory arguments 
 dockerRoot = "/mnt/work/"
@@ -365,7 +381,26 @@ workflow = gbdx.Workflow([first_task, # <----------- Call to AComp with default 
                           layers_task,
                           save_layers_task]) 
 
+"""
+# None of these do not work. Why?
+workflow.savedata(rgb_dir, location = out_rgb_dir)      
+workflow.savedata(mi_mask_dir, location = out_mi_mask_dir)
+workflow.savedata(scube_dir, location = out_scube_dir)
+workflow.savedata(filegen_dir, location = out_scube_dir)
+workflow.savedata(water_scube_dir, location = out_water_scube_dir)           
+workflow.savedata(cloud_scube_dir, location = out_cloud_scube_dir)   
+workflow.savedata(vnir_imd_dir, location = out_vnir_imd_dir) 
+workflow.savedata(swir_imd_dir, location = out_swir_imd_dir) 
+workflow.savedata(water_vnir_dir, location = out_water_vnir_dir) 
+workflow.savedata(cloud_vnir_dir, location = out_cloud_vnir_dir)  
+#workflow.savedata(acomp_old_dir, location = out_acomp_old_dir)
+#workflow.savedata(acomp_new_dir, location = out_acomp_new_dir) 
+#workflow.savedata(mi_tmp_dir, location = out_mi_tmp_dir)   
+"""
+
+#print workflow.generate_workflow_description()
 workflow.execute()
+print 
 print workflow.id
 ```
 
