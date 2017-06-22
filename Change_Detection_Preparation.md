@@ -80,16 +80,22 @@ which specify the task's input and output data locations.
 
 Name        | Required             |       Default         |        Valid Values             |   Description
 ------------|-------------|:---------------------:|---------------------------------|-----------------
-pre_image_dir   |      |  N/A  |  S3 URL | Pre-image input directory containing one or more TIFF files
-post_image_dir   |       | N/A  |  S3 URL | Post-image input directory containing one or more TIFF files
-final_pre_image_dir |      |N/A | S3 URL | Pre-image output directory for cd_prep
-final_post_image_dir |      |N/A | S3 URL | Post-image output directory for cd_prep 
+pre_image_dir   | Yes     |  N/A  |  S3 URL | Pre-image input directory containing one or more TIFF files
+post_image_dir   |  Yes     | N/A  |  S3 URL | Post-image input directory containing one or more TIFF files
+
 
 ### Outputs
 
 On completion, the processed imagery will be written to your specified S3 Customer 
 Location (i.e., s3://gbd-customer-data/unique customer id/pre_image_dir/, s3://gbd-customer-data/unique customer id/post_image_dir/).
 Each output directory will contain a single geotif file with one of the names: pre_image_cdprep.tif or post_image_cdprep.tif.
+
+
+Name        | Required             |       Default         |        Valid Values             |   Description
+------------|-------------|:---------------------:|---------------------------------|-----------------
+final_pre_image_dir |  Yes    |N/A | S3 URL | Pre-image output directory for cd_prep
+final_post_image_dir | Yes     |N/A | S3 URL | Post-image output directory for cd_prep 
+
 
 
 [Contact Us](#contact-us) If your Customer has questions regarding required inputs,
