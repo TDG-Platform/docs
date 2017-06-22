@@ -79,7 +79,7 @@ All inputs are optional with default values, with the exception of
 which specify the task's input and output data locations.
 
 Name        | Required             |       Default         |        Valid Values             |   Description
--------------------------|:---------------------:|---------------------------------|-----------------
+------------|-------------|:---------------------:|---------------------------------|-----------------
 pre_image_dir   |      |  N/A  |  S3 URL | Pre-image input directory containing one or more TIFF files
 post_image_dir   |       | N/A  |  S3 URL | Post-image input directory containing one or more TIFF files
 final_pre_image_dir |      |N/A | S3 URL | Pre-image output directory for cd_prep
