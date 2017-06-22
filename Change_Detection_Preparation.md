@@ -31,7 +31,7 @@ from gbdxtools import Interface
 gbdx = Interface()
 
 # The data input and lines must be edited to point to an authorized customer S3 location)
-cd_prep = gbdx.Task('cd_prep_crop', 
+cd_prep = gbdx.Task('cd_prep', 
                     pre_image_dir='s3://gbd-customer-data/CustomerAccount#/PathToPreImage/',
                     post_image_dir='s3://gbd-customer-data/CustomerAccount#/PathToPostImage')
     
