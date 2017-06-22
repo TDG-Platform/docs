@@ -61,6 +61,7 @@ out_mi_tmp_dir = os.path.join(out_base_dir, "MI_TMP")
 #     Build Water and Cloud Mask -- use old (default) AC gain offsets          TBD -- do Orthorectify then AComp to save runtime
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
+# Ughli and AComp -- mixing model on. 
 if input_data_is_1b:
     ############## Orthorectify 1B and AComp -- ALSO converts to UTM
     print "Starting with 1B's"
@@ -71,14 +72,14 @@ if input_data_is_1b:
                         epsg_code = "UTM",
                         pixel_size_ms = vnir_reproj_res,
                         pixel_size_swir = swir_reproj_res,
-                        compute_noise = "false")  #<------- No noise files 
+                        compute_noise = "true") #<------- Generates noise files (which we don't need), but usefully mosaics the output
 
 else: # ortho
     ############## Just do AComp #############
     print "Starting with Ortho's"
     first_task = gbdx.Task("AComp",
                            data = dn_vnir_dir, #<---------- VNIR only
-                           compute_noise = "false") #<------- No noise files 
+                           compute_noise = "true") #<------- Generates noise files (which we don't need), but usefully mosaics the output
 
 acomp_old_dir = first_task.outputs.data.value
 
@@ -165,9 +166,10 @@ save_mi_mask_task = gbdx.Task("StageDataToS3",
 #      Build supercube for material ID -- use new AC gain offsets
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-acomp_gain_offset_file = "gainOffsetTable_WV3_2016v0.xml" # Bill
-#acomp_gain_offset_file = "gainOffsetTable_1.0_2015v2_SWIR_2016.xml" # Brett
+# Gain offsets file
+acomp_gain_offset_file = "gainOffsetTable_WV3_2016v0.xml" 
 
+# Ughli and AComp -- mixing model on.
 if input_data_is_1b:
     ############## Orthorectify 1B and AComp -- ALSO converts to UTM
     print "Starting with 1B's"
