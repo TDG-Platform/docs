@@ -132,7 +132,7 @@ This Advanced Option permits the Customer to:
 ```
 
 ### Known Issues
-Pairwise Image Registration has been certified for source image strips and mosiacs up to 12 GB in size registered to a reference image of similar size. You may encounter a limit on the size of the image that can be processed for Mosiacs larger than 12 GB, because the AWS system may time out. If you wish to process an image >12 GB please contact us.
+Pairwise Image Registration has been certified for source image strips and mosiacs up to 12 GB in size registered to a reference image of similar size. You may encounter a limit on the size of the image that can be processed for Mosaics larger than 12 GB, because the AWS system may time out. If you wish to process an image >12 GB please contact us.
 
 ### Contact Us
 Tech Owner: [Mike Aschenbeck](#michael.aschenbeck@digitalglobe.com) & Editor:  [Kathleen Johnson](#kathleen.johnsons@digitalglobe.com)
