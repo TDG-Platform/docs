@@ -30,6 +30,7 @@ if input_data_is_1b:
 dn_data_dir = os.path.join(in_base_dir, "XXXXXXXXXXXX/")
 dn_vnir_dir = os.path.join(dn_data_dir, "XXXXXXXXXXXX/")
 dn_swir_dir = os.path.join(dn_data_dir, "XXXXXXXXXXXX/")
+print dn_data_dir
 
 recipe_dir = os.path.join(in_base_dir, "XXXXXXXXXXXX/")
 recipe_filename = "info_layers_dgl_recipe.txt"
@@ -417,7 +418,7 @@ Here are the modifications you need to make to the above workflow for your appli
  
 * Set **_in_base_dir_** -- this is the top-level S3 input directory that contains your DN input data 
 * Set **_out_base_dir_** -- this is your  top-level S3 output directory
-* Set **_input_data_is_1b_** -- (True/False) this indicates whether the input DN data is Level 1B processing or not
+* Set **_input_data_is_1b_** -- (True/False) this indicates whether the input DN data is Level 1B or Orthorectified
 * Set **_vnir_reproj_res_** and **_swir_reproj_res_** -- these are the target reprojection resolutions when converting 1B to UTM
 * Set **_dn_dir_**, **_vnir_dn_dir_**, and **_swir_dn_dir_** -- these are the S3 locations of your DN input data 
 * Set **_recipe_dir_** -- this is the S3 directory that contains your DGLayers recipe file **_and any auxiliary files it refers to_** 
@@ -640,7 +641,7 @@ To run the workflow on your desired imagery using the above DGLayers recipe file
 * To improve run-time efficiency, don't compute the reprojection of VNIR 1B twice, as is happening now with the two calls to ughli task
 * Incorporate newest protogen tasks for cloud, water, and snow masking when they become available
 * Incoporate latest resample_and_cut task when it becomes available
-* Improve interface for mi_setup -- it is clunky and finicky at the moment. Move filegen_task funcionality inside mi_setup. Provide option to stack. Others.
+* Improve I/F for mi_setup -- it is clunky at the moment. Move filegen_task funcionality inside mi_setup. Provide option to stack. Others.
 * Convert StageDataToS3 task to savedata task
 
 
