@@ -6,7 +6,7 @@ The Change Detection Preparation task performs a series of operations on a pair 
     2. Image-to-image registration
     3. Alignment of the images to a common grid, cloud removal and final cropping
 
-This task takes as input two orthorectified, atmospherically compensated images in geotiff format and UTM projection output from  the [Advanced Image Preprocessor](https://github.com/TDG-Platform/docs/blob/master/Advanced_Image_Preprocessor.md).
+The input imagery for this task is two orthorectified, atmospherically compensated images in geotiff format and UTM projection from the [Advanced Image Preprocessor](https://github.com/TDG-Platform/docs/blob/master/Advanced_Image_Preprocessor.md).
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
