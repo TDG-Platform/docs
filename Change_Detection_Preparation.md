@@ -172,13 +172,10 @@ For details on the methods of testing the runtimes of the task visit the followi
 
 ###Known Issues
 
-Make sure the Advanced Image preprocessing step is set to UTM output (most common reason for failure).
-
-You should also be aware of the following:
-
-See issues for [Pairwise Image Registration](https://github.com/TDG-Platform/docs/blob/master/Pairwise_Image_Registration.md): fails if not enough tie points (<20).
-
-See issues for the [8-Band Cloud Mask](https://github.com/TDG-Platform/docs/blob/master/protogenV2RAC.md)
+* Make sure the Advanced Image preprocessing step is set to UTM output (most common reason for failure).
+* You should also be aware of the following:
+    * See issues for [Pairwise Image Registration](https://github.com/TDG-Platform/docs/blob/master/Pairwise_Image_Registration.md): fails if not enough tie points (<20).
+    * See issues for the [8-Band Cloud Mask](https://github.com/TDG-Platform/docs/blob/master/protogenV2RAC.md)
 
 
 
