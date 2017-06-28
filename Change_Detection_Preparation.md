@@ -65,7 +65,7 @@ print workflow.status
 This task takes as input two orthorectified, atmospherically compensated images in geotiff format.
 It is intended to work as a following task to the AOP_Strip_Processor, with only the AComp option specified.
 
-Example overlapping 1B images that can be processed by Advanced Image Preprocessor prior to CDP are:
+Example overlapping 1B images that can be processed by Advanced Image Preprocessor prior Change Detection Preparation are:
 
     pre-image in India: 1040010004D5AD00
     post-image in India:  105041001259EA00
