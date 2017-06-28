@@ -118,6 +118,47 @@ crop_work_dir | N/A | S3 URL | Working output directory for the initial cropping
 crop_log_dir | N/A | S3 URL | Log output directory for the initial cropping task (for diagnostic purposes)
 image2image_dir | N/A | S3 URL | Log output directory for the image2image task (for diagnostic purposes)
 
+#### Advanced Script
+
+This script runs the Advanced Image Preprocessor and Change Detection Preparation end to end.  Note that you must write the output from the Advanced Image Preprocessor to a file which the Change Detection Preparation task will read.
+
+```python
+# Runs the Advanced Image Preprocessor end to end with Change Detection Preparation Task
+# This example uses the posted data from India.
+from gbdxtools import Interface
+gbdx = Interface()
+
+#Edit the following path to reflect a specific path to an image
+data1 = "s3://receiving-dgcs-tdgplatform-com/054661384050_01_003" # Hyderabad GE01
+data2 = "s3://receiving-dgcs-tdgplatform-com/055775971010_01_003" # Hyderabad WV03
+
+# Run the Advanced Image Preprocessor
+aoptask1 = gbdx.Task("AOP_Strip_Processor", data=data1, enable_acomp=True, enable_pansharpen=False, enable_dra=False, bands='MS', ortho_epsg="UTM")
+aoptask2 = gbdx.Task("AOP_Strip_Processor", data=data2, enable_acomp=True, enable_pansharpen=False, enable_dra=False, bands='MS', ortho_epsg="UTM")
+
+# Edit the following path to reflect a specific path to an image
+data1A = "s3://gbd-customer-data/full path to customer's s3 bucket containing preprocessed imagery"
+data2A = "s3://gbd-customer-data/full path to customer's s3 bucket containing preprocessed imagery"
+
+# The data input and lines must be edited to point to an authorized customer S3 location)
+cd_preptask = gbdx.Task('cd_prep', pre_image_dir=data1A, post_image_dir=data2A)
+    
+workflow = gbdx.Workflow([ aoptask1, aoptask2, cd_preptask ])
+    
+# Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
+workflow.savedata(aoptask1.outputs.data, location='path to customers3 bucket for preprocessed imagery/')
+workflow.savedata(aoptask2.outputs.data, location='path to customer s3 bucket for preprocessed imagery/')
+workflow.savedata(cd_prep_test.outputs.final_pre_image_dir, location='customer final output directory/end2end/GE01_Hyderabad/pre/')
+workflow.savedata(cd_prep_test.outputs.final_post_image_dir, location='customer final output directory/end2end/WV03_Hyderabad/post/')
+
+workflow.execute()
+
+print workflow.id
+print workflow.status
+
+```
+
+
 ### Runtime
 
 Runtime is a function of the overlap region between the two images.  The following table lists applicable runtime outputs.
