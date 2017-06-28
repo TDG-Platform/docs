@@ -172,7 +172,8 @@ For details on the methods of testing the runtimes of the task visit the followi
 
 ###Known Issues
 
-* The Change Detectio Preparation task only processes multispectal images (MS) and UTM projrcted images. Make sure the [Advanced Image Preprocessing](https://github.com/TDG-Platform/docs/blob/master/Advanced_Image_Preprocessor.md) step is set to bands="MS" and ortho_epsg="UTM" (most common reasons for failure).
+* The Change Detection Preparation task only processes multispectal images (MS) and UTM projrcted images. Make sure the [Advanced Image Preprocessing](https://github.com/TDG-Platform/docs/blob/master/Advanced_Image_Preprocessor.md) step is set to bands="MS" and ortho_epsg="UTM" (most common reasons for failure).
+* The output from the Advanced Image Preprocessor must be written to a directory for use by this task.  You cannot use "aop.outputs.data.value" as input.
 * You should also be aware of the following:
     * See issues for [Pairwise Image Registration](https://github.com/TDG-Platform/docs/blob/master/Pairwise_Image_Registration.md): fails if not enough tie points (<20).
     * See issues for the [8-Band Cloud Mask](https://github.com/TDG-Platform/docs/blob/master/protogenV2RAC.md)
