@@ -170,7 +170,7 @@ For details on the methods of testing the runtimes of the task visit the followi
 1040010004D5AD00 105041001259EA00|###|###| ### | ### |
 
 
-###Known Issues
+### Known Issues
 
 * The Change Detection Preparation task only processes multispectal images (MS) and UTM projrcted images. Make sure the [Advanced Image Preprocessing](https://github.com/TDG-Platform/docs/blob/master/Advanced_Image_Preprocessor.md) step is set to bands="MS" and ortho_epsg="UTM" (most common reasons for failure).
 * The output from the Advanced Image Preprocessor must be written to a directory for use by this task.  You cannot use "aop.outputs.data.value" as input.
