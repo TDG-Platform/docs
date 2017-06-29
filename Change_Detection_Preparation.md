@@ -167,7 +167,7 @@ For details on the methods of testing the runtimes of the task visit the followi
 
   CatId Pair  |  Total Pixels within Overlap |  Total Area of Overlap (k2)  |  Time(secs)  |  Time/Area k2
 --------|:----------:|-----------|----------------|---------------
-1040010004D5AD00 105041001259EA00|###|###| ### | ### |
+1040010004D5AD00 105041001259EA00|315,701,538|1168.27| 1347.00 | 1.15 |
 
 
 ### Known Issues
