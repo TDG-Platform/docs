@@ -176,8 +176,7 @@ For details on the methods of testing the runtimes of the task visit the followi
 * The output from the Advanced Image Preprocessor must be written to a directory for use by this task.  You cannot use "aop.outputs.data.value" as input.
 * You should also be aware of the following:
     * See issues for [Pairwise Image Registration](https://github.com/TDG-Platform/docs/blob/master/Pairwise_Image_Registration.md): fails if not enough tie points (<20).
-    * ADD ISSUES/EXCEPTIONS for "cloud puncher" if I can find out what is being used here.
-
+    * The Cloud and Shadow Mask applied here sometimes confuses water and shadow.
 
 
 ### Contact Us
