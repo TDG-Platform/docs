@@ -166,7 +166,7 @@ For details on the methods of testing the runtimes of the task visit the followi
 (TBD: need info on how to do this.  Is GBDX overhead included or just the CPU runtime for the individual tasks?)
 
   CatId Pair  |  Total Pixels within Overlap |  Total Area of Overlap (k2)  |  Time(secs)  |  Time/Area k2
---------|:----------:|-----------|----------------|---------------
+--------|:----------:|:-----------:|:----------------:|:---------------:
 1040010004D5AD00 105041001259EA00|315,701,538|1168.27| 1347.00 | 1.15 |
 
 
