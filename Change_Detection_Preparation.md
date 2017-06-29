@@ -161,7 +161,7 @@ print workflow.status
 
 ### Runtime
 
-Runtime is a function of the overlap region between the two images.  The following table lists applicable runtime outputs.
+Runtime is a function of the overlap region between the two images.  The following table lists applicable runtime outputs for the example pair using the Quickstart script.
 For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
 (TBD: need info on how to do this.  Is GBDX overhead included or just the CPU runtime for the individual tasks?)
 
