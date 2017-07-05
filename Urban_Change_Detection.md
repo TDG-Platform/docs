@@ -33,7 +33,7 @@ urban_change = gbdx.Task('urban_change',
 workflow = gbdx.Workflow([urban_change])
 
 #Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
-workflow.savedata(urban_change.outputs.Results, location='UrbanChange/test1/Results')
+workflow.savedata(urban_change.outputs.results_dir, location='UrbanChange/test1/Results')
 
 workflow.execute()
 
@@ -67,14 +67,18 @@ All inputs are optional with default values, with the exception of
 'pre_image_dir' and 'post_image_dir',
 which specify the task's input and output data locations.
 
-Name                     |       Default         |        Valid Values             |   Description
--------------------------|:---------------------:|---------------------------------|-----------------
-pre_image_dir   |   N/A  |  S3 URL | Pre-image input directory containing one or more 1b TIFF files
+Name        | Required             |       Default         |        Valid Values             |   Description
+----------------|---------|:---------------------:|---------------------------------|-----------------
+pre_image_dir   | N/A  |  S3 URL | Pre-image input directory containing one or more 1b TIFF files
 post_image_dir   |   N/A  |  S3 URL | Post-image input directory containing one or more 1b TIFF files
 bounding_rectangle   |   N/A  |  ULx, ULy, LRx, LRy (latlon) | Subregion (specified using bounding box coordinates) within the image pair overlap to process
 enable_cloud_mask   |   N/A  |  boolean | Enable/Disable the use of a cloudmask (default: true) 
 
 ### Outputs
+
+Name           |    Required      |       Default         |        Valid Values             |   Description
+---------------|----------|:---------------------:|---------------------------------|-----------------
+
 
 On completion, the processed imagery will be written to your specified S3 Customer 
 Location (i.e., s3://gbd-customer-data/unique customer id/<user supplied path>/Results).  Contained in this directory
@@ -86,11 +90,11 @@ expected outputs and [Advanced Options](advanced-options).
 
 ### Advanced Options
 
-The options in the following table provide additional control over the resulting output. 
+The options in the following table provide additional diagnostic information. 
 
 
-Name                     |       Default         |        Valid Values             |   Description
--------------------------|:---------------------:|---------------------------------|-----------------
+Name           |    Required      |       Default         |        Valid Values             |   Description
+---------------|----------|:---------------------:|---------------------------------|-----------------
 Work | N/A | S3 URL | Output directory containing intermediate work files (for diagnostic purposes)
 Log | N/A | S3 URL | Output directory containing the runtime log (for diagnostic purposes)
 
