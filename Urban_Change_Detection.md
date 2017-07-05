@@ -69,20 +69,21 @@ which specify the task's input and output data locations.
 
 Name        | Required             |       Default         |        Valid Values             |   Description
 ----------------|---------|:---------------------:|---------------------------------|-----------------
-pre_image_dir   |   | N/A  |  S3 URL | Pre-image input directory containing one or more 1b TIFF files
-post_image_dir    |   |   N/A  |  S3 URL | Post-image input directory containing one or more 1b TIFF files
-bounding_rectangle    |   |   N/A  |  ULx, ULy, LRx, LRy (latlon) | Subregion (specified using bounding box coordinates) within the image pair overlap to process
-enable_cloud_mask     |    |   N/A  |  boolean | Enable/Disable the use of a cloudmask (default: true) 
+pre_image_dir   | Yes   | N/A  |  S3 URL | Pre-image input directory containing one or more 1b TIFF files
+post_image_dir    | Yes   |   N/A  |  S3 URL | Post-image input directory containing one or more 1b TIFF files
+bounding_rectangle    | ??  |   N/A  |  ULx, ULy, LRx, LRy (latlon) | Subregion (specified using bounding box coordinates) within the image pair overlap to process
+enable_cloud_mask     | No   |   True  |  boolean | Enable/Disable the use of a cloudmask (default: true) 
 
 ### Outputs
 
+On completion, the processed imagery will be written to your specified S3 Customer 
+Location (i.e., s3://gbd-customer-data/unique customer id/<user supplied path>/Results). 
+
 Name           |    Required      |       Default         |        Valid Values             |   Description
 ---------------|----------|:---------------------:|---------------------------------|-----------------
-results_dir    | Yes      |  N/A      | customer's s3 bucket location | 
-
-On completion, the processed imagery will be written to your specified S3 Customer 
-Location (i.e., s3://gbd-customer-data/unique customer id/<user supplied path>/Results).  Contained in this directory
+results_dir    | Yes      |  N/A      | customer's s3 bucket location | Contained in this directory
 are files of the name change_detection_latlon.* with JSON, shapefile and zip (containing the shapefiles).
+
 
 
 [Contact Us](#contact-us) If your Customer has questions regarding required inputs,
@@ -95,8 +96,8 @@ The options in the following table provide additional diagnostic information.
 
 Name           |    Required      |       Default         |        Valid Values             |   Description
 ---------------|----------|:---------------------:|---------------------------------|-----------------
-Work |       |  N/A | S3 URL | Output directory containing intermediate work files (for diagnostic purposes)
-Log |     |  N/A | S3 URL | Output directory containing the runtime log (for diagnostic purposes)
+Work |  No     |  N/A | S3 URL | Output directory containing intermediate work files (for diagnostic purposes)
+Log |  No   |  N/A | S3 URL | Output directory containing the runtime log (for diagnostic purposes)
 
 TBD -- we have exposed many options, only a few of which will be eventually be retained
 
