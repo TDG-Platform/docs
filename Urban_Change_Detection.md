@@ -81,8 +81,7 @@ Location (i.e., s3://gbd-customer-data/unique customer id/<user supplied path>/R
 
 Name           |    Required      |       Default         |        Valid Values             |   Description
 ---------------|----------|:---------------------:|---------------------------------|-----------------
-results_dir    | Yes      |  N/A      | customer's s3 bucket location | Contained in this directory
-are files of the name change_detection_latlon; with JSON, shapefile and zip (containing the shapefiles).
+results_dir    | Yes      |  N/A      | customer's s3 bucket location | Contained in this directory are files of the name change_detection_latlon; with JSON, shapefile and zip (containing the shapefiles).
 
 
 
