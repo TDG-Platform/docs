@@ -69,10 +69,10 @@ which specify the task's input and output data locations.
 
 Name        | Required             |       Default         |        Valid Values             |   Description
 ----------------|---------|:---------------------:|---------------------------------|-----------------
-pre_image_dir   | N/A  |  S3 URL | Pre-image input directory containing one or more 1b TIFF files
-post_image_dir   |   N/A  |  S3 URL | Post-image input directory containing one or more 1b TIFF files
-bounding_rectangle   |   N/A  |  ULx, ULy, LRx, LRy (latlon) | Subregion (specified using bounding box coordinates) within the image pair overlap to process
-enable_cloud_mask   |   N/A  |  boolean | Enable/Disable the use of a cloudmask (default: true) 
+pre_image_dir   |   | N/A  |  S3 URL | Pre-image input directory containing one or more 1b TIFF files
+post_image_dir    |   |   N/A  |  S3 URL | Post-image input directory containing one or more 1b TIFF files
+bounding_rectangle    |   |   N/A  |  ULx, ULy, LRx, LRy (latlon) | Subregion (specified using bounding box coordinates) within the image pair overlap to process
+enable_cloud_mask     |    |   N/A  |  boolean | Enable/Disable the use of a cloudmask (default: true) 
 
 ### Outputs
 
@@ -95,8 +95,8 @@ The options in the following table provide additional diagnostic information.
 
 Name           |    Required      |       Default         |        Valid Values             |   Description
 ---------------|----------|:---------------------:|---------------------------------|-----------------
-Work | N/A | S3 URL | Output directory containing intermediate work files (for diagnostic purposes)
-Log | N/A | S3 URL | Output directory containing the runtime log (for diagnostic purposes)
+Work |       |  N/A | S3 URL | Output directory containing intermediate work files (for diagnostic purposes)
+Log |     |  N/A | S3 URL | Output directory containing the runtime log (for diagnostic purposes)
 
 TBD -- we have exposed many options, only a few of which will be eventually be retained
 
