@@ -49,7 +49,7 @@ print workflow.status
                         pre_image_dir='s3://receiving-dgcs-tdgplatform-com/056194460010_01_003',
                         post_image_dir='s3://receiving-dgcs-tdgplatform-com/056194461010_01_003')
     In [4]: workflow = gbdx.Workflow([urban_change])
-    In [5]: workflow.savedata(urban_change.outputs.Results, location='UrbanChange/test1/Results')    
+    In [5]: workflow.savedata(urban_change.outputs.results_dir, location='UrbanChange/test1/Results')    
     In [6]: workflow.execute()
     Out [6]: 
     u'4507220531957672228'
@@ -78,7 +78,7 @@ enable_cloud_mask   |   N/A  |  boolean | Enable/Disable the use of a cloudmask 
 
 Name           |    Required      |       Default         |        Valid Values             |   Description
 ---------------|----------|:---------------------:|---------------------------------|-----------------
-
+results_dir    | Yes      |  N/A      | customer's s3 bucket location | 
 
 On completion, the processed imagery will be written to your specified S3 Customer 
 Location (i.e., s3://gbd-customer-data/unique customer id/<user supplied path>/Results).  Contained in this directory
