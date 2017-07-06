@@ -9,19 +9,19 @@ workflow equivalent to [Change Detection Preparation](https://github.com/TDG-Pla
  * [Quickstart](#quickstart) - Get started!
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and example contents.
- * [Advanced Options](#advanced-options) - Examples linking to a second task and running VNIR+SWIR
+ * [Advanced Options](#advanced-options) 
  * [Known Issues](#known-issues)
 
 ### Quickstart
 
-The urban_change GBDX task can be run using [gbdxtools](https://github.com/DigitalGlobe/gbdxtools/blob/master/docs/user_guide.rst) Python module, which requires some initial setup.
+The Urban Change Detection GBDX task can be run using [gbdxtools](https://github.com/DigitalGlobe/gbdxtools/blob/master/docs/user_guide.rst) Python module, which requires some initial setup.
 Tasks and workflows can be added (described here in [gbdxtools](https://github.com/DigitalGlobe/gbdxtools/blob/master/docs/running_workflows.rst))  or run separately after the urban_change process is completed.
 
-**Example Script:** These basic settings will run urban_change from a pair of paths to 1b images.
+**Example Script:** These basic settings will run Urban Change Detection from a pair of paths to 1b images.
 See also examples listed under the [Advanced Options](#advanced-options).
 
 ```python
-# Run urban_change on a pair of images
+# Run Urban Change Detection (urban_change) on a pair of images
 
 from gbdxtools import Interface
 gbdx = Interface()
