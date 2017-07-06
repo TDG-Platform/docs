@@ -33,7 +33,7 @@ urban_change = gbdx.Task('urban_change',
 workflow = gbdx.Workflow([urban_change])
 
 #Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
-workflow.savedata(urban_change.outputs.results_dir, location='UrbanChange/test1/Results')
+workflow.savedata(urban_change.outputs.results_dir, location='UrbanChange/Results')
 
 workflow.execute()
 
@@ -49,7 +49,7 @@ print workflow.status
                         pre_image_dir='s3://receiving-dgcs-tdgplatform-com/056194460010_01_003',
                         post_image_dir='s3://receiving-dgcs-tdgplatform-com/056194461010_01_003')
     In [4]: workflow = gbdx.Workflow([urban_change])
-    In [5]: workflow.savedata(urban_change.outputs.results_dir, location='UrbanChange/test1/Results')    
+    In [5]: workflow.savedata(urban_change.outputs.results_dir, location='UrbanChange/Results')    
     In [6]: workflow.execute()
     Out [6]: 
     u'4507220531957672228'
@@ -84,7 +84,6 @@ Name           |    Required      |       Default         |        Valid Values 
 results_dir    | Yes      |  N/A      | customer's s3 bucket location | Contained in this directory are files of the name change_detection_latlon; with JSON, shapefile and zip (containing the shapefiles).
 
 
-
 [Contact Us](#contact-us) If your Customer has questions regarding required inputs,
 expected outputs and [Advanced Options](advanced-options).
 
@@ -98,7 +97,6 @@ Name           |    Required      |       Default         |        Valid Values 
 Work |  No     |  N/A | S3 URL | Output directory containing intermediate work files (for diagnostic purposes)
 Log |  No   |  N/A | S3 URL | Output directory containing the runtime log (for diagnostic purposes)
 
-TBD -- we have exposed many options, only a few of which will be eventually be retained
 
 ### Runtime ###
 
@@ -109,8 +107,6 @@ For details on the methods of testing the runtimes of the task visit the followi
   CatId Pair  |  Total Pixels within Overlap |  Total Area of Overlap (k2)  |  Time(secs)  |  Time/Area k2
 --------|:----------:|-----------|----------------|---------------
 1030010005850300 1030010018700D00|###|###| ### | ### |
-
-
 
 
 ### Known Issues ###
