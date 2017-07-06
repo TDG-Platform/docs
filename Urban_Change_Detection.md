@@ -100,7 +100,7 @@ Log |  No   |  N/A | S3 URL | Output directory containing the runtime log (for d
 
 TBD -- we have exposed many options, only a few of which will be eventually be retained
 
-### Runtime
+### Runtime ###
 
 Runtime is a function of the size of the overlap region between the two images.  The following table lists applicable runtime outputs.
 For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
@@ -113,7 +113,7 @@ For details on the methods of testing the runtimes of the task visit the followi
 
 
 
-###Known Issues###
+### Known Issues ###
 
 The Urban Change Task automatically inputs the appropriate settings for the four sub-tasks in the workflow library as listed below.  Refer to the documentation for those tasks for further details:
 
@@ -126,7 +126,7 @@ The Urban Change Task automatically inputs the appropriate settings for the four
 *	The Cloud and Shadow Mask applied here sometimes confuses water and shadow. No documentation is available for this Task.
 
 
-### Contact Us
+### Contact Us ###
 Tech Owners: [Jeff Collins](#jcollins@digitalglobe.com), [Carsten Tusk](#ctusk@digitalglobe.com)
 
 Document Owner: [Kathleen Johnson](#kathleen.johnson@digitalglobe.com)
