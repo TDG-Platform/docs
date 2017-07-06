@@ -2,8 +2,8 @@
 
 The urban_change GBDX library task performs change detection of builtup areas.  It takes as input a pair of overlapping 1b images and outputs the urban change
 as a collection of polygons.  The processing includes ACOMP/FastOrtho (via 
-AOP_Strip_Processor), image/grid alignment, cloud detection and cropping (via
-workflow equivalent to cd_prep) and urban change detection (via urban_change_task). 
+the [Advanced Image Preprocessor](#https://github.com/TDG-Platform/docs/blob/master/Advanced_Image_Preprocessor.md)), image/grid alignment, cloud detection and cropping (via
+workflow equivalent to [Change Detection Preparation](#https://github.com/TDG-Platform/docs/blob/master/Change_Detection_Preparation.md)) and urban change detection (via urban_change_task). 
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
@@ -113,11 +113,18 @@ For details on the methods of testing the runtimes of the task visit the followi
 
 
 
-###Known Issues
+###Known Issues###
 
-See issues for cd_prep
+The Urban Change Task automatically inputs the appropriate settings for the four sub-tasks in the workflow library as listed below.  Refer to the documentation for those tasks for further details:
 
-(### need to determine more issues during testing)
+*	The Change Detection Preparation task only processes multispectral images (MS) and UTM projected images. 
+
+*	The Advanced Image Preprocessor is run automatically with the appropriate settings.
+
+*	The Pairwise Image Registration Task; fails if not enough tie points (<20).
+
+*	The Cloud and Shadow Mask applied here sometimes confuses water and shadow. No documentation is available for this Task.
+
 
 ### Contact Us
 Tech Owners: [Jeff Collins](#jcollins@digitalglobe.com), [Carsten Tusk](#ctusk@digitalglobe.com)
