@@ -2,8 +2,8 @@
 
 The urban_change GBDX library task performs change detection of builtup areas.  It takes as input a pair of overlapping 1b images and outputs the urban change
 as a collection of polygons.  The processing includes ACOMP/FastOrtho (via 
-the [Advanced Image Preprocessor](#https://github.com/TDG-Platform/docs/blob/master/Advanced_Image_Preprocessor.md)), image/grid alignment, cloud detection and cropping (via
-workflow equivalent to [Change Detection Preparation](#https://github.com/TDG-Platform/docs/blob/master/Change_Detection_Preparation.md)) and urban change detection (via urban_change_task). 
+the [Advanced Image Preprocessor](https://github.com/TDG-Platform/docs/blob/master/Advanced_Image_Preprocessor.md)), image/grid alignment, cloud detection and cropping (via
+workflow equivalent to [Change Detection Preparation](https://github.com/TDG-Platform/docs/blob/master/Change_Detection_Preparation.md)) and urban change detection (via urban_change_task). 
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
