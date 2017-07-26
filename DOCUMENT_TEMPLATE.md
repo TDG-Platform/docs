@@ -1,4 +1,4 @@
-# taskname
+# Similarity: Automatic Image Anomaly Detection System
 
 Task description.
 
