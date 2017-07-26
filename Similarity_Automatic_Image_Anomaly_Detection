@@ -8,7 +8,7 @@ The Task takes as its input, a directory which is output by the AOP_strip_proces
 task (or an equivalent directory structure) and outputs an image file which is a
 heat map of anomalies in a "candidate" image.
 
-taskname can be run with Python using [gbdxtools](https://github.com/DigitalGlobe/gbdxtools) or through the [GBDX Web Application](https://gbdx.geobigdata.io/materials/).  
+Automatic Image Anomaly Detection can be run with Python using [gbdxtools](https://github.com/DigitalGlobe/gbdxtools) or through the [GBDX Web Application](https://gbdx.geobigdata.io/materials/).  
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
