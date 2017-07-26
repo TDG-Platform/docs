@@ -1,4 +1,4 @@
-# Similarity: Automatic Image Anomaly Detection System
+# DOCUMENT_TEMPLATE
 
 Task description.
 
