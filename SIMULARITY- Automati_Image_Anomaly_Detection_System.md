@@ -117,8 +117,8 @@ For background on the development and implementation of taskname see [here](Inse
 
 ### Contact
 Tech Owner: [Ray Richardson](ray@simularity.com) @ SIMULARITY
+
 Document Owner: [Kathleen Johnson](kajohnso@digitalglobe.com)
 
 
 
-> Written with [StackEdit](https://stackedit.io/).
