@@ -25,18 +25,41 @@ taskname can be run with Python using [gbdxtools](https://github.com/DigitalGlob
 Quick start example.
 
 ```python
-# Quickstart example for taskname.  
+# AIADS Example Python
+# python aiads.py test_directory 10500100077B2A00 1050410011113800 1030010063143700 10300100649F2800 103001003E418400
 
 from gbdxtools import Interface
+import inspect
+import time
+from os.path import join
+import subprocess
+import sys
+
 gbdx = Interface()
 
-#Edit the following line to reflect a specific path to an image
-raster = 's3://gbd-customer-data/CustomerAccount#/PathToImage/'
-taskname = gbdx.Task('taskname', raster=raster)
+aop = gbdx.Task("AOP_Strip_Processor")
+aop.inputs.data = ['s3://receiving-dgcs-tdgplatform-com/056374187010_01_003',
+	's3://receiving-dgcs-tdgplatform-com/056380302010_01_003',
+	's3://receiving-dgcs-tdgplatform-com/056374186010_01_003',
+	's3://receiving-dgcs-tdgplatform-com/056374188010_01_003',
+	's3://receiving-dgcs-tdgplatform-com/056374184010_01_003']
 
-workflow = gbdx.Workflow([taskname])  
-#Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
-workflow.savedata(taskname.outputs.data, location='taskname')
+aiads = gbdx.Task("aiads")
+aiads.inputs.data_in = aop.outputs.data.value
+aiads.inputs.method = "euclidean"
+aiads.inputs.metric = "variation_dist"
+aiads.inputs.scale = "3"
+aiads.inputs.threshold = "0.1"
+# aiads.inputs.target = target
+
+workflow = gbdx.Workflow([aop, aiads])
+
+# order.timeout = 36000
+aop.timeout = 36000
+aiads.timeout = 36000
+workflow.savedata(aiads.outputs.data_out, location='Akejohnson_Files/SIMILARITY/Test1')
+    # execute
+
 workflow.execute()
 
 print workflow.id
