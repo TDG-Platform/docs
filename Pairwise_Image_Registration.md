@@ -52,9 +52,9 @@ This script uses the Pairwise Image Registration task to co-register two images.
 
 Name      |     Required          |       File Type       |   Description
 --------------|:-----------|:---------------------:|---------------------------------
-source_directory    | YES     |  directory   | S3 location of the Image that provides the base layer for warping
+source_directory    | YES     |  directory   | S3 location of the Image that is layer to be warped
 source_filename   | NO  |  geotiff     | source file must be set in the task command line if both files are located in the same directory    
-reference_directory  | YES    |  directory   | S3 location of the Image that will be warped
+reference_directory  | YES    |  directory   | S3 location of the Image that is the base layer
 reference_filename  | NO |  geotiff     | reference file must be set in the task command line if both files are located in the same directory
 boundary_directory   |  NO |  directory   | S3 location of the all the input data; only required if there is a boundary shapefile 
 boundary_filename  |  NO |  shapefile   | file that limits the areal extent of the image warping (optional)
