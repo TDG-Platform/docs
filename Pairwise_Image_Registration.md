@@ -80,7 +80,7 @@ boundary_filename  |  NO |  shapefile   | file that limits the areal extent of t
 *  Supports up to a factor of 25 resolution difference
 
 
-### Output:
+### Outputs:
 The Pairwaise Image Registration task outputs the warped source image that is registered to the reference image.
 
 The warped source will be placed in the output s3 bucket.  This tiff image will have the same metadata as the source.  It will be output with the suffix “_warped” appended to the original filename.
