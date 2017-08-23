@@ -624,11 +624,11 @@ The above command takes as input a multi-band raster of any data type and return
 
 **_Command:_**
 ```shell
-indices --outdirID <node_id> --indirID <node_id> --indexIDsFromFile <file_symbol> <(index_names)|all> --noDataValIn <val> -noDataValOut <val>
+(DEPRECATED) indices --outdirID <node_id> --indirID <node_id> --indexIDsFromFile <file_symbol> all --noDataValIn <val> -noDataValOut <val>
+indices --outdirID <node_id> --indirID <node_id> --indexFile <file_symbol> --noDataValIn <val> -noDataValOut <val>
 
-# Examples:
-	indices --outdirID n4 --indirID SRC --indexIDsFromFile FILE_1 Laterite Gossan --noDataValIn 0 -noDataValOut 9999
-	indices --outdirID n4 --indirID n2 --indexIDsFromFile FILE_1 all --noDataValIn 0 -noDataValOut 9999 
+# Example:
+	indices --outdirID n4 --indirID n2 --indexFile FILE_1 --noDataValIn 0 -noDataValOut 9999 
 ```
 Example index file:
 ```shell
@@ -639,7 +639,18 @@ B11/B13 : Laterite
 B11/B5 : Gossan
 B13/B11 : Ferrous iron index
 ```
-The above command takes as input a multi-band raster of any data type and returns a multi-band raster of FLOAT32 and a text legend README.txt (as well as a README_22.txt for ENVI users). This function builds an index raster stack according to the band math expressions contained in an index file. Command syntax allows the user to reference specific indices within the file or reference all indices within the file. The file may contain any number of comment lines that begin with "#" and blank lines -- these will ignored. Each non-ignored line must be of the form (band_math) : (index_name). The (band_math) can involve spaces, parentheses, arithmetic operations, exponent (carrot), numbers, log, and sqrt. The (index_name) can be any string, and may contain spaces, commas, and so on, but not colons. **_If the user is referencing a subset of the file indices, then every index name in the file must be a string without spaces_**. The bands in the band math expressions must be labelled B1, B2, B3,.... or b1, b2, b3,.... If the user references an ordered subset of indices in the file, then the ordering of the output bands corresponds to the ordered subset. If the user references all the indices in the file, then the ordering of the output bands corresponds to the file ordering. 
+
+Example index file (with convenient short names for auto-naming of downstream products)
+```shell
+# ENVI EXPRESSIONS
+B5/B3 : Ferric oxide composition : FerrOxComp
+(B13/B7) + (B3/B5) : Ferrous, Fe2+ :  Fe2plus
+B11/B13 : Laterite : Laterite
+B11/B5 : Gossan : Gossan
+B13/B11 : Ferrous iron index : FerrIronIdx
+```
+
+The above command takes as input a multi-band raster of any data type and returns a multi-band raster of FLOAT32 and a text legend README.txt (as well as a README_22.txt for ENVI users). This function builds an index raster stack according to the band math expressions contained in an index file. The file may contain any number of comment lines that begin with "#" and blank lines -- these will ignored. Each non-ignored line must be of the doublet form (band_math) : (index_name) or triplet form (band_math) : (index_name) : (short name). The short name should consist of contiguous characters. The (band_math) can involve spaces, parentheses, arithmetic operations, exponent (carrot), numbers, log, and sqrt. The (index_name) can be any string, and may contain spaces, commas, and so on, but not colons. The bands in the band math expressions must be labelled B1, B2, B3,.... or b1, b2, b3,.... The output band stack ordering is the same as the input file ordering. 
 
 **_Command:_**
 ```shell
@@ -723,9 +734,9 @@ The "-bands" option allows the user to specify a subset of bands on which to per
 
 ### Polygonize 
 ```shell
-polygonize  --indirID <node_id> --outdirID <node_id> 
+polygonize  --indirID <node_id> --outdirID <node_id> [--tag <tag_name>]
 ```
-The above command takes as input a multi-band raster of UCHAR, and returns an ESRI polygon shapefile for each band, where the polygons correspond to the contiguous regions of non-zeroe pixels in the band. This function calls Chris Padwick's fast polygonize code, which is orders of magnitude faster than gdal_polygonize and "pulls back" where polygons would otherwise self-touch. (Some GIS software doesn't handle self-touching polygons.) Polygons with holes (multi-polygons) are correctly handled. Depending on whether or not a README.txt is present in the input directory, attribute columns are added to the shapefile. For DigitalGlobe image data, these include: band number, Acquisition Date-Time, and Order Item Number. If the input README.txt contains band names or band thresholds, colums are added to the shapefiles to display that information. 
+The above command takes as input a multi-band raster of UCHAR, and returns an ESRI polygon shapefile for each band, where the polygons correspond to the contiguous regions of non-zeroe pixels in the band. This function calls Chris Padwick's fast polygonize code, which is orders of magnitude faster than gdal_polygonize and "pulls back" where polygons would otherwise self-touch. (Some GIS software doesn't handle self-touching polygons.) Polygons with holes (multi-polygons) are correctly handled. If --tag option is invoked, then then an attribute field called "shape_tag" will be added to the shapefile and populated with the value <tag_name>. If a README.txt (generated by DGLayers) is present within the input directory for this operation, and the --tag option is not invoked, then an attribute field called "shape_tag" will be added to each shapefile and auto-populated in a descriptive manner, and the shapefiles will be auto-assigned descriptive names. The "shape_tag" field is a field that can be used downstream if there is a desire to merge shapefiles together into a single shapefile. The tag indicates the class (or original shapefile) to which each polygon belongs. 
 
 ### Threshold 
 **_Command:_**
@@ -736,7 +747,7 @@ threshold_the_stack -outdirID <node_id> -indirID <node_id> -threshPairs <thresho
 	threshold_the_stack -outdirID n5 -indirID n4 -threshPairs (*, 0.5) (0.3, 0.4)  
 	threshold_the_stack -outdirID n5 -indirID n4 -threshFile my_thresh_file.txt 	
 ```
-The above command takes as input a multi-band raster of any data type and a threshold pair for each band, and returns a multi-band 0-1 raster of UCHAR and an accompanying text legend README.txt. The output raster has the same number of bands as the input raster. The "star" in ("star", X) means minus infinity. The "star" in (X, "star") means plus infinity. In the first example, it is assumed that the input raster has two bands. The first band in the output raster is 1 wherever the first band of the input raster is between minus infinity and 0.5, and 0 otherwise. The second band in the output raster is 1 wherever the second band of the input raster is between 0.3 and 0.4, and 0 otherwise. In the second example, the threshold pairs are read line by line from a text file, where each line is of the form "<band_num> : <band name> : <threshold_pair>" (the quotes are **_not_** part of the line). An example line is "3 : Ferric Iron A : (1.3, 2.5)". The two colons are required. The band numbers proceed sequentially 1, 2, 3, etc. The band name is allowed to be the empty string. The file can include comment lines (that begin with #) and blanks lines. 
+The above command takes as input a multi-band raster of any data type and a threshold pair for each band, and returns a multi-band 0-1 raster of UCHAR and an accompanying text legend README.txt. The output raster has the same number of bands as the input raster. The "star" in ("star", X) means minus infinity. The "star" in (X, "star") means plus infinity. In the first example, it is assumed that the input raster has two bands. The first band in the output raster is 1 wherever the first band of the input raster is between minus infinity and 0.5, and 0 otherwise. The second band in the output raster is 1 wherever the second band of the input raster is between 0.3 and 0.4, and 0 otherwise. In the second example, the threshold pairs are read line by line from a text file, where each line in the text file is of the form "<band description> : <threshold_pair>" (the quotes are **_not_** part of the line). An example of such a line in such a text file is "3 : Ferric Iron A : FerrIronA : (1.3, 2.5)" (again without the quotes). This line describes the third band of the input raster and how it will be thresholded. The band description string can be any non-empty string. The band numbers proceed sequentially 1, 2, 3, etc. The file can include comment lines (that begin with #) and blanks lines. 
 
 **_Command:_**
 ```shell
@@ -768,10 +779,10 @@ The above command takes as input a multi-band raster and a sequence of bands ind
 
 ## Known Issues
 
-* "saveData" task might not be working with DGLayers. For now, may have to call "StageDataToS3" task
 * polygonize [-thematic] option does not presently work on spectral_angle_mapper output class map because polygonize is expecting README.TXT instead of README_CLASSMAP.TXT
 * polygonize [-geojson] option does not work. This option is supposed to output a polygon geojson in addition to polygon shapefile.
 * Sometimes when polygon would otherwise be self-touching, Chris Padwick's algorithm is a little aggressive in the "pull back".
+* If a 0-1 file has large connected components with lots of holes, or there are a gazillion connected components, sometimes the polygonize functionality appears to run indefinitely. 
 
 
 
