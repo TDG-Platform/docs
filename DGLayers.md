@@ -442,7 +442,7 @@ polygonize -outdirID n0_poly -indirID n0_thresh --deliver
 ## Python-like recipe commands
 In a DGLayers recipe you can call virtually any Python function (from numpy
 or scipy libraries) that goes from one or more numpy arrays, all of the same row-column dimension,
-to a new numpy array of the same row-column dimension. The functions you see below are
+to a new numpy array of the same row-column dimension. The functions you see below are some
 examples that satisfy the property. See Internet for descriptions.
 ```shell				
 # In the recipe, use the syntax: <node_id> = <library>.<function>(<arguments>) 
@@ -511,7 +511,7 @@ posterize (plus text legend)
 rgb_to_hsv
 skeletonize (<---- coming soon)
 spec_angle_mapper (plus text legend) 
-other_class_algs (<------ coming soon from J. Shafer)
+spectral_matching (plus text legend)
 
 # Polygonize
 polygonize	
@@ -738,7 +738,7 @@ spectral_matching --metric <metric> --outdirID n1 --indirID SRC -specLibFile <fi
 	[-rules] [-bands <bands>] [-tol <tolerance>] 
 	
 # Example:
-	spectral_matching --outdirID n1 --indirID SRC -metric norm_L1_dist -specLibFile FILE_1 -noDataValIn <val> -noDataValOut <val> -tol <tolerance> [-rules] [-bands <bands>]  	
+	spectral_matching --outdirID n1 --indirID SRC -metric norm_L1_dist -specLibFile FILE_1 -noDataValIn 0 -noDataValOut 0 -tol 0.175   	
 ```
 
 Similar documentation as "spec_angle_mapper" function. The above command takes as input a multi-band AComp'd reflectance raster of USHORT (0-10000) and returns a single-band "class map" raster of UCHAR, an optional multi-band "rules" raster of USHORT, and a text legend README.txt (as well as README_22.txt for ENVI users) accompanying each. This function matches each pixel of the input image with the "closest" spectrum in a spectral refernce library. "Closest" is defined with respect to the metric indicated by the "-metric" option. The possible metrics are: (a) norm_L1_dist; (b) sid_sin_spec_ang; (c) sid_sin_spec_corr_ang. The "-tol" option indicates the maximum distance (in the natural units of the selected metric) that spectrum X can be from spectrum Y and still be considered a candidate match, X to Y. The "rules" raster will only be generated when the "-rules" option is invoked. The "rules" raster is computed as the integer part of "raw distance x 10000". 
