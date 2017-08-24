@@ -720,7 +720,7 @@ Example angle threshold file:
 	alunite1.spc : 0.20
 	gypsum1.spc : 0.18
 ```
-The above command takes as input a multi-band AComp'd reflectance raster of USHORT (0-10000) and returns a single-band "class map" raster of UCHAR, an optional multi-band "rules" ("angles") raster of USHORT, and a text legend README.txt (as well as README_22.txt for ENVI users) accompanying each. This function applies the usual Spectral Angle Mapping calculation to produce the rasters. The "rules" raster will only be generated when the "-rules" option is invoked. The "rules" raster is computed as the integer part of "angle(radians) x 10000". Depending on input file size and the number of materials specified, the "rules" raster can be a very large file. The number of bands in the "rules" raster is the same as the number of materials referenced by the user, and the ordering of the bands corresponds to the ordering in the material list referenced by the user. If the user references all the materials in the spectral library, then the ordering of the output bands follows the file order of materials. The "corr" option means compute "spectral correlation angle" instead of "spectral angle". In the former, the angle is computed as arcosine((r + 1)/2)), where r is the Pearson correlation coefficient. In the latter, the angle is computed as the arcosine of the dot product of the normalized vectors.
+The above command takes as input a multi-band AComp'd reflectance raster of USHORT (0-10000) and returns a single-band "class map" raster of UCHAR, an optional multi-band "rules" ("angles") raster of USHORT, and a text legend README.txt (as well as README_22.txt for ENVI users) accompanying each. This function applies the usual Spectral Angle Mapping calculation to produce the rasters. The "rules" raster will only be generated when the "-rules" option is invoked. The "rules" raster is computed as the integer part of "angle(radians) x 10000". Depending on input file size and the number of materials specified, the "rules" raster can be a very large file. The number of bands in the "rules" raster is the same as the number of materials referenced by the user, and the ordering of the bands corresponds to the ordering in the material list referenced by the user. If the user references all the materials in the spectral library, then the ordering of the output bands follows the file order of materials. The "corr" option means compute "spectral correlation angle" instead of "spectral angle". In the former, the angle is computed as arcosine((r + 1)/2)), where r is a modified Pearson correlation coefficient. In the latter, the angle is computed as the arcosine of the dot product of the normalized vectors.
 
 The spectral library file must be the text file equivalent of an ENVI spectral library file. The first line is a header. The second line is "Column 1: X Axis". That is followed by one line per material. In turn, that is followed by the material spectra in column format. The first "material spectrum" is associated with "Column 1: X Axis".
 
@@ -731,6 +731,25 @@ TBD: What material name in file has spaces in it?
 The "-defAngThreshRad" option allows the user to set a universal default threshold angle (radians) such that, for any pixel and any material, if the spectral angle between pixel and material is greater than the default, the material is disqualified from being explanatory for the pixel. The "-angThresholdsRad" option allows the user to set threshold angles on a per-material basis. Alternatively, the "-angThreshRadFile" option can be used to set threshold angles on a per-material basis. 
 
 The "-bands" option allows the user to specify a subset of bands on which to perform the spectral angle calculation. The option takes one argument, and can utilize digits, commas, and dashes (e.g., the string 2,4-7,10-14), but no other symbols. 
+
+**_Command:_**
+```shell
+spectral_matching --metric <metric> --outdirID n1 --indirID SRC -specLibFile <file_symbol> -noDataValIn <val> -noDataValOut <val>
+	[-rules] [-bands <bands>] [-tol <tolerance>] 
+	
+# Example:
+	spectral_matching --outdirID n1 --indirID SRC -metric norm_L1_dist -specLibFile FILE_1 -noDataValIn <val> -noDataValOut <val> -tol <tolerance> [-rules] [-bands <bands>]  	
+```
+
+Similar documentation as "spec_angle_mapper" function. The above command takes as input a multi-band AComp'd reflectance raster of USHORT (0-10000) and returns a single-band "class map" raster of UCHAR, an optional multi-band "rules" raster of USHORT, and a text legend README.txt (as well as README_22.txt for ENVI users) accompanying each. This function matches each pixel of the input image with the "closest" spectrum in a spectral refernce library. "Closest" is defined with respect to the metric indicated by the "-metric" option. The possible metrics are: (a) norm_L1_dist; (b) sid_sin_spec_ang; (c) sid_sin_spec_corr_ang. The "-tol" option indicates the maximum distance (in the natural units of the selected metric) that spectrum X can be from spectrum Y and still be considered a candidate match, X to Y. The "rules" raster will only be generated when the "-rules" option is invoked. The "rules" raster is computed as the integer part of "raw distance x 10000". 
+
+Let X, Y be two spectra:
+
+norm_L1_dist(X, Y) -- Perform L1 normalization of X and Y and compute the L1-distance between the results.
+
+sid_sin_spec_ang(X, Y) -- Compute the angle, spec_ang_rad, between X and Y. Compute the Spectral Information Divergence SID(X, Y). Form the metric SID(X, Y) * sin(spec_ang_rad). 
+
+sid_sin_spec_corr_ang(X, Y) -- Compute the correlation angle, spec_corr_ang_rad, between X and Y. The correlation angle is computed as arcosine((r + 1)/2)), where r is a modified Pearson correlation coefficient. Compute the Spectral Information Divergence SID(X, Y). Form the metric SID(X, Y) * sin(spec_corr_ang_rad). 
 
 ### Polygonize 
 ```shell
