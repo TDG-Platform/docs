@@ -802,6 +802,10 @@ The above command takes as input a multi-band raster and a sequence of bands ind
 * polygonize [-geojson] option does not work. This option is supposed to output a polygon geojson in addition to polygon shapefile.
 * Sometimes when polygon would otherwise be self-touching, Chris Padwick's algorithm is a little aggressive in the "pull back".
 * If a 0-1 file has large connected components with lots of holes, or there are a gazillion connected components, sometimes the polygonize functionality appears to run indefinitely. 
+* n0_A = np.where(n0_B > 2.5, 1, 0).astype(np.bool) works correctly. But n0_A = np.where(n0_B > 2.5, True, False).astype(np.bool) is always gives the empty image.
+* The user-specified optional tag in the polygonize routine should be used as the suffix in the name of the resulting shapefiles
+* DGLayers recipe should have all commands looking as much like Python functions as possible. Presently polygonize, spectral_angle_mapper, indices, etc. don't look like that. They look like option calls to an executable. 
+* Refactor and simplify the code. 
 
 
 
