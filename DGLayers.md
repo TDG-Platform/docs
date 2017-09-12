@@ -769,7 +769,24 @@ threshold_the_stack -outdirID <node_id> -indirID <node_id> -threshPairs <thresho
 	threshold_the_stack -outdirID n5 -indirID n4 -threshPairs (*, 0.5) (0.3, 0.4)  
 	threshold_the_stack -outdirID n5 -indirID n4 -threshFile my_thresh_file.txt 	
 ```
-The above command takes as input a multi-band raster of any data type and a threshold pair for each band, and returns a multi-band 0-1 raster of UCHAR and an accompanying text legend README.txt. The output raster has the same number of bands as the input raster. The "star" in ("star", X) means minus infinity. The "star" in (X, "star") means plus infinity. In the first example, it is assumed that the input raster has two bands. The first band in the output raster is 1 wherever the first band of the input raster is between minus infinity and 0.5, and 0 otherwise. The second band in the output raster is 1 wherever the second band of the input raster is between 0.3 and 0.4, and 0 otherwise. In the second example, the threshold pairs are read line by line from a text file, where each line in the text file is of the form "<band description> : <threshold_pair>" (the quotes are **_not_** part of the line). An example of such a line in such a text file is "3 : Ferric Iron A : FerrIronA : (1.3, 2.5)" (again without the quotes). This line describes the third band of the input raster and how it will be thresholded. The band description string can be any non-empty string. The band numbers proceed sequentially 1, 2, 3, etc. The file can include comment lines (that begin with #) and blanks lines. 
+
+Example thresholds file:
+```shell
+# Threshold inetrvals
+1 : Ferric oxide composition : (1.3, *)
+2 : Laterite : (*, 1.1)
+3 : Gossan : (0.9, 1.0)
+```
+
+Example thresholds file (with convenient short names for auto-naming of downstream products):
+```shell
+# Threshold intervals
+1 : Ferric oxide composition : FER_OX_COMP : (1.3, *)
+2 : Laterite : LAT : (*, 1.1)
+3 : Gossan : GOS : (0.9, 1.0)
+```
+
+The above command takes as input a multi-band raster of any data type and a threshold pair **_for each band_**, and returns a multi-band 0-1 raster of UCHAR and an accompanying text legend README.txt. The output raster has the same number of bands as the input raster. The "star" in ("star", X) means minus infinity. The "star" in (X, "star") means plus infinity. In the first example invocation, it is assumed that the input raster has two bands. The first band in the output raster has pixel value 1 wherever the first band of the input raster is between minus infinity and 0.5, and pixel value 0 otherwise. The second band in the output raster has pixel value 1 wherever the second band of the input raster is between 0.3 and 0.4, and pixel value 0 otherwise. In the second example invocation, the threshold pairs are read line by line from a text file. The file can include comment lines (that begin with #) and can include blanks lines. 
 
 **_Command:_**
 ```shell
