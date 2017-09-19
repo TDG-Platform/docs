@@ -165,6 +165,7 @@ See the below table for support datasets and the specific band grouping names.
 |  QuickBird (see note)  |       multispectral, panchromatic        |      quickbird      |
 |         IKONOS         |       multispectral, panchromatic        |       ikonos        |
 |       Landsat 8        | multispectral, panchromatic, cirrus, thermal, quality |      landsat-8      |
+|       Sentinel-2       |    M1, M2, M3 (names of the mirrors)     |     sentinel-2      |
 
 > Note: Band grouping names do not apply for standard format DG products where the a typical input_raster would have to point to a folder with a multispectral or panchromatic in it. Having both would cause an error with the task runner.
 
