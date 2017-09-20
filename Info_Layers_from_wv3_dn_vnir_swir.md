@@ -387,23 +387,6 @@ workflow = gbdx.Workflow([first_task, # <----------- Call to AComp with default 
                           layers_task,
                           save_layers_task]) 
 
-"""
-# None of these do not work. Why?
-workflow.savedata(rgb_dir, location = out_rgb_dir)      
-workflow.savedata(mi_mask_dir, location = out_mi_mask_dir)
-workflow.savedata(scube_dir, location = out_scube_dir)
-workflow.savedata(filegen_dir, location = out_scube_dir)
-workflow.savedata(water_scube_dir, location = out_water_scube_dir)           
-workflow.savedata(cloud_scube_dir, location = out_cloud_scube_dir)   
-workflow.savedata(vnir_imd_dir, location = out_vnir_imd_dir) 
-workflow.savedata(swir_imd_dir, location = out_swir_imd_dir) 
-workflow.savedata(water_vnir_dir, location = out_water_vnir_dir) 
-workflow.savedata(cloud_vnir_dir, location = out_cloud_vnir_dir)  
-#workflow.savedata(acomp_old_dir, location = out_acomp_old_dir)
-#workflow.savedata(acomp_new_dir, location = out_acomp_new_dir) 
-#workflow.savedata(mi_tmp_dir, location = out_mi_tmp_dir)   
-"""
-
 #print workflow.generate_workflow_description()
 workflow.execute()
 print 
@@ -420,7 +403,8 @@ Here are the modifications you need to make to the above workflow for your appli
 * Set **_out_base_dir_** -- this is your  top-level S3 output directory
 * Set **_input_data_is_1b_** -- (True/False) this indicates whether the input DN data is Level 1B or Orthorectified
 * Set **_vnir_reproj_res_** and **_swir_reproj_res_** -- these are the target reprojection resolutions when converting 1B to UTM
-* Set **_dn_dir_**, **_vnir_dn_dir_**, and **_swir_dn_dir_** -- these are the S3 locations of your DN input data 
+* Set **_dn_vnir_dir_** and **_dn_swir_dir_** -- these are the S3 locations of your DN VNIR and SWIR input data 
+* Set **_dn_data_dir_** -- this is the s3 path with subdirectories for DN VNIR and SWIR data (used explicitly only when starting with Orthos)
 * Set **_recipe_dir_** -- this is the S3 directory that contains your DGLayers recipe file **_and any auxiliary files it refers to_** 
 * Set **_recipe_filename_** -- this is the file name of your DGLayers recipe file 
 * Set **_py_script_file_** -- this is the path to a python script that writes band names and wavelengths files for the output supercube

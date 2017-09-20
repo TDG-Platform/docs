@@ -22,7 +22,7 @@ input_data_is_1b = True  # True/False
 if input_data_is_1b:
     vnir_reproj_res = "2.0"
     swir_reproj_res = "7.5"
-dn_data_dir = os.path.join(in_base_dir, "XXXXXXXXXXXX/")
+dn_data_dir = os.path.join(in_base_dir, "XXXXXXXXXXXX/") 
 dn_vnir_dir = os.path.join(dn_data_dir, "XXXXXXXXXXXX/")
 dn_swir_dir = os.path.join(dn_data_dir, "XXXXXXXXXXXX/")
 print dn_data_dir
@@ -37,11 +37,11 @@ out_cloud_scube_dir = os.path.join(out_base_dir, "CLOUD_SCUBE")
 
 ###### DEBUG OUTPUTS ################
 if input_data_is_1b:
-    out_acomp_new_dir = os.path.join(out_base_dir, "Ortho_and_ACompNew_UTM")
-    out_acomp_old_dir = os.path.join(out_base_dir, "Ortho_and_ACompOld_UTM")
+    out_acomp_old_dir = os.path.join(out_base_dir, "UTM_ACompOld")
+    out_acomp_new_dir = os.path.join(out_base_dir, "UTM_ACompNew")
 else:
-    out_acomp_new_dir = os.path.join(out_base_dir, "ACOMP_NEW")
     out_acomp_old_dir = os.path.join(out_base_dir, "ACOMP_OLD")
+    out_acomp_new_dir = os.path.join(out_base_dir, "ACOMP_NEW")
 
 out_vnir_imd_dir = os.path.join(out_base_dir, "vnir_imd_dir")
 out_swir_imd_dir = os.path.join(out_base_dir, "swir_imd_dir")
@@ -357,23 +357,6 @@ workflow = gbdx.Workflow([first_task, # <----------- Call to AComp with default 
                           rc_cloud_scube_task,
                           save_cloud_scube_task]) 
 
-"""
-# None of these do not work. Why?
-workflow.savedata(rgb_dir, location = out_rgb_dir)      
-workflow.savedata(mi_mask_dir, location = out_mi_mask_dir)
-workflow.savedata(scube_dir, location = out_scube_dir)
-workflow.savedata(filegen_dir, location = out_scube_dir)
-workflow.savedata(water_scube_dir, location = out_water_scube_dir)           
-workflow.savedata(cloud_scube_dir, location = out_cloud_scube_dir)   
-workflow.savedata(vnir_imd_dir, location = out_vnir_imd_dir) 
-workflow.savedata(swir_imd_dir, location = out_swir_imd_dir) 
-workflow.savedata(water_vnir_dir, location = out_water_vnir_dir) 
-workflow.savedata(cloud_vnir_dir, location = out_cloud_vnir_dir)  
-#workflow.savedata(acomp_old_dir, location = out_acomp_old_dir)
-#workflow.savedata(acomp_new_dir, location = out_acomp_new_dir) 
-#workflow.savedata(mi_tmp_dir, location = out_mi_tmp_dir)   
-"""
-
 #print workflow.generate_workflow_description()
 workflow.execute()
 print 
@@ -390,8 +373,62 @@ Here are the modifications you need to make to the above workflow for your appli
 * Set **_out_base_dir_** -- this is your  top-level S3 output directory
 * Set **_input_data_is_1b_** -- (True/False) this indicates whether the input DN data is Level 1B or Orthorectified
 * Set **_vnir_reproj_res_** and **_swir_reproj_res_** -- these are the target reprojection resolutions when converting 1B to UTM
-* Set **_dn_dir_**, **_vnir_dn_dir_**, and **_swir_dn_dir_** -- these are the S3 locations of your DN input data 
+* Set **_dn_vnir_dir_** and **_dn_swir_dir_** -- these are the S3 locations of your DN VNIR and SWIR input data 
+* Set **_dn_data_dir_** -- this is the s3 path with subdirectories for DN VNIR and SWIR data (used explicitly only when starting with Orthos)
 * Set **_py_script_file_** -- this is the path to a python script that writes band names and wavelengths files for the output supercube
+
+<!--
+***************************************************************************
+-->
+
+The above workflow calls the following Python script:
+
+**create_wv3_scube_text_files.py:**
+
+```shell
+import os
+from glob import glob
+import argparse
+
+if __name__ == "__main__":
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("outdir")
+    args = parser.parse_args()
+    outdir = args.outdir
+
+    band_list = ['1_coastal', '2_blue','3_green','4_yellow',
+                 '5_red','6_rededge', '7_nir1', '8_nir2',
+                 '9_SWIR-1', '10_SWIR-2', '11_SWIR-3', '12_SWIR-4', 
+                 '13_SWIR-5', '14_SWIR-6', '15_SWIR-7', '16_SWIR-8'] 
+
+    fobj = open(os.path.join(outdir, "bands.txt"), "w")
+    for x in band_list:
+        fobj.write(x + "\n")
+    fobj.close()
+
+    wave_list = ['427.399994', 
+                 '481.899994', 
+                 '547.099976', 
+                 '604.299988',  
+                 '660.099976',  
+                 '722.700012', 
+                 '824.000000', 
+                 '913.599976',  
+                 '1209.099976', 
+                 '1571.599976', 
+                 '1661.099976', 
+                 '1729.500000', 
+                 '2163.699951',  
+                 '2202.199951',  
+                 '2259.300049', 
+                 '2329.199951']  
+
+    fobj = open(os.path.join(outdir, "wavelengths.txt"), "w")
+    for x in wave_list:
+        fobj.write(x + "\n")
+    fobj.close()
+```
 
 <!--
 ***************************************************************************
