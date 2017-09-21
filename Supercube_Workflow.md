@@ -53,12 +53,12 @@ out_mi_tmp_dir = os.path.join(out_base_dir, "MI_TMP")
 ####################################################################################
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-#     Build Water and Cloud Mask -- use old (default) AC gain offsets          TBD -- do Orthorectify then AComp to save runtime
+#     Build Water and Cloud Mask -- use old 2015 (default) AC gain offsets          
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 # Ughli and AComp -- mixing model on. 
 if input_data_is_1b:
-    ############## Orthorectify 1B and AComp -- ALSO converts to UTM
+    ############## Orthorectify 1B and AComp 
     print "Starting with 1B's"
     first_task = gbdx.Task('ughli', 
                         data = dn_vnir_dir, #<---------- VNIR only
@@ -66,7 +66,6 @@ if input_data_is_1b:
                         exclude_bands = "P, All-S",     # Suppress PAN and SWIR processing in AComp
                         epsg_code = "UTM",
                         pixel_size_ms = vnir_reproj_res,
-                        pixel_size_swir = swir_reproj_res,
                         compute_noise = "true") #<------- Generates noise files (which we don't need), but usefully mosaics the output
 
 else: # ortho
@@ -158,7 +157,7 @@ save_mi_mask_task = gbdx.Task("StageDataToS3",
                             destination = out_mi_mask_dir)
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-#      Build supercube for material ID -- use new AC gain offsets
+#      Build supercube for material ID -- use new 2016 AC gain offsets
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 # Gain offsets file
@@ -166,7 +165,7 @@ acomp_gain_offset_file = "gainOffsetTable_WV3_2016v0.xml"
 
 # Ughli and AComp -- mixing model on.
 if input_data_is_1b:
-    ############## Orthorectify 1B and AComp -- ALSO converts to UTM
+    ############## Orthorectify 1B and AComp 
     print "Starting with 1B's"
     second_task = gbdx.Task('ughli', 
                         data = dn_vnir_dir, 
@@ -373,8 +372,8 @@ Here are the modifications you need to make to the above workflow for your appli
 * Set **_out_base_dir_** -- this is your  top-level S3 output directory
 * Set **_input_data_is_1b_** -- (True/False) this indicates whether the input DN data is Level 1B or Orthorectified
 * Set **_vnir_reproj_res_** and **_swir_reproj_res_** -- these are the target reprojection resolutions when converting 1B to UTM
-* Set **_dn_vnir_dir_** and **_dn_swir_dir_** -- these are the S3 locations of your DN VNIR and SWIR input data 
-* Set **_dn_data_dir_** -- this is the s3 path with subdirectories for DN VNIR and SWIR data (used explicitly only when starting with Orthos)
+* Set **_dn_vnir_dir_** and **_dn_swir_dir_** -- these are the S3 paths of your DN VNIR and DN SWIR input data 
+* Set **_dn_data_dir_** -- deepest s3 path that contains both the DN VNIR and DN SWIR input data sub-directories
 * Set **_py_script_file_** -- this is the path to a python script that writes band names and wavelengths files for the output supercube
 
 <!--
