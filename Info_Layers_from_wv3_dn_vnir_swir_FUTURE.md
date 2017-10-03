@@ -274,6 +274,9 @@ mi_setup_task = gbdx.Task("mi_setup",
                        buildClassifier = False,
                        buildMask = True,
                        buildAlignImages = True)
+					   
+# mi_setup can be a memory hog -- set larger domain
+mi_setup_task.domain = 'r44xlarge'
 
 """
 ###### TBD Should be doing things this way!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
