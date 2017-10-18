@@ -234,6 +234,8 @@ layers_task = gbdx.Task("DGLayers",
                         generate_top_dir = 'True',
                         recipe_dir = recipe_dir, 
                         recipe_filename = recipe_filename)
+layers_task.domain = 'r44xlarge'
+#layers_task.timeout = 36000 
 
 layers_dir = layers_task.outputs.DST_LAYERS.value
 
