@@ -414,31 +414,34 @@ save_layers_task = gbdx.Task("StageDataToS3",
 
 ####################################################################################
 
-workflow = gbdx.Workflow([status_task,        
-                          save_status_task,   
-                          decision_task,      
-                          save_decision_task, 
-                          first_task, # <----------- Call to AComp with default gain offsets
-                          move_vnir_task,
-                          rgb_task,
-                          save_rgb_task,
-                          water_task,
-                          cloud_task,
-                          union_mask_task,
-                          save_mi_mask_task,
-                          second_task, # <---------- Call to AComp with new gain offsets                       
-                          copy_imd_task,
-                          mi_setup_task,
-                          stack_task,
-                          save_scube_task,
-                          filegen_task,
-                          save_filegen_task,
-                          rc_water_scube_task, 
-                          save_water_scube_task,
-                          rc_cloud_scube_task,
-                          save_cloud_scube_task,
-                          layers_task,
-                          save_layers_task]) 
+task_list = [status_task,        
+            save_status_task,   
+            decision_task,      
+            save_decision_task, 
+            first_task, # <----------- Call to AComp with default gain offsets
+            move_vnir_task,
+            rgb_task,
+            save_rgb_task,
+            water_task,
+            cloud_task,
+            union_mask_task,
+            save_mi_mask_task,
+            second_task, # <---------- Call to AComp with new gain offsets                       
+            copy_imd_task,
+            mi_setup_task,
+            stack_task,
+            save_scube_task,
+            filegen_task,
+            save_filegen_task,
+            rc_water_scube_task, 
+            save_water_scube_task,
+            rc_cloud_scube_task,
+            save_cloud_scube_task]
+
+if recipe_dir and recipe_filename:
+    task_list += [layers_task, save_layers_task]
+
+workflow = gbdx.Workflow(task_list) 	
 
 #print workflow.generate_workflow_description()
 workflow.execute()
