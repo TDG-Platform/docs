@@ -18,8 +18,9 @@ import os
 from gbdxtools import Interface
 gbdx = Interface()
 
-in_base_dir = "s3://gbd-customer-data/58600248-2927-4523-b44b-5fec3d278c09/seth/"
-out_base_dir = "s3://gbd-customer-data/58600248-2927-4523-b44b-5fec3d278c09/seth/DGL_OUTPUT/stuff/"
+# Ensure trailing backslash
+in_base_dir = "s3://XXXXXXXXXXXX/"
+out_base_dir = "s3://XXXXXXXXXXXX/"
 print out_base_dir
 
 ####### INPUTS #######
@@ -33,17 +34,19 @@ dn_vnir_dir = os.path.join(dn_data_dir, "057108633010_01_003/")
 dn_swir_dir = os.path.join(dn_data_dir, "057108631010_01_003/")
 dn_vnir_gis_dir = os.path.join(dn_vnir_dir, "057108633010_01/GIS_FILES/") 
 dn_swir_gis_dir = os.path.join(dn_swir_dir, "057108631010_01/GIS_FILES/") 
-
 print dn_data_dir
 
-recipe_dir = os.path.join(in_base_dir, "DGL_RECIPES/")  
+recipe_dir = "s3://XXXXXXXXXXXX/"  
 recipe_filename = "info_layers_dgl_recipe.txt"
 
-py_script_file = os.path.join(in_base_dir, "PYTHON_SCRIPTS/create_wv3_scube_text_files.py")
-thing1_py = os.path.join(in_base_dir, "PYTHON_SCRIPTS/thing1.py") 
-thing2_py = os.path.join(in_base_dir, "PYTHON_SCRIPTS/thing2.py") 
+py_script_dir = "s3://XXXXXXXXXXXX/"
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ Do NOT MODIFY BELOW THIS LINE @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+####### PREPARED SCRIPTS #######
+py_script_file = os.path.join(py_script_dir, "create_wv3_scube_text_files.py")
+thing1_py = os.path.join(py_script_dir, "thing1.py") 
+thing2_py = os.path.join(py_script_dir, "thing2.py") 
 
 ####### OUTPUTS #######
 out_status_dir = os.path.join(out_base_dir, "STATUS") 
