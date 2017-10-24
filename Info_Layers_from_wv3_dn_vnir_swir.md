@@ -18,8 +18,8 @@ import os
 from gbdxtools import Interface
 gbdx = Interface()
 
-in_base_dir = "s3://XXXXXXXXXXXX/"
-out_base_dir = "s3://XXXXXXXXXXXX/"
+in_base_dir = "s3://gbd-customer-data/58600248-2927-4523-b44b-5fec3d278c09/seth/"
+out_base_dir = "s3://gbd-customer-data/58600248-2927-4523-b44b-5fec3d278c09/seth/DGL_OUTPUT/stuff/"
 print out_base_dir
 
 ####### INPUTS #######
@@ -27,19 +27,26 @@ input_data_is_1b = True  # True/False
 if input_data_is_1b:
     vnir_reproj_res = "2.0"
     swir_reproj_res = "7.5"
-dn_data_dir = os.path.join(in_base_dir, "XXXXXXXXXXXX/")
-dn_vnir_dir = os.path.join(dn_data_dir, "XXXXXXXXXXXX/")
-dn_swir_dir = os.path.join(dn_data_dir, "XXXXXXXXXXXX/")
+
+dn_data_dir = "s3://receiving-dgcs-tdgplatform-com/"
+dn_vnir_dir = os.path.join(dn_data_dir, "057108633010_01_003/")
+dn_swir_dir = os.path.join(dn_data_dir, "057108631010_01_003/")
+dn_vnir_gis_dir = os.path.join(dn_vnir_dir, "057108633010_01/GIS_FILES/") 
+dn_swir_gis_dir = os.path.join(dn_swir_dir, "057108631010_01/GIS_FILES/") 
+
 print dn_data_dir
 
-recipe_dir = os.path.join(in_base_dir, "XXXXXXXXXXXX/")
+recipe_dir = os.path.join(in_base_dir, "DGL_RECIPES/")  
 recipe_filename = "info_layers_dgl_recipe.txt"
 
 py_script_file = os.path.join(in_base_dir, "PYTHON_SCRIPTS/create_wv3_scube_text_files.py")
+thing1_py = os.path.join(in_base_dir, "PYTHON_SCRIPTS/thing1.py") 
+thing2_py = os.path.join(in_base_dir, "PYTHON_SCRIPTS/thing2.py") 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ Do NOT MODIFY BELOW THIS LINE @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 ####### OUTPUTS #######
+out_status_dir = os.path.join(out_base_dir, "STATUS") 
 out_rgb_dir = os.path.join(out_base_dir, "RGB")
 out_scube_dir = os.path.join(out_base_dir, "ACOMP_SCUBE")
 out_water_scube_dir = os.path.join(out_base_dir, "WATER_SCUBE")
@@ -60,6 +67,42 @@ out_cloud_vnir_dir = os.path.join(out_base_dir, "CLOUD_VNIR")
 out_water_vnir_dir = os.path.join(out_base_dir, "WATER_VNIR")
 out_mi_mask_dir = os.path.join(out_base_dir, "MI_MASK")
 out_mi_tmp_dir = os.path.join(out_base_dir, "MI_TMP")
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+# A hack to kill the workflow if VNIR and SWIR do not overlap
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+#### Check to see if the VNIR overlaps the SWIR and write status.txt
+cmd = "mkdir $outdir/data; "
+cmd += "python $indir/data0/thing1.py $indir/dataV $indir/dataS $outdir/data/status.txt" 
+status_task = gbdx.Task('gdal-cli-multiplex')
+status_task.inputs.data0 = os.path.dirname(thing1_py) 
+status_task.inputs.dataV = dn_vnir_gis_dir 
+status_task.inputs.dataS = dn_swir_gis_dir 
+status_task.inputs.command = cmd
+status_task.execution_strategy='runonce'
+
+status_dir = status_task.outputs.data.value
+
+save_status_task = gbdx.Task("StageDataToS3",
+                           data = status_dir,
+                           destination = out_status_dir)
+
+#### If status.txt says "bad", then don't write to the output port, thereby crashing the workflow
+cmd = "mkdir $outdir/data; "
+cmd += "python $indir/data0/thing2.py $indir/data1/status.txt $outdir/data/status.txt" 
+decision_task = gbdx.Task('gdal-cli-multiplex')
+decision_task.inputs.data0 = os.path.dirname(thing2_py) 
+decision_task.inputs.data1 = status_dir
+decision_task.inputs.command = cmd
+decision_task.execution_strategy='runonce'
+
+decision_dir = decision_task.outputs.data.value
+
+# Yes, save back to out_status_dir
+save_decision_task = gbdx.Task("StageDataToS3",
+                           data = decision_dir,
+                           destination = out_status_dir)
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 #     Build Water and Cloud Mask -- use old 2015 (default) AC gain offsets          
@@ -358,8 +401,7 @@ layers_task = gbdx.Task("DGLayers",
                      generate_top_dir = 'True',
                      recipe_dir = recipe_dir, 
                      recipe_filename = recipe_filename)
-layers_task.domain = 'r44xlarge'
-#layers_task.timeout = 36000 				 
+layers_task.domain = 'r44xlarge'				 
 
 layers_dir = layers_task.outputs.DST_LAYERS.value
 
@@ -369,7 +411,11 @@ save_layers_task = gbdx.Task("StageDataToS3",
 
 ####################################################################################
 
-workflow = gbdx.Workflow([first_task, # <----------- Call to AComp with default gain offsets
+workflow = gbdx.Workflow([status_task,        
+                          save_status_task,   
+                          decision_task,      
+                          save_decision_task, 
+                          first_task, # <----------- Call to AComp with default gain offsets
                           move_vnir_task,
                           rgb_task,
                           save_rgb_task,
@@ -417,7 +463,7 @@ Here are the modifications you need to make to the above workflow for your appli
 ***************************************************************************
 -->
 
-The above workflow calls the following Python script:
+The above workflow calls the following Python scripts:
 
 **create_wv3_scube_text_files.py:**
 
@@ -466,6 +512,101 @@ if __name__ == "__main__":
     fobj.close()
 ```
 
+**thing1.py:**
+
+```shell
+import os
+import sys
+from osgeo import ogr
+from glob import glob
+import argparse
+
+if __name__ == "__main__":
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("dn_vnir_gis_dir")
+    parser.add_argument("dn_swir_gis_dir")
+    parser.add_argument("outfile")
+    args = parser.parse_args()
+
+    dn_vnir_gis_dir = args.dn_vnir_gis_dir
+    dn_swir_gis_dir = args.dn_swir_gis_dir
+    outfile = args.outfile
+
+    glob_shp = glob(os.path.join(dn_vnir_gis_dir, "*_ORDER_SHAPE.shp")) 
+    shapefile1 = glob_shp[0]
+
+    glob_shp = glob(os.path.join(dn_swir_gis_dir, "*_ORDER_SHAPE.shp")) 
+    shapefile2 = glob_shp[0]
+
+    driver = ogr.GetDriverByName("ESRI Shapefile")
+
+    ds1 = driver.Open(shapefile1, 0)
+    layer1 = ds1.GetLayer()
+    for feature in layer1:
+        geom = feature.GetGeometryRef()
+        # Get Envelope (minX, maxX, minY, maxY)
+        env = geom.GetEnvelope()
+        print env
+        ul1 = (env[0], env[3])
+        lr1 = (env[1], env[2])
+        break
+
+    ds2 = driver.Open(shapefile2, 0)
+    layer2 = ds2.GetLayer()
+    for feature in layer2:
+        geom = feature.GetGeometryRef()
+        # Get Envelope (minX, maxX, minY, maxY)
+        env = geom.GetEnvelope()
+        print env
+        ul2 = (env[0], env[3])
+        lr2 = (env[1], env[2])
+        break
+
+    overlap = True
+
+    # If one rectangle is on left side of other
+    # if (ul1.x > lr2.x || ul2.x > lr1.x)
+    if (ul1[0] > lr2[0] or ul2[0] > lr1[0]):
+        overlap = False
+ 
+    # If one rectangle is above other
+    # if (ul1.y < lr2.y || ul2.y < lr1.y)
+    if (ul1[1] < lr2[1] or ul2[1] < lr1[1]):
+        overlap = False
+ 
+    with open(outfile, "w") as fobj:
+        if overlap:
+            fobj.write("good\n")
+            fobj.write("VNIR and SWIR overlap")
+        else:
+            fobj.write("bad\n")
+            fobj.write("VNIR and SWIR do not overlap")
+```
+
+**thing2.py:**
+
+```shell
+import os
+import shutil
+import argparse
+
+if __name__ == "__main__":
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("infile")
+    parser.add_argument("outfile")
+    args = parser.parse_args()
+    infile = args.infile
+    outfile = args.outfile
+
+    with open(infile, "r") as fobj:
+        line = fobj.readline()
+        line = line.strip()
+        if line == "good":
+            shutil.copyfile(infile, outfile)
+```
+
 The above workflow presently calls the following DGLayers recipe file:
 
 **info_layers_dgl_recipe.txt:**
@@ -510,33 +651,24 @@ END_RENAME_OUTPUTS
 #                             Process Flow 
 #------------------------------------------------------------------------
 
-#######################
 ### black fill
-#######################
-
 subset_bands --outdirID n1b --indirID SRC1_SCUBE -bands 9
-n2b = np.where(n1b == 0, 1, 0).astype(np.bool) 
+n2b = (n1b == 0) 
 
-#######################
 ### veg mask 
-#######################
-
 indices -outdirID n1v -indirID SRC1_SCUBE -indexIDandExp NDVI (B7-B5)/(B7+B5) -noDataValIn 0 -noDataValOut 0 
-n2v = np.where(n1v > 0.3, 1, 0).astype(np.bool) 
+n2v = (n1v > 0.3)
 
-#######################
 ### Dark mask 
-#######################
-
 indices -outdirID n1d -indirID SRC1_SCUBE -indexIDandExp AVG (B2+B3+B5)/3 -noDataValIn 0 -noDataValOut 0 
-n2d = np.where(n1d < 500, 1, 0).astype(np.bool)  
+n2d = (n1d < 500)
 
 #######################
-### Indices 
+### Material Indices 
 #######################
 
 # Using the noDataValOut of black fill
-indices -outdirID n1i -indirID SRC1_SCUBE -indexIDsFromFile FILE_1 all -noDataValIn -0 -noDataValOut 9999 -deliver
+indices -outdirID n1i -indirID SRC1_SCUBE -indexFile FILE_1 -noDataValIn -0 -noDataValOut 9999 -deliver
 
 #######################
 ### Class map
