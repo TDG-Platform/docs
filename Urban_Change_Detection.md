@@ -21,39 +21,82 @@ Tasks and workflows can be added (described here in [gbdxtools](https://github.c
 See also examples listed under the [Advanced Options](#advanced-options).
 
 ```python
-# Run Urban Change Detection (urban_change) on a pair of images
+# Quickstart Example running the task name.
 
+# Initialize the Environment.
 from gbdxtools import Interface
 gbdx = Interface()
 
-urban_change = gbdx.Task('urban_change', 
-                        pre_image_dir='s3://receiving-dgcs-tdgplatform-com/056194460010_01_003',
-                        post_image_dir='s3://receiving-dgcs-tdgplatform-com/056194461010_01_003')
+tasks = []
+output_location = 'Digital_Globe/Urban_Change/task'
 
-workflow = gbdx.Workflow([urban_change])
+# task parameters
+uc_task = gbdx.Task('urban_change')
 
-#Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
-workflow.savedata(urban_change.outputs.results_dir, location='UrbanChange/Results')
+# Pre-Image Auto ordering task parameters
+pre_order = gbdx.Task("Auto_Ordering")
+pre_order.inputs.cat_id = '103001001C423600'
+pre_order.impersonation_allowed = True
+pre_order.persist = True
+pre_order.timeout = 36000
+uc_task.inputs.pre_image_dir = pre_order.outputs.s3_location.value
+tasks += [pre_order]
 
+# Post-Image Auto ordering task parameters
+post_order = gbdx.Task("Auto_Ordering")
+post_order.inputs.cat_id = '1050410000648000'
+post_order.impersonation_allowed = True
+post_order.persist = True
+post_order.timeout = 36000
+uc_task.inputs.post_image_dir = post_order.outputs.s3_location.value
+tasks += [post_order]
+
+# Add Urban Change task
+tasks += [uc_task]
+
+# Set up workflow save data
+workflow = gbdx.Workflow(tasks)
+workflow.savedata(uc_task.outputs.results_dir, location=output_location)
+
+# Execute workflow
 workflow.execute()
-
-print workflow.id
-print workflow.status
 ```
 
 **Example Run in IPython:**
 
     In [1]: from gbdxtools import Interface
-    In [2]: gbdx = Interface()
-    In [3]: urban_change = gbdx.Task('urban_change', 
-                        pre_image_dir='s3://receiving-dgcs-tdgplatform-com/056194460010_01_003',
-                        post_image_dir='s3://receiving-dgcs-tdgplatform-com/056194461010_01_003')
-    In [4]: workflow = gbdx.Workflow([urban_change])
-    In [5]: workflow.savedata(urban_change.outputs.results_dir, location='UrbanChange/Results')    
-    In [6]: workflow.execute()
-    Out [6]: 
-    u'4507220531957672228'
-    In [7]: print workflow.status
+            gbdx = Interface()
+
+            tasks = []
+            output_location = 'Digital_Globe/Urban_Change/task'
+
+    In [2]: uc_task = gbdx.Task('urban_change')
+
+            pre_order = gbdx.Task("Auto_Ordering")
+            pre_order.inputs.cat_id = '103001001C423600'
+            pre_order.impersonation_allowed = True
+            pre_order.persist = True
+            pre_order.timeout = 36000
+            uc_task.inputs.pre_image_dir = pre_order.outputs.s3_location.value
+            tasks += [pre_order]
+
+            post_order = gbdx.Task("Auto_Ordering")
+            post_order.inputs.cat_id = '1050410000648000'
+            post_order.impersonation_allowed = True
+            post_order.persist = True
+            post_order.timeout = 36000
+            uc_task.inputs.post_image_dir = post_order.outputs.s3_location.value
+            tasks += [post_order]
+
+    In [3]: tasks += [uc_task]
+            workflow = gbdx.Workflow(tasks)
+            workflow.savedata(uc_task.outputs.results_dir, location=output_location)
+
+    In [4]: workflow.execute()
+
+    Out [5]:
+    '4507220531957672228'
+    In [6]: print workflow.status
     {u'state': u'running', u'event': u'started'}
 
 

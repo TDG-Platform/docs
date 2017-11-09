@@ -30,10 +30,10 @@ from gbdxtools import Interface
 gbdx = Interface()
 
 # The data input and lines must be edited to point to an authorized customer S3 location)
-cd_prep = gbdx.Task('cd_prep', 
+cd_prep = gbdx.Task('cd_prep',
                     pre_image_dir='s3://gbd-customer-data/CustomerAccount#/PathToPreImage/',
                     post_image_dir='s3://gbd-customer-data/CustomerAccount#/PathToPostImage')
-    
+
 workflow = gbdx.Workflow([cd_prep])
 #Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
 workflow.savedata(cd_prep.outputs.final_pre_image_dir, location='CDPrep/pre_image_dir')
@@ -48,14 +48,14 @@ print workflow.status
 
     In [1]: from gbdxtools import Interface
     In [2]: gbdx = Interface()
-    In [3]: cd_prep = gbdx.Task('cd_prep', 
-                                 pre_image_dir='s3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/jkoenig/cd_prep_test/Borneo/test2/AOP/pre/', 
+    In [3]: cd_prep = gbdx.Task('cd_prep',
+                                 pre_image_dir='s3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/jkoenig/cd_prep_test/Borneo/test2/AOP/pre/',
                                  post_image_dir = 's3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/jkoenig/cd_prep_test/Borneo/test2/AOP/post/')
     In [4]: workflow = gbdx.Workflow([cd_prep])
     In [5]: workflow.savedata(cd_prep.outputs.final_pre_image_dir, location='cd_prep_test/pub_test/pre_image_dir')
     In [6]: workflow.savedata(cd_prep.outputs.final_post_image_dir, location='cd_prep_test/pub_test/post_image_dir')
     In [7]: workflow.execute()
-    Out [7]: 
+    Out [7]:
     u'4498407427801810318'
     In [8]: print workflow.status
     {u'state': u'running', u'event': u'started'} [9]:
@@ -67,8 +67,8 @@ It is intended to work as a following task to the AOP_Strip_Processor, with only
 
 Example overlapping 1B images that can be processed by Advanced Image Preprocessor prior Change Detection Preparation are:
 
-    pre-image in India: 1040010004D5AD00
-    post-image in India:  105041001259EA00
+    pre-image: 10504100003E9200
+    post-image: 103001001C423600
 
 **Description of Basic Input Parameters for the Change Detection Preparation GBDX task**
 
@@ -120,42 +120,69 @@ image2image_dir | N/A | S3 URL | Log output directory for the image2image task (
 
 #### Advanced Script
 
-This script runs the Advanced Image Preprocessor and Change Detection Preparation end to end.  Note that you must write the output from the Advanced Image Preprocessor to a file which the Change Detection Preparation task will read.
+This script runs the Advanced Image Preprocessor and Change Detection Preparation end to end.
 
 ```python
-# Runs the Advanced Image Preprocessor end to end with Change Detection Preparation Task
-# This example uses the posted data from India.
+# Quickstart Example running the task name.
+
+# Initialize the Environment.
 from gbdxtools import Interface
 gbdx = Interface()
 
-#Edit the following path to reflect a specific path to an image
-data1 = "s3://receiving-dgcs-tdgplatform-com/054661384050_01_003" # Hyderabad GE01
-data2 = "s3://receiving-dgcs-tdgplatform-com/055775971010_01_003" # Hyderabad WV03
+tasks = []
+output_location = 'Digital_Globe/Change_Detection/task'
 
-# Run the Advanced Image Preprocessor
-aoptask1 = gbdx.Task("AOP_Strip_Processor", data=data1, enable_acomp=True, enable_pansharpen=False, enable_dra=False, bands='MS', ortho_epsg="UTM")
-aoptask2 = gbdx.Task("AOP_Strip_Processor", data=data2, enable_acomp=True, enable_pansharpen=False, enable_dra=False, bands='MS', ortho_epsg="UTM")
+# Change Detection task setup
+cd_prep_task = gbdx.Task('cd_prep')
 
-# Edit the following path to reflect a specific path to an image
-data1A = "s3://gbd-customer-data/full path to customer's s3 bucket containing preprocessed imagery"
-data2A = "s3://gbd-customer-data/full path to customer's s3 bucket containing preprocessed imagery"
+# Pre-Image Auto ordering task parameters
+pre_order = gbdx.Task("Auto_Ordering")
+pre_order.inputs.cat_id = '10504100003E9200'
+pre_order.impersonation_allowed = True
+pre_order.persist = True
+pre_order.timeout = 36000
+tasks += [pre_order]
 
-# The data input and lines must be edited to point to an authorized customer S3 location)
-cd_preptask = gbdx.Task('cd_prep', pre_image_dir=data1A, post_image_dir=data2A)
-    
-workflow = gbdx.Workflow([ aoptask1, aoptask2, cd_preptask ])
-    
-# Edit the following line(s) to reflect specific folder(s) for the output file (example location provided)
-workflow.savedata(aoptask1.outputs.data, location='path to customers3 bucket for preprocessed imagery/')
-workflow.savedata(aoptask2.outputs.data, location='path to customer s3 bucket for preprocessed imagery/')
-workflow.savedata(cd_prep_test.outputs.final_pre_image_dir, location='customer final output directory/end2end/GE01_Hyderabad/pre/')
-workflow.savedata(cd_prep_test.outputs.final_post_image_dir, location='customer final output directory/end2end/WV03_Hyderabad/post/')
+# Pre-Image AOP task parameters
+pre_aop = gbdx.Task("AOP_Strip_Processor")
+pre_aop.inputs.data = pre_order.outputs.s3_location.value
+pre_aop.inputs.bands = 'MS'
+pre_aop.inputs.enable_pansharpen = False
+pre_aop.inputs.enable_dra = False
+pre_aop.inputs.ortho_epsg = "UTM"
+pre_aop.timeout = 36000
+tasks += [pre_aop]
 
+# Post-Image Auto ordering task parameters
+post_order = gbdx.Task("Auto_Ordering")
+post_order.inputs.cat_id = '103001001C423600'
+post_order.impersonation_allowed = True
+post_order.persist = True
+post_order.timeout = 36000
+tasks += [post_order]
+
+# Post-Image AOP task parameters
+post_aop = gbdx.Task("AOP_Strip_Processor")
+post_aop.inputs.data = post_order.outputs.s3_location.value
+post_aop.inputs.bands = 'MS'
+post_aop.inputs.enable_pansharpen = False
+post_aop.inputs.enable_dra = False
+post_aop.inputs.ortho_epsg = "UTM"
+post_aop.timeout = 36000
+tasks += [post_aop]
+
+# Add Change Detection task parameters
+cd_prep_task.inputs.pre_image_dir = pre_aop.outputs.data.value
+cd_prep_task.inputs.post_image_dir = post_aop.outputs.data.value
+tasks += [cd_prep_task]
+
+# Set up workflow save data
+workflow = gbdx.Workflow(tasks)
+workflow.savedata(cd_prep_task.outputs.final_pre_image_dir, location=output_location + "/pre")
+workflow.savedata(cd_prep_task.outputs.final_post_image_dir, location=output_location + "/post")
+
+# Execute workflow
 workflow.execute()
-
-print workflow.id
-print workflow.status
-
 ```
 
 

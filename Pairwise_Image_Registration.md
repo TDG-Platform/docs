@@ -17,33 +17,68 @@ The Pairwise Image Registration task will remove misregistrations between two im
 This script uses the Pairwise Image Registration task to co-register two images.  The source image will be registered to the reference image and output to the specified directory.
 
 ```python
-    from gbdxtools import Interface
-    from os.path import join
-    import uuid
-    gbdx = Interface()
+# Quickstart Example running the task name.
 
-    # set my s3 bucket location:
-    my_bucket = 's3://gbd-customer-data/acct#'
+# Initialize the Environment.
+from os.path import join, split
+from gbdxtools import Interface
+gbdx = Interface()
 
-    # create task object
-    im2im_task = gbdx.Task('image2image')
+tasks = []
+output_location = 'Digital_Globe/Image2Image/task'
 
-    # set the values of source_directory, reference_directory
-    # this assumes each directory contains a single image
-    im2im_task.inputs.source_directory = join(my_bucket,'short path to source image directory')
-    im2im_task.inputs.reference_directory = join(my_bucket,'short path to reference image directory')
+# Change Detection task setup
+im2im_task = gbdx.Task('image2image')
+pre_cat_id = '10504100003E9200'
+post_cat_id = '103001001C423600'
 
-    # put the task in a workflow
-    workflow = gbdx.Workflow([im2im_task])
+# Pre-Image Auto ordering task parameters
+pre_order = gbdx.Task("Auto_Ordering")
+pre_order.inputs.cat_id = pre_cat_id
+pre_order.impersonation_allowed = True
+pre_order.persist = True
+pre_order.timeout = 36000
+tasks += [pre_order]
 
-    # save the data to an output location of your choice
-    workflow.savedata(im2im_task.outputs.out, location='path to customer S3 output directory')
+# Pre-Image AOP task parameters
+pre_aop = gbdx.Task("AOP_Strip_Processor")
+pre_aop.inputs.data = pre_order.outputs.s3_location.value
+pre_aop.outputs.data.persist = True
+pre_aop.outputs.data.persist_location = output_location+'/pre_aop'
+pre_aop.timeout = 36000
+tasks += [pre_aop]
 
-    # Execute the Workflow
-    workflow.execute()
-    print workflow.id
-    print workflow.status
-    
+# Post-Image Auto ordering task parameters
+post_order = gbdx.Task("Auto_Ordering")
+post_order.inputs.cat_id = post_cat_id
+post_order.impersonation_allowed = True
+post_order.persist = True
+post_order.timeout = 36000
+tasks += [post_order]
+
+# Post-Image AOP task parameters
+post_aop = gbdx.Task("AOP_Strip_Processor")
+post_aop.inputs.data = post_order.outputs.s3_location.value
+post_aop.outputs.data.persist = True
+post_aop.outputs.data.persist_location = output_location+'/post_aop'
+post_aop.timeout = 36000
+tasks += [post_aop]
+
+# Get Image acquisition ID's for subdirectory in AOP
+pre_acq_id = split(gbdx.catalog.get_data_location(pre_cat_id))[-1][:15]
+post_acq_id = split(gbdx.catalog.get_data_location(post_cat_id))[-1][:15]
+
+# Add Pairwise Image Registration task parameters
+im2im_task.inputs.source_directory = join('s3://gbd-customer-data', gbdx.s3.info['prefix'], pre_aop.outputs.data.persist_location, pre_acq_id)
+im2im_task.inputs.reference_directory = join('s3://gbd-customer-data', gbdx.s3.info['prefix'], post_aop.outputs.data.persist_location, post_acq_id)
+tasks += [im2im_task]
+
+# Set up workflow save data
+workflow = gbdx.Workflow(tasks)
+workflow.savedata(im2im_task.outputs.out, location=output_location + '/im2im')
+
+# Execute workflow
+workflow.execute()
 ```
 
 
