@@ -262,7 +262,7 @@ END_RENAME_OUTPUTS
 n1 = np.mean(SRC, axis=0).astype(np.uint16)
 
 ###### Threshold for bright: True for x > 50; False otherwise.
-n2 = np.where(n1 > 50, True, False).astype(np.bool) 
+n2 = (n1 > 50) 
 
 ###### Binary closure on True 
 n3 = binary_closing_dgl(n2, rad_mtrs=20) --deliver
@@ -307,13 +307,13 @@ END_RENAME_OUTPUTS
 #------------------------------------------------------------------------
 
 # False == Tree; True otherwise. tree_label=5
-n1_tree_mask = np.where(SRC1_lulc != 5, True, False).astype(np.bool) 
+n1_tree_mask = (SRC1_lulc != 5) 
 
 # False == valid DSM; True otherwise. no_data_dsm = -9999
-n2_dsm_mask = np.where(SRC2_dsm == -9999, True, False).astype(np.bool)
+n2_dsm_mask = (SRC2_dsm == -9999)
 
 # False == valid trees and DSM; True otherwise  
-n3_umask = np.logical_or(n1_tree_mask, n2_dsm_mask) 
+n3_umask = n1_tree_mask + n2_dsm_mask 
 
 # Digital height model
 n4_dhm = SRC2_dsm - SRC3_dtm
@@ -367,38 +367,23 @@ END_RENAME_OUTPUTS
 #                             Process Flow 
 #------------------------------------------------------------------------
 
-#######################
 ### black fill
-#######################
-
 subset_bands --outdirID n1b --indirID SRC1_SCUBE -bands 9
-n2b = np.where(n1b == 0, 1, 0).astype(np.bool) 
+n2b = (n1b == 0) 
 
-#######################
 ### veg mask 
-#######################
-
 indices -outdirID n1v -indirID SRC1_SCUBE -indexIDandExp NDVI (B7-B5)/(B7+B5) -noDataValIn 0 -noDataValOut 0 
-n2v = np.where(n1v > 0.3, 1, 0).astype(np.bool) 
+n2v = (n1v > 0.3) 
 
-#######################
 ### Dark mask 
-#######################
-
 indices -outdirID n1d -indirID SRC1_SCUBE -indexIDandExp AVG (B2+B3+B5)/3 -noDataValIn 0 -noDataValOut 0 
-n2d = np.where(n1d < 500, 1, 0).astype(np.bool)  
+n2d = (n1d < 500)  
 
-#######################
 ### Indices 
-#######################
-
 # Using the noDataValOut of black fill
-indices -outdirID n1i -indirID SRC1_SCUBE -indexIDsFromFile FILE_1 all -noDataValIn -0 -noDataValOut 9999 -deliver
+indices -outdirID n1i -indirID SRC1_SCUBE -indexFile FILE_1 -noDataValIn -0 -noDataValOut 9999 -deliver
 
-#######################
 ### Class map
-#######################
-
 # Use -rules if want rules file
 # Note: tolerance = 0.125
 spec_angle_mapper -outdirID n1m -indirID SRC1_SCUBE -materialIDsFromFile FILE_2 all -defAngThreshRad 0.125 -rules -noDataValIn 0 -noDataValOut 255 -deliver
@@ -469,7 +454,12 @@ scipy.ndimage.morphology.<function>()
 skimage.morphology.skeletonize() (<--- coming soon)
 skimage.morphology.medial_axis() (<--- coming soon)
 
-And arithmetic expressions: (e.g., n3 = 5*(n1[1,:,:] + n2[0,:,:]))
+And arithmetic expressions: 
+n3 = 5*(n1[1,:,:] + n2[0,:,:]))
+n3 = (n2/n1).astype(np.uint16) 
+
+Expressions involving Boolean terms (* equals and, + equals or)
+n4 = (n1 > n2)*(n3/n2 < 5.2) + (n3 == 0)*(n1 != 2)
 ```
 
 ## Built-in recipe commands 
@@ -553,13 +543,18 @@ The above command takes as input a single-band 0-1 UCHAR raster and returns a si
 	n5 = binary_dilation_dgl(n4, rad_pix=2)
 	n5 = binary_dilation_dgl(n3, rad_mtrs=2)
 
-# Related: 
-	binary_erosion_dgl, binary_opening_dgl, binary_closing_dgl,
-	binary_open_and_reconstruct, binary_close_and_reconstruct,
-	binary_erase_fat_ones, binary_erase_fat_zeros, 	
-	binary_erase_thin_ones, binary_erase_thin_zeros
+# Related (same interface as above, all using disc template): 
+	binary_erosion_dgl -- erode 
+	binary_opening_dgl -- erode, then dilate  
+	binary_closing_dgl -- dilate, then erode 
+	binary_open_and_reconstruct -- erode, then dilate back to original shape 
+	binary_close_and_reconstruct -- dilate, then erode back to original shape 
+	binary_erase_fat_ones – remove portions of blobs of ones that have local radius greater than or equal to the specified radius
+	binary_erase_fat_zeros – remove portions of blobs of zeros that have local radius greater than or equal to the specified radius
+	binary_erase_thin_ones – remove portions of blobs of ones that have local radius less than or equal to the specified radius
+	binary_erase_thin_zeros – remove portions of blobs of zeros that have local radius less than or equal to the specified radius
 ```
-The above command takes as input a single-band 0-1 UCHAR raster and returns a single-band 0-1 UCHAR raster. This function dilates the 1's by a disc of the specified radius in specified units. Edge effects are handled correctly. All the related commands listed have the same interface. 
+The above command takes as input a single-band 0-1 UCHAR raster and returns a single-band 0-1 UCHAR raster. This function dilates the 1's by a disc of the specified radius in specified units. Edge effects are handled correctly. 
 
 **_Command:_**
 ```shell
@@ -615,12 +610,13 @@ The above command takes as input a single-band UCHAR raster and returns a single
 
 **_Command:_**
 ```shell
-indices -outdirID <node_id> -indirID <node_id> -indexIDandExp <index_name> <band_math> -noDataValIn <val> -noDataValOut <val>
+indices -outdirID <node_id> -indirID <node_id> -indexIDandExp <index_name> <band_math> [-bool] -noDataValIn <val> -noDataValOut <val>
 
-# Example:
+# Examples:
 	indices -outdirID n4 -indirID n2 -indexIDandExp NDVI (b7-b5)/(b7+b5) -noDataValIn 0 -noDataValOut 9999
+	indices -outdirID n4 -indirID n2 -indexIDandExp XYZWHK (b7>b5)*(b4<2)+((b3/b2)>8) -bool -noDataValIn 0 -noDataValOut 9999
 ```
-The above command takes as input a multi-band raster of any data type and returns a multi-band raster of FLOAT32 and a text legend README.TXT. The band math expression can involve parentheses, arithmetic operations, exponent (carrot), numbers, log, and sqrt, **_but not spaces_**. Designate bands with B1, B2, B3,... or b1, b2, b3,.... 
+The first example command takes as input a multi-band raster of any data type and returns a multi-band raster of FLOAT32 and a text legend README.TXT. The band math expression can involve parentheses, arithmetic operations, less than, greater than, equals (two equals symbols juxtaposed), not equals (exclamation mark followed by equals symbol), exponent (carrot), numbers, log, and sqrt, **_but not spaces_**. Designate bands with B1, B2, B3,... or b1, b2, b3,.... The bands are read in as FLOAT32 and by default the output is written to FLOAT32. You can write the output to Boolean type with the --bool option. 
 
 **_Command:_**
 ```shell
@@ -747,18 +743,20 @@ Let X, Y be two spectra:
 
 norm_L1_dist(X, Y) -- Perform L1 normalization of X and Y and compute the L1-distance between the results.
 
+norm_Linfty_dist(X, Y) -- Perform L1 normalization of X and Y and compute the L-infinity distance between the results. (The L1 here is not a typo.)
+
 sid_sin_spec_ang(X, Y) -- Compute the angle, spec_ang_rad, between X and Y. Compute the Spectral Information Divergence SID(X, Y). Form the metric SID(X, Y) * sin(spec_ang_rad). 
 
 sid_sin_spec_corr_ang(X, Y) -- Compute the correlation angle, spec_corr_ang_rad, between X and Y. The correlation angle is computed as arcosine((r + 1)/2)), where r is the Pearson correlation coefficient. Compute the Spectral Information Divergence SID(X, Y). Form the metric SID(X, Y) * sin(spec_corr_ang_rad). 
 
 ### Polygonize 
 ```shell
-polygonize  --indirID <node_id> --outdirID <node_id> [--tag <tag_name>] [--timeout_m <int>] [--maxRatio <float>]
+polygonize  --indirID <node_id> --outdirID <node_id> [--tag <auto|tag_name>] [--timeout_m <int>] [--maxRatio <float>]
 
 # Example:
 	polygonize --indirID n2 --outdirID n1 --tag FRED --timeout_m 6 --maxRatio 0.3  
 ```
-The above command takes as input a multi-band raster of UCHAR, and returns an ESRI polygon shapefile for each band, where the polygons correspond to the contiguous regions of non-zeroe pixels in the band. This function calls Chris Padwick's fast polygonize code, which is orders of magnitude faster than gdal_polygonize and "pulls back" where polygons would otherwise self-touch. (Some GIS software doesn't handle self-touching polygons.) Polygons with holes (multi-polygons) are correctly handled. If --tag option is invoked, then then an attribute field called "shape_tag" will be added to the shapefile and populated with the value <tag_name>. If a README.txt (generated by DGLayers) is present within the input directory for this operation, and the --tag option is not invoked, then an attribute field called "shape_tag" will be added to each shapefile and auto-populated in a descriptive manner, and the shapefiles will be auto-assigned descriptive names. The "shape_tag" field is a field that can be used downstream if there is a desire to merge shapefiles together into a single shapefile. The tag indicates the class (or original shapefile) to which each polygon belongs. The "--timeout_m" option allows the user to limit the execution time (in minutes) of the polygon processing per band. (The polygonization code has sometimes been observed to run indefinitely.) If the time limit is encountered during processing, a text-file error message to the effect is output. If the option is not specified, the time limit is defaulted to 10 minutes. The "--maxRatio" option allows the user to enforce a specified max ratio between total polygon area and image area. If the ratio exceeds the specified maximum, a text-file error message to the effect is output. If the option is not specified, the max ratio is defaulted to 1.0. 
+The above command takes as input a multi-band raster of UCHAR, and returns an ESRI polygon shapefile for each band, where the polygons correspond to the contiguous regions of non-zeroe pixels in the band. This function calls Chris Padwick's fast polygonize code, which is orders of magnitude faster than gdal_polygonize and "pulls back" where polygons would otherwise self-touch. (Some GIS software doesn't handle self-touching polygons.) Polygons with holes (multi-polygons) are correctly handled. If --tag <tag_name> option is invoked, then then an attribute field called "shape_tag" will be added to the shapefile and populated with the value <tag_name>. If the --tag auto option is invoked and a README.txt (generated by DGLayers) exists in the input directory for this operation, then an attribute field called "shape_tag" will be added to each output shapefile and auto-populated accordingly. If there is no README.txt, then an attribute field called "shape_tag" will be added to each output shapefile and auto-populated in a default manner. The "--timeout_m" option allows the user to limit the execution time (in minutes) of the polygon processing per band. (The polygonization code has sometimes been observed to run indefinitely.) If the time limit is encountered during processing, a text-file error message to the effect is output. If the option is not specified, the time limit is defaulted to 10 minutes. The "--maxRatio" option allows the user to enforce a specified max ratio between total polygon area and image area. If the ratio exceeds the specified maximum, a text-file error message to the effect is output. If the option is not specified, the max ratio is defaulted to 1.0. 
 
 ### Threshold 
 **_Command:_**
