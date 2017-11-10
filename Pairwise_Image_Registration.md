@@ -163,7 +163,6 @@ This Advanced Option permits the Customer to:
     workflow.execute()
     print workflow.id
     print workflow.status
-
 ```
 
 ### Known Issues

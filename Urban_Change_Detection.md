@@ -35,23 +35,43 @@ uc_task = gbdx.Task('urban_change')
 
 # Pre-Image Auto ordering task parameters
 pre_order = gbdx.Task("Auto_Ordering")
-pre_order.inputs.cat_id = '103001001C423600'
+pre_order.inputs.cat_id = '10504100003E9200'
 pre_order.impersonation_allowed = True
 pre_order.persist = True
 pre_order.timeout = 36000
-uc_task.inputs.pre_image_dir = pre_order.outputs.s3_location.value
 tasks += [pre_order]
+
+# Pre-Image AOP task parameters
+pre_aop = gbdx.Task("AOP_Strip_Processor")
+pre_aop.inputs.data = pre_order.outputs.s3_location.value
+pre_aop.inputs.bands = 'MS'
+pre_aop.inputs.enable_pansharpen = False
+pre_aop.inputs.enable_dra = False
+pre_aop.inputs.ortho_epsg = "UTM"
+pre_aop.timeout = 36000
+tasks += [pre_aop]
 
 # Post-Image Auto ordering task parameters
 post_order = gbdx.Task("Auto_Ordering")
-post_order.inputs.cat_id = '1050410000648000'
+post_order.inputs.cat_id = '103001001C423600'
 post_order.impersonation_allowed = True
 post_order.persist = True
 post_order.timeout = 36000
-uc_task.inputs.post_image_dir = post_order.outputs.s3_location.value
 tasks += [post_order]
 
-# Add Urban Change task
+# Post-Image AOP task parameters
+post_aop = gbdx.Task("AOP_Strip_Processor")
+post_aop.inputs.data = post_order.outputs.s3_location.value
+post_aop.inputs.bands = 'MS'
+post_aop.inputs.enable_pansharpen = False
+post_aop.inputs.enable_dra = False
+post_aop.inputs.ortho_epsg = "UTM"
+post_aop.timeout = 36000
+tasks += [post_aop]
+
+# Add Urban Change task parameters
+uc_task.inputs.pre_image_dir = pre_aop.outputs.data.value
+uc_task.inputs.post_image_dir = post_aop.outputs.data.value
 tasks += [uc_task]
 
 # Set up workflow save data
@@ -60,6 +80,7 @@ workflow.savedata(uc_task.outputs.results_dir, location=output_location)
 
 # Execute workflow
 workflow.execute()
+
 ```
 
 **Example Run in IPython:**
@@ -73,22 +94,40 @@ workflow.execute()
     In [2]: uc_task = gbdx.Task('urban_change')
 
             pre_order = gbdx.Task("Auto_Ordering")
-            pre_order.inputs.cat_id = '103001001C423600'
+            pre_order.inputs.cat_id = '10504100003E9200'
             pre_order.impersonation_allowed = True
             pre_order.persist = True
             pre_order.timeout = 36000
-            uc_task.inputs.pre_image_dir = pre_order.outputs.s3_location.value
             tasks += [pre_order]
 
+            pre_aop = gbdx.Task("AOP_Strip_Processor")
+            pre_aop.inputs.data = pre_order.outputs.s3_location.value
+            pre_aop.inputs.bands = 'MS'
+            pre_aop.inputs.enable_pansharpen = False
+            pre_aop.inputs.enable_dra = False
+            pre_aop.inputs.ortho_epsg = "UTM"
+            pre_aop.timeout = 36000
+            tasks += [pre_aop]
+
             post_order = gbdx.Task("Auto_Ordering")
-            post_order.inputs.cat_id = '1050410000648000'
+            post_order.inputs.cat_id = '103001001C423600'
             post_order.impersonation_allowed = True
             post_order.persist = True
             post_order.timeout = 36000
-            uc_task.inputs.post_image_dir = post_order.outputs.s3_location.value
             tasks += [post_order]
 
-    In [3]: tasks += [uc_task]
+            post_aop = gbdx.Task("AOP_Strip_Processor")
+            post_aop.inputs.data = post_order.outputs.s3_location.value
+            post_aop.inputs.bands = 'MS'
+            post_aop.inputs.enable_pansharpen = False
+            post_aop.inputs.enable_dra = False
+            post_aop.inputs.ortho_epsg = "UTM"
+            post_aop.timeout = 36000
+            tasks += [post_aop]
+
+    In [3]: uc_task.inputs.pre_image_dir = pre_aop.outputs.data.value
+            uc_task.inputs.post_image_dir = post_aop.outputs.data.value
+            tasks += [uc_task]
             workflow = gbdx.Workflow(tasks)
             workflow.savedata(uc_task.outputs.results_dir, location=output_location)
 
@@ -114,7 +153,7 @@ Name        | Required             |       Default         |        Valid Values
 ----------------|---------|:---------------------:|---------------------------------|-----------------
 pre_image_dir   | Yes   | N/A  |  S3 URL | Pre-image input directory containing one or more 1b TIFF files
 post_image_dir    | Yes   |   N/A  |  S3 URL | Post-image input directory containing one or more 1b TIFF files
-bounding_rectangle    | ??  |   N/A  |  ULx, ULy, LRx, LRy (latlon) | Subregion (specified using bounding box coordinates) within the image pair overlap to process
+cropping_rectangle    | No  |   N/A  |  ULx, ULy, LRx, LRy |Optional cropping rectangle in the form: ULX, ULY, LRX, LRY.  All in latlon coordinates (EPSG:4326)
 enable_cloud_mask     | No   |   True  |  boolean | Enable/Disable the use of a cloudmask (default: true) 
 
 ### Outputs
@@ -139,17 +178,6 @@ Name           |    Required      |       Default         |        Valid Values 
 ---------------|----------|:---------------------:|---------------------------------|-----------------
 Work |  No     |  N/A | S3 URL | Output directory containing intermediate work files (for diagnostic purposes)
 Log |  No   |  N/A | S3 URL | Output directory containing the runtime log (for diagnostic purposes)
-
-
-### Runtime ###
-
-Runtime is a function of the size of the overlap region between the two images.  The following table lists applicable runtime outputs.
-For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
-(TBD: need info on how to do this.  Is GBDX overhead included or just the CPU runtime for the individual tasks?)
-
-  CatId Pair  |  Total Pixels within Overlap |  Total Area of Overlap (k2)  |  Time(secs)  |  Time/Area k2
---------|:----------:|-----------|----------------|---------------
-1030010005850300 1030010018700D00|###|###| ### | ### |
 
 
 ### Known Issues ###
