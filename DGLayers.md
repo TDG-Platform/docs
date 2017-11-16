@@ -1,7 +1,10 @@
 # DGLayers GBDX Task
 
 Developer: Seth Malitz
+
 Note: Be sure to see the known issues at the bottom of this doocument
+
+Note: This document also describes how to install and run dglayers on the HPC Linux cluster 
 
 The DGLayers (Derived Layer Generator) GBDX task is a general-purpose recipe-driven workflow engine that can be used to generate a wide variety of raster and vector layers from input raster data (**_TIFF only_**). A DGLayers recipe is a text file that describes a flow grapf of operations. 
 
@@ -737,7 +740,7 @@ spectral_matching --metric <metric> --outdirID n1 --indirID SRC -specLibFile <fi
 	spectral_matching --outdirID n1 --indirID SRC -metric norm_L1_dist -specLibFile FILE_1 -noDataValIn 0 -noDataValOut 0 -tol 0.175   	
 ```
 
-Similar documentation as "spec_angle_mapper" function. The above command takes as input a multi-band AComp'd reflectance raster of USHORT (0-10000) and returns a single-band "class map" raster of UCHAR, an optional multi-band "rules" raster of USHORT, and a text legend README.txt (as well as README_22.txt for ENVI users) accompanying each. This function matches each pixel of the input image with the "closest" spectrum in a spectral refernce library. "Closest" is defined with respect to the metric indicated by the "-metric" option. The possible metrics are: (a) norm_L1_dist; (b) sid_sin_spec_ang; (c) sid_sin_spec_corr_ang. The "-tol" option indicates the maximum distance (in the natural units of the selected metric) that spectrum X can be from spectrum Y and still be considered a candidate match, X to Y. The "rules" raster will only be generated when the "-rules" option is invoked. The "rules" raster is computed as the integer part of "raw distance x 10000". 
+Similar documentation as "spec_angle_mapper" function. The above command takes as input a multi-band AComp'd reflectance raster of USHORT (0-10000) and returns a single-band "class map" raster of UCHAR, an optional multi-band "rules" raster of USHORT, and a text legend README.txt (as well as README_22.txt for ENVI users) accompanying each. This function matches each pixel of the input image with the "closest" spectrum in a spectral refernce library. "Closest" is defined with respect to the metric indicated by the "-metric" option. The possible metrics are: (a) norm_L1_dist; (b) norm_Linfty_dist; (c) sid_sin_spec_ang; (d) sid_sin_spec_corr_ang. The "-tol" option indicates the maximum distance (in the natural units of the selected metric) that spectrum X can be from spectrum Y and still be considered a candidate match, X to Y. The "rules" raster will only be generated when the "-rules" option is invoked. The "rules" raster is computed as the integer part of "raw distance x 10000". 
 
 Let X, Y be two spectra:
 
@@ -813,6 +816,47 @@ subset_bands --outdirID <node_id> --indirID <node_id> -bands <idx1 idx2 ...>
 	subset_bands --outdirID n3 --indirID n1 -bands 2 5 1 7 
 ```
 The above command takes as input a multi-band raster and a sequence of bands indices, and returns a new multi-band raster consisting of the specified bands in the specified order. Band indexing starts at 1. If the input directory contains a README.txt describing each band, it will be band-subsetted to form an output README.txt.
+
+## How to Install and Run DGLayers on HPC
+
+Ensure the following lines are in your .bashrc 
+
+```shell
+### <my_dglayers_install_path> is where you install dglayers
+export PYTHONPATH=<my_dglayers_install_path>/dglayers/src/python:$PYTHONPATH
+export PYTHON_HOME=/mnt/panasas/smalitz/python/2.7
+export LD_LIBRARY_PATH=$PYTHON_HOME/lib:$LD_LIBRARY_PATH
+export PATH=$PYTHON_HOME/bin:$PATH
+
+### Environment variables to build dglayers/cpp_support (the makefile there calls these) 
+export GDAL_INC_SG=/mnt/tier2/hva_cmake_resources/ThirdPartyPrebuilts/centos_6/gdal_Release_2_0_2_x64/include
+export GEOS_INC_SG=/mnt/tier2/hva_cmake_resources/ThirdPartyPrebuilts/centos_6/geos_Release_3_4_2_x64/include
+export GDAL_LIB_SG=/mnt/tier2/hva_cmake_resources/ThirdPartyPrebuilts/centos_6/gdal_Release_2_0_2_x64/lib
+export GEOS_LIB_SG=/mnt/tier2/hva_cmake_resources/ThirdPartyPrebuilts/centos_6/geos_Release_3_4_2_x64/lib
+
+### Environment variable accessed in dglayers/dgl_utils.py in order to locate run_ip executable
+export AOP_SETUP_SH=/mnt/tier2/staging/sandbox/apps/AOP-Processing/bin/setupLibraryPath.sh
+
+### Point to the necessary python modules
+if [ -f "/etc/profile.d/modules.sh" ]; then
+	source /etc/profile.d/modules.sh
+	export MODULEPATH=/dg/local/cots/osgeo/modulefiles/
+	module load python/2.7.5 perl/5.12.1 ruby/1.9.3 all-python-libs geos/3.4.2 kakadu/6_4-00636C oracle/11gClient postgresql/9.2.5-postgis-1.5.8 gdal/1.8.1  
+fi
+
+### Alias Seth's environment
+alias sethenv='source ~/sethenv/bin/activate'
+```
+
+Install dglayers at <my_path> as indicated below. Then navigate to <mt_path>/dglayers/cpp_support and type "make" (without quotes).
+```shell
+git clone -b develop https://github.digitalglobe.com/PDL/dglayers.git <my_dglayers_install_path>/dglayers
+```
+
+To run dglayers, prepare recipe and auxiliary files in same directory somewhere. Put your data in directories somewhere. At the prompt, type "sethenv" (ithout quotes) to invoke proper environment. Navigate to <my_dglayers_install_path>/dglayers/src/python and issue a command line like:
+```shell
+python run_dglayers.py -img_indirs <path1> <path2> <path3> -img_indir_ids SRC1_SCUBE SRC2_CLOUD SRC3_WATER -outdir <path_outdir> -recipe_file <my_recipe_path>/recipe_ndvi.txt -generate_top_dir  -num_cpus 1
+```
 
 ## Known Issues
 
