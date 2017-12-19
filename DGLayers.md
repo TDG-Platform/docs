@@ -864,7 +864,7 @@ if [ -f "/etc/profile.d/modules.sh" ]; then
 fi
 
 ### Alias Seth's environment and get gdal libraries to run th epolygonize function.
-alias sethenv='module purge; module load python; export PATH=/mnt/panasas/tharris/dev/gdal/gdal-2.2.3-install/bin:$PATH; export LD_LIBRARY_PATH=/mnt/panasas/tharris/dev/gdal/gdal-2.2.3-install/lib:$LD_LIBRARY_PATH; source ~/sethenv/bin/activate'
+alias sethenv='module purge; module load python; export PATH=/mnt/panasas/tharris/dev/gdal/gdal-2.2.3-install/bin:$PATH; export LD_LIBRARY_PATH=/mnt/panasas/tharris/dev/gdal/gdal-2.2.3-install/lib:$LD_LIBRARY_PATH; source /home/smalitz/sethenv/bin/activate'
 ```
 
 Install dglayers at <my_dglayers_install_path> as indicated below. Then navigate to <mt_path>/dglayers/cpp_support and type "make" (without quotes).
@@ -876,6 +876,7 @@ To run dglayers, prepare recipe and auxiliary files in same directory somewhere.
 ```shell
 python run_dglayers.py -img_indirs <path1> <path2> <path3> -img_indir_ids SRC1_SCUBE SRC2_CLOUD SRC3_WATER -outdir <path_outdir> -recipe_file <my_recipe_path>/recipe_ndvi.txt -generate_top_dir  -num_cpus 1
 ```
+If you prefer, you can copy the run_dglayers.py file to another location (e.g., your home directory) and inside the file hard-code the arguments and options above, and then type (without quotes) "python run_dglayers.py".
 
 ## Known Issues
 
