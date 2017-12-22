@@ -869,12 +869,14 @@ fi
 alias sethenv='module purge; module load python; export PATH=/mnt/panasas/tharris/dev/gdal/gdal-2.2.3-install/bin:$PATH; export LD_LIBRARY_PATH=/mnt/panasas/tharris/dev/gdal/gdal-2.2.3-install/lib:$LD_LIBRARY_PATH; source /home/smalitz/sethenv/bin/activate'
 ```
 
-Install dglayers at <my_dglayers_install_path> as indicated below. Then navigate to <mt_path>/dglayers/cpp_support and type "make" (without quotes).
+Install dglayers at <my_path> as indicated below. 
 ```shell
 git clone -b develop https://github.digitalglobe.com/PDL/dglayers.git <my_dglayers_install_path>/dglayers
 ```
 
-To run dglayers, prepare recipe and auxiliary files in same directory somewhere. Put your data in directories somewhere. At the prompt, type "sethenv" (without quotes) to invoke proper environment. Navigate to <my_dglayers_install_path>/dglayers/src/python and issue a command line like:
+Then navigate to <my_path>/dglayers/cpp_support and type "make" (without quotes). Then navigate to <my_path>/dglayers/src/python/dglayers and rename actions.py.in as actions.py.  Go inside the latter file, into function get_main_exec_path(), uncomment the code in that function and appropriately comment out the other code in there execpt for the return statement. 
+
+To run dglayers, prepare recipe and auxiliary files in same directory somewhere. Put your data in directories somewhere. At the prompt, type "sethenv" (without quotes) to invoke proper environment. Navigate to <my_path>/dglayers/src/python and issue a command line like:
 ```shell
 python run_dglayers.py -img_indirs <path1> <path2> <path3> -img_indir_ids SRC1_SCUBE SRC2_CLOUD SRC3_WATER -outdir <path_outdir> -recipe_file <my_recipe_path>/recipe_ndvi.txt -generate_top_dir  -num_cpus 1
 ```
