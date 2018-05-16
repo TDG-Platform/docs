@@ -42,7 +42,8 @@ sweeptask = gbdx.Task('dsm_sweep',
 
 workflow = gbdx.Workflow([s2ptask,sweeptask])
 
-#Edit the following line(s) to reflect specific folder(s) for the output file.  The final desitnation directory names must be 'data'.
+# Edit the following line(s) to reflect specific folder(s) for the output file.  
+# The final desitnation directory names must be 'data'.
 
 workflow.savedata(s2ptask.outputs.data, location='customer s3 output location/s2p_out/data/')
 workflow.savedata(sweeptask.outputs.data, location='customer s3 output location/sweep_out/data/')
