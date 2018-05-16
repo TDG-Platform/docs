@@ -18,7 +18,7 @@ ADD IMAGES AND ANIMATIONS
 
 #### QUICKSTART TUTORIALS
 
-This script uses the combined task of the DG Stereo Solution to produce a digital surface model (DSM) from an image stereo pair.  When the input raster is larger than 3000 x 3000 pixels, satellite_stereo_pipeline trims by 1000 pixels on each side.   This prevents expensive and slow post processing along collect boundaries that for full stereo pairs are poorly resolved.
+This script uses the combined task of the DG DSM MVP to produce a digital surface model (DSM) from an image stereo pair.  When the input raster is larger than 3000 x 3000 pixels, satellite_stereo_pipeline trims by 1000 pixels on each side.   This prevents expensive and slow post processing along collect boundaries that for full stereo pairs are poorly resolved.
 
 ```python
 # Test Run for Satellite Stereo Pipeline & DSM Sweep
