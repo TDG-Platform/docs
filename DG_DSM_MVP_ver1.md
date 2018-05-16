@@ -8,7 +8,7 @@ This document describes the end-to-end application of the Satellite Stereo Pipel
 * [Quickstart](#quickstart) - Get started!
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and example contents.
- * [Advanced Options](#advanced-options) - Additional information for advanced users.
+ * [Accuracy Estimates](#accuracy-esimates) 
  * [Known Issues](#known-issues) - 
  * [Contact Us ](#contact-us) - Contact information.
 
