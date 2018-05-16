@@ -5,10 +5,9 @@ This document describes the end-to-end application of the Satellite Stereo Pipel
 
 #### TABLE OF CONTENTS
 
-* [Quickstart](#quickstart) - Get started!
+ * [Quickstart](#quickstart) - Get started!
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and example contents.
- * [Accuracy Estimates](#accuracy-esimates) -
  * [Known Issues](#known-issues) - 
  * [Contact Us ](#contact-us) - Contact information.
 
@@ -138,11 +137,6 @@ Below are the expected contents of the `data directory` for the final dsm produc
 	14	 water_mask.shp		
 	15	 water_mask.shx
 ```
-
-
-#### ACCURACY ESTIMATES
-
-Want feedback on this before I take the time to type a table.  What do we want to say here? I'm considering a table that has our best sample data Cat ID's with stats for those pairs: Salt Lake City, Melbourne, Garden Grove, Alameda.
 	
 
 #### KNOWN ISSUES
@@ -156,4 +150,3 @@ Want feedback on this before I take the time to type a table.  What do we want t
 #### CONTACT US
 
 
-```
