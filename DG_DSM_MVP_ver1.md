@@ -148,5 +148,5 @@ Below are the expected contents of the `data directory` for the final dsm produc
  
 
 #### CONTACT US
-
+Tech Owner: [Rick Clelland](#Richard.Clelland@digitalglobe.com) & Editor:  [Kathleen Johnson](#kathleen.johnsons@digitalglobe.com)
 
