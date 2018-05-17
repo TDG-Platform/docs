@@ -56,7 +56,7 @@ print workflow.status
 
 ### For satellite_stereo_pipeline Task:
 
-The `input_pair` is the only required data.  You can run a smaller test subset of the input data by setting the x-y pixel values for the upper left corner of the subset region and setting the height and width of the region of interest.   Default Input types have set optimal values.  Depending on feedback, future versions of the algorithm will allow the customer to change these values.
+The `input_pair` is the only required data.  You can run a smaller test subset of the input data by setting the x-y pixel values for the upper left corner of the subset region and setting the height and width of the subset region.   Default Input types have set optimal values.  Depending on feedback, future versions of the algorithm will allow the customer to change these values.
 
 Name             |     Required    |   Input Type   |   Description
 -----------------|:---------------:|------------------|--------
@@ -70,6 +70,7 @@ tile_size        |  NO    |  preset    | default setting is: 500   ; cannot be c
 matching_algorithm |  NO  |  preset    | default setting is: MGM   ; cannot be changed by user
 
 ### For dsm_sweep Task:
+
 Name             |     Required    |   Input Type   |   Description
 -----------------|:---------------:|------------------|--------
 dsm_input            |  YES   |  directory  | S3 directory location of input  data. Use: dsm_input = task.outputs.data as shown in the example script.
@@ -119,7 +120,7 @@ Name             |     Required    |   Input Type   |   Description
 -----------------|:---------------:|------------------|--------
 data             |      YES    |  directory           | S3 directory location of output data.
 
-Below are the expected contents of the `data directory` for the final dsm product.  The dsm.tif is the output file containing the adjusted digital surface model results from the `dsm_sweep` Task.
+Below are the expected contents of the `data directory` for the final `dsm_sweep` Task product.  The dsm.tif is the final corrected tif output; ?????
 
 ```
 
