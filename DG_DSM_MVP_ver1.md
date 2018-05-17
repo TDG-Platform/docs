@@ -1,5 +1,4 @@
 ﻿## DG Digital Surface Model MVP 
-(Adam will change the name to something he likes)
 
 This document describes the end-to-end application of the Satellite Stereo Pipeline (satellite_stereo_pipeline) and DSM Sweep (dsm_Sweep) Tasks to produce a digital surface model (DSM) from in-track stereo pair images.
 
@@ -142,8 +141,9 @@ Below are the expected contents of the `data directory` for the final dsm produc
 #### KNOWN ISSUES
 
  - The `exterior_buffer` is disabled in this version.
+ - The orthorectified image must be a tif file.
  - Full stereo pairs (approx. 30,000 x 50,000 pixels) take about 14-18 hours to run
-~ 12 hours satellite_stereo_pipeline; ~4 hours dsm_sweep.  The satellite_stereo_pipeline runs on a `raid` instance
+~ 12 hours satellite_stereo_pipeline; ~4 hours dsm_sweep.  The satellite_stereo_pipeline runs on a `raid` instance.
  - Cross track stereo pairs have not been tested.
  
 
