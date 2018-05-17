@@ -120,7 +120,7 @@ Name             |     Required    |   Input Type   |   Description
 -----------------|:---------------:|------------------|--------
 data             |      YES    |  directory           | S3 directory location of output data.
 
-Below are the expected contents of the `data directory` for the final `dsm_sweep` Task product.  The dsm.tif is the final corrected tif output; ?????
+Below are the expected contents of the `data directory` for the final `dsm_sweep` Task product.  The dsm.tif is the final corrected tif output; ?????  There will only be a 'Statistics.txt` file if you have provided a truth dataset.
 
 ```
 
