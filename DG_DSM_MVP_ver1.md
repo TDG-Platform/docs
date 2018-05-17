@@ -1,6 +1,6 @@
 ﻿## DG Digital Surface Model MVP 
 
-This document describes the end-to-end application of the Satellite Stereo Pipeline (satellite_stereo_pipeline) and DSM Sweep (dsm_Sweep) Tasks to produce a digital surface model (DSM) from in-track stereo pair images.
+This document describes the end-to-end application of the Satellite Stereo Pipeline (satellite_stereo_pipeline) and DSM Sweep (dsm_Sweep) Tasks to produce a digital surface model (DSM) from in-track stereo pair images. DSM Sweep removes spikes and fills holes that remain after the initial DSM processing by the Satellite Stereo Pipeline.
 
 #### TABLE OF CONTENTS
 
