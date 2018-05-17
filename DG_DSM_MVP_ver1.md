@@ -97,7 +97,8 @@ data             |      YES    |  directory           | S3 directory location of
 If you choose to save the raw digital surface model results, this is the expected contents of the `data directory`.  The dsm.tif is the output file containing the raw digital surface model results from the `satellite_stereo_pipeline` Task.
 
 ```
-	4	 yourImage.RPC	
+	3	 yourImage1.RPC	
+	4	 yourImage2.RPC	
 	5	 ReturnComments.txt	
 	6	 SuccessAndFailureInfo.txt	
 	7	 config.json	
@@ -122,19 +123,26 @@ Below are the expected contents of the `data directory` for the final dsm produc
 
 ```
 
-	3	 dsm.tif	
-	4	 dsm_sweep.json		
-	5	 spike_filtered.tif	
-	6	 spike_filtered.tif.aux.xml	
-	7	 temp_water.cpg		
-	8	 temp_water.dbf		
-	9	 temp_water.prj		
-	10	 temp_water.shp		
-	11	 temp_water.shx		
-	12	 water_mask.dbf		
-	13	 water_mask.prj		
-	14	 water_mask.shp		
-	15	 water_mask.shx
+	3        DifferenceHistogram.png	
+	4	 Statistics.txt	
+	5	 dsm.tif	
+	6	 dsm_filtered.tif	
+	7	 dsm_minus_truth.tif	
+	8	 dsm_sweep.json	
+	9	 dsm_unfiltered.tif	
+	10	 holes_filled.tif.aux.xml	
+	11	 holes_filled_subset.tif	
+	12	 holes_filled_subset.tif.aux.xml	
+	13	 spike_filtered.tif.aux.xml	
+	14	 temp_water.cpg	
+	15	 temp_water.dbf	
+	16	 temp_water.prj	
+	17	 temp_water.shp	
+	18	 temp_water.shx	
+	19	 water_mask.dbf	
+	20	 water_mask.prj	
+	21	 water_mask.shp	
+	22	 water_mask.shx
 ```
 	
 
