@@ -54,6 +54,8 @@ print workflow.status
 
 #### INPUT OPTIONS
 
+The input data consists of a pair of in-track panchromatic stereo images in tiff format and factory-ordered (or preprocessed) to Level OR2A (ortho-ready level 2A).  The imagery should include RPB/RPC files, and bundle-block-adjustment (BBA) is highly recommended for the most accurate results.
+
 ### For satellite_stereo_pipeline Task:
 
 The `input_pair` is the only required data.  You can run a smaller test subset of the input data by setting the x-y pixel values for the upper left corner of the subset region and setting the height and width of the subset region.   Default Input types have set optimal values.  Depending on feedback, future versions of the algorithm will allow the customer to change these values.
