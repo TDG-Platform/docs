@@ -155,7 +155,7 @@ Below are the expected contents of the `data directory` for the final `dsm_sweep
  - The orthorectified image must be a tif file.
  - Full stereo pairs (approx. 30,000 x 50,000 pixels) take about 14-18 hours to run
 ~ 12 hours satellite_stereo_pipeline; ~4 hours dsm_sweep.  The satellite_stereo_pipeline runs on a `raid` instannce.
- - These Processors can also be applied to cross-track stereo pairs, however, this application of the Tasks has not been heavily tested. It should only be applied when in-track stereo pairs are not available.
+ - These Processors can also be applied to cross-track stereo pairs, however, this application of the Tasks has not been heavily tested. Cross-track images should only be utilized when in-track stereo pairs are not available.
  
 
 #### CONTACT US
