@@ -25,11 +25,13 @@ from gbdxtools import Interface
 gbdx = Interface()
 
 # Run the Satellite Stereo Pipeline and DSM_Sweep Tasks end to end.  
-# You must stage the data to your customer S3 bucket
+# You must stage the data to your customer S3 bucket.  Each input value requires a separate directory.
 
 s2ptask = gbdx.Task('satellite_stereo_pipeline',
 	input_pair='s3://gbd-customer-data/full path to customer's S3 location/input_pair/'
 )
+
+# dsm_input is the only required input value.  Edit the others according to whether those parameters are used.
 
 sweeptask = gbdx.Task('dsm_sweep', 
 	dsm_input = s2ptask.outputs.data,
@@ -54,7 +56,7 @@ print workflow.status
 
 #### INPUT OPTIONS
 
-The input data consists of a pair of in-track panchromatic stereo images in tiff format and factory-ordered (or preprocessed) to Level OR2A (ortho-ready level 2A).  The imagery should include RPB/RPC files, and bundle-block-adjustment (BBA) is highly recommended for the most accurate results.
+The input data consists of a pair of in-track panchromatic stereo images in tiff format and factory-ordered (or preprocessed) to Level OR2A (ortho-ready level 2A).  The imagery should include RPC files in the same directory and bundle-block-adjustment (BBA) is highly recommended for the most accurate results.
 
 ### For satellite_stereo_pipeline Task:
 
@@ -152,6 +154,7 @@ Below are the expected contents of the `data directory` for the final `dsm_sweep
 #### KNOWN ISSUES
 
  - The `exterior_buffer` is disabled in this version.
+ - RPC files are required. Imagery with RPB's must be converted to RPC.
  - The orthorectified image must be a tif file.
  - Full stereo pairs (approx. 30,000 x 50,000 pixels) take about 14-18 hours to run
 ~ 12 hours satellite_stereo_pipeline; ~4 hours dsm_sweep.  The satellite_stereo_pipeline runs on a `raid` instannce.
