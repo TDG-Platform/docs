@@ -87,8 +87,7 @@ hole_filling   |  NO  | preset |   default setting is: vsr  ; cannot be changed 
 hole_filling_max_search 	| NO  | preset| default setting is: 50  ; cannot be changed by user	
 vsr_guide      |  NO  |  preset  | default setting is: minval  ; cannot be changed by user                                       
 vsr_prior_prob |  NO  |  preset  | default setting is: 0.1 ; cannot be changed by user	
-filter_spikes  |  NO  |  preset  | default setting is: true ; cannot be changed by user
-exterior_buffer |  NO  |  preset | default setting is: 1000 ;  see known issues					
+filter_spikes  |  NO  |  preset  | default setting is: true ; cannot be changed by user			
 
 
 #### OUTPUTS
@@ -153,7 +152,6 @@ Below are the expected contents of the `data directory` for the final `dsm_sweep
 
 #### KNOWN ISSUES
 
- - The `exterior_buffer` is disabled in this version.
  - RPC files are required. RPB's must be converted to RPC for the current version.
  - The orthorectified image must be a tif file.
  - Full stereo pairs (approx. 30,000 x 50,000 pixels) take about 14-18 hours to run
