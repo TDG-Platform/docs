@@ -5,7 +5,7 @@ This document describes the end-to-end application of the Satellite Stereo Pipel
 #### TABLE OF CONTENTS
 
  * [Quickstart](#quickstart-tutorials) - Get started!
- * [Inputs](#inputs-options) - Required and optional task inputs.
+ * [Inputs](#input-options) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and example contents.
  * [Known Issues](#known-issues) 
  * [Contact Us ](#contact-us) - Contact information.
