@@ -67,7 +67,7 @@ subset_ul_row    |  NO    |  string     | upper left y-pixel value for subset
 subset_ul_col    |  NO    |  string     | upper left x-pixel value for subset
 subset_height    |  NO    |  string     |   pixel height of subset
 subset_width     |  NO    |  string     |   pixel width of subset
-max_processes    |  NO    |  preset    | default setting is: 16   ; cannot be changed by user
+max_processes    |  YES    |  preset    | default setting is: 16, which is the maximum allowed
 tile_size        |  NO    |  preset    | default setting is: 500   ; cannot be changed by user
 matching_algorithm |  NO  |  preset    | default setting is: MGM   ; cannot be changed by user
 
