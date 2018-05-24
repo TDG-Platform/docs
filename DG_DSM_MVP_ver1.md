@@ -101,8 +101,8 @@ data             |      YES    |  directory           | S3 directory location of
 If you choose to save the raw digital surface model results, this is the expected contents of the `data directory`.  The dsm.tif is the output file containing the raw digital surface model results from the `satellite_stereo_pipeline` Task.
 
 ```
-	3	 yourImage1.RPC	
-	4	 yourImage2.RPC	
+	3	 yourImage1.RPC
+	4	 yourImage2.RPC
 	5	 ReturnComments.txt	
 	6	 SuccessAndFailureInfo.txt	
 	7	 config.json	
@@ -152,7 +152,6 @@ Below are the expected contents of the `data directory` for the final `dsm_sweep
 
 #### KNOWN ISSUES
 
- - RPC files are required. RPB's must be converted to RPC for the current version.
  - The orthorectified image must be a tif file.
  - Full stereo pairs (approx. 30,000 x 50,000 pixels) take about 14-18 hours to run
 ~ 12 hours satellite_stereo_pipeline; ~4 hours dsm_sweep.  The satellite_stereo_pipeline runs on a `raid` instannce.
