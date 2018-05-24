@@ -56,7 +56,7 @@ print workflow.status
 
 #### INPUT OPTIONS
 
-The input data consists of a pair of in-track panchromatic stereo images in tiff format and factory-ordered (or preprocessed) to Level OR2A (ortho-ready level 2A).  The imagery should include RPC files in the same directory and bundle-block-adjustment (BBA) is highly recommended for the most accurate results.
+The input data consists of a pair of in-track panchromatic stereo images in tiff format and factory-ordered (or preprocessed) to Level OR2A (ortho-ready level 2A).  The Task will first look for an RPC file, and if none is present, look for an RPB file and perform the RBP to RPC conversion. The RPC/RPB files should be in the same directory as the input_pair files. Bundle-block-adjustment (BBA) is highly recommended for the most accurate results.
 
 ### For satellite_stereo_pipeline Task:
 
