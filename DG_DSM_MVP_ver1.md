@@ -70,8 +70,8 @@ subset_ul_col    |  NO    |  string     | upper left x-pixel value for subset
 subset_height    |  NO    |  string     |   pixel height of subset
 subset_width     |  NO    |  string     |   pixel width of subset
 max_processes    |  YES    |  preset    | default setting is: 16, which is the maximum allowed
-tile_size        |  NO    |  preset    | default setting is: 500   ; cannot be changed by user
-matching_algorithm |  NO  |  preset    | default setting is: MGM   ; cannot be changed by user
+tile_size        |  NO    |  preset    | default setting is: 500   ; should not be changed by user
+matching_algorithm |  NO  |  preset    | default setting is: MGM   ; should ot be changed by user
 
 ### For dsm_sweep Task:
 
@@ -80,14 +80,14 @@ Name             |     Required    |   Input Type   |   Description
 dsm_input            |  YES   |  directory  | S3 directory location of input  data. Use: dsm_input = task.outputs.data as shown in the example script.
 exterior_shapefile   |  NO    |  directory  | S3 directory location of order shapefile
 gcp_shapefile        |  NO    |  directory  | S3 directory location of gcp shapefile
-ortho  |  NO  |  directory  | S3 directory location of orthorectified image with same footprint
+ortho  |  NO  |  directory  | S3 directory location of orthorectified image with same footprint; if specified, it is used by VSR to improve the DSM edges.
 truth_dsm     |  NO  |directory  |  S3 directory location of elevation truth data set		     		                		 
-water_masking  | NO  | preset  |     default setting is: true ; cannot be changed by user                      
-hole_filling   |  NO  | preset |   default setting is: vsr  ; cannot be changed by user                               
-hole_filling_max_search 	| NO  | preset| default setting is: 50  ; cannot be changed by user	
-vsr_guide      |  NO  |  preset  | default setting is: minval  ; cannot be changed by user                                       
-vsr_prior_prob |  NO  |  preset  | default setting is: 0.1 ; cannot be changed by user	
-filter_spikes  |  NO  |  preset  | default setting is: true ; cannot be changed by user			
+water_masking  | NO  | preset  |     default setting is: true ; should ot be changed by user                      
+hole_filling   |  NO  | preset |   default setting is: vsr  ; should ot be changed by user                               
+hole_filling_max_search 	| NO  | preset| default setting is: 50  ; should ot be changed by user	
+vsr_guide      |  NO  |  preset  | default setting is: minval  ; should ot be changed by user                                      
+vsr_prior_prob |  NO  |  preset  | default setting is: 0.1 ; should ot be changed by user	
+filter_spikes  |  NO  |  preset  | default setting is: true ; should ot be changed by user			
 
 
 #### OUTPUTS
@@ -152,6 +152,7 @@ Below are the expected contents of the `data directory` for the final `dsm_sweep
 
 #### KNOWN ISSUES
 
+ - The output DSM will be half meter resolution. The only tested input is half meter OR2As. Behavior with other resolutions is unknown.
  - The orthorectified image can be a tif file or a vrt file with the associated tif files.
  - Full stereo pairs (approx. 30,000 x 50,000 pixels) take about 14-18 hours to run
 ~ 12 hours satellite_stereo_pipeline; ~4 hours dsm_sweep.  The satellite_stereo_pipeline runs on a `raid` instannce.
